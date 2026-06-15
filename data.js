@@ -1,0 +1,1 @@
+const KOSPI_QUANT_PACKAGE = {"server": {"status": "MAINTENANCE", "checked_at": "2026-06-15 22:22:56", "data_date": "2026년 06월 15일", "estimated_end": "2026-06-16 08:00:00"}, "recommend_top10": [], "super_value": [], "ncav_value": []};
