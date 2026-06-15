@@ -1,0 +1,51 @@
+# ─── 💥 [파이썬 3.14 최신 버전 호환성 최종 마스터 패치] ───
+import os
+import sys
+import types
+from pathlib import Path
+
+try:
+    import pkg_resources
+except ModuleNotFoundError:
+    fake_pkg = types.ModuleType("pkg_resources")
+    fake_pkg.declare_namespace = lambda name: None
+    fake_pkg.get_distribution = lambda name: types.SimpleNamespace(version="0.0.0")
+    
+    def fake_resource_filename(package_name, resource_name):
+        base_path = Path(sys.executable).parent / "Lib" / "site-packages" / package_name
+        if not base_path.exists():
+            base_path = Path(os.environ["APPDATA"]) / "Python" / "Python314" / "site-packages" / package_name
+        return str(base_path / resource_name)
+    
+    fake_pkg.resource_filename = fake_resource_filename
+    sys.modules["pkg_resources"] = fake_pkg
+# ───────────────────────────────────────────────────────
+
+from pykrx import stock
+
+# 💥 야간 서버 우회를 위해 확실하게 데이터가 박제된 금요일 날짜를 정확한 포맷으로 지정
+test_date = "20260612"
+
+print(f"=== [{test_date}] 야간 방화벽 우회 통신 검증 ===")
+
+try:
+    # 야간 시간대에는 등락률 함수를 통해 접근하는 것이 거래소 보안망을 가장 안정적으로 우회합니다.
+    df = stock.get_market_price_change_by_ticker(test_date, test_date)
+    
+    if not df.empty:
+        total_tickers = len(df.index)
+        print(f"✅ 1단계 성공: 현재 KOSPI/KOSDAQ 상장 종목 수는 총 [{total_tickers}]개 입니다.")
+        
+        # 삼성전자(005930)가 데이터에 존재하는지 확인
+        if "005930" in df.index:
+            samsung_name = df.loc["005930", "종목명"]
+            samsung_close = int(df.loc["005930", "종가"])
+            print(f"✅ 2단계 성공: [{samsung_name}]의 해당 일자 마감 종가는 [{format(samsung_close, ',')}원] 입니다.")
+            print("\n🎉 [통신 정상화 완료] 거래소 서버의 빗장이 완전히 열렸습니다!")
+        else:
+            print("🟡 삼성전자 코드가 유실되었습니다. 거래소 서버 정비가 아직 진행 중입니다.")
+    else:
+        print("❌ 거래소 야간 정비로 인해 빈 데이터가 반환되었습니다. 잠시 후 다시 시도해 주세요.")
+
+except Exception as e:
+    print(f"❌ 통신 에러 발생: {e}")
