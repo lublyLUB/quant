@@ -5,280 +5,136 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>바이브 프로 퀀트 플랫폼</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background-color: #f8fafc; padding: 6px; margin: 0; color: #333; }
-        .container { max-width: 650px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        
-        .status-banner { padding: 10px; border-radius: 8px; font-size: 11px; font-weight: bold; text-align: center; margin-bottom: 12px; display: none; }
-        .status-normal { background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; display: block; }
-        .status-alert { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; display: block; }
-        
-        .menu-tabs { display: grid; grid-template-columns: 1fr 1.2fr 1fr; background-color: #f1f5f9; padding: 3px; border-radius: 8px; margin-bottom: 10px; gap: 2px; }
-        .tab-btn { border: none; background: none; padding: 9px 1px; font-size: 12px; font-weight: bold; color: #64748b; cursor: pointer; border-radius: 6px; text-align: center; transition: all 0.15s; }
-        .tab-btn.active { background-color: #fff; color: #1e3a8a; box-shadow: 0 2px 4px rgba(0,0,0,0.06); }
-
-        /* 🔍 스마트 종목 검색창 스타일 */
-        .search-box { width: 100%; padding: 10px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 12px; box-sizing: border-box; outline: none; }
-        .search-box:focus { border-color: #2563eb; box-shadow: 0 0 0 2px rgba(37,99,235,0.1); }
-
-        h1 { font-size: 14px; color: #1e3a8a; text-align: center; margin: 4px 0; }
-        .condition-sub { font-size: 10px; color: #1e3a8a; background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 6px; border-radius: 6px; text-align: center; margin: 4px 0 8px 0; line-height: 1.4; display: none; }
-        .date-badge { font-size: 10px; color: #ff5a00; font-weight: bold; text-align: center; margin-bottom: 12px; }
-        
-        table { width: 100%; border-collapse: collapse; font-size: 11px; table-layout: fixed; }
-        th, td { padding: 9px 1px; border-bottom: 1px solid #e2e8f0; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
-        th { background-color: #f8fafc; color: #475569; cursor: pointer; user-select: none; font-weight: bold; font-size: 10px; }
-        
-        .sub-text { font-size: 9px; color: #94a3b8; display: block; margin-top: 2px; }
-        .price-text { font-size: 10px; color: #64748b; font-weight: normal; display: block; margin-top: 2px; }
-        .rank-main { font-weight: bold; color: #2563eb; }
-        .rank-avg { font-weight: bold; color: #059669; }
-
-        /* ⭐ 북마크 별 아이콘 및 지표 강조 효과 */
-        .star-icon { cursor: pointer; color: #cbd5e1; font-size: 12px; margin-right: 2px; transition: color 0.2s; }
-        .star-icon.active { color: #f59e0b; }
-        .badge-cheap { color: #b91c1c; font-weight: bold; }
-
-        .rank-top10 { color: #b45309; font-size: 12px; font-weight: 800; background-color: #fef3c7; padding: 4px 4px; border-radius: 6px; display: inline-block; border: 1px solid #fde68a; }
-        .rank-1-20 { color: #1e40af; font-size: 11px; font-weight: 800; background-color: #eff6ff; padding: 4px 5px; border-radius: 6px; display: inline-block; border: 1px solid #bfdbfe; }
-        .rank-21-30 { color: #0f172a; font-size: 11px; font-weight: 700; display: inline-block; }
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --positive: #ef4444;
+            --negative: #3b82f6;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 16px;
+        }
+        .header {
+            margin-bottom: 24px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 12px;
+        }
+        h1 { font-size: 20px; margin: 0 0 4px 0; color: var(--accent-color); }
+        .timestamp { font-size: 12px; color: var(--text-muted); }
+        .table-container {
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow-x: auto;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            text-align: left;
+        }
+        th, td { padding: 12px; border-bottom: 1px solid #334155; white-space: nowrap; }
+        th { background-color: #111827; color: var(--text-muted); font-weight: 600; }
+        tr:last-child td { border-bottom: none; }
+        .rank { font-weight: bold; color: var(--accent-color); text-align: center; width: 40px; }
+        .up { color: var(--positive); }
+        .down { color: var(--negative); }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div id="status-bar" class="status-banner">시스템 정상 기동 완료</div>
-
-    <div class="menu-tabs">
-        <button id="btn-recommend" class="tab-btn active" onclick="switchMenu('recommend')">⭐ 추천 10</button>
-        <button id="btn-super" class="tab-btn" onclick="switchMenu('super')">13. 슈퍼 가치</button>
-        <button id="btn-ncav" class="tab-btn" onclick="switchMenu('ncav')">12. NCAV</button>
+    <div class="header">
+        <h1>📊 바이브 프로 퀀트 매트릭스</h1>
+        <div class="timestamp" id="update-time">데이터 로딩 중...</div>
     </div>
 
-    <input type="text" id="search-bar" class="search-box" placeholder="🔍 필터링할 종목명을 입력하세요 (실시간 반영)..." oninput="handleSearch()">
-
-    <h1 id="strategy-title">👑 전 전략 통합 추천 종목 Top 10</h1>
-    <div id="ncav-info-lbl" class="condition-sub">
-        <b>💡 12. NCAV 전략 필터 마스터 가이드</b><br>
-        순유동 > 시가총액 (1배 완화) | 분기 흑자 기업 | GP/A 상위 50% 이내 | 차입금비율 200% 이하
-    </div>
-    <div id="data-date-view" class="date-badge">데이터 로딩 중...</div>
-
-    <table id="quant-table">
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="text-align: center;">순위</th>
+                    <th>종목명</th>
+                    <th style="text-align: right;">현재가</th>
+                    <th style="text-align: right;">등락률</th>
+                    <th style="text-align: right;">PER</th>
+                    <th style="text-align: right;">PBR</th>
+                </tr>
+            </thead>
+            <tbody id="quant-table-body">
+                </tbody>
         </table>
-</div>
+    </div>
 
-<script src="data.js"></script>
-<script>
-    let currentMenu = 'recommend';
-    let currentSortKey = 'rank';
-    let isAscending = true;
-    let searchQuery = "";
-    let recommendData = [], superData = [], ncavData = [];
-    
-    // 🌟 관심 종목 로컬 스토리지 보관 매커니즘
-    let bookmarks = JSON.parse(localStorage.getItem('quant_bookmarks')) || [];
-
-    function formatNumber(num) {
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-
-    function toggleBookmark(name) {
-        if (bookmarks.includes(name)) {
-            bookmarks = bookmarks.filter(b => b !== name);
-        } else {
-            bookmarks.push(name);
-        }
-        localStorage.setItem('quant_bookmarks', JSON.stringify(bookmarks));
-        refreshCurrentTable();
-    }
-
-    function getStarHtml(name) {
-        const isActive = bookmarks.includes(name) ? 'active' : '';
-        return `<span class="star-icon ${isActive}" onclick="toggleBookmark('${name}')">★</span>`;
-    }
-
-    function handleSearch() {
-        searchQuery = document.getElementById("search-bar").value.toLowerCase().trim();
-        refreshCurrentTable();
-    }
-
-    function startCountdown(endTimeStr) {
-        const statusBar = document.getElementById("status-bar");
-        const endTime = new Date(endTimeStr).getTime();
-        function updateTimer() {
-            const now = new Date().getTime();
-            const distance = endTime - now;
-            if (distance < 0) {
-                statusBar.className = "status-banner status-normal";
-                statusBar.innerHTML = "✅ KRX 시스템 점검 마감 예정 시간 종료. 엔진 재구동이 가능합니다.";
-                clearInterval(timerInterval);
+    <script src="data.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 1. 업데이트 시각 반영
+            if (typeof lastUpdated !== 'undefined') {
+                document.getElementById("update-time").innerText = "시스템 최종 동기화: " + lastUpdated;
+            } else {
+                document.getElementById("update-time").innerText = "데이터 선로 오류 (data.js를 확인하세요)";
                 return;
             }
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            statusBar.innerHTML = `⚠️ KRX 서버 시스템 정기 점검 중 [정상 가동까지 약 ${hours}시간 ${minutes}분 남음]`;
-        }
-        updateTimer();
-        setInterval(updateTimer, 60000); // 1분 단위 갱신 최적화
-    }
 
-    function switchMenu(menuType) {
-        currentMenu = menuType;
-        currentSortKey = 'rank';
-        isAscending = true;
-        document.getElementById("search-bar").value = "";
-        searchQuery = "";
-        
-        const subMenus = ['recommend', 'super', 'ncav'];
-        subMenus.forEach(m => document.getElementById(`btn-${m}`).classList.toggle("active", m === menuType));
-        document.getElementById("ncav-info-lbl").style.display = (menuType === 'ncav') ? 'block' : 'none';
-        
-        refreshCurrentTable();
-    }
+            // 2. 퀀트 알고리즘 연산 (필터링 및 멀티 팩터 랭킹 매트릭스)
+            if (typeof quantData !== 'undefined' && quantData.length > 0) {
+                
+                // [필터링 및 스코어링] PER과 PBR이 0보다 큰 정상 가치주만 엄선
+                let validStocks = quantData.filter(stock => stock.per > 0 && stock.pbr > 0);
 
-    function refreshCurrentTable() {
-        if (currentMenu === 'recommend') {
-            document.getElementById("strategy-title").innerText = "👑 전 전략 통합 추천 종목 Top 10";
-            renderRecommendTable(filterBySearch(recommendData));
-        } else if (currentMenu === 'super') {
-            document.getElementById("strategy-title").innerText = "📈 13. 슈퍼 가치 4대 통합 스크리너";
-            renderSuperTable(filterBySearch(superData));
-        } else if (currentMenu === 'ncav') {
-            document.getElementById("strategy-title").innerText = "🛡️ 12. NCAV 청산가치 & 퀄리티 스크리너";
-            renderNcavTable(filterBySearch(ncavData));
-        }
-    }
+                // PER 순위 매기기 (오름차순)
+                validStocks.sort((a, b) => a.per - b.per);
+                validStocks.forEach((stock, index) => { stock.perRank = index + 1; });
 
-    function filterBySearch(dataset) {
-        if (!searchQuery) return dataset;
-        return dataset.filter(item => item.name.toLowerCase().includes(searchQuery));
-    }
+                // PBR 순위 매기기 (오름차순)
+                validStocks.sort((a, b) => a.pbr - b.pbr);
+                validStocks.forEach((stock, index) => { stock.pbrRank = index + 1; });
 
-    // 🚀 최적화 리팩토링: innerHTML 속도를 위해 큰 하나의 문자열 블록으로 조립 후 일괄 쓰기 수행
-    function renderRecommendTable(data) {
-        let html = `
-            <thead>
-                <tr>
-                    <th style="width: 11%;" onclick="sortData('rank')">통합<br>추천</th>
-                    <th style="width: 36%;" onclick="sortData('name')">추천 종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
-                    <th style="width: 26%;" onclick="sortData('super_r')">13. 슈퍼가치</th>
-                    <th style="width: 27%;" onclick="sortData('ncav_r')">12. NCAV</th>
-                </tr>
-            </thead>
-            <tbody>`;
-        
-        data.forEach(s => {
-            const ncavDisplay = s.ncav_r === "미달" ? `<span style="color:#94a3b8; font-size:10px;">탈락</span>` : `${s.ncav_r}위`;
-            html += `<tr>
-                <td style="color:#b45309; font-weight:bold; font-size:12px;">★ ${s.rank}</td>
-                <td>${getStarHtml(s.name)}<span class="rank-top10">${s.name}</span><span class="price-text">${formatNumber(s.price)}원</span></td>
-                <td><b style="color:#2563eb;">${s.super_r}위</b></td>
-                <td><b style="color:#dc2626;">${ncavDisplay}</b></td>
-            </tr>`;
-        });
-        html += `</tbody>`;
-        document.getElementById("quant-table").innerHTML = html;
-    }
+                // 종합 점수 계산 (PER 순위 + PBR 순위) 및 최종 정렬
+                validStocks.forEach(stock => {
+                    stock.totalScore = stock.perRank + stock.pbrRank;
+                });
+                validStocks.sort((a, b) => a.totalScore - b.totalScore);
 
-    function renderSuperTable(data) {
-        let html = `
-            <thead>
-                <tr>
-                    <th style="width: 10%;" onclick="sortData('rank')">종합<br>순위</th>
-                    <th style="width: 26%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
-                    <th style="width: 13%;" onclick="sortData('pbr')">PBR</th>
-                    <th style="width: 13%;" onclick="sortData('per')">PER</th>
-                    <th style="width: 13%;" onclick="sortData('pfcr')">PFCR</th>
-                    <th style="width: 13%;" onclick="sortData('psr')">PSR</th>
-                    <th style="width: 12%;" onclick="sortData('avg_r')">평균</th>
-                </tr>
-            </thead>
-            <tbody>`;
-        
-        data.forEach(s => {
-            const nameClass = s.rank <= 20 ? "rank-1-20" : "rank-21-30";
-            const pbrClass = s.pbr < 0.4 ? "badge-cheap" : "";
-            html += `<tr>
-                <td class="rank-main">${s.rank}</td>
-                <td>${getStarHtml(s.name)}<span class="${nameClass}">${s.name}</span><span class="price-text">${formatNumber(s.price)}원</span></td>
-                <td class="${pbrClass}">${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
-                <td>${s.per.toFixed(1)}<span class="sub-text">${s.per_r}위</span></td>
-                <td style="color:#d97706; font-weight:600;">${s.pfcr.toFixed(2)}<span class="sub-text" style="color:#94a3b8; font-weight:normal;">${s.pfcr_r}위</span></td>
-                <td>${s.psr.toFixed(2)}<span class="sub-text">${s.psr_r}위</span></td>
-                <td class="rank-avg">${s.avg_r}위</td>
-            </tr>`;
-        });
-        html += `</tbody>`;
-        document.getElementById("quant-table").innerHTML = html;
-    }
+                // 최상위 가치 우량주 Top 15 추출 및 렌더링
+                const topStocks = validStocks.slice(0, 15);
+                const tableBody = document.getElementById("quant-table-body");
+                tableBody.innerHTML = "";
 
-    function renderNcavTable(data) {
-        let html = `
-            <thead>
-                <tr>
-                    <th style="width: 12%;" onclick="sortData('rank')">NCAV</th>
-                    <th style="width: 26%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
-                    <th style="width: 15%;" onclick="sortData('ncav')">순유동</th>
-                    <th style="width: 15%;" onclick="sortData('ncav_ratio')">시총비중</th>
-                    <th style="width: 16%;" onclick="sortData('gpa')">GP/A</th>
-                    <th style="width: 16%;" onclick="sortData('debt_ratio')">차입금</th>
-                </tr>
-            </thead>
-            <tbody>`;
-        
-        data.forEach(s => {
-            const nameClass = s.rank <= 20 ? "rank-1-20" : "rank-21-30";
-            html += `<tr>
-                <td class="rank-main">${s.rank}위</td>
-                <td>${getStarHtml(s.name)}<span class="${nameClass}">${s.name}</span><span class="price-text">${formatNumber(s.price)}원</span></td>
-                <td style="font-weight:bold;">${formatNumber(s.ncav)}억</td>
-                <td class="rank-avg" style="font-size:11.5px; color:#b91c1c;">${s.ncav_ratio.toFixed(2)}배</td>
-                <td style="color:#16a34a; font-weight:600;">${s.gpa.toFixed(2)}</td>
-                <td>${s.debt_ratio.toFixed(1)}%</td>
-            </tr>`;
-        });
-        html += `</tbody>`;
-        document.getElementById("quant-table").innerHTML = html;
-    }
+                topStocks.forEach((stock, index) => {
+                    const fltRt = stock.fltRt;
+                    const fltClass = fltRt > 0 ? "up" : (fltRt < 0 ? "down" : "");
+                    const fltSign = fltRt > 0 ? "+" : "";
 
-    function sortData(key) {
-        let targetDataset = [];
-        if (currentMenu === 'recommend') targetDataset = recommendData;
-        else if (currentMenu === 'super') targetDataset = superData;
-        else if (currentMenu === 'ncav') targetDataset = ncavData;
-        
-        if (targetDataset.length === 0) return;
-        if (currentSortKey === key) { isAscending = !isAscending; } 
-        else { currentSortKey = key; isAscending = true; }
-        
-        targetDataset.sort((a, b) => {
-            if (typeof a[key] === 'string') return isAscending ? a[key].localeCompare(b[key]) : b[key].localeCompare(a[key]);
-            return isAscending ? a[key] - b[key] : b[key] - a[key];
-        });
-        
-        refreshCurrentTable();
-    }
-
-    window.onload = function() {
-        if (typeof KOSPI_QUANT_PACKAGE !== 'undefined') {
-            const server = KOSPI_QUANT_PACKAGE.server;
-            recommendData = KOSPI_QUANT_PACKAGE.recommend_top10;
-            superData = KOSPI_QUANT_PACKAGE.super_value;
-            ncavData = KOSPI_QUANT_PACKAGE.ncav_value;
-            
-            document.getElementById("data-date-view").innerHTML = `📅 데이터 기준: ${server.data_date} 마감 정보`;
-            
-            const statusBar = document.getElementById("status-bar");
-            if (server.status === "MAINTENANCE") {
-                statusBar.className = "status-banner status-alert";
-                startCountdown(server.estimated_end);
+                    const row = `
+                        <tr>
+                            <td class="rank">${index + 1}</td>
+                            <td style="font-weight: 500;">${stock.name}</td>
+                            <td style="text-align: right;">${stock.close.toLocaleString()}원</td>
+                            <td style="text-align: right;" class="${fltClass}">${fltSign}${fltRt.toFixed(2)}%</td>
+                            <td style="text-align: right; color: #e2e8f0;">${stock.per.toFixed(2)}</td>
+                            <td style="text-align: right; color: #e2e8f0;">${stock.pbr.toFixed(2)}</td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
             } else {
-                statusBar.className = "status-banner status-normal";
-                statusBar.innerHTML = `✅ KRX 서버 정상 가동 중 (동기화 완료: ${server.checked_at})`;
+                document.getElementById("quant-table-body").innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                            수집된 주가 데이터가 없거나 점검 중입니다.
+                        </td>
+                    </tr>
+                `;
             }
-            switchMenu('recommend');
-        }
-    };
-</script>
+        });
+    </script>
 </body>
 </html>

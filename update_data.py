@@ -1,179 +1,107 @@
-# ─── 💥 [파이썬 3.14 최신 버전 호환성 최종 마스터 패치] ───
 import os
 import sys
-import types
-from pathlib import Path
-
-try:
-    import pkg_resources
-except ModuleNotFoundError:
-    fake_pkg = types.ModuleType("pkg_resources")
-    fake_pkg.declare_namespace = lambda name: None
-    fake_pkg.get_distribution = lambda name: types.SimpleNamespace(version="0.0.0")
-    
-    def fake_resource_filename(package_name, resource_name):
-        base_path = Path(sys.executable).parent / "Lib" / "site-packages" / package_name
-        if not base_path.exists():
-            base_path = Path(os.environ["APPDATA"]) / "Python" / "Python314" / "site-packages" / package_name
-        return str(base_path / resource_name)
-    
-    fake_pkg.resource_filename = fake_resource_filename
-    sys.modules["pkg_resources"] = fake_pkg
-# ───────────────────────────────────────────────────────────────────
-
 import json
-import time
-import logging
+import requests
 from datetime import datetime, timedelta
-import pandas as pd
-from pykrx import stock
 
-logging.getLogger("pykrx").setLevel(logging.ERROR)
+# ==========================================
+# [필수 입력] 공공데이터포털 일반 인증키(Decoding)를 입력하세요
+# ==========================================
+API_KEY = "ee77101d0a1cb46a6be4fa95573a05fcf1c9331fbe8f3d3cb8e921f5b66fedfb"
 
-def fetch_market_data():
-    """1단계: 거래소 야간 셧다운 및 점검을 우회하여 실시간 데이터를 수집합니다."""
-    target_date = datetime.today()
-    for _ in range(15):
-        date_str = target_date.strftime("%Y%m%d")
-        try:
-            tickers = stock.get_market_ticker_list(date_str, market="KOSPI")
-            if tickers:
-                df_test = stock.get_market_fundamental_by_ticker(date=date_str, market="KOSPI")
-                if not df_test.empty and 'PBR' in df_test.columns and df_test['PBR'].sum() > 0:
-                    print(f"✅ 실시간 통신 성공! 기준 영업일: [{date_str}]")
-                    return date_str, df_test, tickers, "NORMAL"
-        except Exception:
-            time.sleep(0.05)
-        target_date -= timedelta(days=1)
+def fetch_krx_market_data():
+    print("[시스템] 공공데이터포털(금융위) API 연동을 시작합니다...")
+    print("= [바이브 프로 퀀트 플랫폼] 무적 엔진 가동 =")
+    
+    url = "http://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo"
+    
+    items = []
+    # 최신 영업일 데이터를 찾기 위해 오늘부터 역산하며 호출 시도
+    for i in range(7):
+        target_date = (datetime.now() - timedelta(days=i)).strftime("%Y%m%d")
         
-    return None, None, None, "MAINTENANCE"
+        params = {
+            "serviceKey": API_KEY,
+            "resultType": "json",
+            "numOfRows": "1000",     # 코스피 종목을 넉넉히 수용
+            "pageNo": "1",
+            "mrktCls": "KOSPI",
+            "basDt": target_date     # 야간/주말 호출을 위해 날짜 명시 필수
+        }
+        
+        try:
+            response = requests.get(url, params=params, timeout=15)
+            data = response.json()
+            fetched_items = data.get("response", {}).get("body", {}).get("items", {}).get("item", [])
+            
+            if fetched_items:
+                items = fetched_items
+                print(f"✅ [성공] {target_date} 기준 영업일 데이터 조회 성공!")
+                break
+        except Exception:
+            continue
 
-def process_quant_algorithms(valid_date, df_base, ticker_list):
-    """2단계: 퀀트 전략 매트릭스 결합 및 스크리닝 연산을 수행합니다."""
-    print("▶ 팩터 연산 및 랭킹 알고리즘 가동 중...")
+    if not items:
+        print("⚠️ [경고] 최근 7일간의 데이터 로딩에 실패했습니다.")
+        return False
+        
+    print(f"✅ [성공] 국토 데이터 수집 완료! 종목 수: {len(items)}개")
     
-    name_list = [stock.get_market_ticker_name(t) for t in ticker_list]
-    df_cap = stock.get_market_cap_by_ticker(date=valid_date, market="KOSPI")
-
-    df_total = pd.DataFrame(index=ticker_list)
-    df_total['종목명'] = name_list
-    df_total['종가'] = df_cap['종가']
-    df_total['시가총액_원'] = df_cap['시가총액']
-    df_total['최근분기_PER'] = df_base['PER']
-    df_total['최근분기_PBR'] = df_base['PBR']
-    df_total['최근분기_EPS'] = df_base['EPS']
-    df_total['최근분기_PFCR'] = df_base['PER'] * 0.65 * 0.95
-    df_total['최근분기_PSR'] = df_base['PBR'] * 0.85 
-
-    # 💡 개발자님의 로직 존중: 음수(적자)를 살려두고, 0으로 나누는 에러만 방지합니다.
-    df_total = df_total[(df_total['최근분기_PER'] != 0) & (df_total['최근분기_PBR'] != 0) & 
-                        (df_total['최근분기_PFCR'] != 0) & (df_total['최근분기_PSR'] != 0)]
-
-    # ── [전략 1] 13. 슈퍼 가치 연산 (천재적인 '음수 후순위 밀어내기' 역수 내림차순 원복) ──
-    df_total['1/PBR'] = 1 / df_total['최근분기_PBR']
-    df_total['1/PER'] = 1 / df_total['최근분기_PER']
-    df_total['1/PFCR'] = 1 / df_total['최근분기_PFCR']
-    df_total['1/PSR'] = 1 / df_total['최근분기_PSR']
+    # index.html 변수 규격과 100% 동기화하는 패키징 공정
+    processed_data = []
+    for item in items:
+        # 공공 API에서 문자열로 오는 가치지표들을 안전하게 숫자형으로 정제
+        try:
+            clpr_val = int(item.get("clpr", 0)) if item.get("clpr") else 0
+            flt_val = float(item.get("fltRt", 0.0)) if item.get("fltRt") else 0.0
+            
+            # API 제공 항목 매핑 (제공되지 않는 항목은 0.0 처리하여 스크립트 오류 방지)
+            pbr_val = float(item.get("pbr", 0.0)) if item.get("pbr") else 0.0
+            per_val = float(item.get("per", 0.0)) if item.get("per") else 0.0
+            eps_val = float(item.get("eps", 0.0)) if item.get("eps") else 0.0
+            
+            processed_data.append({
+                "code": item.get("srtnCd", ""),
+                "name": item.get("itmsNm", ""),
+                "close": clpr_val,
+                "fltRt": flt_val,
+                "pbr": pbr_val,
+                "per": per_val,
+                "eps": eps_val
+            })
+        except Exception:
+            continue
+        
+    now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
-    df_total['PBR순위'] = df_total['1/PBR'].rank(ascending=False, method='min')
-    df_total['PER순위'] = df_total['1/PER'].rank(ascending=False, method='min')
-    df_total['PFCR순위'] = df_total['1/PFCR'].rank(ascending=False, method='min')
-    df_total['PSR순위'] = df_total['1/PSR'].rank(ascending=False, method='min')
+    # 프론트엔드가 다이렉트로 로딩할 수 있게 구조화
+    js_content = f"const quantData = {json.dumps(processed_data, ensure_ascii=False, indent=2)};\n"
+    js_content += f"const lastUpdated = '{now_str}';\n"
     
-    df_total['슈퍼_평균순위'] = (df_total['PBR순위'] + df_total['PER순위'] + df_total['PFCR순위'] + df_total['PSR순위']) / 4
-    df_total['슈퍼_종합순위'] = df_total['슈퍼_평균순위'].rank(ascending=True, method='min')
+    output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data.js")
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(js_content)
+        
+    print("▶ 웹앱 전용 데이터 패키징 완료.")
+    return True
 
-    # ── [전략 2] 12. NCAV 청산가치 연산 ──
-    df_total['유동자산_억'] = (df_total['시가총액_원'] / 100000000) * 1.8
-    df_total['총부채_억'] = (df_total['시가총액_원'] / 100000000) * 0.6
-    df_total['NCAV_억'] = df_total['유동자산_억'] - df_total['총부채_억']
-    df_total['NCAV비율'] = df_total['NCAV_억'] / (df_total['시가총액_원'] / 100000000)
+def deploy_to_github():
+    print("🚀 [배포 시작] 깃허브 원격 저장소 동기화 중...")
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    os.chdir(current_dir)
     
-    df_total['GPA_수치'] = (1 / df_total['최근분기_PBR']) * 0.35 + 0.1
-    df_total['차입금비율'] = (df_total['최근분기_PBR'] * 85) + 35
+    os.system("git add data.js")
+    os.system('git commit -m "🤖 [자동화] 무적 API 규격 정렬 퀀트 배포"')
+    res = os.system("git push origin main")
     
-    df_ncav_filtered = df_total[
-        (df_total['NCAV비율'] > 1.0) & 
-        (df_total['최근분기_EPS'] > 0) & 
-        (df_total['GPA_수치'] >= df_total['GPA_수치'].median()) & 
-        (df_total['차입금비율'] <= 200.0)
-    ].copy()
-    
-    df_ncav_filtered['NCAV_종합순위'] = df_ncav_filtered['NCAV비율'].rank(ascending=False, method='min')
-    df_total['NCAV_종합순위'] = df_ncav_filtered['NCAV_종합순위'].fillna(9999)
-
-    # ── [최종 추천 시너지 채점] ──
-    df_total['마스터_추천점수'] = (df_total['슈퍼_종합순위'] + df_total['NCAV_종합순위']) / 2
-    df_total['최종_추천순위'] = df_total['마스터_추천점수'].rank(ascending=True, method='min')
-
-    return df_total, df_ncav_filtered
-
-def export_and_deploy(valid_date, df_total, df_ncav_filtered, server_info):
-    """3단계: JSON 빌드 및 깃허브 자동 배포를 수행합니다."""
-    print("▶ 웹앱 전용 데이터 패키징 및 배포 시작...")
-    
-    recommend_list = [{
-        "rank": int(r['최종_추천순위']), "name": r['종목명'], "price": int(r['종가']),
-        "super_r": int(r['슈퍼_종합순위']), "ncav_r": int(r['NCAV_종합순위']) if r['NCAV_종합순위'] != 9999 else "미달"
-    } for _, r in df_total.sort_values(by='최종_추천순위').head(10).iterrows()]
-
-    super_list = [{
-        "name": r['종목명'], "price": int(r['종가']), 
-        "pbr": float(r['최근분기_PBR']), "pbr_r": int(r['PBR순위']),
-        "per": float(r['최근분기_PER']), "per_r": int(r['PER순위']), 
-        "pfcr": float(r['최근분기_PFCR']), "pfcr_r": int(r['PFCR순위']),
-        "psr": float(r['최근분기_PSR']), "psr_r": int(r['PSR순위']), 
-        "avg_r": float(round(r['슈퍼_평균순위'], 1)), "rank": int(r['슈퍼_종합순위'])
-    } for _, r in df_total.sort_values(by='슈퍼_종합순위').head(40).iterrows()]
-
-    ncav_list = [{
-        "name": r['종목명'], "price": int(r['종가']), 
-        "current_assets": int(r['유동자산_억']), "total_liabilities": int(r['총부채_억']),
-        "ncav": int(r['NCAV_억']), "ncav_ratio": float(round(r['NCAV비율'], 2)), 
-        "gpa": float(round(r['GPA_수치'], 2)), "debt_ratio": float(round(r['차입금비율'], 1)), 
-        "rank": int(r['NCAV_종합순위'])
-    } for _, r in df_ncav_filtered.sort_values(by='NCAV비율', ascending=False).head(40).iterrows()]
-
-    output_data = {
-        "server": server_info, "recommend_top10": recommend_list, 
-        "super_value": super_list, "ncav_value": ncav_list
-    }
-
-    with open("data.js", "w", encoding="utf-8") as f:
-        f.write(f"const KOSPI_QUANT_PACKAGE = {json.dumps(output_data, ensure_ascii=False)};")
-    print(f"🎉 로컬 빌드 성공 (기준일: {valid_date})")
-
-    try:
-        import git
-        repo = git.Repo(os.path.dirname(os.path.abspath(__file__)))
-        repo.git.add("data.js")
-        now_str = datetime.today().strftime("%Y-%m-%d %H:%M:%S")
-        repo.index.commit(f"🤖 시스템 자동 갱신 및 로직 원복 ({now_str})")
-        repo.remote(name="origin").push()
+    if res == 0:
         print("🚀 [배포 성공] 깃허브 원격 저장소 동기화 완료!")
-    except Exception as git_err:
-        print(f"❌ 깃허브 업로드 실패: {git_err}")
+        print("========================================================================")
+        print("[완료] 모든 자동화 프로세스가 마감되었습니다. 창을 닫으셔도 됩니다.")
+        print("========================================================================")
+    else:
+        print("❌ 깃허브 업로드 중 오류가 발생했습니다.")
 
 if __name__ == "__main__":
-    print("= [바이브 프로 퀀트 플랫폼] 최적화 자동화 엔진 가동 =")
-    
-    valid_date, df_base, ticker_list, server_status = fetch_market_data()
-    
-    formatted_date = f"{valid_date[:4]}년 {valid_date[4:6]}월 {valid_date[6:]}일" if valid_date else datetime.today().strftime("%Y년 %m월 %d일")
-    server_info = {
-        "status": server_status, 
-        "checked_at": datetime.today().strftime("%Y-%m-%d %H:%M:%S"),
-        "data_date": formatted_date, 
-        "estimated_end": "2026-06-16 08:00:00"
-    }
-
-    if valid_date is None or df_base is None:
-        print("⚠️ [안내] 거래소 서버 점검/차단 상태. 안전 모드(빈 패키지)로 빌드합니다.")
-        with open("data.js", "w", encoding="utf-8") as f:
-            f.write(f"const KOSPI_QUANT_PACKAGE = {json.dumps({'server': server_info, 'recommend_top10': [], 'super_value': [], 'ncav_value': []}, ensure_ascii=False)};")
-    else:
-        try:
-            df_tot, df_ncav = process_quant_algorithms(valid_date, df_base, ticker_list)
-            export_and_deploy(valid_date, df_tot, df_ncav, server_info)
-        except Exception as e:
-            print(f"❌ 데이터 프로세싱 장애 발생: {e}")
+    if fetch_krx_market_data():
+        deploy_to_github()
