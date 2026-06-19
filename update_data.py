@@ -450,9 +450,9 @@ def fetch_krx_market_data():
     momentum_base = rank_momentum(valid_stocks)
     momentum_base_smallcap = rank_momentum([s for s in valid_stocks if s["market_cap"] <= smallcap_cutoff])
 
-    # 6. 신 F-스코어+저PBR 연산부 - 3개 지표(유상증자 없음/순이익>=0/영업CF>=0) 모두 충족하는 종목만, PBR 내림차순
+    # 6. 신 F-스코어+저PBR 연산부 - 3개 지표(유상증자 없음/순이익>=0/영업CF>=0) 모두 충족하는 종목만, PBR 오름차순
     fscore_base = [s for s in valid_stocks if s["f_score"] == 3 and s["pbr"] > 0]
-    fscore_base.sort(key=lambda x: x["pbr"], reverse=True)
+    fscore_base.sort(key=lambda x: x["pbr"])
 
     # 12. NCAV 청산가치 & 퀄리티 스크리너 연산부
     # 조건: 1) 순유동자산 > 시가총액  2) 최신 분기 순이익 > 0  3) 차입금비율 200% 이하  4) 상위 20개만 노출
@@ -502,6 +502,7 @@ def fetch_krx_market_data():
                 "rank": idx + 1,
                 "name": s["name"],
                 "price": s["price"],
+                "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
                 "pbr": s["pbr"],
                 "pbr_r": s["pbr_r"],
                 "per": s["per"],
@@ -525,6 +526,7 @@ def fetch_krx_market_data():
                 "rank": idx + 1,
                 "name": s["name"],
                 "price": s["price"],
+                "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
                 "op_growth_qoq": s["op_growth_qoq"],
                 "op_qoq_r": s["op_qoq_r"],
                 "op_growth_yoy": s["op_growth_yoy"],

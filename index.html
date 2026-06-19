@@ -44,15 +44,26 @@
 
 <div class="container">
     <div class="menu-tabs">
+        <button id="btn-recommend" class="tab-btn active" onclick="switchMenu('recommend')">⭐ 추천</button>
+        <button id="btn-rebalance" class="tab-btn" onclick="switchMenu('rebalance')">🔁 리밸런싱</button>
+    </div>
+    <div class="menu-tabs">
         <button id="btn-fscore" class="tab-btn" onclick="switchMenu('fscore')">6. [밸류+퀄리티] 신 F-스코어+저PBR</button>
         <button id="btn-momentum" class="tab-btn" onclick="switchMenu('momentum')">11. [모멘텀] 이익 모멘텀</button>
         <button id="btn-ncav" class="tab-btn" onclick="switchMenu('ncav')">12. [밸류+퀄리티] NCAV</button>
-        <button id="btn-super" class="tab-btn active" onclick="switchMenu('super')">13. [밸류] 슈퍼 가치</button>
+        <button id="btn-super" class="tab-btn" onclick="switchMenu('super')">13. [밸류] 슈퍼 가치</button>
     </div>
 
     <input type="text" id="search-bar" class="search-box" placeholder="🔍 필터링할 종목명을 입력하세요 (실시간 반영)..." oninput="handleSearch()">
 
-    <h1 id="strategy-title">📈 13. 슈퍼 가치 4대 통합 스크리너</h1>
+    <h1 id="strategy-title">⭐ 추천 종목</h1>
+    <div id="recommend-filter-lbl" style="display:block; font-size: 11px; margin-bottom: 6px;">
+        <span style="color:#64748b;">전략을 선택하면 선택한 전략을 모두 만족하는 종목만 표시합니다 (미선택 시 2개 이상 전략에 중복 추천된 종목 표시)</span><br>
+        <label style="margin-right:10px;"><input type="checkbox" id="recommend-chk-fscore" onchange="handleRecommendFilterChange()"> F-스코어</label>
+        <label style="margin-right:10px;"><input type="checkbox" id="recommend-chk-momentum" onchange="handleRecommendFilterChange()"> 모멘텀</label>
+        <label style="margin-right:10px;"><input type="checkbox" id="recommend-chk-super" onchange="handleRecommendFilterChange()"> 슈퍼가치</label>
+        <label><input type="checkbox" id="recommend-chk-ncav" onchange="handleRecommendFilterChange()"> NCAV</label>
+    </div>
     <div id="ncav-info-lbl" class="condition-sub">
         <b>💡 12. NCAV 전략 필터 마스터 가이드</b><br>
         순유동 > 시가총액 (1배 완화) | 분기 흑자 기업 | 차입금비율 200% 이하 | GP/A 상위 50% 필터는 체크박스 선택 시 적용
@@ -78,7 +89,7 @@
 
 <script src="data.js"></script>
 <script>
-    let currentMenu = 'super';
+    let currentMenu = 'recommend';
     let currentSortKey = 'rank';
     let isAscending = true;
     let searchQuery = "";
@@ -87,6 +98,7 @@
     let isSmallcapMode = false;
     let isGpaMode = false;
     let isMomentumSmallcapMode = false;
+    let recommendDataCache = [];
     
     // 🌟 관심 종목 로컬 스토리지 보관 매커니즘
     let bookmarks = JSON.parse(localStorage.getItem('quant_bookmarks')) || [];
@@ -122,14 +134,60 @@
         document.getElementById("search-bar").value = "";
         searchQuery = "";
         
-        const subMenus = ['fscore', 'momentum', 'super', 'ncav'];
+        const subMenus = ['recommend', 'rebalance', 'fscore', 'momentum', 'super', 'ncav'];
         subMenus.forEach(m => document.getElementById(`btn-${m}`).classList.toggle("active", m === menuType));
         document.getElementById("ncav-info-lbl").style.display = (menuType === 'ncav') ? 'block' : 'none';
         document.getElementById("super-smallcap-lbl").style.display = (menuType === 'super') ? 'block' : 'none';
         document.getElementById("ncav-gpa-lbl").style.display = (menuType === 'ncav') ? 'block' : 'none';
         document.getElementById("momentum-smallcap-lbl").style.display = (menuType === 'momentum') ? 'block' : 'none';
+        document.getElementById("recommend-filter-lbl").style.display = (menuType === 'recommend') ? 'block' : 'none';
 
         refreshCurrentTable();
+    }
+
+    function handleRecommendFilterChange() {
+        currentSortKey = 'rank';
+        isAscending = true;
+        refreshCurrentTable();
+    }
+
+    const RECOMMEND_SOURCES = [
+        { key: 'fscore', label: 'F-스코어', getData: () => fscoreData },
+        { key: 'momentum', label: '모멘텀', getData: () => momentumData },
+        { key: 'super', label: '슈퍼가치', getData: () => superData },
+        { key: 'ncav', label: 'NCAV', getData: () => ncavData },
+    ];
+
+    function computeRecommendData() {
+        const checkedSources = RECOMMEND_SOURCES.filter(src => document.getElementById(`recommend-chk-${src.key}`).checked);
+        const activeSources = checkedSources.length > 0 ? checkedSources : RECOMMEND_SOURCES;
+        const requireAll = checkedSources.length > 0;
+
+        const entries = activeSources.map(src => ({
+            key: src.key,
+            label: src.label,
+            map: new Map(src.getData().map(s => [s.name, s]))
+        }));
+
+        const allNames = new Set();
+        entries.forEach(e => e.map.forEach((_, name) => allNames.add(name)));
+
+        const results = [];
+        allNames.forEach(name => {
+            const matched = entries.filter(e => e.map.has(name));
+            const ok = requireAll ? matched.length === entries.length : matched.length >= 2;
+            if (ok) {
+                const sample = matched[0].map.get(name);
+                const ranks = {};
+                matched.forEach(e => { ranks[e.key] = e.map.get(name).rank; });
+                const avgRank = matched.reduce((sum, e) => sum + ranks[e.key], 0) / matched.length;
+                results.push({ name, price: sample.price, count: matched.length, ranks, avgRank });
+            }
+        });
+
+        results.sort((a, b) => b.count - a.count || a.avgRank - b.avgRank);
+        results.forEach((r, idx) => r.rank = idx + 1);
+        return results;
     }
 
     function handleSmallcapToggle() {
@@ -154,7 +212,14 @@
     }
 
     function refreshCurrentTable() {
-        if (currentMenu === 'fscore') {
+        if (currentMenu === 'recommend') {
+            document.getElementById("strategy-title").innerText = "⭐ 추천 종목";
+            recommendDataCache = computeRecommendData();
+            renderRecommendTable(filterBySearch(recommendDataCache));
+        } else if (currentMenu === 'rebalance') {
+            document.getElementById("strategy-title").innerText = "🔁 리밸런싱";
+            renderRebalanceTable();
+        } else if (currentMenu === 'fscore') {
             document.getElementById("strategy-title").innerText = "🏆 6. 신 F-스코어+저PBR";
             renderFscoreTable(filterBySearch(fscoreData));
         } else if (currentMenu === 'momentum') {
@@ -175,6 +240,39 @@
     }
 
     // 🚀 최적화 리팩토링: innerHTML 속도를 위해 큰 하나의 문자열 블록으로 조립 후 일괄 쓰기 수행
+    function renderRecommendTable(data) {
+        const colWidth = Math.floor(54 / RECOMMEND_SOURCES.length);
+        let html = `
+            <thead>
+                <tr>
+                    <th style="width: 10%;" onclick="sortData('rank')">순위</th>
+                    <th style="width: 26%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
+                    <th style="width: 10%;" onclick="sortData('count')">중복<br>전략수</th>
+                    ${RECOMMEND_SOURCES.map(src => `<th style="width: ${colWidth}%;">${src.label}</th>`).join('')}
+                </tr>
+            </thead>
+            <tbody>`;
+
+        data.forEach(s => {
+            html += `<tr>
+                <td class="rank-main">${s.rank}</td>
+                <td>${getStarHtml(s.name)}<span class="rank-1-20">${s.name}</span><span class="price-text">${formatNumber(s.price)}원</span></td>
+                <td class="rank-avg">${s.count}</td>
+                ${RECOMMEND_SOURCES.map(src => `<td>${s.ranks[src.key] !== undefined ? s.ranks[src.key] + '위' : ''}</td>`).join('')}
+            </tr>`;
+        });
+        if (data.length === 0) {
+            html += `<tr><td colspan="${3 + RECOMMEND_SOURCES.length}" style="padding:20px; color:#94a3b8;">조건을 만족하는 종목이 없습니다.</td></tr>`;
+        }
+        html += `</tbody>`;
+        document.getElementById("quant-table").innerHTML = html;
+    }
+
+    function renderRebalanceTable() {
+        document.getElementById("quant-table").innerHTML =
+            `<tbody><tr><td style="padding:30px; color:#94a3b8;">🔁 리밸런싱 화면은 준비 중입니다.</td></tr></tbody>`;
+    }
+
     function renderFscoreTable(data) {
         let html = `
             <thead>
@@ -208,13 +306,14 @@
         let html = `
             <thead>
                 <tr>
-                    <th style="width: 9%;" onclick="sortData('rank')">종합<br>순위</th>
-                    <th style="width: 19%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
-                    <th style="width: 15%;" onclick="sortData('op_growth_qoq')">영업이익<br>QoQ</th>
-                    <th style="width: 15%;" onclick="sortData('op_growth_yoy')">영업이익<br>YoY</th>
-                    <th style="width: 15%;" onclick="sortData('ni_growth_qoq')">순이익<br>QoQ</th>
-                    <th style="width: 15%;" onclick="sortData('ni_growth_yoy')">순이익<br>YoY</th>
-                    <th style="width: 12%;" onclick="sortData('avg_r')">평균</th>
+                    <th style="width: 8%;" onclick="sortData('rank')">종합<br>순위</th>
+                    <th style="width: 16%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
+                    <th style="width: 13%;" onclick="sortData('market_cap')">시가<br>총액</th>
+                    <th style="width: 14%;" onclick="sortData('op_growth_qoq')">영업이익<br>QoQ</th>
+                    <th style="width: 14%;" onclick="sortData('op_growth_yoy')">영업이익<br>YoY</th>
+                    <th style="width: 14%;" onclick="sortData('ni_growth_qoq')">순이익<br>QoQ</th>
+                    <th style="width: 13%;" onclick="sortData('ni_growth_yoy')">순이익<br>YoY</th>
+                    <th style="width: 8%;" onclick="sortData('avg_r')">평균</th>
                 </tr>
             </thead>
             <tbody>`;
@@ -224,6 +323,7 @@
             html += `<tr>
                 <td class="rank-main">${s.rank}</td>
                 <td>${getStarHtml(s.name)}<span class="${nameClass}">${s.name}</span><span class="price-text">${formatNumber(s.price)}원</span></td>
+                <td>${formatNumber(s.market_cap)}억</td>
                 <td>${s.op_growth_qoq.toFixed(1)}%<span class="sub-text">${s.op_qoq_r}위</span></td>
                 <td>${s.op_growth_yoy.toFixed(1)}%<span class="sub-text">${s.op_yoy_r}위</span></td>
                 <td>${s.ni_growth_qoq.toFixed(1)}%<span class="sub-text">${s.ni_qoq_r}위</span></td>
@@ -239,22 +339,24 @@
         let html = `
             <thead>
                 <tr>
-                    <th style="width: 10%;" onclick="sortData('rank')">종합<br>순위</th>
-                    <th style="width: 26%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
-                    <th style="width: 13%;" onclick="sortData('per')">PER</th>
-                    <th style="width: 13%;" onclick="sortData('pbr')">PBR</th>
-                    <th style="width: 13%;" onclick="sortData('pfcr')">PFCR</th>
-                    <th style="width: 13%;" onclick="sortData('psr')">PSR</th>
-                    <th style="width: 12%;" onclick="sortData('avg_r')">평균</th>
+                    <th style="width: 9%;" onclick="sortData('rank')">종합<br>순위</th>
+                    <th style="width: 19%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
+                    <th style="width: 13%;" onclick="sortData('market_cap')">시가<br>총액</th>
+                    <th style="width: 12%;" onclick="sortData('per')">PER</th>
+                    <th style="width: 12%;" onclick="sortData('pbr')">PBR</th>
+                    <th style="width: 12%;" onclick="sortData('pfcr')">PFCR</th>
+                    <th style="width: 12%;" onclick="sortData('psr')">PSR</th>
+                    <th style="width: 11%;" onclick="sortData('avg_r')">평균</th>
                 </tr>
             </thead>
             <tbody>`;
-        
+
         data.forEach(s => {
             const nameClass = s.rank <= 20 ? "rank-1-20" : "rank-21-30";
             html += `<tr>
                 <td class="rank-main">${s.rank}</td>
                 <td>${getStarHtml(s.name)}<span class="${nameClass}">${s.name}</span><span class="price-text">${formatNumber(s.price)}원</span></td>
+                <td>${formatNumber(s.market_cap)}억</td>
                 <td>${s.per.toFixed(1)}<span class="sub-text">${s.per_r}위</span></td>
                 <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
                 <td>${s.pfcr.toFixed(2)}<span class="sub-text">${s.pfcr_r}위</span></td>
@@ -298,6 +400,18 @@
     }
 
     function sortData(key) {
+        if (currentMenu === 'recommend') {
+            if (recommendDataCache.length === 0) return;
+            if (currentSortKey === key) { isAscending = !isAscending; }
+            else { currentSortKey = key; isAscending = true; }
+            recommendDataCache.sort((a, b) => {
+                if (typeof a[key] === 'string') return isAscending ? a[key].localeCompare(b[key]) : b[key].localeCompare(a[key]);
+                return isAscending ? a[key] - b[key] : b[key] - a[key];
+            });
+            renderRecommendTable(filterBySearch(recommendDataCache));
+            return;
+        }
+
         let targetDataset = [];
         if (currentMenu === 'fscore') targetDataset = fscoreData;
         else if (currentMenu === 'momentum') targetDataset = isMomentumSmallcapMode ? momentumSmallcapData : momentumData;
@@ -329,7 +443,7 @@
 
             document.getElementById("data-date-view").innerHTML =
                 `📅 공공데이터 기준: ${server.krx_basis_date} &nbsp;|&nbsp; DART 기준: ${server.dart_basis}`;
-            switchMenu('super');
+            switchMenu('recommend');
         }
     };
 </script>
