@@ -5,136 +5,333 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>바이브 프로 퀀트 플랫폼</title>
     <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent-color: #38bdf8;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --positive: #ef4444;
-            --negative: #3b82f6;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 16px;
-        }
-        .header {
-            margin-bottom: 24px;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 12px;
-        }
-        h1 { font-size: 20px; margin: 0 0 4px 0; color: var(--accent-color); }
-        .timestamp { font-size: 12px; color: var(--text-muted); }
-        .table-container {
-            background: var(--card-bg);
-            border-radius: 8px;
-            overflow-x: auto;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-            text-align: left;
-        }
-        th, td { padding: 12px; border-bottom: 1px solid #334155; white-space: nowrap; }
-        th { background-color: #111827; color: var(--text-muted); font-weight: 600; }
-        tr:last-child td { border-bottom: none; }
-        .rank { font-weight: bold; color: var(--accent-color); text-align: center; width: 40px; }
-        .up { color: var(--positive); }
-        .down { color: var(--negative); }
+        body { font-family: -apple-system, sans-serif; background-color: #f8fafc; padding: 6px; margin: 0; color: #333; }
+        .container { max-width: 650px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        
+        
+        .menu-tabs { display: grid; grid-template-columns: 1fr 1fr; background-color: #f1f5f9; padding: 3px; border-radius: 8px; margin-bottom: 10px; gap: 2px; }
+        .tab-btn { border: none; background: none; padding: 9px 1px; font-size: 12px; font-weight: bold; color: #64748b; cursor: pointer; border-radius: 6px; text-align: center; transition: all 0.15s; }
+        .tab-btn.active { background-color: #fff; color: #1e3a8a; box-shadow: 0 2px 4px rgba(0,0,0,0.06); }
+
+        /* 🔍 스마트 종목 검색창 스타일 */
+        .search-box { width: 100%; padding: 10px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 12px; box-sizing: border-box; outline: none; }
+        .search-box:focus { border-color: #2563eb; box-shadow: 0 0 0 2px rgba(37,99,235,0.1); }
+
+        h1 { font-size: 14px; color: #1e3a8a; text-align: center; margin: 4px 0; }
+        .condition-sub { font-size: 10px; color: #1e3a8a; background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 6px; border-radius: 6px; text-align: center; margin: 4px 0 8px 0; line-height: 1.4; display: none; }
+        .date-badge { font-size: 10px; color: #ff5a00; font-weight: bold; text-align: center; margin-bottom: 12px; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 11px; table-layout: fixed; }
+        th, td { padding: 9px 1px; border-bottom: 1px solid #e2e8f0; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
+        th { background-color: #f8fafc; color: #475569; cursor: pointer; user-select: none; font-weight: bold; font-size: 10px; }
+        
+        .sub-text { font-size: 9px; color: #94a3b8; display: block; margin-top: 2px; }
+        .price-text { font-size: 10px; color: #64748b; font-weight: normal; display: block; margin-top: 2px; }
+        .rank-main { font-weight: bold; color: #2563eb; }
+        .rank-avg { font-weight: bold; color: #059669; }
+
+        /* ⭐ 북마크 별 아이콘 및 지표 강조 효과 */
+        .star-icon { cursor: pointer; color: #cbd5e1; font-size: 12px; margin-right: 2px; transition: color 0.2s; }
+        .star-icon.active { color: #f59e0b; }
+        .badge-cheap { color: #b91c1c; font-weight: bold; }
+
+        .rank-top10 { color: #b45309; font-size: 12px; font-weight: 800; background-color: #fef3c7; padding: 4px 4px; border-radius: 6px; display: inline-block; border: 1px solid #fde68a; }
+        .rank-1-20 { color: #1e40af; font-size: 11px; font-weight: 800; background-color: #eff6ff; padding: 4px 5px; border-radius: 6px; display: inline-block; border: 1px solid #bfdbfe; }
+        .rank-21-30 { color: #0f172a; font-size: 11px; font-weight: 700; display: inline-block; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>📊 바이브 프로 퀀트 매트릭스</h1>
-        <div class="timestamp" id="update-time">데이터 로딩 중...</div>
+<div class="container">
+    <div class="menu-tabs">
+        <button id="btn-fscore" class="tab-btn" onclick="switchMenu('fscore')">6. [밸류+퀄리티] 신 F-스코어+저PBR</button>
+        <button id="btn-momentum" class="tab-btn" onclick="switchMenu('momentum')">11. [모멘텀] 이익 모멘텀</button>
+        <button id="btn-ncav" class="tab-btn" onclick="switchMenu('ncav')">12. [밸류+퀄리티] NCAV</button>
+        <button id="btn-super" class="tab-btn active" onclick="switchMenu('super')">13. [밸류] 슈퍼 가치</button>
     </div>
 
-    <div class="table-container">
-        <table>
+    <input type="text" id="search-bar" class="search-box" placeholder="🔍 필터링할 종목명을 입력하세요 (실시간 반영)..." oninput="handleSearch()">
+
+    <h1 id="strategy-title">📈 13. 슈퍼 가치 4대 통합 스크리너</h1>
+    <div id="ncav-info-lbl" class="condition-sub">
+        <b>💡 12. NCAV 전략 필터 마스터 가이드</b><br>
+        순유동 > 시가총액 (1배 완화) | 분기 흑자 기업 | 차입금비율 200% 이하 | GP/A 상위 50% 필터는 체크박스 선택 시 적용
+    </div>
+    <div id="super-smallcap-lbl" style="display:none; font-size: 11px; text-align: right; margin-bottom: 6px;">
+        <label><input type="checkbox" id="smallcap-checkbox" onchange="handleSmallcapToggle()"> 소형주 (시가총액 하위 20%)</label>
+    </div>
+    <div id="momentum-smallcap-lbl" style="display:none; font-size: 11px; text-align: right; margin-bottom: 6px;">
+        <label><input type="checkbox" id="momentum-smallcap-checkbox" onchange="handleMomentumSmallcapToggle()"> 소형주 (시가총액 하위 20%)</label>
+    </div>
+    <div id="ncav-gpa-lbl" style="display:none; font-size: 11px; text-align: right; margin-bottom: 6px;">
+        <label><input type="checkbox" id="gpa-checkbox" onchange="handleGpaToggle()"> GP/A 필터 (상위 50%)</label>
+    </div>
+    <div id="sell-strategy-lbl" class="condition-sub" style="display:block;">
+        <b>📌 매도 전략</b><br>
+        4월, 10월 마지막 거래일 리밸런싱
+    </div>
+    <div id="data-date-view" class="date-badge">데이터 로딩 중...</div>
+
+    <table id="quant-table">
+        </table>
+</div>
+
+<script src="data.js"></script>
+<script>
+    let currentMenu = 'super';
+    let currentSortKey = 'rank';
+    let isAscending = true;
+    let searchQuery = "";
+    let superData = [], superSmallcapData = [], ncavData = [], ncavGpaData = [], fscoreData = [];
+    let momentumData = [], momentumSmallcapData = [];
+    let isSmallcapMode = false;
+    let isGpaMode = false;
+    let isMomentumSmallcapMode = false;
+    
+    // 🌟 관심 종목 로컬 스토리지 보관 매커니즘
+    let bookmarks = JSON.parse(localStorage.getItem('quant_bookmarks')) || [];
+
+    function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function toggleBookmark(name) {
+        if (bookmarks.includes(name)) {
+            bookmarks = bookmarks.filter(b => b !== name);
+        } else {
+            bookmarks.push(name);
+        }
+        localStorage.setItem('quant_bookmarks', JSON.stringify(bookmarks));
+        refreshCurrentTable();
+    }
+
+    function getStarHtml(name) {
+        const isActive = bookmarks.includes(name) ? 'active' : '';
+        return `<span class="star-icon ${isActive}" onclick="toggleBookmark('${name}')">★</span>`;
+    }
+
+    function handleSearch() {
+        searchQuery = document.getElementById("search-bar").value.toLowerCase().trim();
+        refreshCurrentTable();
+    }
+
+    function switchMenu(menuType) {
+        currentMenu = menuType;
+        currentSortKey = 'rank';
+        isAscending = true;
+        document.getElementById("search-bar").value = "";
+        searchQuery = "";
+        
+        const subMenus = ['fscore', 'momentum', 'super', 'ncav'];
+        subMenus.forEach(m => document.getElementById(`btn-${m}`).classList.toggle("active", m === menuType));
+        document.getElementById("ncav-info-lbl").style.display = (menuType === 'ncav') ? 'block' : 'none';
+        document.getElementById("super-smallcap-lbl").style.display = (menuType === 'super') ? 'block' : 'none';
+        document.getElementById("ncav-gpa-lbl").style.display = (menuType === 'ncav') ? 'block' : 'none';
+        document.getElementById("momentum-smallcap-lbl").style.display = (menuType === 'momentum') ? 'block' : 'none';
+
+        refreshCurrentTable();
+    }
+
+    function handleSmallcapToggle() {
+        isSmallcapMode = document.getElementById("smallcap-checkbox").checked;
+        currentSortKey = 'rank';
+        isAscending = true;
+        refreshCurrentTable();
+    }
+
+    function handleGpaToggle() {
+        isGpaMode = document.getElementById("gpa-checkbox").checked;
+        currentSortKey = 'rank';
+        isAscending = true;
+        refreshCurrentTable();
+    }
+
+    function handleMomentumSmallcapToggle() {
+        isMomentumSmallcapMode = document.getElementById("momentum-smallcap-checkbox").checked;
+        currentSortKey = 'rank';
+        isAscending = true;
+        refreshCurrentTable();
+    }
+
+    function refreshCurrentTable() {
+        if (currentMenu === 'fscore') {
+            document.getElementById("strategy-title").innerText = "🏆 6. 신 F-스코어+저PBR";
+            renderFscoreTable(filterBySearch(fscoreData));
+        } else if (currentMenu === 'momentum') {
+            document.getElementById("strategy-title").innerText = "🚀 11. 이익 모멘텀 전략" + (isMomentumSmallcapMode ? " (소형주)" : "");
+            renderMomentumTable(filterBySearch(isMomentumSmallcapMode ? momentumSmallcapData : momentumData));
+        } else if (currentMenu === 'super') {
+            document.getElementById("strategy-title").innerText = "📈 13. 슈퍼 가치 4대 통합 스크리너" + (isSmallcapMode ? " (소형주)" : "");
+            renderSuperTable(filterBySearch(isSmallcapMode ? superSmallcapData : superData));
+        } else if (currentMenu === 'ncav') {
+            document.getElementById("strategy-title").innerText = "🛡️ 12. NCAV 청산가치 & 퀄리티 스크리너" + (isGpaMode ? " (GP/A 필터)" : "");
+            renderNcavTable(filterBySearch(isGpaMode ? ncavGpaData : ncavData));
+        }
+    }
+
+    function filterBySearch(dataset) {
+        if (!searchQuery) return dataset;
+        return dataset.filter(item => item.name.toLowerCase().includes(searchQuery));
+    }
+
+    // 🚀 최적화 리팩토링: innerHTML 속도를 위해 큰 하나의 문자열 블록으로 조립 후 일괄 쓰기 수행
+    function renderFscoreTable(data) {
+        let html = `
             <thead>
                 <tr>
-                    <th style="text-align: center;">순위</th>
-                    <th>종목명</th>
-                    <th style="text-align: right;">현재가</th>
-                    <th style="text-align: right;">등락률</th>
-                    <th style="text-align: right;">PER</th>
-                    <th style="text-align: right;">PBR</th>
+                    <th style="width: 10%;" onclick="sortData('rank')">순위</th>
+                    <th style="width: 26%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
+                    <th style="width: 16%;" onclick="sortData('cap_increase_flag')">유상증자</th>
+                    <th style="width: 16%;" onclick="sortData('ni_pos_flag')">순이익</th>
+                    <th style="width: 16%;" onclick="sortData('cf_pos_flag')">영업CF</th>
+                    <th style="width: 16%;" onclick="sortData('pbr')">PBR</th>
                 </tr>
             </thead>
-            <tbody id="quant-table-body">
-                </tbody>
-        </table>
-    </div>
+            <tbody>`;
 
-    <script src="data.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // 1. 업데이트 시각 반영
-            if (typeof lastUpdated !== 'undefined') {
-                document.getElementById("update-time").innerText = "시스템 최종 동기화: " + lastUpdated;
-            } else {
-                document.getElementById("update-time").innerText = "데이터 선로 오류 (data.js를 확인하세요)";
-                return;
-            }
-
-            // 2. 퀀트 알고리즘 연산 (필터링 및 멀티 팩터 랭킹 매트릭스)
-            if (typeof quantData !== 'undefined' && quantData.length > 0) {
-                
-                // [필터링 및 스코어링] PER과 PBR이 0보다 큰 정상 가치주만 엄선
-                let validStocks = quantData.filter(stock => stock.per > 0 && stock.pbr > 0);
-
-                // PER 순위 매기기 (오름차순)
-                validStocks.sort((a, b) => a.per - b.per);
-                validStocks.forEach((stock, index) => { stock.perRank = index + 1; });
-
-                // PBR 순위 매기기 (오름차순)
-                validStocks.sort((a, b) => a.pbr - b.pbr);
-                validStocks.forEach((stock, index) => { stock.pbrRank = index + 1; });
-
-                // 종합 점수 계산 (PER 순위 + PBR 순위) 및 최종 정렬
-                validStocks.forEach(stock => {
-                    stock.totalScore = stock.perRank + stock.pbrRank;
-                });
-                validStocks.sort((a, b) => a.totalScore - b.totalScore);
-
-                // 최상위 가치 우량주 Top 15 추출 및 렌더링
-                const topStocks = validStocks.slice(0, 15);
-                const tableBody = document.getElementById("quant-table-body");
-                tableBody.innerHTML = "";
-
-                topStocks.forEach((stock, index) => {
-                    const fltRt = stock.fltRt;
-                    const fltClass = fltRt > 0 ? "up" : (fltRt < 0 ? "down" : "");
-                    const fltSign = fltRt > 0 ? "+" : "";
-
-                    const row = `
-                        <tr>
-                            <td class="rank">${index + 1}</td>
-                            <td style="font-weight: 500;">${stock.name}</td>
-                            <td style="text-align: right;">${stock.close.toLocaleString()}원</td>
-                            <td style="text-align: right;" class="${fltClass}">${fltSign}${fltRt.toFixed(2)}%</td>
-                            <td style="text-align: right; color: #e2e8f0;">${stock.per.toFixed(2)}</td>
-                            <td style="text-align: right; color: #e2e8f0;">${stock.pbr.toFixed(2)}</td>
-                        </tr>
-                    `;
-                    tableBody.innerHTML += row;
-                });
-            } else {
-                document.getElementById("quant-table-body").innerHTML = `
-                    <tr>
-                        <td colspan="6" style="text-align: center; padding: 40px; color: var(--text-muted);">
-                            수집된 주가 데이터가 없거나 점검 중입니다.
-                        </td>
-                    </tr>
-                `;
-            }
+        data.forEach(s => {
+            const nameClass = s.rank <= 20 ? "rank-1-20" : "rank-21-30";
+            html += `<tr>
+                <td class="rank-main">${s.rank}</td>
+                <td>${getStarHtml(s.name)}<span class="${nameClass}">${s.name}</span><span class="price-text">${formatNumber(s.price)}원</span></td>
+                <td>${s.cap_increase_flag}</td>
+                <td>${s.ni_pos_flag}</td>
+                <td>${s.cf_pos_flag}</td>
+                <td>${s.pbr.toFixed(2)}</td>
+            </tr>`;
         });
-    </script>
+        html += `</tbody>`;
+        document.getElementById("quant-table").innerHTML = html;
+    }
+
+    function renderMomentumTable(data) {
+        let html = `
+            <thead>
+                <tr>
+                    <th style="width: 9%;" onclick="sortData('rank')">종합<br>순위</th>
+                    <th style="width: 19%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
+                    <th style="width: 15%;" onclick="sortData('op_growth_qoq')">영업이익<br>QoQ</th>
+                    <th style="width: 15%;" onclick="sortData('op_growth_yoy')">영업이익<br>YoY</th>
+                    <th style="width: 15%;" onclick="sortData('ni_growth_qoq')">순이익<br>QoQ</th>
+                    <th style="width: 15%;" onclick="sortData('ni_growth_yoy')">순이익<br>YoY</th>
+                    <th style="width: 12%;" onclick="sortData('avg_r')">평균</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+        data.forEach(s => {
+            const nameClass = s.rank <= 20 ? "rank-1-20" : "rank-21-30";
+            html += `<tr>
+                <td class="rank-main">${s.rank}</td>
+                <td>${getStarHtml(s.name)}<span class="${nameClass}">${s.name}</span><span class="price-text">${formatNumber(s.price)}원</span></td>
+                <td>${s.op_growth_qoq.toFixed(1)}%<span class="sub-text">${s.op_qoq_r}위</span></td>
+                <td>${s.op_growth_yoy.toFixed(1)}%<span class="sub-text">${s.op_yoy_r}위</span></td>
+                <td>${s.ni_growth_qoq.toFixed(1)}%<span class="sub-text">${s.ni_qoq_r}위</span></td>
+                <td>${s.ni_growth_yoy.toFixed(1)}%<span class="sub-text">${s.ni_yoy_r}위</span></td>
+                <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
+            </tr>`;
+        });
+        html += `</tbody>`;
+        document.getElementById("quant-table").innerHTML = html;
+    }
+
+    function renderSuperTable(data) {
+        let html = `
+            <thead>
+                <tr>
+                    <th style="width: 10%;" onclick="sortData('rank')">종합<br>순위</th>
+                    <th style="width: 26%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
+                    <th style="width: 13%;" onclick="sortData('per')">PER</th>
+                    <th style="width: 13%;" onclick="sortData('pbr')">PBR</th>
+                    <th style="width: 13%;" onclick="sortData('pfcr')">PFCR</th>
+                    <th style="width: 13%;" onclick="sortData('psr')">PSR</th>
+                    <th style="width: 12%;" onclick="sortData('avg_r')">평균</th>
+                </tr>
+            </thead>
+            <tbody>`;
+        
+        data.forEach(s => {
+            const nameClass = s.rank <= 20 ? "rank-1-20" : "rank-21-30";
+            html += `<tr>
+                <td class="rank-main">${s.rank}</td>
+                <td>${getStarHtml(s.name)}<span class="${nameClass}">${s.name}</span><span class="price-text">${formatNumber(s.price)}원</span></td>
+                <td>${s.per.toFixed(1)}<span class="sub-text">${s.per_r}위</span></td>
+                <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
+                <td>${s.pfcr.toFixed(2)}<span class="sub-text">${s.pfcr_r}위</span></td>
+                <td>${s.psr.toFixed(2)}<span class="sub-text">${s.psr_r}위</span></td>
+                <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
+            </tr>`;
+        });
+        html += `</tbody>`;
+        document.getElementById("quant-table").innerHTML = html;
+    }
+
+    function renderNcavTable(data) {
+        let html = `
+            <thead>
+                <tr>
+                    <th style="width: 10%;" onclick="sortData('rank')">NCAV</th>
+                    <th style="width: 22%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
+                    <th style="width: 13%;" onclick="sortData('ncav')">순유동</th>
+                    <th style="width: 14%;" onclick="sortData('market_cap')">시가총액</th>
+                    <th style="width: 14%;" onclick="sortData('quarter_net_income')">분기순이익</th>
+                    <th style="width: 13%;" onclick="sortData('gpa')">GP/A</th>
+                    <th style="width: 14%;" onclick="sortData('debt_ratio')">차입금</th>
+                </tr>
+            </thead>
+            <tbody>`;
+        
+        data.forEach(s => {
+            const nameClass = s.rank <= 20 ? "rank-1-20" : "rank-21-30";
+            html += `<tr>
+                <td class="rank-main">${s.rank}위</td>
+                <td>${getStarHtml(s.name)}<span class="${nameClass}">${s.name}</span><span class="price-text">${formatNumber(s.price)}원</span></td>
+                <td>${formatNumber(s.ncav)}억</td>
+                <td>${formatNumber(s.market_cap)}억</td>
+                <td>${formatNumber(s.quarter_net_income)}억</td>
+                <td>${s.gpa === null ? 'N/A' : s.gpa.toFixed(2)}</td>
+                <td>${s.debt_ratio === null ? 'N/A' : s.debt_ratio.toFixed(1) + '%'}</td>
+            </tr>`;
+        });
+        html += `</tbody>`;
+        document.getElementById("quant-table").innerHTML = html;
+    }
+
+    function sortData(key) {
+        let targetDataset = [];
+        if (currentMenu === 'fscore') targetDataset = fscoreData;
+        else if (currentMenu === 'momentum') targetDataset = isMomentumSmallcapMode ? momentumSmallcapData : momentumData;
+        else if (currentMenu === 'super') targetDataset = isSmallcapMode ? superSmallcapData : superData;
+        else if (currentMenu === 'ncav') targetDataset = isGpaMode ? ncavGpaData : ncavData;
+        
+        if (targetDataset.length === 0) return;
+        if (currentSortKey === key) { isAscending = !isAscending; } 
+        else { currentSortKey = key; isAscending = true; }
+        
+        targetDataset.sort((a, b) => {
+            if (typeof a[key] === 'string') return isAscending ? a[key].localeCompare(b[key]) : b[key].localeCompare(a[key]);
+            return isAscending ? a[key] - b[key] : b[key] - a[key];
+        });
+        
+        refreshCurrentTable();
+    }
+
+    window.onload = function() {
+        if (typeof KOSPI_QUANT_PACKAGE !== 'undefined') {
+            const server = KOSPI_QUANT_PACKAGE.server;
+            superData = KOSPI_QUANT_PACKAGE.super_value;
+            superSmallcapData = KOSPI_QUANT_PACKAGE.super_value_smallcap;
+            momentumData = KOSPI_QUANT_PACKAGE.momentum_value;
+            momentumSmallcapData = KOSPI_QUANT_PACKAGE.momentum_value_smallcap;
+            fscoreData = KOSPI_QUANT_PACKAGE.fscore_value;
+            ncavData = KOSPI_QUANT_PACKAGE.ncav_value;
+            ncavGpaData = KOSPI_QUANT_PACKAGE.ncav_value_gpa;
+
+            document.getElementById("data-date-view").innerHTML =
+                `📅 공공데이터 기준: ${server.krx_basis_date} &nbsp;|&nbsp; DART 기준: ${server.dart_basis}`;
+            switchMenu('super');
+        }
+    };
+</script>
 </body>
 </html>

@@ -1,0 +1,4 @@
+config_local.py
+__pycache__/
+*.pyc
+dart_corp_map.json
