@@ -10,8 +10,14 @@
         
         
         .menu-tabs { display: grid; grid-template-columns: 1fr 1fr; background-color: #f1f5f9; padding: 3px; border-radius: 8px; margin-bottom: 10px; gap: 2px; }
-        .tab-btn { border: none; background: none; padding: 9px 1px; font-size: 12px; font-weight: bold; color: #64748b; cursor: pointer; border-radius: 6px; text-align: center; transition: all 0.15s; }
+        .tab-btn { border: none; background: none; padding: 7px 1px; font-size: 11px; font-weight: bold; color: #64748b; cursor: pointer; border-radius: 6px; text-align: center; transition: all 0.15s; line-height: 1.3; }
         .tab-btn.active { background-color: #fff; color: #1e3a8a; box-shadow: 0 2px 4px rgba(0,0,0,0.06); }
+        .strategy-name { display: inline; }
+        .strategy-tags { display: inline-block; margin-left: 4px; vertical-align: middle; }
+        .tag-chip { display: inline-block; font-size: 8px; font-weight: bold; padding: 1px 5px; border-radius: 8px; margin: 0 1px; }
+        .tag-value { background-color: #dbeafe; color: #1d4ed8; }
+        .tag-quality { background-color: #dcfce7; color: #15803d; }
+        .tag-momentum { background-color: #ffedd5; color: #c2410c; }
 
         /* 🔍 스마트 종목 검색창 스타일 */
         .search-box { width: 100%; padding: 10px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 12px; box-sizing: border-box; outline: none; }
@@ -47,12 +53,7 @@
         <button id="btn-recommend" class="tab-btn active" onclick="switchMenu('recommend')">⭐ 추천</button>
         <button id="btn-rebalance" class="tab-btn" onclick="switchMenu('rebalance')">🔁 리밸런싱</button>
     </div>
-    <div class="menu-tabs">
-        <button id="btn-fscore" class="tab-btn" onclick="switchMenu('fscore')">6. [밸류+퀄리티] 신 F-스코어+저PBR</button>
-        <button id="btn-momentum" class="tab-btn" onclick="switchMenu('momentum')">11. [모멘텀] 이익 모멘텀</button>
-        <button id="btn-ncav" class="tab-btn" onclick="switchMenu('ncav')">12. [밸류+퀄리티] NCAV</button>
-        <button id="btn-super" class="tab-btn" onclick="switchMenu('super')">13. [밸류] 슈퍼 가치</button>
-    </div>
+    <div class="menu-tabs" id="strategy-tabs"></div>
 
     <input type="text" id="search-bar" class="search-box" placeholder="🔍 필터링할 종목명을 입력하세요 (실시간 반영)..." oninput="handleSearch()">
 
@@ -89,6 +90,30 @@
 
 <script src="data.js"></script>
 <script>
+    const TAG_LABELS = { value: '밸류', quality: '퀄리티', momentum: '모멘텀' };
+    const STRATEGIES = [
+        { key: 'fscore', num: 6, name: '신F-스코어+저PBR', tags: ['value', 'quality'], ready: true },
+        { key: 'momentum', num: 11, name: '이익 모멘텀', tags: ['momentum'], ready: true },
+        { key: 'ncav', num: 12, name: 'NCAV전략 업그레이드', tags: ['value', 'quality'], ready: true },
+        { key: 'super', num: 13, name: '오리지널 슈퍼 가치 전략 업그레이드', tags: ['value'], ready: true },
+        { key: 'strategy15', num: 15, name: '슈퍼 퀄리티', tags: ['quality'], ready: false },
+        { key: 'strategy16', num: 16, name: '파마의 최종 병기', tags: ['value', 'quality', 'momentum'], ready: false },
+        { key: 'strategy18', num: 18, name: '슈퍼 가치+퀄리티', tags: ['value', 'quality'], ready: false },
+        { key: 'strategy19', num: 19, name: '밸류+모멘텀', tags: ['value', 'momentum'], ready: false },
+        { key: 'strategy20', num: 20, name: '슈퍼 퀄리티+모멘텀', tags: ['quality', 'momentum'], ready: false },
+        { key: 'strategy21', num: 21, name: '울트라', tags: ['value', 'quality', 'momentum'], ready: false },
+    ];
+
+    function renderStrategyTabs() {
+        document.getElementById('strategy-tabs').innerHTML = STRATEGIES.map(s => `
+            <button id="btn-${s.key}" class="tab-btn" onclick="switchMenu('${s.key}')">
+                <span class="strategy-name">${s.num}. ${s.name}</span>
+                <span class="strategy-tags">${s.tags.map(t => `<span class="tag-chip tag-${t}">${TAG_LABELS[t]}</span>`).join('')}</span>
+            </button>
+        `).join('');
+    }
+    renderStrategyTabs();
+
     let currentMenu = 'recommend';
     let currentSortKey = 'rank';
     let isAscending = true;
@@ -134,7 +159,7 @@
         document.getElementById("search-bar").value = "";
         searchQuery = "";
         
-        const subMenus = ['recommend', 'rebalance', 'fscore', 'momentum', 'super', 'ncav'];
+        const subMenus = ['recommend', 'rebalance', ...STRATEGIES.map(s => s.key)];
         subMenus.forEach(m => document.getElementById(`btn-${m}`).classList.toggle("active", m === menuType));
         document.getElementById("ncav-info-lbl").style.display = (menuType === 'ncav') ? 'block' : 'none';
         document.getElementById("super-smallcap-lbl").style.display = (menuType === 'super') ? 'block' : 'none';
@@ -153,8 +178,8 @@
 
     const RECOMMEND_SOURCES = [
         { key: 'fscore', label: 'F-스코어', getData: () => fscoreData },
-        { key: 'momentum', label: '모멘텀', getData: () => momentumData },
-        { key: 'super', label: '슈퍼가치', getData: () => superData },
+        { key: 'momentum', label: '모멘텀', getData: () => isMomentumSmallcapMode ? momentumSmallcapData : momentumData },
+        { key: 'super', label: '슈퍼가치', getData: () => isSmallcapMode ? superSmallcapData : superData },
         { key: 'ncav', label: 'NCAV', getData: () => ncavData },
     ];
 
@@ -231,6 +256,12 @@
         } else if (currentMenu === 'ncav') {
             document.getElementById("strategy-title").innerText = "🛡️ 12. NCAV 청산가치 & 퀄리티 스크리너" + (isGpaMode ? " (GP/A 필터)" : "");
             renderNcavTable(filterBySearch(isGpaMode ? ncavGpaData : ncavData));
+        } else {
+            const strategy = STRATEGIES.find(s => s.key === currentMenu);
+            if (strategy) {
+                document.getElementById("strategy-title").innerText = `${strategy.num}. ${strategy.name}`;
+                renderPlaceholderTable();
+            }
         }
     }
 
@@ -271,6 +302,11 @@
     function renderRebalanceTable() {
         document.getElementById("quant-table").innerHTML =
             `<tbody><tr><td style="padding:30px; color:#94a3b8;">🔁 리밸런싱 화면은 준비 중입니다.</td></tr></tbody>`;
+    }
+
+    function renderPlaceholderTable() {
+        document.getElementById("quant-table").innerHTML =
+            `<tbody><tr><td style="padding:30px; color:#94a3b8;">⏳ 준비 중인 전략입니다.</td></tr></tbody>`;
     }
 
     function renderFscoreTable(data) {

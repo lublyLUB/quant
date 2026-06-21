@@ -2,3 +2,6 @@ config_local.py
 __pycache__/
 *.pyc
 dart_corp_map.json
+cache_dart_financials.json
+cache_capital_increase.json
+cache_monthly_price.json

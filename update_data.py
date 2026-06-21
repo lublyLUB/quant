@@ -20,9 +20,34 @@ except ImportError:
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CORP_CODE_CACHE = os.path.join(BASE_DIR, "dart_corp_map.json")
 
+# 업데이트 주기가 긴 데이터는 디스크에 캐싱해서 재검증 시간을 단축한다.
+# - DART 재무제표: 분기 단위로만 바뀜 -> 최신 분기로 이미 캐싱돼 있으면 API 호출 스킵
+# - 유상증자 여부: 하루 단위로만 갱신
+# - 월간 가격 스냅샷: 과거 날짜는 불변값이라 한 번 캐싱하면 재사용
+DART_FINANCIALS_CACHE_FILE = os.path.join(BASE_DIR, "cache_dart_financials.json")
+CAPITAL_INCREASE_CACHE_FILE = os.path.join(BASE_DIR, "cache_capital_increase.json")
+MONTHLY_PRICE_CACHE_FILE = os.path.join(BASE_DIR, "cache_monthly_price.json")
+
+
+def load_json_cache(path):
+    if os.path.exists(path):
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except (json.JSONDecodeError, OSError):
+            return {}
+    return {}
+
+
+def save_json_cache(path, data):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False)
+
+
 DART_ACCOUNTS = {
     "assets": ("BS", "ifrs-full_Assets"),
     "current_assets": ("BS", "ifrs-full_CurrentAssets"),
+    "current_liabilities": ("BS", "ifrs-full_CurrentLiabilities"),
     "liabilities": ("BS", "ifrs-full_Liabilities"),
     "equity": ("BS", "ifrs-full_Equity"),
     "revenue": ("IS", "ifrs-full_Revenue"),
@@ -30,11 +55,17 @@ DART_ACCOUNTS = {
     "net_income": ("IS", "ifrs-full_ProfitLoss"),
     "operating_income": ("IS", "dart_OperatingIncomeLoss"),
     "operating_cf": ("CF", "ifrs-full_CashFlowsFromUsedInOperatingActivities"),
+    "capex": ("CF", "ifrs-full_PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities"),
+    "dividends_paid": ("CF", "ifrs-full_DividendsPaidClassifiedAsFinancingActivities"),
 }
 
 # 영업이익/순이익은 전년동기 분기 단독값(frmtrm_q_amount)을 DART가 같은 응답에서 같이 주므로
 # YoY 성장률은 추가 API 호출 없이 계산 가능
 YOY_ACCOUNTS = ("net_income", "operating_income")
+
+# 분기 단독값이 따로 없는(=thstrm_amount가 연초 누적치인) CF 계정들. 1분기 외 보고서에서는
+# 같은 해 이전 분기의 누적치를 빼서 단독 분기값을 derive해야 한다.
+CUMULATIVE_ONLY_ACCOUNTS = ("operating_cf", "capex")
 
 
 def get_corp_code_map():
@@ -89,8 +120,13 @@ def _build_period_candidates():
     return [(year, code, months) for (_end, year, code, months) in candidates]
 
 
-def has_recent_capital_increase(corp_code):
-    """최근 1년간 유상증자결정 공시(주요사항보고서) 여부."""
+def has_recent_capital_increase(corp_code, cache):
+    """최근 1년간 유상증자결정 공시(주요사항보고서) 여부. 하루 단위로 캐싱."""
+    today_str = datetime.now().strftime("%Y%m%d")
+    cached = cache.get(corp_code)
+    if cached and cached.get("date") == today_str:
+        return cached.get("value")
+
     end_de = datetime.now()
     bgn_de = end_de - timedelta(days=365)
     try:
@@ -111,15 +147,18 @@ def has_recent_capital_increase(corp_code):
         return None
 
     if data.get("status") == "013":  # 조회된 데이터 없음 (정상)
-        return False
-    if data.get("status") != "000":
+        value = False
+    elif data.get("status") != "000":
         return None
+    else:
+        value = any("유상증자" in (item.get("report_nm") or "") for item in data.get("list", []) or [])
 
-    return any("유상증자" in (item.get("report_nm") or "") for item in data.get("list", []) or [])
+    cache[corp_code] = {"date": today_str, "value": value}
+    return value
 
 
-def _fetch_is_period(corp_code, year, reprt_code, fs_div):
-    """손익계산서에서 영업이익/순이익의 (당기 분기단독, 당기 누적) 값을 한 번에 가져온다."""
+def _fetch_period_accounts(corp_code, year, reprt_code, fs_div, keys):
+    """주어진 보고서에서 지정된 계정들의 (당기 분기단독, 당기 누적) 값을 한 번에 가져온다."""
     try:
         r = requests.get(
             "https://opendart.fss.or.kr/api/fnlttSinglAcntAll.json",
@@ -139,13 +178,12 @@ def _fetch_is_period(corp_code, year, reprt_code, fs_div):
     if data.get("status") != "000":
         return None
 
-    targets = {key: DART_ACCOUNTS[key][1] for key in ("operating_income", "net_income")}
+    targets = {key: DART_ACCOUNTS[key] for key in keys}
     result = {}
     for row in data.get("list", []):
-        if row.get("sj_div") != "IS":
-            continue
-        for key, account_id in targets.items():
-            if row.get("account_id") == account_id and key not in result:
+        sj_div = row.get("sj_div")
+        for key, (target_sj, account_id) in targets.items():
+            if sj_div == target_sj and row.get("account_id") == account_id and key not in result:
                 try:
                     single = float(row.get("thstrm_amount", "0").replace(",", ""))
                 except (ValueError, AttributeError):
@@ -153,38 +191,111 @@ def _fetch_is_period(corp_code, year, reprt_code, fs_div):
                 try:
                     cum = float(row.get("thstrm_add_amount", "0").replace(",", ""))
                 except (ValueError, AttributeError):
-                    cum = single
+                    cum = single  # CF계정은 add_amount가 없고 thstrm_amount 자체가 누적치
                 result[key] = {"single": single, "cum": cum}
 
     return result or None
 
 
-def fetch_prev_quarter_is(corp_code, year, reprt_code, fs_div):
-    """직전 분기(3개월 단독)의 영업이익/순이익을 구한다. 보고서 종류별로 차감 방식이 다르다."""
-    if reprt_code == "11013":  # 1분기 -> 전분기는 전년 4분기 = 전년 사업보고서(연간) - 전년 3분기 누적
-        annual = _fetch_is_period(corp_code, year - 1, "11011", fs_div)
-        q3 = _fetch_is_period(corp_code, year - 1, "11014", fs_div)
-        if not annual or not q3:
-            return None
-        return {k: annual[k]["single"] - q3[k]["cum"] for k in annual if k in q3}
-    elif reprt_code == "11012":  # 반기 -> 전분기는 같은 해 1분기(단독값 그대로)
-        q1 = _fetch_is_period(corp_code, year, "11013", fs_div)
-        return {k: v["single"] for k, v in q1.items()} if q1 else None
-    elif reprt_code == "11014":  # 3분기 -> 전분기는 같은 해 반기(2분기, 단독값 그대로)
-        half = _fetch_is_period(corp_code, year, "11012", fs_div)
-        return {k: v["single"] for k, v in half.items()} if half else None
-    elif reprt_code == "11011":  # 사업보고서 -> 전분기는 같은 해 4분기 = 연간 - 3분기 누적
-        annual = _fetch_is_period(corp_code, year, "11011", fs_div)
-        q3 = _fetch_is_period(corp_code, year, "11014", fs_div)
-        if not annual or not q3:
-            return None
-        return {k: annual[k]["single"] - q3[k]["cum"] for k in annual if k in q3}
+BASELINE_KEYS = ("operating_income", "net_income", "operating_cf", "capex")
+
+
+def fetch_baseline_period(corp_code, year, reprt_code, fs_div):
+    """현재 보고서의 분기단독값을 derive하기 위해 필요한, 같은 해의 직전 보고서 데이터를 가져온다.
+    1분기 보고서는 누적=단독이라 베이스라인이 필요 없다."""
+    if reprt_code == "11012":  # 반기 -> 같은 해 1분기
+        return _fetch_period_accounts(corp_code, year, "11013", fs_div, BASELINE_KEYS)
+    elif reprt_code == "11014":  # 3분기 -> 같은 해 반기
+        return _fetch_period_accounts(corp_code, year, "11012", fs_div, BASELINE_KEYS)
+    elif reprt_code == "11011":  # 사업보고서 -> 같은 해 3분기
+        return _fetch_period_accounts(corp_code, year, "11014", fs_div, BASELINE_KEYS)
     return None
 
 
-def fetch_dart_financials(corp_code):
-    """가장 최근에 공시된 분기/반기/3분기/사업보고서에서 핵심 재무계정을 가져와 연환산한다."""
-    for year, reprt_code, months in _build_period_candidates():
+def fetch_prev_year_q4_base(corp_code, year, fs_div):
+    """1분기 보고서일 때 "전분기"(전년 4분기) 계산에 필요한 전년 사업보고서/3분기 데이터."""
+    annual = _fetch_period_accounts(corp_code, year - 1, "11011", fs_div, BASELINE_KEYS)
+    q3 = _fetch_period_accounts(corp_code, year - 1, "11014", fs_div, BASELINE_KEYS)
+    if not annual or not q3:
+        return None
+    return {k: annual[k]["single"] - q3[k]["cum"] for k in annual if k in q3}
+
+
+def extract_borrowings(rows):
+    """총차입금 추정치: DART는 '차입금' 단일 표준계정이 없어 회사마다 계정ID가 다르므로,
+    재무상태표(BS)에서 계정명에 '차입금' 또는 '사채'가 들어간 항목을 전부 합산한다."""
+    total = 0.0
+    found = False
+    for row in rows:
+        if row.get("sj_div") != "BS":
+            continue
+        name = row.get("account_nm") or ""
+        if "차입금" in name or "사채" in name:
+            try:
+                total += float(row.get("thstrm_amount", "0").replace(",", ""))
+                found = True
+            except (ValueError, AttributeError):
+                pass
+    return total if found else None
+
+
+def fetch_bs_snapshot_yoy(corp_code, year, reprt_code, fs_div):
+    """전년동기 시점의 자산총계/부채총계 스냅샷 (자산성장률, 차입금 YoY용)."""
+    try:
+        r = requests.get(
+            "https://opendart.fss.or.kr/api/fnlttSinglAcntAll.json",
+            params={
+                "crtfc_key": DART_API_KEY,
+                "corp_code": corp_code,
+                "bsns_year": str(year - 1),
+                "reprt_code": reprt_code,
+                "fs_div": fs_div,
+            },
+            timeout=15,
+        )
+        data = r.json()
+    except Exception:
+        return None
+    if data.get("status") != "000":
+        return None
+
+    result = {}
+    for row in data.get("list", []):
+        for key in ("assets", "liabilities"):
+            target_sj, account_id = DART_ACCOUNTS[key]
+            if row.get("sj_div") == target_sj and row.get("account_id") == account_id and key not in result:
+                try:
+                    result[key] = float(row.get("thstrm_amount", "0").replace(",", ""))
+                except (ValueError, AttributeError):
+                    pass
+
+    borrowings = extract_borrowings(data.get("list", []))
+    result["borrowings"] = borrowings if borrowings is not None else result.get("liabilities")
+
+    return result or None
+
+
+def fetch_latest_annual_dividend(corp_code, fs_div):
+    """배당율은 분기 단위가 아니라 가장 최근 사업보고서(연간)의 현금배당 총액 기준으로 계산한다."""
+    candidates = [c for c in _build_period_candidates() if c[1] == "11011"]
+    if not candidates:
+        return None
+    year = candidates[0][0]
+    result = _fetch_period_accounts(corp_code, year, "11011", fs_div, ("dividends_paid",))
+    return result["dividends_paid"]["single"] if result and "dividends_paid" in result else None
+
+
+def fetch_dart_financials(corp_code, cache=None):
+    """가장 최근에 공시된 분기/반기/3분기/사업보고서에서 핵심 재무계정을 가져와 연환산한다.
+    같은 분기로 이미 캐싱된 결과가 있으면 API 호출 없이 그대로 재사용한다."""
+    candidates = _build_period_candidates()
+    if cache is not None and candidates:
+        best_year, best_reprt_code, _ = candidates[0]
+        cached = cache.get(corp_code)
+        if cached and cached.get("_period") == f"{best_year}-{best_reprt_code}":
+            return cached
+
+    for year, reprt_code, months in candidates:
         for fs_div in ("CFS", "OFS"):
             try:
                 r = requests.get(
@@ -224,26 +335,56 @@ def fetch_dart_financials(corp_code):
             if "assets" not in values or "liabilities" not in values:
                 continue
 
+            # 차입금(이자부담부채) - 표준계정 대신 계정명 매칭으로 추출, 못 찾으면 부채총계로 대체
+            borrowings = extract_borrowings(data.get("list", []))
+            values["borrowings"] = borrowings if borrowings is not None else values["liabilities"]
+
             # DART 손익계산서(IS) 항목의 thstrm_amount는 사업보고서가 아니면 이미 "당기 1개 분기" 단독값이다
             # (반기보고서도 6개월 누적이 아니라 2분기 단독값을 thstrm_amount로 줌 - 누적은 thstrm_add_amount).
             # 사업보고서(11011)는 thstrm_amount 자체가 연간 총액이므로 그대로 사용.
             for key in ("revenue", "cost_of_sales", "net_income", "operating_income"):
                 if key in values:
                     values[f"quarter_{key}"] = values[key]
-                    if reprt_code != "11011":
-                        values[key] *= 4  # 분기 단독값을 연환산
 
-            # 영업활동현금흐름(CF)은 DART가 분기 단독값을 따로 안 주고 연초 누적치만 제공
-            if "operating_cf" in values:
-                values["operating_cf"] *= (12 / months)
+            baseline = None if reprt_code == "11013" else fetch_baseline_period(corp_code, year, reprt_code, fs_div)
+
+            # CF 계정(영업활동현금흐름/CapEx)은 분기 단독값이 따로 없고 연초 누적치만 주어지므로
+            # 1분기가 아니면 직전 보고서의 누적치를 빼서 분기 단독값을 derive한다.
+            for key in CUMULATIVE_ONLY_ACCOUNTS:
+                if key not in values:
+                    continue
+                if reprt_code == "11013":
+                    values[f"quarter_{key}"] = values[key]
+                elif baseline and key in baseline:
+                    values[f"quarter_{key}"] = values[key] - baseline[key]["cum"]
+                # baseline 조회 실패 시 quarter_{key}는 채워지지 않음 (해당 지표 계산 제외)
 
             # 직전 분기(3개월 단독) 영업이익/순이익 - 모멘텀(전분기대비) 계산용
-            prev_q = fetch_prev_quarter_is(corp_code, year, reprt_code, fs_div)
+            if reprt_code == "11013":
+                prev_q = fetch_prev_year_q4_base(corp_code, year, fs_div)
+            elif baseline:
+                prev_q = {k: v["single"] for k, v in baseline.items() if k in ("operating_income", "net_income")}
+            else:
+                prev_q = None
             if prev_q:
                 values["prev_operating_income"] = prev_q.get("operating_income")
                 values["prev_net_income"] = prev_q.get("net_income")
 
+            # 전년동기 시점 자산총계/부채총계 - 자산성장률, 영업이익/차입금 비율 YoY 계산용
+            bs_yoy = fetch_bs_snapshot_yoy(corp_code, year, reprt_code, fs_div)
+            if bs_yoy:
+                values["assets_yoy"] = bs_yoy.get("assets")
+                values["borrowings_yoy"] = bs_yoy.get("borrowings")
+
+            # 19. 배당율 - 분기 단독값이 아니라 가장 최근 사업보고서의 연간 배당총액 기준
+            if reprt_code == "11011":
+                values["annual_dividends_paid"] = values.get("dividends_paid")
+            else:
+                values["annual_dividends_paid"] = fetch_latest_annual_dividend(corp_code, fs_div)
+
             values["_period"] = f"{year}-{reprt_code}"
+            if cache is not None:
+                cache[corp_code] = values
             return values
 
     return None
@@ -253,38 +394,93 @@ def fetch_krx_market_data():
     
     url = "http://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo"
     
-    items = []
-    krx_basis_date = None
-    # 최근 7일 중 가장 최신 영업일 데이터 탐색
-    for i in range(7):
-        target_date = (datetime.now() - timedelta(days=i)).strftime("%Y%m%d")
-
+    def fetch_market(mrkt_cls, target_date):
         params = {
             "serviceKey": API_KEY,
             "resultType": "json",
-            "numOfRows": "3000", 
+            "numOfRows": "3000",
             "pageNo": "1",
-            "mrktCls": "KOSPI",
-            "basDt": target_date
+            "mrktCls": mrkt_cls,
+            "basDt": target_date,
         }
-        
         try:
             response = requests.get(url, params=params, timeout=15)
             data = response.json()
-            fetched_items = data.get("response", {}).get("body", {}).get("items", {}).get("item", [])
-            if fetched_items:
-                items = fetched_items
-                krx_basis_date = target_date
-                print(f"✅ [성공] {target_date} 기준 영업일 데이터 조회 성공!")
-                break
+            return data.get("response", {}).get("body", {}).get("items", {}).get("item", [])
         except Exception:
-            continue
+            return []
+
+    items = []
+    krx_basis_date = None
+    # 최근 7일 중 가장 최신 영업일 데이터 탐색 (KOSPI 기준일에 KOSDAQ도 함께 조회)
+    for i in range(7):
+        target_date = (datetime.now() - timedelta(days=i)).strftime("%Y%m%d")
+
+        kospi_items = fetch_market("KOSPI", target_date)
+        if kospi_items:
+            kosdaq_items = fetch_market("KOSDAQ", target_date)
+            items = kospi_items + kosdaq_items
+            krx_basis_date = target_date
+            print(f"✅ [성공] {target_date} 기준 영업일 데이터 조회 성공! (KOSPI {len(kospi_items)}개, KOSDAQ {len(kosdaq_items)}개)")
+            break
 
     if not items:
         print("⚠️ [경고] 데이터 로딩에 실패했습니다.")
         return False
-        
+
     print(f"✅ [성공] 국토 데이터 수집 완료! 종목 수: {len(items)}개")
+
+    # 10. 주가 변동성 - 최근 12개월 + 오늘, 총 13개 월간 스냅샷 종가로 월간수익률 표준편차 계산
+    # 과거 날짜의 시세는 불변값이므로 연-월 단위로 캐싱해서 매번 새로 받아오지 않는다.
+    monthly_price_cache = load_json_cache(MONTHLY_PRICE_CACHE_FILE)
+    print("[변동성] 최근 12개월 월간 시세 조회를 시작합니다 (캐싱된 과거 월은 스킵)...")
+    monthly_snapshots = []
+    cache_dirty = False
+    for months_back in range(12, -1, -1):
+        if months_back == 0:
+            # 오늘자 시세는 이미 위에서 받아온 items를 그대로 재사용 (중복 호출 없음)
+            monthly_snapshots.append({
+                it.get("srtnCd"): float(it.get("clpr", 0) or 0) for it in items if it.get("clpr")
+            })
+            continue
+
+        anchor = datetime.now() - timedelta(days=months_back * 30)
+        cache_key = anchor.strftime("%Y-%m")
+        if cache_key in monthly_price_cache:
+            monthly_snapshots.append(monthly_price_cache[cache_key])
+            continue
+
+        snapshot = {}
+        for backoff in range(7):
+            target_date = (anchor - timedelta(days=backoff)).strftime("%Y%m%d")
+            kospi_snap = fetch_market("KOSPI", target_date)
+            if kospi_snap:
+                kosdaq_snap = fetch_market("KOSDAQ", target_date)
+                snapshot = {
+                    it.get("srtnCd"): float(it.get("clpr", 0) or 0)
+                    for it in (kospi_snap + kosdaq_snap) if it.get("clpr")
+                }
+                break
+        monthly_price_cache[cache_key] = snapshot
+        cache_dirty = True
+        monthly_snapshots.append(snapshot)
+
+    if cache_dirty:
+        save_json_cache(MONTHLY_PRICE_CACHE_FILE, monthly_price_cache)
+
+    volatility_map = {}
+    all_codes = set()
+    for snap in monthly_snapshots:
+        all_codes.update(snap.keys())
+    for code in all_codes:
+        prices = [snap.get(code) for snap in monthly_snapshots if snap.get(code)]
+        if len(prices) < 4:
+            continue
+        returns = [prices[i] / prices[i - 1] - 1 for i in range(1, len(prices))]
+        mean_r = sum(returns) / len(returns)
+        variance = sum((r - mean_r) ** 2 for r in returns) / len(returns)
+        volatility_map[code] = round((variance ** 0.5) * 100, 2)  # %
+    print(f"[변동성] {len(volatility_map)}개 종목 변동성 계산 완료.")
 
     # 시세 API에는 PER/PBR/PSR/EPS 항목이 없으므로 가격/시총/종목코드만 추출
     raw_stocks = []
@@ -318,12 +514,21 @@ def fetch_krx_market_data():
             print(f"⚠️ [경고] DART corp_code 매핑 실패: {e}")
             corp_map = {}
 
-        print(f"[DART] {len(raw_stocks)}개 종목의 재무제표 조회를 시작합니다 (시간이 다소 걸립니다)...")
+        dart_financials_cache = load_json_cache(DART_FINANCIALS_CACHE_FILE)
+        capital_increase_cache = load_json_cache(CAPITAL_INCREASE_CACHE_FILE)
+        cache_hits = 0
+
+        print(f"[DART] {len(raw_stocks)}개 종목의 재무제표 조회를 시작합니다 (캐싱된 종목은 스킵)...")
         for i, s in enumerate(raw_stocks):
             corp_code = corp_map.get(s["code"])
             if not corp_code:
                 continue
-            fin = fetch_dart_financials(corp_code)
+            candidates = _build_period_candidates()
+            best_period = f"{candidates[0][0]}-{candidates[0][1]}" if candidates else None
+            cached_entry = dart_financials_cache.get(corp_code)
+            if cached_entry and cached_entry.get("_period") == best_period:
+                cache_hits += 1
+            fin = fetch_dart_financials(corp_code, cache=dart_financials_cache)
             if not fin:
                 continue
 
@@ -331,62 +536,93 @@ def fetch_krx_market_data():
             liabilities = fin.get("liabilities", 0)
             equity = fin.get("equity", assets - liabilities)
             current_assets = fin.get("current_assets", 0)
-            revenue = fin.get("revenue", 0)
-            cost_of_sales = fin.get("cost_of_sales", 0)
-            net_income = fin.get("net_income", 0)
-            operating_cf = fin.get("operating_cf", 0)
-            quarter_net_income = fin.get("quarter_net_income", 0)
+            current_liabilities = fin.get("current_liabilities", 0)
+            borrowings = fin.get("borrowings", liabilities)
+            quarter_revenue = fin.get("quarter_revenue")
+            quarter_cost_of_sales = fin.get("quarter_cost_of_sales")
+            quarter_net_income = fin.get("quarter_net_income")
             quarter_operating_income = fin.get("quarter_operating_income")
+            quarter_operating_cf = fin.get("quarter_operating_cf")
+            quarter_capex = fin.get("quarter_capex")
             dart_periods_used.append(fin.get("_period"))
 
-            # 11. 이익 모멘텀 전략 - 전분기대비/전년동기대비 영업이익·순이익 성장률
             def growth_rate(curr, base):
                 if curr is None or base is None or base == 0:
                     return None
                 return round((curr - base) / abs(base) * 100, 1)
 
+            # 11~14. 이익 모멘텀 - 전분기대비/전년동기대비 영업이익·순이익 성장률
             op_growth_qoq = growth_rate(quarter_operating_income, fin.get("prev_operating_income"))
             op_growth_yoy = growth_rate(quarter_operating_income, fin.get("operating_income_yoy"))
             ni_growth_qoq = growth_rate(quarter_net_income, fin.get("prev_net_income"))
             ni_growth_yoy = growth_rate(quarter_net_income, fin.get("net_income_yoy"))
 
             # 6. 신 F-스코어+저PBR - 3개 이진지표(1/0)의 합산 점수
-            cap_increase = has_recent_capital_increase(corp_code)
+            cap_increase = has_recent_capital_increase(corp_code, capital_increase_cache)
             cap_increase_flag = 0 if cap_increase else (1 if cap_increase is False else None)
-            quarter_net_income_raw = fin.get("quarter_net_income")
-            ni_pos_flag = None if quarter_net_income_raw is None else (1 if quarter_net_income_raw >= 0 else 0)
-            operating_cf_raw = fin.get("operating_cf")
-            cf_pos_flag = None if operating_cf_raw is None else (1 if operating_cf_raw >= 0 else 0)
+            ni_pos_flag = None if quarter_net_income is None else (1 if quarter_net_income >= 0 else 0)
+            cf_pos_flag = None if quarter_operating_cf is None else (1 if quarter_operating_cf >= 0 else 0)
             if None in (cap_increase_flag, ni_pos_flag, cf_pos_flag):
                 f_score = None
             else:
                 f_score = cap_increase_flag + ni_pos_flag + cf_pos_flag
 
+            # 8. 영업이익/차입금(계정명 매칭으로 추출한 총차입금) 비율의 전년동기대비 증가율
+            borrowings_yoy = fin.get("borrowings_yoy")
+            op_to_debt_now = (quarter_operating_income / borrowings) if (quarter_operating_income is not None and borrowings) else None
+            op_to_debt_yoy = (
+                fin.get("operating_income_yoy") / borrowings_yoy
+                if (fin.get("operating_income_yoy") is not None and borrowings_yoy)
+                else None
+            )
+            op_debt_growth_yoy = growth_rate(op_to_debt_now, op_to_debt_yoy)
+
+            # 9. 자산성장률 (전년동기대비)
+            assets_yoy = fin.get("assets_yoy")
+            asset_growth_yoy = growth_rate(assets, assets_yoy)
+
             market_cap = s["market_cap"]
-            per = round(market_cap / net_income, 2) if net_income > 0 else 0.0
+            per = round(market_cap / quarter_net_income, 2) if quarter_net_income and quarter_net_income > 0 else 0.0
             pbr = round(market_cap / equity, 2) if equity > 0 else 0.0
-            psr = round(market_cap / revenue, 2) if revenue > 0 else 0.0
-            pfcr = round(market_cap / operating_cf, 2) if operating_cf > 0 else 0.0
-            debt_ratio = round(liabilities / equity * 100, 1) if equity > 0 else None
+            psr = round(market_cap / quarter_revenue, 2) if quarter_revenue and quarter_revenue > 0 else 0.0
+            pcr = round(market_cap / quarter_operating_cf, 2) if quarter_operating_cf and quarter_operating_cf > 0 else 0.0
+            fcf = (quarter_operating_cf - quarter_capex) if (quarter_operating_cf is not None and quarter_capex is not None) else None
+            pfcr = round(market_cap / fcf, 2) if fcf and fcf > 0 else 0.0
+            debt_ratio = round(borrowings / equity * 100, 1) if equity > 0 else None  # 17. 차입금비율(=차입금/자본)
             # 지주회사 등 일부 업종은 표준 IFRS 매출/매출원가 계정을 쓰지 않아 데이터가 없을 수 있음
-            gpa = round((revenue - cost_of_sales) / assets * 100, 1) if (assets > 0 and revenue > 0) else None
+            gpa = (
+                round((quarter_revenue - quarter_cost_of_sales) / assets * 100, 1)
+                if (assets > 0 and quarter_revenue and quarter_cost_of_sales is not None)
+                else None
+            )
             ncav_total = current_assets - liabilities
             ncav = int(ncav_total / 100000000)  # 억 단위
             ncav_ratio = round(ncav_total / market_cap, 2) if market_cap > 0 else 0.0
-            eps = int(net_income / (market_cap / s["price"])) if net_income and market_cap else 0
+
+            # 18. 유동비율 = 유동자산 / 유동부채
+            current_ratio = round(current_assets / current_liabilities * 100, 1) if current_liabilities > 0 else None
+
+            # 19. 배당율 = 최근 사업보고서 연간 배당총액 / 시가총액
+            annual_dividends_paid = fin.get("annual_dividends_paid")
+            dividend_yield = (
+                round(annual_dividends_paid / market_cap * 100, 2)
+                if (annual_dividends_paid is not None and market_cap > 0)
+                else None
+            )
 
             valid_stocks.append({
                 **s,
                 "per": per,
                 "pbr": pbr,
                 "psr": psr,
+                "pcr": pcr,
                 "pfcr": pfcr,
-                "eps": eps,
                 "ncav": ncav,
                 "ncav_ratio": ncav_ratio,
                 "gpa": gpa,
                 "debt_ratio": debt_ratio,
-                "net_income": net_income,
+                "op_debt_growth_yoy": op_debt_growth_yoy,
+                "asset_growth_yoy": asset_growth_yoy,
                 "quarter_net_income": quarter_net_income,
                 "cap_increase_flag": cap_increase_flag,
                 "ni_pos_flag": ni_pos_flag,
@@ -396,12 +632,17 @@ def fetch_krx_market_data():
                 "op_growth_yoy": op_growth_yoy,
                 "ni_growth_qoq": ni_growth_qoq,
                 "ni_growth_yoy": ni_growth_yoy,
+                "price_volatility": volatility_map.get(s["code"]),
+                "current_ratio": current_ratio,
+                "dividend_yield": dividend_yield,
             })
 
             if (i + 1) % 100 == 0:
                 print(f"[DART] 진행 중... {i + 1}/{len(raw_stocks)}")
 
-        print(f"[DART] 재무제표 보강 완료: {len(valid_stocks)}개 종목 확보")
+        save_json_cache(DART_FINANCIALS_CACHE_FILE, dart_financials_cache)
+        save_json_cache(CAPITAL_INCREASE_CACHE_FILE, capital_increase_cache)
+        print(f"[DART] 재무제표 보강 완료: {len(valid_stocks)}개 종목 확보 (캐시 적중 {cache_hits}건)")
 
     # 13. 슈퍼 가치 4대 통합 스크리너 연산부
     def rank_super_value(pool):
@@ -461,7 +702,7 @@ def fetch_krx_market_data():
         return [
             s for s in pool
             if s["ncav_ratio"] > 1
-            and s["net_income"] > 0
+            and s["quarter_net_income"] is not None and s["quarter_net_income"] > 0
             and s["debt_ratio"] is not None and s["debt_ratio"] <= 200
         ]
 
