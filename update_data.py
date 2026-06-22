@@ -612,6 +612,14 @@ def fetch_krx_market_data():
 
             valid_stocks.append({
                 **s,
+                "equity": equity,
+                "assets": assets,
+                "liabilities": liabilities,
+                "current_assets": current_assets,
+                "current_liabilities": current_liabilities,
+                "borrowings": borrowings,
+                "quarter_revenue": quarter_revenue,
+                "quarter_cost_of_sales": quarter_cost_of_sales,
                 "per": per,
                 "pbr": pbr,
                 "psr": psr,
@@ -624,6 +632,14 @@ def fetch_krx_market_data():
                 "op_debt_growth_yoy": op_debt_growth_yoy,
                 "asset_growth_yoy": asset_growth_yoy,
                 "quarter_net_income": quarter_net_income,
+                "quarter_operating_cf": quarter_operating_cf,
+                "quarter_capex": quarter_capex,
+                "fcf": fcf,
+                "quarter_operating_income": quarter_operating_income,
+                "prev_operating_income": fin.get("prev_operating_income"),
+                "operating_income_yoy": fin.get("operating_income_yoy"),
+                "prev_net_income": fin.get("prev_net_income"),
+                "net_income_yoy": fin.get("net_income_yoy"),
                 "cap_increase_flag": cap_increase_flag,
                 "ni_pos_flag": ni_pos_flag,
                 "cf_pos_flag": cf_pos_flag,
@@ -736,6 +752,9 @@ def fetch_krx_market_data():
         year, reprt_code = top_period.split("-")
         dart_basis = f"{year}년 {REPORT_LABELS.get(reprt_code, reprt_code)}"
 
+    def to_eok(v):
+        return int(v / 100000000) if v is not None else None
+
     def package_super_value(base):
         packaged = []
         for idx, s in enumerate(base[:30]):
@@ -752,7 +771,13 @@ def fetch_krx_market_data():
                 "pfcr_r": s["pfcr_r"],
                 "psr": s["psr"],
                 "psr_r": s["psr_r"],
-                "avg_r": round(s["int_score"] / 4, 1)
+                "avg_r": round(s["int_score"] / 4, 1),
+                "quarter_net_income": to_eok(s["quarter_net_income"]),
+                "equity": to_eok(s["equity"]),
+                "quarter_operating_cf": to_eok(s["quarter_operating_cf"]),
+                "quarter_capex": to_eok(s["quarter_capex"]),
+                "fcf": to_eok(s["fcf"]),
+                "quarter_revenue": to_eok(s["quarter_revenue"]),
             })
         return packaged
 
@@ -776,7 +801,13 @@ def fetch_krx_market_data():
                 "ni_qoq_r": s["ni_qoq_r"],
                 "ni_growth_yoy": s["ni_growth_yoy"],
                 "ni_yoy_r": s["ni_yoy_r"],
-                "avg_r": round(s["momentum_score"] / 4, 1)
+                "avg_r": round(s["momentum_score"] / 4, 1),
+                "quarter_operating_income": to_eok(s["quarter_operating_income"]),
+                "prev_operating_income": to_eok(s["prev_operating_income"]),
+                "operating_income_yoy": to_eok(s["operating_income_yoy"]),
+                "quarter_net_income": to_eok(s["quarter_net_income"]),
+                "prev_net_income": to_eok(s["prev_net_income"]),
+                "net_income_yoy": to_eok(s["net_income_yoy"]),
             })
         return packaged
 
@@ -794,8 +825,12 @@ def fetch_krx_market_data():
             "cap_increase_flag": s["cap_increase_flag"],
             "ni_pos_flag": s["ni_pos_flag"],
             "cf_pos_flag": s["cf_pos_flag"],
+            "quarter_net_income": int(s["quarter_net_income"] / 100000000) if s["quarter_net_income"] is not None else None,  # 억 단위
+            "quarter_operating_cf": int(s["quarter_operating_cf"] / 100000000) if s["quarter_operating_cf"] is not None else None,  # 억 단위
             "f_score": s["f_score"],
             "pbr": s["pbr"],
+            "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
+            "equity": int(s["equity"] / 100000000),  # 억 단위
         })
 
     # NCAV 상위 20개 패키징 (GP/A 필터 미적용 / 적용)
@@ -810,7 +845,14 @@ def fetch_krx_market_data():
                 "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
                 "quarter_net_income": int(s["quarter_net_income"] / 100000000),  # 억 단위
                 "gpa": s["gpa"],
-                "debt_ratio": s["debt_ratio"]
+                "debt_ratio": s["debt_ratio"],
+                "current_assets": to_eok(s["current_assets"]),
+                "liabilities": to_eok(s["liabilities"]),
+                "assets": to_eok(s["assets"]),
+                "quarter_revenue": to_eok(s["quarter_revenue"]),
+                "quarter_cost_of_sales": to_eok(s["quarter_cost_of_sales"]),
+                "borrowings": to_eok(s["borrowings"]),
+                "equity": to_eok(s["equity"]),
             })
         return packaged
 
