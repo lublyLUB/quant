@@ -98,14 +98,11 @@
             <label id="super-smallcap-lbl" style="display:none;"><input type="checkbox" id="smallcap-checkbox" onchange="handleSmallcapToggle()"> 소형주(하위 20%)</label>
             <label id="momentum-smallcap-lbl" style="display:none;"><input type="checkbox" id="momentum-smallcap-checkbox" onchange="handleMomentumSmallcapToggle()"> 소형주(하위 20%)</label>
             <label id="ncav-gpa-lbl" style="display:none;"><input type="checkbox" id="gpa-checkbox" onchange="handleGpaToggle()"> GP/A 필터(상위 50%)</label>
+            <label id="ultra-smallcap-lbl" style="display:none;"><input type="checkbox" id="ultra-smallcap-checkbox" onchange="handleUltraSmallcapToggle()"> 소형주(하위 20%)</label>
         </div>
     </div>
-    <div id="recommend-filter-lbl" style="display:block; font-size: 11px; margin-bottom: 10px;">
-        <span style="color:#64748b;">전략을 선택하면 선택한 전략을 모두 만족하는 종목만 표시합니다 (미선택 시 2개 이상 전략에 중복 추천된 종목 표시)</span><br>
-        <label style="margin-right:10px;"><input type="checkbox" id="recommend-chk-fscore" onchange="handleRecommendFilterChange()"> F-스코어</label>
-        <label style="margin-right:10px;"><input type="checkbox" id="recommend-chk-momentum" onchange="handleRecommendFilterChange()"> 모멘텀</label>
-        <label style="margin-right:10px;"><input type="checkbox" id="recommend-chk-super" onchange="handleRecommendFilterChange()"> 슈퍼가치</label>
-        <label><input type="checkbox" id="recommend-chk-ncav" onchange="handleRecommendFilterChange()"> NCAV</label>
+    <div id="recommend-filter-lbl" style="display:block; font-size: 11px; margin-bottom: 10px; color:#64748b;">
+        전략 번호 아래 체크박스를 선택하면 선택한 전략을 모두 만족하는 종목만 표시합니다 (미선택 시 2개 이상 전략에 중복 추천된 종목 표시)
     </div>
 
     <table id="quant-table">
@@ -120,12 +117,12 @@
         { key: 'momentum', num: 11, name: '이익 모멘텀', tags: ['momentum'], ready: true },
         { key: 'ncav', num: 12, name: 'NCAV전략 업그레이드', tags: ['value', 'quality'], ready: true },
         { key: 'super', num: 13, name: '오리지널 슈퍼 가치 전략 업그레이드', tags: ['value'], ready: true },
-        { key: 'strategy15', num: 15, name: '슈퍼 퀄리티', tags: ['quality'], ready: false },
-        { key: 'strategy16', num: 16, name: '파마의 최종 병기', tags: ['value', 'quality'], ready: false },
-        { key: 'strategy18', num: 18, name: '슈퍼 가치+퀄리티', tags: ['value', 'quality'], ready: false },
-        { key: 'strategy19', num: 19, name: '밸류+모멘텀', tags: ['value', 'momentum'], ready: false },
-        { key: 'strategy20', num: 20, name: '슈퍼 퀄리티+모멘텀', tags: ['quality', 'momentum'], ready: false },
-        { key: 'strategy21', num: 21, name: '울트라', tags: ['value', 'quality', 'momentum'], ready: false },
+        { key: 'strategy15', num: 15, name: '슈퍼 퀄리티', tags: ['quality'], ready: true },
+        { key: 'strategy16', num: 16, name: '파마의 최종 병기', tags: ['value', 'quality'], ready: true },
+        { key: 'strategy18', num: 18, name: '슈퍼 가치+퀄리티', tags: ['value', 'quality'], ready: true },
+        { key: 'strategy19', num: 20, name: '밸류+모멘텀', tags: ['value', 'momentum'], ready: true },
+        { key: 'strategy20', num: 21, name: '슈퍼 퀄리티+모멘텀', tags: ['quality', 'momentum'], ready: true },
+        { key: 'strategy21', num: 22, name: '울트라', tags: ['value', 'quality', 'momentum'], ready: true },
     ];
 
     function renderStrategyTabs() {
@@ -142,11 +139,12 @@
     let currentSortKey = 'rank';
     let isAscending = true;
     let searchQuery = "";
-    let superData = [], superSmallcapData = [], ncavData = [], ncavGpaData = [], fscoreData = [];
+    let superData = [], superSmallcapData = [], ncavData = [], ncavGpaData = [], fscoreData = [], qualityData = [], famaData = [], superQualityData = [], valueMomentumData = [], qualityMomentumData = [], ultraData = [], ultraSmallcapData = [];
     let momentumData = [], momentumSmallcapData = [];
     let isSmallcapMode = false;
     let isGpaMode = false;
     let isMomentumSmallcapMode = false;
+    let isUltraSmallcapMode = false;
     let recommendDataCache = [];
     let displayMode = 'simple';  // 'simple' | 'detail' - 19개 지표를 최종값으로 보여줄지, 계산식(분수)으로 보여줄지
 
@@ -223,6 +221,7 @@
         document.getElementById("super-smallcap-lbl").style.display = (menuType === 'super') ? 'block' : 'none';
         document.getElementById("ncav-gpa-lbl").style.display = (menuType === 'ncav') ? 'block' : 'none';
         document.getElementById("momentum-smallcap-lbl").style.display = (menuType === 'momentum') ? 'block' : 'none';
+        document.getElementById("ultra-smallcap-lbl").style.display = (menuType === 'strategy21') ? 'block' : 'none';
         document.getElementById("recommend-filter-lbl").style.display = (menuType === 'recommend') ? 'block' : 'none';
         document.getElementById("sell-strategy-lbl").style.display = (menuType !== 'recommend' && menuType !== 'rebalance') ? 'inline-flex' : 'none';
         document.getElementById("control-bar").style.display = (menuType === 'rebalance') ? 'none' : 'flex';
@@ -231,21 +230,32 @@
         refreshCurrentTable();
     }
 
-    function handleRecommendFilterChange() {
+    const RECOMMEND_SOURCES = [
+        { key: 'fscore', num: 6, getData: () => fscoreData },
+        { key: 'momentum', num: 11, getData: () => isMomentumSmallcapMode ? momentumSmallcapData : momentumData },
+        { key: 'ncav', num: 12, getData: () => isGpaMode ? ncavGpaData : ncavData },
+        { key: 'super', num: 13, getData: () => isSmallcapMode ? superSmallcapData : superData },
+        { key: 'strategy15', num: 15, getData: () => qualityData },
+        { key: 'strategy16', num: 16, getData: () => famaData },
+        { key: 'strategy18', num: 18, getData: () => superQualityData },
+        { key: 'strategy19', num: 20, getData: () => valueMomentumData },
+        { key: 'strategy20', num: 21, getData: () => qualityMomentumData },
+        { key: 'strategy21', num: 22, getData: () => isUltraSmallcapMode ? ultraSmallcapData : ultraData },
+    ];
+
+    let recommendCheckedKeys = new Set();
+
+    function handleRecommendHeaderCheckbox(key) {
+        const checkbox = document.getElementById(`recommend-chk-${key}`);
+        if (checkbox.checked) recommendCheckedKeys.add(key);
+        else recommendCheckedKeys.delete(key);
         currentSortKey = 'rank';
         isAscending = true;
         refreshCurrentTable();
     }
 
-    const RECOMMEND_SOURCES = [
-        { key: 'fscore', label: 'F-스코어', getData: () => fscoreData },
-        { key: 'momentum', label: '모멘텀', getData: () => isMomentumSmallcapMode ? momentumSmallcapData : momentumData },
-        { key: 'super', label: '슈퍼가치', getData: () => isSmallcapMode ? superSmallcapData : superData },
-        { key: 'ncav', label: 'NCAV', getData: () => ncavData },
-    ];
-
     function computeRecommendData() {
-        const checkedSources = RECOMMEND_SOURCES.filter(src => document.getElementById(`recommend-chk-${src.key}`).checked);
+        const checkedSources = RECOMMEND_SOURCES.filter(src => recommendCheckedKeys.has(src.key));
         const activeSources = checkedSources.length > 0 ? checkedSources : RECOMMEND_SOURCES;
         const requireAll = checkedSources.length > 0;
 
@@ -297,6 +307,13 @@
         refreshCurrentTable();
     }
 
+    function handleUltraSmallcapToggle() {
+        isUltraSmallcapMode = document.getElementById("ultra-smallcap-checkbox").checked;
+        currentSortKey = 'rank';
+        isAscending = true;
+        refreshCurrentTable();
+    }
+
     function refreshCurrentTable() {
         if (currentMenu === 'recommend') {
             document.getElementById("strategy-title").innerText = "⭐ 추천 종목";
@@ -317,6 +334,24 @@
         } else if (currentMenu === 'ncav') {
             document.getElementById("strategy-title").innerText = "🛡️ 12. NCAV 청산가치 & 퀄리티 스크리너" + (isGpaMode ? " (GP/A 필터)" : "");
             renderNcavTable(filterBySearch(isGpaMode ? ncavGpaData : ncavData));
+        } else if (currentMenu === 'strategy15') {
+            document.getElementById("strategy-title").innerText = "💎 15. 슈퍼 퀄리티";
+            renderQualityTable(filterBySearch(qualityData));
+        } else if (currentMenu === 'strategy16') {
+            document.getElementById("strategy-title").innerText = "🧪 16. 파마의 최종 병기";
+            renderFamaTable(filterBySearch(famaData));
+        } else if (currentMenu === 'strategy18') {
+            document.getElementById("strategy-title").innerText = "⚡ 18. 슈퍼 가치+퀄리티";
+            renderSuperQualityTable(filterBySearch(superQualityData));
+        } else if (currentMenu === 'strategy19') {
+            document.getElementById("strategy-title").innerText = "🚀 20. 밸류+모멘텀";
+            renderValueMomentumTable(filterBySearch(valueMomentumData));
+        } else if (currentMenu === 'strategy20') {
+            document.getElementById("strategy-title").innerText = "🌟 21. 슈퍼 퀄리티+모멘텀";
+            renderQualityMomentumTable(filterBySearch(qualityMomentumData));
+        } else if (currentMenu === 'strategy21') {
+            document.getElementById("strategy-title").innerText = "🔥 22. 울트라" + (isUltraSmallcapMode ? " (소형주)" : "");
+            renderUltraTable(filterBySearch(isUltraSmallcapMode ? ultraSmallcapData : ultraData));
         } else {
             const strategy = STRATEGIES.find(s => s.key === currentMenu);
             if (strategy) {
@@ -340,7 +375,12 @@
                     <th style="width: 10%;" onclick="sortData('rank')">순위</th>
                     <th style="width: 26%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
                     <th style="width: 10%;" onclick="sortData('count')">중복<br>전략수</th>
-                    ${RECOMMEND_SOURCES.map(src => `<th style="width: ${colWidth}%;">${src.label}</th>`).join('')}
+                    ${RECOMMEND_SOURCES.map(src => `
+                        <th style="width: ${colWidth}%; font-size:9px;">
+                            ${src.num}<br>
+                            <input type="checkbox" id="recommend-chk-${src.key}" onclick="event.stopPropagation()" onchange="handleRecommendHeaderCheckbox('${src.key}')" ${recommendCheckedKeys.has(src.key) ? 'checked' : ''}>
+                        </th>
+                    `).join('')}
                 </tr>
             </thead>
             <tbody>`;
@@ -368,6 +408,331 @@
     function renderPlaceholderTable() {
         document.getElementById("quant-table").innerHTML =
             `<tbody><tr><td style="padding:30px; color:#94a3b8;">⏳ 준비 중인 전략입니다.</td></tr></tbody>`;
+    }
+
+    function renderUltraTable(data) {
+        const isDetail = displayMode === 'detail';
+        let html = isDetail ? `
+            <thead>
+                <tr>
+                    <th style="width: 5%;" onclick="sortData('rank')">순위</th>
+                    <th style="width: 16%;" onclick="sortData('name')">종목명</th>
+                    <th style="width: 5%;" onclick="sortData('per')">PER</th>
+                    <th style="width: 5%;" onclick="sortData('pfcr')">PFCR</th>
+                    <th style="width: 5%;" onclick="sortData('pbr')">PBR</th>
+                    <th style="width: 5%;" onclick="sortData('psr')">PSR</th>
+                    <th style="width: 5%;" onclick="sortData('gpa')">GP/A</th>
+                    <th style="width: 9%;" onclick="sortData('op_debt_growth_yoy')">영업이익/<br>차입금</th>
+                    <th style="width: 8%;" onclick="sortData('asset_growth_yoy')">자산<br>성장률</th>
+                    <th style="width: 7%;" onclick="sortData('price_volatility')">변동성</th>
+                    <th style="width: 8%;" onclick="sortData('op_growth_qoq')">영업이익<br>QoQ</th>
+                    <th style="width: 8%;" onclick="sortData('op_growth_yoy')">영업이익<br>YoY</th>
+                    <th style="width: 8%;" onclick="sortData('ni_growth_qoq')">순이익<br>QoQ</th>
+                    <th style="width: 6%;" onclick="sortData('ni_growth_yoy')">순이익<br>YoY</th>
+                </tr>
+            </thead>
+            <tbody>` : `
+            <thead>
+                <tr>
+                    <th style="width: 8%;" onclick="sortData('rank')">순위</th>
+                    <th style="width: 25%;" onclick="sortData('name')">종목명</th>
+                    <th style="width: 12%;" onclick="sortData('price')">종가</th>
+                    <th style="width: 18%;" onclick="sortData('market_cap')">시가<br>총액</th>
+                    <th style="width: 18%;" onclick="sortData('avg_r')">평균</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+        data.forEach(s => {
+            if (isDetail) {
+                html += `<tr>
+                    <td class="rank-main">${s.rank}</td>
+                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${s.per.toFixed(1)}<span class="sub-text">${s.per_r}위</span></td>
+                    <td>${s.pfcr.toFixed(1)}<span class="sub-text">${s.pfcr_r}위</span></td>
+                    <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
+                    <td>${s.psr.toFixed(2)}<span class="sub-text">${s.psr_r}위</span></td>
+                    <td>${s.gpa.toFixed(1)}<span class="sub-text">${s.gpa_r}위</span></td>
+                    <td>${s.op_debt_growth_yoy.toFixed(1)}%<span class="sub-text">${s.op_debt_r}위</span></td>
+                    <td>${s.asset_growth_yoy.toFixed(1)}%<span class="sub-text">${s.asset_growth_r}위</span></td>
+                    <td>${s.price_volatility.toFixed(1)}%<span class="sub-text">${s.volatility_r}위</span></td>
+                    <td>${s.op_growth_qoq.toFixed(1)}%<span class="sub-text">${s.op_qoq_r}위</span></td>
+                    <td>${s.op_growth_yoy.toFixed(1)}%<span class="sub-text">${s.op_yoy_r}위</span></td>
+                    <td>${s.ni_growth_qoq.toFixed(1)}%<span class="sub-text">${s.ni_qoq_r}위</span></td>
+                    <td>${s.ni_growth_yoy.toFixed(1)}%<span class="sub-text">${s.ni_yoy_r}위</span></td>
+                </tr>`;
+            } else {
+                html += `<tr>
+                    <td class="rank-main">${s.rank}</td>
+                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${formatNumber(s.price)}</td>
+                    <td>${formatNumber(s.market_cap)}억</td>
+                    <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
+                </tr>`;
+            }
+        });
+        html += `</tbody>`;
+        document.getElementById("quant-table").innerHTML = html;
+    }
+
+    function renderQualityMomentumTable(data) {
+        const isDetail = displayMode === 'detail';
+        let html = isDetail ? `
+            <thead>
+                <tr>
+                    <th style="width: 6%;" onclick="sortData('rank')">순위</th>
+                    <th style="width: 14%;" onclick="sortData('name')">종목명</th>
+                    <th style="width: 10%;" onclick="sortData('gpa')">GP/A</th>
+                    <th style="width: 13%;" onclick="sortData('op_debt_growth_yoy')">영업이익/<br>차입금</th>
+                    <th style="width: 11.5%;" onclick="sortData('asset_growth_yoy')">자산<br>성장률</th>
+                    <th style="width: 11%;" onclick="sortData('price_volatility')">변동성</th>
+                    <th style="width: 11%;" onclick="sortData('op_growth_qoq')">영업이익<br>QoQ</th>
+                    <th style="width: 11%;" onclick="sortData('op_growth_yoy')">영업이익<br>YoY</th>
+                    <th style="width: 11%;" onclick="sortData('ni_growth_qoq')">순이익<br>QoQ</th>
+                    <th style="width: 11%;" onclick="sortData('ni_growth_yoy')">순이익<br>YoY</th>
+                </tr>
+            </thead>
+            <tbody>` : `
+            <thead>
+                <tr>
+                    <th style="width: 8%;" onclick="sortData('rank')">순위</th>
+                    <th style="width: 25%;" onclick="sortData('name')">종목명</th>
+                    <th style="width: 12%;" onclick="sortData('price')">종가</th>
+                    <th style="width: 18%;" onclick="sortData('market_cap')">시가<br>총액</th>
+                    <th style="width: 18%;" onclick="sortData('avg_r')">평균</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+        data.forEach(s => {
+            if (isDetail) {
+                html += `<tr>
+                    <td class="rank-main">${s.rank}</td>
+                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${s.gpa.toFixed(1)}<span class="sub-text">${s.gpa_r}위</span></td>
+                    <td>${s.op_debt_growth_yoy.toFixed(1)}%<span class="sub-text">${s.op_debt_r}위</span></td>
+                    <td>${s.asset_growth_yoy.toFixed(1)}%<span class="sub-text">${s.asset_growth_r}위</span></td>
+                    <td>${s.price_volatility.toFixed(1)}%<span class="sub-text">${s.volatility_r}위</span></td>
+                    <td>${s.op_growth_qoq.toFixed(1)}%<span class="sub-text">${s.op_qoq_r}위</span></td>
+                    <td>${s.op_growth_yoy.toFixed(1)}%<span class="sub-text">${s.op_yoy_r}위</span></td>
+                    <td>${s.ni_growth_qoq.toFixed(1)}%<span class="sub-text">${s.ni_qoq_r}위</span></td>
+                    <td>${s.ni_growth_yoy.toFixed(1)}%<span class="sub-text">${s.ni_yoy_r}위</span></td>
+                </tr>`;
+            } else {
+                html += `<tr>
+                    <td class="rank-main">${s.rank}</td>
+                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${formatNumber(s.price)}</td>
+                    <td>${formatNumber(s.market_cap)}억</td>
+                    <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
+                </tr>`;
+            }
+        });
+        html += `</tbody>`;
+        document.getElementById("quant-table").innerHTML = html;
+    }
+
+    function renderValueMomentumTable(data) {
+        const isDetail = displayMode === 'detail';
+        let html = isDetail ? `
+            <thead>
+                <tr>
+                    <th style="width: 6%;" onclick="sortData('rank')">순위</th>
+                    <th style="width: 22%;" onclick="sortData('name')">종목명</th>
+                    <th style="width: 8%;" onclick="sortData('per')">PER</th>
+                    <th style="width: 8%;" onclick="sortData('pfcr')">PFCR</th>
+                    <th style="width: 8%;" onclick="sortData('pbr')">PBR</th>
+                    <th style="width: 8%;" onclick="sortData('psr')">PSR</th>
+                    <th style="width: 10%;" onclick="sortData('op_growth_qoq')">영업이익<br>QoQ</th>
+                    <th style="width: 10%;" onclick="sortData('op_growth_yoy')">영업이익<br>YoY</th>
+                    <th style="width: 10%;" onclick="sortData('ni_growth_qoq')">순이익<br>QoQ</th>
+                    <th style="width: 10%;" onclick="sortData('ni_growth_yoy')">순이익<br>YoY</th>
+                </tr>
+            </thead>
+            <tbody>` : `
+            <thead>
+                <tr>
+                    <th style="width: 8%;" onclick="sortData('rank')">순위</th>
+                    <th style="width: 25%;" onclick="sortData('name')">종목명</th>
+                    <th style="width: 12%;" onclick="sortData('price')">종가</th>
+                    <th style="width: 18%;" onclick="sortData('market_cap')">시가<br>총액</th>
+                    <th style="width: 18%;" onclick="sortData('avg_r')">평균</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+        data.forEach(s => {
+            if (isDetail) {
+                html += `<tr>
+                    <td class="rank-main">${s.rank}</td>
+                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${s.per.toFixed(1)}<span class="sub-text">${s.per_r}위</span></td>
+                    <td>${s.pfcr.toFixed(2)}<span class="sub-text">${s.pfcr_r}위</span></td>
+                    <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
+                    <td>${s.psr.toFixed(2)}<span class="sub-text">${s.psr_r}위</span></td>
+                    <td>${s.op_growth_qoq.toFixed(1)}%<span class="sub-text">${s.op_qoq_r}위</span></td>
+                    <td>${s.op_growth_yoy.toFixed(1)}%<span class="sub-text">${s.op_yoy_r}위</span></td>
+                    <td>${s.ni_growth_qoq.toFixed(1)}%<span class="sub-text">${s.ni_qoq_r}위</span></td>
+                    <td>${s.ni_growth_yoy.toFixed(1)}%<span class="sub-text">${s.ni_yoy_r}위</span></td>
+                </tr>`;
+            } else {
+                html += `<tr>
+                    <td class="rank-main">${s.rank}</td>
+                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${formatNumber(s.price)}</td>
+                    <td>${formatNumber(s.market_cap)}억</td>
+                    <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
+                </tr>`;
+            }
+        });
+        html += `</tbody>`;
+        document.getElementById("quant-table").innerHTML = html;
+    }
+
+    function renderSuperQualityTable(data) {
+        const isDetail = displayMode === 'detail';
+        let html = isDetail ? `
+            <thead>
+                <tr>
+                    <th style="width: 6%;" onclick="sortData('rank')">순위</th>
+                    <th style="width: 23%;" onclick="sortData('name')">종목명</th>
+                    <th style="width: 8%;" onclick="sortData('per')">PER</th>
+                    <th style="width: 8%;" onclick="sortData('pcr')">PCR</th>
+                    <th style="width: 8%;" onclick="sortData('pbr')">PBR</th>
+                    <th style="width: 8%;" onclick="sortData('psr')">PSR</th>
+                    <th style="width: 8%;" onclick="sortData('gpa')">GP/A</th>
+                    <th style="width: 13%;" onclick="sortData('op_debt_growth_yoy')">영업이익/<br>차입금</th>
+                    <th style="width: 9%;" onclick="sortData('asset_growth_yoy')">자산<br>성장률</th>
+                    <th style="width: 9%;" onclick="sortData('price_volatility')">변동성</th>
+                </tr>
+            </thead>
+            <tbody>` : `
+            <thead>
+                <tr>
+                    <th style="width: 7%;" onclick="sortData('rank')">순위</th>
+                    <th style="width: 22%;" onclick="sortData('name')">종목명</th>
+                    <th style="width: 9%;" onclick="sortData('price')">종가</th>
+                    <th style="width: 14%;" onclick="sortData('market_cap')">시가<br>총액</th>
+                    <th style="width: 24%;" onclick="sortData('f_score')">신F-스코어</th>
+                    <th style="width: 24%;" onclick="sortData('avg_r')">평균</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+        data.forEach(s => {
+            if (isDetail) {
+                html += `<tr>
+                    <td class="rank-main">${s.rank}</td>
+                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${s.per.toFixed(1)}<span class="sub-text">${s.per_r}위</span></td>
+                    <td>${s.pcr.toFixed(1)}<span class="sub-text">${s.pcr_r}위</span></td>
+                    <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
+                    <td>${s.psr.toFixed(2)}<span class="sub-text">${s.psr_r}위</span></td>
+                    <td>${s.gpa.toFixed(1)}<span class="sub-text">${s.gpa_r}위</span></td>
+                    <td>${s.op_debt_growth_yoy.toFixed(1)}%<span class="sub-text">${s.op_debt_r}위</span></td>
+                    <td>${s.asset_growth_yoy.toFixed(1)}%<span class="sub-text">${s.asset_growth_r}위</span></td>
+                    <td>${s.price_volatility.toFixed(1)}%<span class="sub-text">${s.volatility_r}위</span></td>
+                </tr>`;
+            } else {
+                html += `<tr>
+                    <td class="rank-main">${s.rank}</td>
+                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${formatNumber(s.price)}</td>
+                    <td>${formatNumber(s.market_cap)}억</td>
+                    <td>3점</td>
+                    <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
+                </tr>`;
+            }
+        });
+        html += `</tbody>`;
+        document.getElementById("quant-table").innerHTML = html;
+    }
+
+    function renderFamaTable(data) {
+        let html = `
+            <thead>
+                <tr>
+                    <th style="width: 6%;" onclick="sortData('rank')">순위</th>
+                    <th style="width: 18%;" onclick="sortData('name')">종목명</th>
+                    <th style="width: 8%;" onclick="sortData('price')">종가</th>
+                    <th style="width: 12%;" onclick="sortData('market_cap')">시가<br>총액</th>
+                    <th style="width: 14%;" onclick="sortData('pbr')">PBR</th>
+                    <th style="width: 14%;" onclick="sortData('gpa')">GP/A</th>
+                    <th style="width: 14%;" onclick="sortData('asset_growth_yoy')">자산<br>성장률</th>
+                    <th style="width: 14%;" onclick="sortData('avg_r')">평균</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+        data.forEach(s => {
+            html += `<tr>
+                <td class="rank-main">${s.rank}</td>
+                <td>${getStarHtml(s.name)}${s.name}</td>
+                <td>${formatNumber(s.price)}</td>
+                <td>${formatNumber(s.market_cap)}억</td>
+                <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
+                <td>${s.gpa.toFixed(2)}<span class="sub-text">${s.gpa_r}위</span></td>
+                <td>${s.asset_growth_yoy.toFixed(1)}%<span class="sub-text">${s.asset_growth_r}위</span></td>
+                <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
+            </tr>`;
+        });
+        html += `</tbody>`;
+        document.getElementById("quant-table").innerHTML = html;
+    }
+
+    function renderQualityTable(data) {
+        const isDetail = displayMode === 'detail';
+        const pct = v => v == null ? 'N/A' : v.toFixed(1) + '%';
+        let html = isDetail ? `
+            <thead>
+                <tr>
+                    <th style="width: 6%;" onclick="sortData('rank')">순위</th>
+                    <th style="width: 16%;" onclick="sortData('name')">종목명</th>
+                    <th style="width: 9%;" onclick="sortData('price')">종가</th>
+                    <th style="width: 10%;" onclick="sortData('cap_increase_flag')">유상증자</th>
+                    <th style="width: 11%;" onclick="sortData('gpa')">GP/A</th>
+                    <th style="width: 16%;" onclick="sortData('op_debt_growth_yoy')">영업이익/<br>차입금 YoY</th>
+                    <th style="width: 16%;" onclick="sortData('asset_growth_yoy')">자산<br>성장률</th>
+                    <th style="width: 16%;" onclick="sortData('price_volatility')">주가<br>변동성</th>
+                </tr>
+            </thead>
+            <tbody>` : `
+            <thead>
+                <tr>
+                    <th style="width: 8%;" onclick="sortData('rank')">순위</th>
+                    <th style="width: 26%;" onclick="sortData('name')">종목명</th>
+                    <th style="width: 12%;" onclick="sortData('price')">종가</th>
+                    <th style="width: 27%;" onclick="sortData('cap_increase_flag')">신F-스코어</th>
+                    <th style="width: 27%;" onclick="sortData('avg_r')">평균</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+        data.forEach(s => {
+            const nameCell = `${getStarHtml(s.name)}${s.name}`;
+            if (isDetail) {
+                html += `<tr>
+                    <td class="rank-main">${s.rank}</td>
+                    <td>${nameCell}</td>
+                    <td>${formatNumber(s.price)}</td>
+                    <td>${s.cap_increase_flag === 1 ? 'X' : 'O'}</td>
+                    <td>${s.gpa == null ? 'N/A' : s.gpa.toFixed(2)}<span class="sub-text">${s.gpa_r}위</span></td>
+                    <td>${pct(s.op_debt_growth_yoy)}<span class="sub-text">${s.op_debt_r}위</span></td>
+                    <td>${pct(s.asset_growth_yoy)}<span class="sub-text">${s.asset_growth_r}위</span></td>
+                    <td>${pct(s.price_volatility)}<span class="sub-text">${s.volatility_r}위</span></td>
+                </tr>`;
+            } else {
+                html += `<tr>
+                    <td class="rank-main">${s.rank}</td>
+                    <td>${nameCell}</td>
+                    <td>${formatNumber(s.price)}</td>
+                    <td>${s.cap_increase_flag + s.ni_pos_flag + s.cf_pos_flag}점</td>
+                    <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
+                </tr>`;
+            }
+        });
+        html += `</tbody>`;
+        document.getElementById("quant-table").innerHTML = html;
     }
 
     function renderFscoreTable(data) {
@@ -596,6 +961,12 @@
 
         let targetDataset = [];
         if (currentMenu === 'fscore') targetDataset = fscoreData;
+        else if (currentMenu === 'strategy15') targetDataset = qualityData;
+        else if (currentMenu === 'strategy16') targetDataset = famaData;
+        else if (currentMenu === 'strategy18') targetDataset = superQualityData;
+        else if (currentMenu === 'strategy19') targetDataset = valueMomentumData;
+        else if (currentMenu === 'strategy20') targetDataset = qualityMomentumData;
+        else if (currentMenu === 'strategy21') targetDataset = isUltraSmallcapMode ? ultraSmallcapData : ultraData;
         else if (currentMenu === 'momentum') targetDataset = isMomentumSmallcapMode ? momentumSmallcapData : momentumData;
         else if (currentMenu === 'super') targetDataset = isSmallcapMode ? superSmallcapData : superData;
         else if (currentMenu === 'ncav') targetDataset = isGpaMode ? ncavGpaData : ncavData;
@@ -620,6 +991,13 @@
             momentumData = KOSPI_QUANT_PACKAGE.momentum_value;
             momentumSmallcapData = KOSPI_QUANT_PACKAGE.momentum_value_smallcap;
             fscoreData = KOSPI_QUANT_PACKAGE.fscore_value;
+            qualityData = KOSPI_QUANT_PACKAGE.quality_value;
+            famaData = KOSPI_QUANT_PACKAGE.fama_value;
+            superQualityData = KOSPI_QUANT_PACKAGE.super_quality_value;
+            valueMomentumData = KOSPI_QUANT_PACKAGE.value_momentum_value;
+            qualityMomentumData = KOSPI_QUANT_PACKAGE.quality_momentum_value;
+            ultraData = KOSPI_QUANT_PACKAGE.ultra_value;
+            ultraSmallcapData = KOSPI_QUANT_PACKAGE.ultra_value_smallcap;
             ncavData = KOSPI_QUANT_PACKAGE.ncav_value;
             ncavGpaData = KOSPI_QUANT_PACKAGE.ncav_value_gpa;
 

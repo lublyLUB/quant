@@ -581,14 +581,15 @@ def fetch_krx_market_data():
             assets_yoy = fin.get("assets_yoy")
             asset_growth_yoy = growth_rate(assets, assets_yoy)
 
+            # 음수/적자도 실제 비율로 계산하고, 데이터 자체가 없거나(None) 분모가 0일 때만 0.0(계산불가 자리값)
             market_cap = s["market_cap"]
-            per = round(market_cap / quarter_net_income, 2) if quarter_net_income and quarter_net_income > 0 else 0.0
-            pbr = round(market_cap / equity, 2) if equity > 0 else 0.0
-            psr = round(market_cap / quarter_revenue, 2) if quarter_revenue and quarter_revenue > 0 else 0.0
-            pcr = round(market_cap / quarter_operating_cf, 2) if quarter_operating_cf and quarter_operating_cf > 0 else 0.0
+            per = round(market_cap / quarter_net_income, 2) if quarter_net_income else 0.0
+            pbr = round(market_cap / equity, 2) if equity else 0.0
+            psr = round(market_cap / quarter_revenue, 2) if quarter_revenue else 0.0
+            pcr = round(market_cap / quarter_operating_cf, 2) if quarter_operating_cf else 0.0
             fcf = (quarter_operating_cf - quarter_capex) if (quarter_operating_cf is not None and quarter_capex is not None) else None
-            pfcr = round(market_cap / fcf, 2) if fcf and fcf > 0 else 0.0
-            debt_ratio = round(borrowings / equity * 100, 1) if equity > 0 else None  # 17. 차입금비율(=차입금/자본)
+            pfcr = round(market_cap / fcf, 2) if fcf else 0.0
+            debt_ratio = round(borrowings / equity * 100, 1) if equity else None  # 17. 차입금비율(=차입금/자본)
             # 지주회사 등 일부 업종은 표준 IFRS 매출/매출원가 계정을 쓰지 않아 데이터가 없을 수 있음
             gpa = (
                 round((quarter_revenue - quarter_cost_of_sales) / assets * 100, 1)
@@ -662,10 +663,11 @@ def fetch_krx_market_data():
 
     # 13. 슈퍼 가치 4대 통합 스크리너 연산부
     def rank_super_value(pool):
-        # 음수가 있을 수 있으므로 원값 오름차순이 아니라 역수의 내림차순으로 순위를 매긴다
+        # 음수가 있을 수 있으므로 원값 오름차순이 아니라 역수의 내림차순으로 순위를 매긴다 (음수도 포함)
+        # 0.0은 "계산 불가(데이터 없음)"를 뜻하는 자리값이라 0으로 나누는 걸 막기 위해서만 제외한다
         # dict()로 복사해서 사용 - 전체/소형주 풀을 번갈아 랭킹할 때 같은 종목 객체를 공유하면
         # 나중 호출의 순위가 앞서 계산해둔 결과를 덮어써버리는 문제를 방지한다
-        base = [dict(s) for s in pool if s["per"] > 0 and s["pbr"] > 0 and s["psr"] > 0 and s["pfcr"] > 0]
+        base = [dict(s) for s in pool if s["per"] != 0 and s["pbr"] != 0 and s["psr"] != 0 and s["pfcr"] != 0]
         base.sort(key=lambda x: 1 / x["per"], reverse=True)
         for idx, s in enumerate(base): s["per_r"] = idx + 1
         base.sort(key=lambda x: 1 / x["pbr"], reverse=True)
@@ -710,6 +712,204 @@ def fetch_krx_market_data():
     # 6. 신 F-스코어+저PBR 연산부 - 3개 지표(유상증자 없음/순이익>=0/영업CF>=0) 모두 충족하는 종목만, PBR 오름차순
     fscore_base = [s for s in valid_stocks if s["f_score"] == 3 and s["pbr"] > 0]
     fscore_base.sort(key=lambda x: x["pbr"])
+
+    # 15. 슈퍼 퀄리티 연산부 - 6번과 동일한 F-스코어 조건(유상증자 없음/순이익>=0/영업CF>=0)이지만
+    # PBR 대신 6.GP/A, 8.영업이익/차입금 증가율, 9.자산성장률, 10.주가변동성 4개 지표로 랭킹
+    quality_base = [
+        s for s in valid_stocks
+        if s["f_score"] == 3
+        and s["gpa"] is not None
+        and s["op_debt_growth_yoy"] is not None
+        and s["asset_growth_yoy"] is not None
+        and s["price_volatility"] is not None
+    ]
+    quality_base = [dict(s) for s in quality_base]
+    quality_base.sort(key=lambda x: x["gpa"], reverse=True)  # 6. GP/A 내림차순
+    for idx, s in enumerate(quality_base): s["gpa_r"] = idx + 1
+    quality_base.sort(key=lambda x: x["op_debt_growth_yoy"], reverse=True)  # 8. 영업이익/차입금 증가율 내림차순
+    for idx, s in enumerate(quality_base): s["op_debt_r"] = idx + 1
+    quality_base.sort(key=lambda x: x["asset_growth_yoy"])  # 9. 자산성장률 오름차순
+    for idx, s in enumerate(quality_base): s["asset_growth_r"] = idx + 1
+    quality_base.sort(key=lambda x: x["price_volatility"])  # 10. 주가 변동성 오름차순
+    for idx, s in enumerate(quality_base): s["volatility_r"] = idx + 1
+    for s in quality_base:
+        s["quality_score"] = s["gpa_r"] + s["op_debt_r"] + s["asset_growth_r"] + s["volatility_r"]
+    quality_base.sort(key=lambda x: x["quality_score"])
+
+    # 16. 파마의 최종 병기 연산부 - 소형주(시가총액 하위 20%) 한정 + 4.PBR/6.GP/A/9.자산성장률 3개 지표
+    # 조건: PBR>0.25, GP/A>0, 자산성장률>-20% / 정렬: PBR 오름차순(=역수 내림차순), GP/A 내림차순, 자산성장률 오름차순
+    fama_base = [
+        s for s in valid_stocks
+        if s["market_cap"] <= smallcap_cutoff
+        and s["pbr"] > 0.25
+        and s["gpa"] is not None and s["gpa"] > 0
+        and s["asset_growth_yoy"] is not None and s["asset_growth_yoy"] > -20
+    ]
+    fama_base = [dict(s) for s in fama_base]
+    fama_base.sort(key=lambda x: x["pbr"])  # 4. PBR 역수의 내림차순 = 원값 오름차순
+    for idx, s in enumerate(fama_base): s["pbr_r"] = idx + 1
+    fama_base.sort(key=lambda x: x["gpa"], reverse=True)  # 6. GP/A 내림차순
+    for idx, s in enumerate(fama_base): s["gpa_r"] = idx + 1
+    fama_base.sort(key=lambda x: x["asset_growth_yoy"])  # 9. 자산성장률 오름차순
+    for idx, s in enumerate(fama_base): s["asset_growth_r"] = idx + 1
+    for s in fama_base:
+        s["fama_score"] = s["pbr_r"] + s["gpa_r"] + s["asset_growth_r"]
+    fama_base.sort(key=lambda x: x["fama_score"])
+
+    # 18. 슈퍼 가치+퀄리티 연산부
+    # 조건: 7.신F-스코어 3점만 / 1,2,4,5(PER,PCR,PBR,PSR) 역수의 내림차순, 6.GP/A 내림차순,
+    #       8.영업이익/차입금 증가율 내림차순, 9.자산성장률·10.주가변동성 오름차순
+    super_quality_base = [
+        s for s in valid_stocks
+        if s["f_score"] == 3
+        and s["per"] != 0 and s["pcr"] != 0 and s["pbr"] != 0 and s["psr"] != 0
+        and s["gpa"] is not None
+        and s["op_debt_growth_yoy"] is not None
+        and s["asset_growth_yoy"] is not None
+        and s["price_volatility"] is not None
+    ]
+    super_quality_base = [dict(s) for s in super_quality_base]
+    super_quality_base.sort(key=lambda x: 1 / x["per"], reverse=True)
+    for idx, s in enumerate(super_quality_base): s["per_r"] = idx + 1
+    super_quality_base.sort(key=lambda x: 1 / x["pcr"], reverse=True)
+    for idx, s in enumerate(super_quality_base): s["pcr_r"] = idx + 1
+    super_quality_base.sort(key=lambda x: 1 / x["pbr"], reverse=True)
+    for idx, s in enumerate(super_quality_base): s["pbr_r"] = idx + 1
+    super_quality_base.sort(key=lambda x: 1 / x["psr"], reverse=True)
+    for idx, s in enumerate(super_quality_base): s["psr_r"] = idx + 1
+    super_quality_base.sort(key=lambda x: x["gpa"], reverse=True)
+    for idx, s in enumerate(super_quality_base): s["gpa_r"] = idx + 1
+    super_quality_base.sort(key=lambda x: x["op_debt_growth_yoy"], reverse=True)
+    for idx, s in enumerate(super_quality_base): s["op_debt_r"] = idx + 1
+    super_quality_base.sort(key=lambda x: x["asset_growth_yoy"])
+    for idx, s in enumerate(super_quality_base): s["asset_growth_r"] = idx + 1
+    super_quality_base.sort(key=lambda x: x["price_volatility"])
+    for idx, s in enumerate(super_quality_base): s["volatility_r"] = idx + 1
+    for s in super_quality_base:
+        s["super_quality_score"] = (
+            s["per_r"] + s["pcr_r"] + s["pbr_r"] + s["psr_r"]
+            + s["gpa_r"] + s["op_debt_r"] + s["asset_growth_r"] + s["volatility_r"]
+        )
+    super_quality_base.sort(key=lambda x: x["super_quality_score"])
+
+    # 20. 밸류+모멘텀 연산부 - 1,3,4,5(PER,PFCR,PBR,PSR) 역수의 내림차순 + 11~14(영업이익·순이익 QoQ/YoY) 내림차순
+    value_momentum_base = [
+        s for s in valid_stocks
+        if s["per"] != 0 and s["pfcr"] != 0 and s["pbr"] != 0 and s["psr"] != 0
+        and s["op_growth_qoq"] is not None and s["op_growth_yoy"] is not None
+        and s["ni_growth_qoq"] is not None and s["ni_growth_yoy"] is not None
+    ]
+    value_momentum_base = [dict(s) for s in value_momentum_base]
+    value_momentum_base.sort(key=lambda x: 1 / x["per"], reverse=True)
+    for idx, s in enumerate(value_momentum_base): s["per_r"] = idx + 1
+    value_momentum_base.sort(key=lambda x: 1 / x["pfcr"], reverse=True)
+    for idx, s in enumerate(value_momentum_base): s["pfcr_r"] = idx + 1
+    value_momentum_base.sort(key=lambda x: 1 / x["pbr"], reverse=True)
+    for idx, s in enumerate(value_momentum_base): s["pbr_r"] = idx + 1
+    value_momentum_base.sort(key=lambda x: 1 / x["psr"], reverse=True)
+    for idx, s in enumerate(value_momentum_base): s["psr_r"] = idx + 1
+    value_momentum_base.sort(key=lambda x: x["op_growth_qoq"], reverse=True)
+    for idx, s in enumerate(value_momentum_base): s["op_qoq_r"] = idx + 1
+    value_momentum_base.sort(key=lambda x: x["op_growth_yoy"], reverse=True)
+    for idx, s in enumerate(value_momentum_base): s["op_yoy_r"] = idx + 1
+    value_momentum_base.sort(key=lambda x: x["ni_growth_qoq"], reverse=True)
+    for idx, s in enumerate(value_momentum_base): s["ni_qoq_r"] = idx + 1
+    value_momentum_base.sort(key=lambda x: x["ni_growth_yoy"], reverse=True)
+    for idx, s in enumerate(value_momentum_base): s["ni_yoy_r"] = idx + 1
+    for s in value_momentum_base:
+        s["value_momentum_score"] = (
+            s["per_r"] + s["pfcr_r"] + s["pbr_r"] + s["psr_r"]
+            + s["op_qoq_r"] + s["op_yoy_r"] + s["ni_qoq_r"] + s["ni_yoy_r"]
+        )
+    value_momentum_base.sort(key=lambda x: x["value_momentum_score"])
+
+    # 21. 슈퍼 퀄리티+모멘텀 연산부
+    # 조건: 7.신F-스코어 3점만 / 6,8(GP/A, 영업이익/차입금 증가율) 내림차순, 9,10(자산성장률,주가변동성) 오름차순,
+    #       11~14(영업이익·순이익 QoQ/YoY) 내림차순
+    quality_momentum_base = [
+        s for s in valid_stocks
+        if s["f_score"] == 3
+        and s["gpa"] is not None
+        and s["op_debt_growth_yoy"] is not None
+        and s["asset_growth_yoy"] is not None
+        and s["price_volatility"] is not None
+        and s["op_growth_qoq"] is not None and s["op_growth_yoy"] is not None
+        and s["ni_growth_qoq"] is not None and s["ni_growth_yoy"] is not None
+    ]
+    quality_momentum_base = [dict(s) for s in quality_momentum_base]
+    quality_momentum_base.sort(key=lambda x: x["gpa"], reverse=True)
+    for idx, s in enumerate(quality_momentum_base): s["gpa_r"] = idx + 1
+    quality_momentum_base.sort(key=lambda x: x["op_debt_growth_yoy"], reverse=True)
+    for idx, s in enumerate(quality_momentum_base): s["op_debt_r"] = idx + 1
+    quality_momentum_base.sort(key=lambda x: x["asset_growth_yoy"])
+    for idx, s in enumerate(quality_momentum_base): s["asset_growth_r"] = idx + 1
+    quality_momentum_base.sort(key=lambda x: x["price_volatility"])
+    for idx, s in enumerate(quality_momentum_base): s["volatility_r"] = idx + 1
+    quality_momentum_base.sort(key=lambda x: x["op_growth_qoq"], reverse=True)
+    for idx, s in enumerate(quality_momentum_base): s["op_qoq_r"] = idx + 1
+    quality_momentum_base.sort(key=lambda x: x["op_growth_yoy"], reverse=True)
+    for idx, s in enumerate(quality_momentum_base): s["op_yoy_r"] = idx + 1
+    quality_momentum_base.sort(key=lambda x: x["ni_growth_qoq"], reverse=True)
+    for idx, s in enumerate(quality_momentum_base): s["ni_qoq_r"] = idx + 1
+    quality_momentum_base.sort(key=lambda x: x["ni_growth_yoy"], reverse=True)
+    for idx, s in enumerate(quality_momentum_base): s["ni_yoy_r"] = idx + 1
+    for s in quality_momentum_base:
+        s["quality_momentum_score"] = (
+            s["gpa_r"] + s["op_debt_r"] + s["asset_growth_r"] + s["volatility_r"]
+            + s["op_qoq_r"] + s["op_yoy_r"] + s["ni_qoq_r"] + s["ni_yoy_r"]
+        )
+    quality_momentum_base.sort(key=lambda x: x["quality_momentum_score"])
+
+    # 22. 울트라 연산부 - 1,3,4,5(PER,PFCR,PBR,PSR) 역수 내림차순 + 6,8(GP/A,영업이익/차입금증가율) 내림차순
+    # + 9,10(자산성장률,변동성) 오름차순 + 7.신F-스코어 3점 필터 + 11~14(영업이익·순이익 QoQ/YoY) 내림차순 (소형주 옵션 지원)
+    def rank_ultra(pool):
+        base = [
+            s for s in pool
+            if s["f_score"] == 3
+            and s["per"] != 0 and s["pfcr"] != 0 and s["pbr"] != 0 and s["psr"] != 0
+            and s["gpa"] is not None
+            and s["op_debt_growth_yoy"] is not None
+            and s["asset_growth_yoy"] is not None
+            and s["price_volatility"] is not None
+            and s["op_growth_qoq"] is not None and s["op_growth_yoy"] is not None
+            and s["ni_growth_qoq"] is not None and s["ni_growth_yoy"] is not None
+        ]
+        base = [dict(s) for s in base]
+        base.sort(key=lambda x: 1 / x["per"], reverse=True)
+        for idx, s in enumerate(base): s["per_r"] = idx + 1
+        base.sort(key=lambda x: 1 / x["pfcr"], reverse=True)
+        for idx, s in enumerate(base): s["pfcr_r"] = idx + 1
+        base.sort(key=lambda x: 1 / x["pbr"], reverse=True)
+        for idx, s in enumerate(base): s["pbr_r"] = idx + 1
+        base.sort(key=lambda x: 1 / x["psr"], reverse=True)
+        for idx, s in enumerate(base): s["psr_r"] = idx + 1
+        base.sort(key=lambda x: x["gpa"], reverse=True)
+        for idx, s in enumerate(base): s["gpa_r"] = idx + 1
+        base.sort(key=lambda x: x["op_debt_growth_yoy"], reverse=True)
+        for idx, s in enumerate(base): s["op_debt_r"] = idx + 1
+        base.sort(key=lambda x: x["asset_growth_yoy"])
+        for idx, s in enumerate(base): s["asset_growth_r"] = idx + 1
+        base.sort(key=lambda x: x["price_volatility"])
+        for idx, s in enumerate(base): s["volatility_r"] = idx + 1
+        base.sort(key=lambda x: x["op_growth_qoq"], reverse=True)
+        for idx, s in enumerate(base): s["op_qoq_r"] = idx + 1
+        base.sort(key=lambda x: x["op_growth_yoy"], reverse=True)
+        for idx, s in enumerate(base): s["op_yoy_r"] = idx + 1
+        base.sort(key=lambda x: x["ni_growth_qoq"], reverse=True)
+        for idx, s in enumerate(base): s["ni_qoq_r"] = idx + 1
+        base.sort(key=lambda x: x["ni_growth_yoy"], reverse=True)
+        for idx, s in enumerate(base): s["ni_yoy_r"] = idx + 1
+        for s in base:
+            s["ultra_score"] = (
+                s["per_r"] + s["pfcr_r"] + s["pbr_r"] + s["psr_r"]
+                + s["gpa_r"] + s["op_debt_r"] + s["asset_growth_r"] + s["volatility_r"]
+                + s["op_qoq_r"] + s["op_yoy_r"] + s["ni_qoq_r"] + s["ni_yoy_r"]
+            )
+        base.sort(key=lambda x: x["ultra_score"])
+        return base
+
+    ultra_base = rank_ultra(valid_stocks)
+    ultra_base_smallcap = rank_ultra([s for s in valid_stocks if s["market_cap"] <= smallcap_cutoff])
 
     # 12. NCAV 청산가치 & 퀄리티 스크리너 연산부
     # 조건: 1) 순유동자산 > 시가총액  2) 최신 분기 순이익 > 0  3) 차입금비율 200% 이하  4) 상위 20개만 노출
@@ -833,6 +1033,129 @@ def fetch_krx_market_data():
             "equity": int(s["equity"] / 100000000),  # 억 단위
         })
 
+    # 15. 슈퍼 퀄리티 상위 30개 패키징
+    quality_value = []
+    for idx, s in enumerate(quality_base[:30]):
+        quality_value.append({
+            "rank": idx + 1,
+            "name": s["name"],
+            "price": s["price"],
+            "cap_increase_flag": s["cap_increase_flag"],
+            "ni_pos_flag": s["ni_pos_flag"],
+            "cf_pos_flag": s["cf_pos_flag"],
+            "gpa": s["gpa"],
+            "gpa_r": s["gpa_r"],
+            "op_debt_growth_yoy": s["op_debt_growth_yoy"],
+            "op_debt_r": s["op_debt_r"],
+            "asset_growth_yoy": s["asset_growth_yoy"],
+            "asset_growth_r": s["asset_growth_r"],
+            "price_volatility": s["price_volatility"],
+            "volatility_r": s["volatility_r"],
+            "avg_r": round(s["quality_score"] / 4, 1),
+        })
+
+    # 16. 파마의 최종 병기 상위 30개 패키징
+    fama_value = []
+    for idx, s in enumerate(fama_base[:30]):
+        fama_value.append({
+            "rank": idx + 1,
+            "name": s["name"],
+            "price": s["price"],
+            "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
+            "pbr": s["pbr"],
+            "pbr_r": s["pbr_r"],
+            "gpa": s["gpa"],
+            "gpa_r": s["gpa_r"],
+            "asset_growth_yoy": s["asset_growth_yoy"],
+            "asset_growth_r": s["asset_growth_r"],
+            "avg_r": round(s["fama_score"] / 3, 1),
+        })
+
+    # 18. 슈퍼 가치+퀄리티 상위 30개 패키징
+    super_quality_value = []
+    for idx, s in enumerate(super_quality_base[:30]):
+        super_quality_value.append({
+            "rank": idx + 1,
+            "name": s["name"],
+            "price": s["price"],
+            "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
+            "per": s["per"], "per_r": s["per_r"],
+            "pcr": s["pcr"], "pcr_r": s["pcr_r"],
+            "pbr": s["pbr"], "pbr_r": s["pbr_r"],
+            "psr": s["psr"], "psr_r": s["psr_r"],
+            "gpa": s["gpa"], "gpa_r": s["gpa_r"],
+            "op_debt_growth_yoy": s["op_debt_growth_yoy"], "op_debt_r": s["op_debt_r"],
+            "asset_growth_yoy": s["asset_growth_yoy"], "asset_growth_r": s["asset_growth_r"],
+            "price_volatility": s["price_volatility"], "volatility_r": s["volatility_r"],
+            "avg_r": round(s["super_quality_score"] / 8, 1),
+        })
+
+    # 20. 밸류+모멘텀 상위 30개 패키징
+    value_momentum_value = []
+    for idx, s in enumerate(value_momentum_base[:30]):
+        value_momentum_value.append({
+            "rank": idx + 1,
+            "name": s["name"],
+            "price": s["price"],
+            "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
+            "per": s["per"], "per_r": s["per_r"],
+            "pfcr": s["pfcr"], "pfcr_r": s["pfcr_r"],
+            "pbr": s["pbr"], "pbr_r": s["pbr_r"],
+            "psr": s["psr"], "psr_r": s["psr_r"],
+            "op_growth_qoq": s["op_growth_qoq"], "op_qoq_r": s["op_qoq_r"],
+            "op_growth_yoy": s["op_growth_yoy"], "op_yoy_r": s["op_yoy_r"],
+            "ni_growth_qoq": s["ni_growth_qoq"], "ni_qoq_r": s["ni_qoq_r"],
+            "ni_growth_yoy": s["ni_growth_yoy"], "ni_yoy_r": s["ni_yoy_r"],
+            "avg_r": round(s["value_momentum_score"] / 8, 1),
+        })
+
+    # 21. 슈퍼 퀄리티+모멘텀 상위 30개 패키징
+    quality_momentum_value = []
+    for idx, s in enumerate(quality_momentum_base[:30]):
+        quality_momentum_value.append({
+            "rank": idx + 1,
+            "name": s["name"],
+            "price": s["price"],
+            "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
+            "gpa": s["gpa"], "gpa_r": s["gpa_r"],
+            "op_debt_growth_yoy": s["op_debt_growth_yoy"], "op_debt_r": s["op_debt_r"],
+            "asset_growth_yoy": s["asset_growth_yoy"], "asset_growth_r": s["asset_growth_r"],
+            "price_volatility": s["price_volatility"], "volatility_r": s["volatility_r"],
+            "op_growth_qoq": s["op_growth_qoq"], "op_qoq_r": s["op_qoq_r"],
+            "op_growth_yoy": s["op_growth_yoy"], "op_yoy_r": s["op_yoy_r"],
+            "ni_growth_qoq": s["ni_growth_qoq"], "ni_qoq_r": s["ni_qoq_r"],
+            "ni_growth_yoy": s["ni_growth_yoy"], "ni_yoy_r": s["ni_yoy_r"],
+            "avg_r": round(s["quality_momentum_score"] / 8, 1),
+        })
+
+    # 22. 울트라 상위 30개 패키징 (전체 / 소형주 한정)
+    def package_ultra(base):
+        packaged = []
+        for idx, s in enumerate(base[:30]):
+            packaged.append({
+                "rank": idx + 1,
+                "name": s["name"],
+                "price": s["price"],
+                "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
+                "per": s["per"], "per_r": s["per_r"],
+                "pfcr": s["pfcr"], "pfcr_r": s["pfcr_r"],
+                "pbr": s["pbr"], "pbr_r": s["pbr_r"],
+                "psr": s["psr"], "psr_r": s["psr_r"],
+                "gpa": s["gpa"], "gpa_r": s["gpa_r"],
+                "op_debt_growth_yoy": s["op_debt_growth_yoy"], "op_debt_r": s["op_debt_r"],
+                "asset_growth_yoy": s["asset_growth_yoy"], "asset_growth_r": s["asset_growth_r"],
+                "price_volatility": s["price_volatility"], "volatility_r": s["volatility_r"],
+                "op_growth_qoq": s["op_growth_qoq"], "op_qoq_r": s["op_qoq_r"],
+                "op_growth_yoy": s["op_growth_yoy"], "op_yoy_r": s["op_yoy_r"],
+                "ni_growth_qoq": s["ni_growth_qoq"], "ni_qoq_r": s["ni_qoq_r"],
+                "ni_growth_yoy": s["ni_growth_yoy"], "ni_yoy_r": s["ni_yoy_r"],
+                "avg_r": round(s["ultra_score"] / 12, 1),
+            })
+        return packaged
+
+    ultra_value = package_ultra(ultra_base)
+    ultra_value_smallcap = package_ultra(ultra_base_smallcap)
+
     # NCAV 상위 20개 패키징 (GP/A 필터 미적용 / 적용)
     def package_ncav_value(base):
         packaged = []
@@ -872,6 +1195,13 @@ def fetch_krx_market_data():
         "momentum_value": momentum_value,
         "momentum_value_smallcap": momentum_value_smallcap,
         "fscore_value": fscore_value,
+        "quality_value": quality_value,
+        "fama_value": fama_value,
+        "super_quality_value": super_quality_value,
+        "value_momentum_value": value_momentum_value,
+        "quality_momentum_value": quality_momentum_value,
+        "ultra_value": ultra_value,
+        "ultra_value_smallcap": ultra_value_smallcap,
         "ncav_value": ncav_value,
         "ncav_value_gpa": ncav_value_gpa
     }
