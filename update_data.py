@@ -27,6 +27,8 @@ CORP_CODE_CACHE = os.path.join(BASE_DIR, "dart_corp_map.json")
 DART_FINANCIALS_CACHE_FILE = os.path.join(BASE_DIR, "cache_dart_financials.json")
 CAPITAL_INCREASE_CACHE_FILE = os.path.join(BASE_DIR, "cache_capital_increase.json")
 MONTHLY_PRICE_CACHE_FILE = os.path.join(BASE_DIR, "cache_monthly_price.json")
+INDUTY_CODE_CACHE_FILE = os.path.join(BASE_DIR, "cache_induty_code.json")
+ADMIN_ISSUE_CACHE_FILE = os.path.join(BASE_DIR, "cache_admin_issue.json")
 
 
 def load_json_cache(path):
@@ -155,6 +157,87 @@ def has_recent_capital_increase(corp_code, cache):
 
     cache[corp_code] = {"date": today_str, "value": value}
     return value
+
+
+# 금융업(은행/보험/증권 등 KSIC 대분류 K, 64~66) + 지주회사(DART induty_code 64992) 제외용
+FINANCIAL_INDUTY_PREFIXES = ("64", "65", "66")
+HOLDING_NAME_PATTERNS = ("홀딩스", "홀딩", "지주")
+
+
+def fetch_induty_code(corp_code, cache):
+    """DART 회사개요에서 업종코드(induty_code)를 가져온다. 업종은 거의 안 바뀌므로 영구 캐싱."""
+    if corp_code in cache:
+        return cache[corp_code]
+    try:
+        r = requests.get(
+            "https://opendart.fss.or.kr/api/company.json",
+            params={"crtfc_key": DART_API_KEY, "corp_code": corp_code},
+            timeout=15,
+        )
+        data = r.json()
+    except Exception:
+        return None
+    if data.get("status") != "000":
+        return None
+    induty_code = data.get("induty_code")
+    cache[corp_code] = induty_code
+    return induty_code
+
+
+def is_financial_or_holding(corp_code, name, induty_cache):
+    """금융업(은행/보험/증권) 또는 지주회사인지 판별 - 업종코드 + 회사명 패턴을 함께 본다."""
+    induty_code = fetch_induty_code(corp_code, induty_cache)
+    if induty_code and induty_code.startswith(FINANCIAL_INDUTY_PREFIXES):
+        return True
+    return any(p in name for p in HOLDING_NAME_PATTERNS)
+
+
+def get_admin_status(corp_code, cache):
+    """관리종목 현재 상태를 판정. 최근 2년 거래소공시(I)에서 '관리종목지정'/'관리종목지정해제'/
+    '관리종목지정우려' 중 가장 최근 건으로 (지정여부, 지정우려여부)를 판단한다. 하루 단위 캐싱."""
+    today_str = datetime.now().strftime("%Y%m%d")
+    cached = cache.get(corp_code)
+    if cached and cached.get("date") == today_str:
+        return cached.get("issue"), cached.get("warning")
+
+    end_de = datetime.now()
+    bgn_de = end_de - timedelta(days=730)
+    try:
+        r = requests.get(
+            "https://opendart.fss.or.kr/api/list.json",
+            params={
+                "crtfc_key": DART_API_KEY,
+                "corp_code": corp_code,
+                "bgn_de": bgn_de.strftime("%Y%m%d"),
+                "end_de": end_de.strftime("%Y%m%d"),
+                "pblntf_ty": "I",  # 거래소공시
+                "page_count": 100,
+            },
+            timeout=15,
+        )
+        data = r.json()
+    except Exception:
+        return None, None
+
+    if data.get("status") == "013":
+        issue, warning = False, False
+    elif data.get("status") != "000":
+        return None, None
+    else:
+        events = []  # (날짜, 종류) 종류: 'issue'(지정) / 'release'(해제) / 'warning'(지정우려)
+        for item in data.get("list", []) or []:
+            nm = item.get("report_nm") or ""
+            if "관리종목지정" not in nm:
+                continue
+            kind = "warning" if "우려" in nm else ("release" if "해제" in nm else "issue")
+            events.append((item.get("rcept_dt", ""), kind))
+        events.sort(key=lambda e: e[0])
+        latest_kind = events[-1][1] if events else None
+        issue = latest_kind == "issue"
+        warning = latest_kind == "warning"
+
+    cache[corp_code] = {"date": today_str, "issue": issue, "warning": warning}
+    return issue, warning
 
 
 def _fetch_period_accounts(corp_code, year, reprt_code, fs_div, keys):
@@ -516,13 +599,24 @@ def fetch_krx_market_data():
 
         dart_financials_cache = load_json_cache(DART_FINANCIALS_CACHE_FILE)
         capital_increase_cache = load_json_cache(CAPITAL_INCREASE_CACHE_FILE)
+        induty_code_cache = load_json_cache(INDUTY_CODE_CACHE_FILE)
+        admin_issue_cache = load_json_cache(ADMIN_ISSUE_CACHE_FILE)
         cache_hits = 0
+        flagged_count = 0
 
         print(f"[DART] {len(raw_stocks)}개 종목의 재무제표 조회를 시작합니다 (캐싱된 종목은 스킵)...")
         for i, s in enumerate(raw_stocks):
             corp_code = corp_map.get(s["code"])
             if not corp_code:
                 continue
+
+            # 금융회사/지주회사/관리종목/관리종목지정우려 여부만 표시해두고 제외는 하지 않음
+            # (12.NCAV에서만 실제 제외 필터링, 추천 메뉴에서는 배지로 표기)
+            is_fin_holding = is_financial_or_holding(corp_code, s["name"], induty_code_cache)
+            is_admin, is_admin_warning = get_admin_status(corp_code, admin_issue_cache)
+            if is_fin_holding or is_admin or is_admin_warning:
+                flagged_count += 1
+
             candidates = _build_period_candidates()
             best_period = f"{candidates[0][0]}-{candidates[0][1]}" if candidates else None
             cached_entry = dart_financials_cache.get(corp_code)
@@ -651,6 +745,9 @@ def fetch_krx_market_data():
                 "ni_growth_yoy": ni_growth_yoy,
                 "price_volatility": volatility_map.get(s["code"]),
                 "current_ratio": current_ratio,
+                "is_fin_holding": is_fin_holding,
+                "is_admin_issue": is_admin,
+                "is_admin_warning": is_admin_warning,
                 "dividend_yield": dividend_yield,
             })
 
@@ -659,7 +756,9 @@ def fetch_krx_market_data():
 
         save_json_cache(DART_FINANCIALS_CACHE_FILE, dart_financials_cache)
         save_json_cache(CAPITAL_INCREASE_CACHE_FILE, capital_increase_cache)
-        print(f"[DART] 재무제표 보강 완료: {len(valid_stocks)}개 종목 확보 (캐시 적중 {cache_hits}건)")
+        save_json_cache(INDUTY_CODE_CACHE_FILE, induty_code_cache)
+        save_json_cache(ADMIN_ISSUE_CACHE_FILE, admin_issue_cache)
+        print(f"[DART] 재무제표 보강 완료: {len(valid_stocks)}개 종목 확보 (캐시 적중 {cache_hits}건, 금융/지주/관리종목 표시 {flagged_count}건)")
 
     # 13. 슈퍼 가치 4대 통합 스크리너 연산부
     def rank_super_value(pool):
@@ -920,6 +1019,7 @@ def fetch_krx_market_data():
             if s["ncav_ratio"] > 1
             and s["quarter_net_income"] is not None and s["quarter_net_income"] > 0
             and s["debt_ratio"] is not None and s["debt_ratio"] <= 200
+            and not s["is_fin_holding"] and not s["is_admin_issue"]
         ]
 
     gpa_pool = sorted((s["gpa"] for s in valid_stocks if s["gpa"] is not None), reverse=True)
@@ -1182,6 +1282,30 @@ def fetch_krx_market_data():
     ncav_value = package_ncav_value(ncav_base)
     ncav_value_gpa = package_ncav_value(ncav_base_gpa)
 
+    # 금융회사/지주회사/관리종목 배지 표기용 (추천 메뉴에서 사용, 12.NCAV 외에는 제외하지 않고 표기만)
+    stock_flags = {}
+    for s in valid_stocks:
+        tags = []
+        if s["is_fin_holding"]:
+            tags.append("금융/지주")
+        if s["is_admin_issue"]:
+            tags.append("관리")
+        if s["is_admin_warning"]:
+            tags.append("관리우려")
+        if tags:
+            stock_flags[s["name"]] = tags
+
+    # 추천 메뉴의 "PBR/GP-A" 참고 컬럼용 - 전략 소속과 무관하게 종목 자체의 값을 표시
+    stock_metrics = {
+        s["name"]: {
+            "pbr": s["pbr"],
+            "gpa": s["gpa"],
+            "f_score": s["f_score"],
+            "asset_growth_yoy": s["asset_growth_yoy"],
+        }
+        for s in valid_stocks
+    }
+
     # 최종 패키지 조립
     package = {
         "server": {
@@ -1202,6 +1326,8 @@ def fetch_krx_market_data():
         "quality_momentum_value": quality_momentum_value,
         "ultra_value": ultra_value,
         "ultra_value_smallcap": ultra_value_smallcap,
+        "stock_flags": stock_flags,
+        "stock_metrics": stock_metrics,
         "ncav_value": ncav_value,
         "ncav_value_gpa": ncav_value_gpa
     }

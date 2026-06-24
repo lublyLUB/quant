@@ -18,6 +18,9 @@
         .tag-value { background-color: #dbeafe; color: #1d4ed8; }
         .tag-quality { background-color: #dcfce7; color: #15803d; }
         .tag-momentum { background-color: #ffedd5; color: #c2410c; }
+        .tag-finance { background-color: #e2e8f0; color: #475569; }
+        .tag-admin { background-color: #fee2e2; color: #b91c1c; }
+        .tag-admin-warn { background-color: #ffedd5; color: #c2410c; }
 
         /* 19개 지표 분수 표기: 분자/분모 각각 라벨(헤더 역할) + 숫자(값) 2단을 가로선으로 분리해 쌓는다 */
         .fraction { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; line-height: 1; margin: 0 2px; }
@@ -63,6 +66,7 @@
         /* ⭐ 북마크 별 아이콘 및 지표 강조 효과 */
         .star-icon { cursor: pointer; color: #cbd5e1; font-size: 12px; margin-right: 2px; transition: color 0.2s; }
         .star-icon.active { color: #f59e0b; }
+        .name-bookmarked { color: #1e40af; font-weight: 800; background-color: #eff6ff; padding: 0 4px; border-radius: 4px; display: inline-block; line-height: 1.6; border: 1px solid #bfdbfe; max-width: 56px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
         .badge-cheap { color: #b91c1c; font-weight: bold; }
 
     </style>
@@ -146,6 +150,8 @@
     let isMomentumSmallcapMode = false;
     let isUltraSmallcapMode = false;
     let recommendDataCache = [];
+    let stockFlags = {};
+    let stockMetrics = {};
     let displayMode = 'simple';  // 'simple' | 'detail' - 19개 지표를 최종값으로 보여줄지, 계산식(분수)으로 보여줄지
 
     function setDisplayMode(mode) {
@@ -201,6 +207,10 @@
     function getStarHtml(name) {
         const isActive = bookmarks.includes(name) ? 'active' : '';
         return `<span class="star-icon ${isActive}" onclick="toggleBookmark('${name}')">★</span>`;
+    }
+
+    function getNameHtml(name) {
+        return bookmarks.includes(name) ? `<span class="name-bookmarked">${name}</span>` : name;
     }
 
     function handleSearch() {
@@ -277,13 +287,28 @@
                 const ranks = {};
                 matched.forEach(e => { ranks[e.key] = e.map.get(name).rank; });
                 const avgRank = matched.reduce((sum, e) => sum + ranks[e.key], 0) / matched.length;
-                results.push({ name, price: sample.price, count: matched.length, ranks, avgRank });
+
+                // 매칭된 전략들의 분류(밸류/퀄리티/모멘텀)와 그 전략에서의 순위(1/순위로 가중)로 성향 판별
+                const categoryScore = { value: 0, quality: 0, momentum: 0 };
+                matched.forEach(e => {
+                    const meta = STRATEGIES.find(st => st.key === e.key);
+                    if (!meta) return;
+                    const weight = 1 / ranks[e.key];
+                    meta.tags.forEach(tag => { categoryScore[tag] += weight; });
+                });
+                const totalScore = categoryScore.value + categoryScore.quality + categoryScore.momentum;
+                const orientation = totalScore > 0
+                    ? Object.entries(categoryScore).sort((a, b) => b[1] - a[1])[0][0]
+                    : null;
+
+                results.push({ name, price: sample.price, count: matched.length, ranks, avgRank, categoryScore, orientation });
             }
         });
 
         results.sort((a, b) => b.count - a.count || a.avgRank - b.avgRank);
-        results.forEach((r, idx) => r.rank = idx + 1);
-        return results;
+        const top = results.slice(0, 50);
+        top.forEach((r, idx) => r.rank = idx + 1);
+        return top;
     }
 
     function handleSmallcapToggle() {
@@ -368,13 +393,18 @@
 
     // 🚀 최적화 리팩토링: innerHTML 속도를 위해 큰 하나의 문자열 블록으로 조립 후 일괄 쓰기 수행
     function renderRecommendTable(data) {
-        const colWidth = Math.floor(54 / RECOMMEND_SOURCES.length);
+        const colWidth = Math.floor(44 / RECOMMEND_SOURCES.length);
+        const FLAG_CLASS = { '금융/지주': 'tag-finance', '관리': 'tag-admin', '관리우려': 'tag-admin-warn' };
         let html = `
             <thead>
                 <tr>
-                    <th style="width: 10%;" onclick="sortData('rank')">순위</th>
-                    <th style="width: 26%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
-                    <th style="width: 10%;" onclick="sortData('count')">중복<br>전략수</th>
+                    <th style="width: 7%;" onclick="sortData('rank')">순위</th>
+                    <th style="width: 5%;" onclick="sortData('orientation')">성향</th>
+                    <th style="width: 15%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
+                    <th style="width: 8%;">업종<br>공시</th>
+                    <th style="width: 8%;">PBR<br>GP/A</th>
+                    <th style="width: 6%;">F-S<br>성장</th>
+                    <th style="width: 7%;" onclick="sortData('count')">중복<br>전략수</th>
                     ${RECOMMEND_SOURCES.map(src => `
                         <th style="width: ${colWidth}%; font-size:9px;">
                             ${src.num}<br>
@@ -386,15 +416,48 @@
             <tbody>`;
 
         data.forEach(s => {
+            const flags = stockFlags[s.name];
+            const noteBadges = flags
+                ? flags.map(f => `<span class="tag-chip ${FLAG_CLASS[f] || 'tag-finance'}">${f}</span>`).join('<br>')
+                : '';
+            const orientationBadge = s.orientation ? `<span class="tag-chip tag-${s.orientation}">${TAG_LABELS[s.orientation]}</span>` : '';
+
+            const metrics = stockMetrics[s.name];
+            let pbrGpaLines = [];
+            if (metrics) {
+                const pbrAlert = metrics.pbr != null && metrics.pbr <= 0.25;
+                const gpaAlert = metrics.gpa != null && metrics.gpa <= 0;
+                if (pbrAlert) pbrGpaLines.push(`<span style="color:#dc2626;">${metrics.pbr.toFixed(2)}</span>`);
+                if (gpaAlert) pbrGpaLines.push(`<span style="color:#dc2626;">${metrics.gpa.toFixed(1)}</span>`);
+                if (pbrAlert && !gpaAlert) pbrGpaLines.push('-');
+                if (gpaAlert && !pbrAlert) pbrGpaLines.unshift('-');
+            }
+            const pbrGpaCell = pbrGpaLines.join('<br>');
+
+            let fsGrowthLines = [];
+            if (metrics) {
+                const fsAlert = metrics.f_score != null && metrics.f_score !== 3;
+                const growthAlert = metrics.asset_growth_yoy != null && metrics.asset_growth_yoy <= -20;
+                if (fsAlert) fsGrowthLines.push(`<span style="color:#dc2626;">${metrics.f_score}</span>`);
+                if (growthAlert) fsGrowthLines.push(`<span style="color:#dc2626;">${metrics.asset_growth_yoy.toFixed(1)}%</span>`);
+                if (fsAlert && !growthAlert) fsGrowthLines.push('-');
+                if (growthAlert && !fsAlert) fsGrowthLines.unshift('-');
+            }
+            const fsGrowthCell = fsGrowthLines.join('<br>');
+
             html += `<tr>
                 <td class="rank-main">${s.rank}</td>
-                <td>${getStarHtml(s.name)}${s.name}<span class="price-text">${formatNumber(s.price)}원</span></td>
+                <td>${orientationBadge}</td>
+                <td>${getStarHtml(s.name)}${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
+                <td style="white-space:normal; line-height:1.6;">${noteBadges}</td>
+                <td style="line-height:1.6;">${pbrGpaCell}</td>
+                <td style="line-height:1.6;">${fsGrowthCell}</td>
                 <td class="rank-avg">${s.count}</td>
-                ${RECOMMEND_SOURCES.map(src => `<td>${s.ranks[src.key] !== undefined ? s.ranks[src.key] + '위' : ''}</td>`).join('')}
+                ${RECOMMEND_SOURCES.map(src => `<td>${s.ranks[src.key] !== undefined ? s.ranks[src.key] : ''}</td>`).join('')}
             </tr>`;
         });
         if (data.length === 0) {
-            html += `<tr><td colspan="${3 + RECOMMEND_SOURCES.length}" style="padding:20px; color:#94a3b8;">조건을 만족하는 종목이 없습니다.</td></tr>`;
+            html += `<tr><td colspan="${7 + RECOMMEND_SOURCES.length}" style="padding:20px; color:#94a3b8;">조건을 만족하는 종목이 없습니다.</td></tr>`;
         }
         html += `</tbody>`;
         document.getElementById("quant-table").innerHTML = html;
@@ -447,7 +510,7 @@
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
                     <td>${s.per.toFixed(1)}<span class="sub-text">${s.per_r}위</span></td>
                     <td>${s.pfcr.toFixed(1)}<span class="sub-text">${s.pfcr_r}위</span></td>
                     <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
@@ -464,7 +527,7 @@
             } else {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
                     <td>${formatNumber(s.price)}</td>
                     <td>${formatNumber(s.market_cap)}억</td>
                     <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
@@ -508,7 +571,7 @@
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
                     <td>${s.gpa.toFixed(1)}<span class="sub-text">${s.gpa_r}위</span></td>
                     <td>${s.op_debt_growth_yoy.toFixed(1)}%<span class="sub-text">${s.op_debt_r}위</span></td>
                     <td>${s.asset_growth_yoy.toFixed(1)}%<span class="sub-text">${s.asset_growth_r}위</span></td>
@@ -521,7 +584,7 @@
             } else {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
                     <td>${formatNumber(s.price)}</td>
                     <td>${formatNumber(s.market_cap)}억</td>
                     <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
@@ -565,7 +628,7 @@
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
                     <td>${s.per.toFixed(1)}<span class="sub-text">${s.per_r}위</span></td>
                     <td>${s.pfcr.toFixed(2)}<span class="sub-text">${s.pfcr_r}위</span></td>
                     <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
@@ -578,7 +641,7 @@
             } else {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
                     <td>${formatNumber(s.price)}</td>
                     <td>${formatNumber(s.market_cap)}억</td>
                     <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
@@ -623,7 +686,7 @@
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
                     <td>${s.per.toFixed(1)}<span class="sub-text">${s.per_r}위</span></td>
                     <td>${s.pcr.toFixed(1)}<span class="sub-text">${s.pcr_r}위</span></td>
                     <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
@@ -636,7 +699,7 @@
             } else {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
                     <td>${formatNumber(s.price)}</td>
                     <td>${formatNumber(s.market_cap)}억</td>
                     <td>3점</td>
@@ -667,7 +730,7 @@
         data.forEach(s => {
             html += `<tr>
                 <td class="rank-main">${s.rank}</td>
-                <td>${getStarHtml(s.name)}${s.name}</td>
+                <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
                 <td>${formatNumber(s.price)}</td>
                 <td>${formatNumber(s.market_cap)}억</td>
                 <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
@@ -709,7 +772,7 @@
             <tbody>`;
 
         data.forEach(s => {
-            const nameCell = `${getStarHtml(s.name)}${s.name}`;
+            const nameCell = `${getStarHtml(s.name)}${getNameHtml(s.name)}`;
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
@@ -763,7 +826,7 @@
             <tbody>`;
 
         data.forEach(s => {
-            const nameCell = `${getStarHtml(s.name)}${s.name}`;
+            const nameCell = `${getStarHtml(s.name)}${getNameHtml(s.name)}`;
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
@@ -808,7 +871,7 @@
             <tbody>`;
 
         data.forEach(s => {
-            const nameCell = `${getStarHtml(s.name)}${s.name}`;
+            const nameCell = `${getStarHtml(s.name)}${getNameHtml(s.name)}`;
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
@@ -868,7 +931,7 @@
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${s.name}<span class="price-text">${formatNumber(s.price)}원</span></td>
+                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
                     <td>${formatNumber(s.market_cap)}억</td>
                     <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.quarter_net_income)))}</td>
                     <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.equity)))}</td>
@@ -878,7 +941,7 @@
             } else {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
                     <td>${formatNumber(s.price)}</td>
                     <td>${formatNumber(s.market_cap)}억</td>
                     <td>${s.per.toFixed(1)}<span class="sub-text">${s.per_r}위</span></td>
@@ -922,7 +985,7 @@
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}위</td>
-                    <td>${getStarHtml(s.name)}${s.name}<span class="price-text">${formatNumber(s.price)}원</span></td>
+                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
                     <td>${formatNumber(s.market_cap)}억</td>
                     <td>${s.quarter_net_income == null ? 'N/A' : formatNumber(s.quarter_net_income) + '억'}</td>
                     <td>${frac(barePart(amt(s.current_assets) + ' − ' + amt(s.liabilities)), barePart(amt(s.market_cap)))}</td>
@@ -932,7 +995,7 @@
             } else {
                 html += `<tr>
                     <td class="rank-main">${s.rank}위</td>
-                    <td>${getStarHtml(s.name)}${s.name}</td>
+                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
                     <td>${formatNumber(s.price)}</td>
                     <td>${formatNumber(s.market_cap)}억</td>
                     <td>${formatNumber(s.ncav)}억</td>
@@ -998,6 +1061,8 @@
             qualityMomentumData = KOSPI_QUANT_PACKAGE.quality_momentum_value;
             ultraData = KOSPI_QUANT_PACKAGE.ultra_value;
             ultraSmallcapData = KOSPI_QUANT_PACKAGE.ultra_value_smallcap;
+            stockFlags = KOSPI_QUANT_PACKAGE.stock_flags || {};
+            stockMetrics = KOSPI_QUANT_PACKAGE.stock_metrics || {};
             ncavData = KOSPI_QUANT_PACKAGE.ncav_value;
             ncavGpaData = KOSPI_QUANT_PACKAGE.ncav_value_gpa;
 

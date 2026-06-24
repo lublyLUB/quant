@@ -5,4 +5,6 @@ dart_corp_map.json
 cache_dart_financials.json
 cache_capital_increase.json
 cache_monthly_price.json
+cache_induty_code.json
+cache_admin_issue.json
 .claude/
