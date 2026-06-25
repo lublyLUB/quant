@@ -153,7 +153,7 @@ def has_recent_capital_increase(corp_code, cache):
     elif data.get("status") != "000":
         return None
     else:
-        value = any("유상증자" in (item.get("report_nm") or "") for item in data.get("list", []) or [])
+        value = any("유상증자" in (item.get("report_nm") or "").replace(" ", "") for item in data.get("list", []) or [])
 
     cache[corp_code] = {"date": today_str, "value": value}
     return value
@@ -227,9 +227,12 @@ def get_admin_status(corp_code, cache):
         events = []  # (날짜, 종류) 종류: 'issue'(지정) / 'release'(해제) / 'warning'(지정우려)
         for item in data.get("list", []) or []:
             nm = item.get("report_nm") or ""
-            if "관리종목지정" not in nm:
+            # 실제 공시명은 "관리종목지정"처럼 붙어 있거나 "관리종목 지정"처럼 띄어 있는 등 표기가
+            # 제각각이라(예: "기타시장안내(관리종목 지정사유 추가 ...)"), 띄어쓰기를 무시하고 매칭한다
+            nm_compact = nm.replace(" ", "")
+            if "관리종목" not in nm_compact or "지정" not in nm_compact:
                 continue
-            kind = "warning" if "우려" in nm else ("release" if "해제" in nm else "issue")
+            kind = "warning" if "우려" in nm_compact else ("release" if "해제" in nm_compact else "issue")
             events.append((item.get("rcept_dt", ""), kind))
         events.sort(key=lambda e: e[0])
         latest_kind = events[-1][1] if events else None

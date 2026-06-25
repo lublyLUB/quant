@@ -35,7 +35,7 @@
         /* 유상증자/순이익/영업CF를 '신F-스코어'로 묶어서 표현 */
 
         /* 🔍 스마트 종목 검색창 스타일 */
-        .search-box { flex: 1 1 160px; padding: 9px 10px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; outline: none; }
+        .search-box { flex: 0 1 80px; padding: 9px 10px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; outline: none; }
         .search-box:focus { border-color: #2563eb; box-shadow: 0 0 0 2px rgba(37,99,235,0.1); }
 
         h1 { font-size: 14px; color: #1e3a8a; text-align: center; margin: 4px 0; }
@@ -66,7 +66,7 @@
         /* ⭐ 북마크 별 아이콘 및 지표 강조 효과 */
         .star-icon { cursor: pointer; color: #cbd5e1; font-size: 12px; margin-right: 2px; transition: color 0.2s; }
         .star-icon.active { color: #f59e0b; }
-        .name-bookmarked { color: #1e40af; font-weight: 800; background-color: #eff6ff; padding: 0 4px; border-radius: 4px; display: inline-block; line-height: 1.6; border: 1px solid #bfdbfe; max-width: 56px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
+        .name-bookmarked { color: #1e40af; font-weight: 800; }
         .badge-cheap { color: #b91c1c; font-weight: bold; }
 
     </style>
@@ -74,8 +74,10 @@
 <body>
 
 <div class="container">
-    <div class="menu-tabs">
+    <div class="menu-tabs" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
         <button id="btn-recommend" class="tab-btn active" onclick="switchMenu('recommend')">⭐ 추천</button>
+        <button id="btn-portfolio" class="tab-btn" onclick="switchMenu('portfolio')">💼 포트폴리오</button>
+        <button id="btn-order" class="tab-btn" onclick="switchMenu('order')">🛒 주문 실행</button>
         <button id="btn-rebalance" class="tab-btn" onclick="switchMenu('rebalance')">🔁 리밸런싱</button>
     </div>
     <div class="menu-tabs" id="strategy-tabs"></div>
@@ -103,10 +105,24 @@
             <label id="momentum-smallcap-lbl" style="display:none;"><input type="checkbox" id="momentum-smallcap-checkbox" onchange="handleMomentumSmallcapToggle()"> 소형주(하위 20%)</label>
             <label id="ncav-gpa-lbl" style="display:none;"><input type="checkbox" id="gpa-checkbox" onchange="handleGpaToggle()"> GP/A 필터(상위 50%)</label>
             <label id="ultra-smallcap-lbl" style="display:none;"><input type="checkbox" id="ultra-smallcap-checkbox" onchange="handleUltraSmallcapToggle()"> 소형주(하위 20%)</label>
+            <label id="recommend-exclude-season-lbl" style="display:none;"><input type="checkbox" id="recommend-exclude-season-checkbox" onchange="handleExcludeSeasonToggle()"> 4~10월 제외</label>
         </div>
     </div>
     <div id="recommend-filter-lbl" style="display:block; font-size: 11px; margin-bottom: 10px; color:#64748b;">
         전략 번호 아래 체크박스를 선택하면 선택한 전략을 모두 만족하는 종목만 표시합니다 (미선택 시 2개 이상 전략에 중복 추천된 종목 표시)
+    </div>
+
+    <div id="portfolio-controls" style="display:none; margin-bottom: 12px;">
+        <button class="mode-btn" style="background:#1e3a8a; color:#fff; padding:8px 12px; margin-bottom:8px;" onclick="handleImportBookmarks()">⭐ 즐겨찾기 가져오기</button>
+        <div style="display:flex; align-items:center; gap:6px; margin-bottom:8px; flex-wrap:wrap; font-size:11px; color:#475569;">
+            <label>투자금</label>
+            <input type="text" inputmode="numeric" id="portfolio-investment-input" class="search-box" style="flex:0 1 110px;" placeholder="10,000,000" oninput="handlePortfolioInvestmentChange()">
+            <span>원</span>
+            <span style="margin-left:8px;">잔액:</span>
+            <label><input type="radio" name="leftover-option" value="top1" checked onchange="handlePortfolioLeftoverChange()"> 1위 추가매수</label>
+            <label><input type="radio" name="leftover-option" value="cash" onchange="handlePortfolioLeftoverChange()"> 현금 보유</label>
+        </div>
+        <div id="portfolio-summary" style="font-size:11px; color:#1e3a8a; font-weight:bold;"></div>
     </div>
 
     <table id="quant-table">
@@ -149,6 +165,11 @@
     let isGpaMode = false;
     let isMomentumSmallcapMode = false;
     let isUltraSmallcapMode = false;
+    let isExcludeSeasonMode = false;
+    let portfolioNames = [];
+    let portfolioInvestment = 0;
+    let portfolioLeftoverOption = 'top1';
+    let portfolioLeftoverCash = 0;
     let recommendDataCache = [];
     let stockFlags = {};
     let stockMetrics = {};
@@ -225,17 +246,21 @@
         document.getElementById("search-bar").value = "";
         searchQuery = "";
         
-        const subMenus = ['recommend', 'rebalance', ...STRATEGIES.map(s => s.key)];
+        const nonStrategyMenus = ['recommend', 'portfolio', 'order', 'rebalance'];
+        const subMenus = [...nonStrategyMenus, ...STRATEGIES.map(s => s.key)];
         subMenus.forEach(m => document.getElementById(`btn-${m}`).classList.toggle("active", m === menuType));
         document.getElementById("ncav-info-lbl").style.display = (menuType === 'ncav') ? 'block' : 'none';
         document.getElementById("super-smallcap-lbl").style.display = (menuType === 'super') ? 'block' : 'none';
         document.getElementById("ncav-gpa-lbl").style.display = (menuType === 'ncav') ? 'block' : 'none';
         document.getElementById("momentum-smallcap-lbl").style.display = (menuType === 'momentum') ? 'block' : 'none';
         document.getElementById("ultra-smallcap-lbl").style.display = (menuType === 'strategy21') ? 'block' : 'none';
+        document.getElementById("recommend-exclude-season-lbl").style.display = (menuType === 'recommend') ? 'block' : 'none';
         document.getElementById("recommend-filter-lbl").style.display = (menuType === 'recommend') ? 'block' : 'none';
-        document.getElementById("sell-strategy-lbl").style.display = (menuType !== 'recommend' && menuType !== 'rebalance') ? 'inline-flex' : 'none';
-        document.getElementById("control-bar").style.display = (menuType === 'rebalance') ? 'none' : 'flex';
-        document.querySelector(".mode-toggle-group").style.display = (menuType === 'recommend' || menuType === 'rebalance') ? 'none' : 'flex';
+        document.getElementById("portfolio-controls").style.display = (menuType === 'portfolio') ? 'block' : 'none';
+        document.getElementById("strategy-tabs").style.display = (menuType === 'portfolio' || menuType === 'order' || menuType === 'rebalance') ? 'none' : 'grid';
+        document.getElementById("sell-strategy-lbl").style.display = (nonStrategyMenus.includes(menuType)) ? 'none' : 'inline-flex';
+        document.getElementById("control-bar").style.display = (menuType === 'rebalance' || menuType === 'portfolio' || menuType === 'order') ? 'none' : 'flex';
+        document.querySelector(".mode-toggle-group").style.display = (nonStrategyMenus.includes(menuType)) ? 'none' : 'flex';
 
         refreshCurrentTable();
     }
@@ -253,6 +278,16 @@
         { key: 'strategy21', num: 22, getData: () => isUltraSmallcapMode ? ultraSmallcapData : ultraData },
     ];
 
+    // "4~10월 제외" 체크 시 12.NCAV는 항상 빼고, 13.슈퍼가치는 소형주 옵션이 켜져 있을 때만 같이 뺀다
+    function getActiveRecommendSources() {
+        return RECOMMEND_SOURCES.filter(src => {
+            if (!isExcludeSeasonMode) return true;
+            if (src.key === 'ncav') return false;
+            if (src.key === 'super' && isSmallcapMode) return false;
+            return true;
+        });
+    }
+
     let recommendCheckedKeys = new Set();
 
     function handleRecommendHeaderCheckbox(key) {
@@ -265,8 +300,9 @@
     }
 
     function computeRecommendData() {
-        const checkedSources = RECOMMEND_SOURCES.filter(src => recommendCheckedKeys.has(src.key));
-        const activeSources = checkedSources.length > 0 ? checkedSources : RECOMMEND_SOURCES;
+        const availableSources = getActiveRecommendSources();
+        const checkedSources = availableSources.filter(src => recommendCheckedKeys.has(src.key));
+        const activeSources = checkedSources.length > 0 ? checkedSources : availableSources;
         const requireAll = checkedSources.length > 0;
 
         const entries = activeSources.map(src => ({
@@ -339,6 +375,13 @@
         refreshCurrentTable();
     }
 
+    function handleExcludeSeasonToggle() {
+        isExcludeSeasonMode = document.getElementById("recommend-exclude-season-checkbox").checked;
+        currentSortKey = 'rank';
+        isAscending = true;
+        refreshCurrentTable();
+    }
+
     function refreshCurrentTable() {
         if (currentMenu === 'recommend') {
             document.getElementById("strategy-title").innerText = "⭐ 추천 종목";
@@ -347,6 +390,12 @@
         } else if (currentMenu === 'rebalance') {
             document.getElementById("strategy-title").innerText = "🔁 리밸런싱";
             renderRebalanceTable();
+        } else if (currentMenu === 'portfolio') {
+            document.getElementById("strategy-title").innerText = "💼 포트폴리오";
+            renderPortfolioTable();
+        } else if (currentMenu === 'order') {
+            document.getElementById("strategy-title").innerText = "🛒 주문 실행";
+            renderOrderTable();
         } else if (currentMenu === 'fscore') {
             document.getElementById("strategy-title").innerText = "🏆 6. 신 F-스코어+저PBR";
             renderFscoreTable(filterBySearch(fscoreData));
@@ -393,7 +442,8 @@
 
     // 🚀 최적화 리팩토링: innerHTML 속도를 위해 큰 하나의 문자열 블록으로 조립 후 일괄 쓰기 수행
     function renderRecommendTable(data) {
-        const colWidth = Math.floor(44 / RECOMMEND_SOURCES.length);
+        const activeSources = getActiveRecommendSources();
+        const colWidth = Math.floor(44 / activeSources.length);
         const FLAG_CLASS = { '금융/지주': 'tag-finance', '관리': 'tag-admin', '관리우려': 'tag-admin-warn' };
         let html = `
             <thead>
@@ -405,7 +455,7 @@
                     <th style="width: 8%;">PBR<br>GP/A</th>
                     <th style="width: 6%;">F-S<br>성장</th>
                     <th style="width: 7%;" onclick="sortData('count')">중복<br>전략수</th>
-                    ${RECOMMEND_SOURCES.map(src => `
+                    ${activeSources.map(src => `
                         <th style="width: ${colWidth}%; font-size:9px;">
                             ${src.num}<br>
                             <input type="checkbox" id="recommend-chk-${src.key}" onclick="event.stopPropagation()" onchange="handleRecommendHeaderCheckbox('${src.key}')" ${recommendCheckedKeys.has(src.key) ? 'checked' : ''}>
@@ -453,11 +503,11 @@
                 <td style="line-height:1.6;">${pbrGpaCell}</td>
                 <td style="line-height:1.6;">${fsGrowthCell}</td>
                 <td class="rank-avg">${s.count}</td>
-                ${RECOMMEND_SOURCES.map(src => `<td>${s.ranks[src.key] !== undefined ? s.ranks[src.key] : ''}</td>`).join('')}
+                ${activeSources.map(src => `<td>${s.ranks[src.key] !== undefined ? s.ranks[src.key] : ''}</td>`).join('')}
             </tr>`;
         });
         if (data.length === 0) {
-            html += `<tr><td colspan="${7 + RECOMMEND_SOURCES.length}" style="padding:20px; color:#94a3b8;">조건을 만족하는 종목이 없습니다.</td></tr>`;
+            html += `<tr><td colspan="${7 + activeSources.length}" style="padding:20px; color:#94a3b8;">조건을 만족하는 종목이 없습니다.</td></tr>`;
         }
         html += `</tbody>`;
         document.getElementById("quant-table").innerHTML = html;
@@ -468,9 +518,128 @@
             `<tbody><tr><td style="padding:30px; color:#94a3b8;">🔁 리밸런싱 화면은 준비 중입니다.</td></tr></tbody>`;
     }
 
+    // 포트폴리오: 전략 데이터셋 전체에서 종목명으로 종가를 찾는다 (소형주 옵션이 켜져 있으면 그 데이터셋 우선)
+    function findStockPrice(name) {
+        const allDatasets = [
+            fscoreData,
+            isMomentumSmallcapMode ? momentumSmallcapData : momentumData,
+            ncavData, ncavGpaData,
+            isSmallcapMode ? superSmallcapData : superData,
+            qualityData, famaData, superQualityData, valueMomentumData, qualityMomentumData,
+            isUltraSmallcapMode ? ultraSmallcapData : ultraData,
+        ];
+        for (const ds of allDatasets) {
+            const found = ds.find(s => s.name === name);
+            if (found) return found.price;
+        }
+        return null;
+    }
+
+    function handleImportBookmarks() {
+        portfolioNames = [...bookmarks];
+        refreshCurrentTable();
+    }
+
+    function handlePortfolioInvestmentChange() {
+        const input = document.getElementById("portfolio-investment-input");
+        const digitsOnly = input.value.replace(/[^0-9]/g, '');
+        const v = parseFloat(digitsOnly);
+        portfolioInvestment = isNaN(v) ? 0 : v;
+        input.value = portfolioInvestment > 0 ? formatNumber(portfolioInvestment) : '';
+        refreshCurrentTable();
+    }
+
+    function handlePortfolioLeftoverChange() {
+        const checked = document.querySelector('input[name="leftover-option"]:checked');
+        portfolioLeftoverOption = checked ? checked.value : 'top1';
+        refreshCurrentTable();
+    }
+
+    function computePortfolioData() {
+        if (portfolioNames.length === 0) return [];
+
+        // 추천 메뉴 순위를 그대로 가져온다 (즐겨찾기 등록 순서와 무관하게 정렬하기 위함)
+        const recommendList = computeRecommendData();
+        const rankByName = new Map(recommendList.map(r => [r.name, r.rank]));
+
+        let stocks = portfolioNames.map(name => ({
+            name,
+            rank: rankByName.has(name) ? rankByName.get(name) : Infinity,
+            price: findStockPrice(name),
+        })).filter(s => s.price != null);
+
+        stocks.sort((a, b) => a.rank - b.rank);
+
+        const count = stocks.length;
+        if (count === 0 || portfolioInvestment <= 0) {
+            stocks.forEach(s => { s.shares = 0; });
+            return stocks;
+        }
+
+        const targetPerStock = portfolioInvestment / count;
+        stocks.forEach(s => { s.shares = Math.floor(targetPerStock / s.price); });
+
+        const spent = stocks.reduce((sum, s) => sum + s.shares * s.price, 0);
+        let leftover = portfolioInvestment - spent;
+
+        if (portfolioLeftoverOption === 'top1' && stocks.length > 0 && leftover > 0) {
+            const top = stocks[0];
+            const extraShares = Math.floor(leftover / top.price);
+            top.shares += extraShares;
+            leftover -= extraShares * top.price;
+        }
+
+        portfolioLeftoverCash = leftover;
+        return stocks;
+    }
+
+    function renderPortfolioTable() {
+        const stocks = computePortfolioData();
+        let html = `
+            <thead>
+                <tr>
+                    <th style="width: 15%;">순위</th>
+                    <th style="width: 40%;">종목명</th>
+                    <th style="width: 20%;">종가</th>
+                    <th style="width: 25%;">매수 가능 주수</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+        if (stocks.length === 0) {
+            html += `<tr><td colspan="4" style="padding:20px; color:#94a3b8;">즐겨찾기를 가져와 주세요.</td></tr>`;
+        } else {
+            stocks.forEach(s => {
+                html += `<tr>
+                    <td class="rank-main">${s.rank === Infinity ? '-' : s.rank}</td>
+                    <td>${s.name}</td>
+                    <td>${formatNumber(s.price)}원</td>
+                    <td class="rank-avg">${formatNumber(s.shares)}주</td>
+                </tr>`;
+            });
+        }
+        html += `</tbody>`;
+        document.getElementById("quant-table").innerHTML = html;
+
+        const summaryEl = document.getElementById("portfolio-summary");
+        if (portfolioNames.length === 0) {
+            summaryEl.innerText = '';
+        } else if (portfolioInvestment <= 0) {
+            summaryEl.innerText = `즐겨찾기 ${portfolioNames.length}종목 불러옴 - 투자금을 입력하세요.`;
+        } else {
+            const spent = stocks.reduce((sum, s) => sum + s.shares * s.price, 0);
+            summaryEl.innerText = `총 ${stocks.length}종목 / 투자금 ${formatNumber(portfolioInvestment)}원 / 매수금액 ${formatNumber(spent)}원 / 현금 잔액 ${formatNumber(Math.round(portfolioLeftoverCash || 0))}원`;
+        }
+    }
+
     function renderPlaceholderTable() {
         document.getElementById("quant-table").innerHTML =
             `<tbody><tr><td style="padding:30px; color:#94a3b8;">⏳ 준비 중인 전략입니다.</td></tr></tbody>`;
+    }
+
+    function renderOrderTable() {
+        document.getElementById("quant-table").innerHTML =
+            `<tbody><tr><td style="padding:30px; color:#94a3b8;">🛒 주문 실행 화면은 준비 중입니다. (키움 API 연동 예정)</td></tr></tbody>`;
     }
 
     function renderUltraTable(data) {
