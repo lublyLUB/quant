@@ -86,6 +86,37 @@ def get_holdings():
     return fetch_account_balance(token, KIWOOM_ACCOUNT_NO, KIWOOM_IS_MOCK)
 
 
+def place_order(stk_cd, qty, side, price=None, is_mock=KIWOOM_IS_MOCK):
+    """주식 매수/매도 주문 (kt10000/kt10001).
+
+    side: "buy" 또는 "sell". price를 주면 보통(한도가) 주문, 없으면 시장가 주문.
+    """
+    if side not in ("buy", "sell"):
+        raise ValueError("side는 'buy' 또는 'sell'이어야 합니다.")
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, is_mock)
+    url = f"{get_base_url(is_mock)}/api/dostk/ordr"
+    api_id = "kt10000" if side == "buy" else "kt10001"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": api_id,
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {token}",
+    }
+    body = {
+        "dmst_stex_tp": "KRX",
+        "stk_cd": stk_cd,
+        "ord_qty": str(int(qty)),
+        "trde_tp": "00" if price else "03",  # 00: 보통(한도가), 03: 시장가
+        "ord_uv": str(int(price)) if price else "",
+    }
+    resp = requests.post(url, headers=headers, json=body, timeout=15)
+    resp.raise_for_status()
+    return resp.json()
+
+
 if __name__ == "__main__":
     if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
         sys.stdout.reconfigure(encoding="utf-8")

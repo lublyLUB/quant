@@ -51,8 +51,9 @@
         .mode-toggle-group { display: flex; background-color: #f1f5f9; border-radius: 8px; padding: 2px; flex: 0 0 auto; }
         .mode-btn { border: none; background: none; padding: 7px 10px; font-size: 11px; font-weight: bold; color: #64748b; cursor: pointer; border-radius: 6px; }
         .mode-btn.active { background-color: #fff; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-        .filter-checkboxes { display: flex; flex-wrap: wrap; gap: 8px; font-size: 11px; color: #475569; flex: 1 1 auto; justify-content: flex-end; }
-        .filter-checkboxes label { white-space: nowrap; }
+        .filter-checkboxes { display: flex; flex-wrap: wrap; gap: 8px; font-size: 11px; color: #475569; flex: 1 1 auto; justify-content: flex-end; align-self: flex-end; }
+        .filter-checkboxes label { white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; }
+        .filter-checkboxes input[type="checkbox"] { margin: 0; position: relative; top: 3px; }
 
         table { width: 100%; border-collapse: collapse; font-size: 11px; table-layout: fixed; }
         th, td { padding: 9px 1px; border-bottom: 1px solid #e2e8f0; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
@@ -63,10 +64,9 @@
         .rank-main { font-weight: bold; color: #2563eb; }
         .rank-avg { font-weight: bold; color: #059669; }
 
-        /* ⭐ 북마크 별 아이콘 및 지표 강조 효과 */
-        .star-icon { cursor: pointer; color: #cbd5e1; font-size: 12px; margin-right: 2px; transition: color 0.2s; }
-        .star-icon.active { color: #f59e0b; }
-        .name-bookmarked { color: #1e40af; font-weight: 800; }
+        /* ⭐ 북마크(즐겨찾기): 종목명 클릭으로 토글 */
+        .name-clickable, .name-bookmarked { cursor: pointer; border: 1px solid transparent; border-radius: 4px; padding: 0 3px; line-height: 1.5; display: inline-block; vertical-align: middle; box-sizing: border-box; }
+        .name-bookmarked { color: #fff; background-color: #1e40af; font-weight: 800; border-color: #1e40af; }
         .badge-cheap { color: #b91c1c; font-weight: bold; }
 
     </style>
@@ -100,6 +100,7 @@
             <button id="btn-mode-simple" class="mode-btn active" onclick="setDisplayMode('simple')">간단</button>
             <button id="btn-mode-detail" class="mode-btn" onclick="setDisplayMode('detail')">자세히</button>
         </div>
+        <span id="bookmark-count" style="font-size:11px; color:#64748b; margin-left:8px; align-self:flex-end;"></span>
         <div class="filter-checkboxes">
             <label id="super-smallcap-lbl" style="display:none;"><input type="checkbox" id="smallcap-checkbox" onchange="handleSmallcapToggle()"> 소형주(하위 20%)</label>
             <label id="momentum-smallcap-lbl" style="display:none;"><input type="checkbox" id="momentum-smallcap-checkbox" onchange="handleMomentumSmallcapToggle()"> 소형주(하위 20%)</label>
@@ -123,6 +124,12 @@
             <label><input type="radio" name="leftover-option" value="cash" onchange="handlePortfolioLeftoverChange()"> 현금 보유</label>
         </div>
         <div id="portfolio-summary" style="font-size:11px; color:#1e3a8a; font-weight:bold;"></div>
+    </div>
+
+    <div id="order-controls" style="display:none; margin-bottom: 12px;">
+        <button class="mode-btn" style="background:#1e3a8a; color:#fff; padding:8px 12px; margin-bottom:8px;" onclick="handleFetchHoldings()">🔄 보유 내역 조회</button>
+        <span id="order-server-status" style="font-size:11px; color:#94a3b8; margin-left:8px;"></span>
+        <div id="order-summary" style="font-size:11px; color:#1e3a8a; font-weight:bold; margin-top:4px;"></div>
     </div>
 
     <table id="quant-table">
@@ -185,6 +192,47 @@
     // 🌟 관심 종목 로컬 스토리지 보관 매커니즘
     let bookmarks = JSON.parse(localStorage.getItem('quant_bookmarks')) || [];
 
+    // 체크박스/옵션 상태를 localStorage에 저장해서 재접속 시에도 유지
+    function saveOptions() {
+        localStorage.setItem('quant_options', JSON.stringify({
+            isSmallcapMode,
+            isGpaMode,
+            isMomentumSmallcapMode,
+            isUltraSmallcapMode,
+            isExcludeSeasonMode,
+            recommendCheckedKeys: Array.from(recommendCheckedKeys),
+            portfolioLeftoverOption,
+        }));
+    }
+
+    function loadOptions() {
+        let saved = {};
+        try {
+            saved = JSON.parse(localStorage.getItem('quant_options')) || {};
+        } catch (e) {
+            saved = {};
+        }
+        isSmallcapMode = !!saved.isSmallcapMode;
+        isGpaMode = !!saved.isGpaMode;
+        isMomentumSmallcapMode = !!saved.isMomentumSmallcapMode;
+        isUltraSmallcapMode = !!saved.isUltraSmallcapMode;
+        isExcludeSeasonMode = !!saved.isExcludeSeasonMode;
+        recommendCheckedKeys = new Set(saved.recommendCheckedKeys || []);
+        portfolioLeftoverOption = saved.portfolioLeftoverOption || 'top1';
+
+        const setChecked = (id, value) => {
+            const el = document.getElementById(id);
+            if (el) el.checked = value;
+        };
+        setChecked('smallcap-checkbox', isSmallcapMode);
+        setChecked('gpa-checkbox', isGpaMode);
+        setChecked('momentum-smallcap-checkbox', isMomentumSmallcapMode);
+        setChecked('ultra-smallcap-checkbox', isUltraSmallcapMode);
+        setChecked('recommend-exclude-season-checkbox', isExcludeSeasonMode);
+        const leftoverRadio = document.querySelector(`input[name="leftover-option"][value="${portfolioLeftoverOption}"]`);
+        if (leftoverRadio) leftoverRadio.checked = true;
+    }
+
     // 19개 지표용 분수 표기 (예: frac(part('시가총액','765,000'), part('순이익','50,000')) -> 세로로 쌓인 분수 HTML)
     // part(라벨, 값): 작은 라벨(헤더 역할) + 굵은 숫자값을 한 단으로
     function part(label, value) {
@@ -222,16 +270,18 @@
             bookmarks.push(name);
         }
         localStorage.setItem('quant_bookmarks', JSON.stringify(bookmarks));
+        updateBookmarkCount();
         refreshCurrentTable();
     }
 
-    function getStarHtml(name) {
-        const isActive = bookmarks.includes(name) ? 'active' : '';
-        return `<span class="star-icon ${isActive}" onclick="toggleBookmark('${name}')">★</span>`;
+    function updateBookmarkCount() {
+        const el = document.getElementById('bookmark-count');
+        if (el) el.textContent = `즐겨찾기 ${bookmarks.length}개`;
     }
 
     function getNameHtml(name) {
-        return bookmarks.includes(name) ? `<span class="name-bookmarked">${name}</span>` : name;
+        const cls = bookmarks.includes(name) ? 'name-bookmarked' : 'name-clickable';
+        return `<span class="${cls}" onclick="toggleBookmark('${name}')">${name}</span>`;
     }
 
     function handleSearch() {
@@ -257,6 +307,7 @@
         document.getElementById("recommend-exclude-season-lbl").style.display = (menuType === 'recommend') ? 'block' : 'none';
         document.getElementById("recommend-filter-lbl").style.display = (menuType === 'recommend') ? 'block' : 'none';
         document.getElementById("portfolio-controls").style.display = (menuType === 'portfolio') ? 'block' : 'none';
+        document.getElementById("order-controls").style.display = (menuType === 'order') ? 'block' : 'none';
         document.getElementById("strategy-tabs").style.display = (menuType === 'portfolio' || menuType === 'order' || menuType === 'rebalance') ? 'none' : 'grid';
         document.getElementById("sell-strategy-lbl").style.display = (nonStrategyMenus.includes(menuType)) ? 'none' : 'inline-flex';
         document.getElementById("control-bar").style.display = (menuType === 'rebalance' || menuType === 'portfolio' || menuType === 'order') ? 'none' : 'flex';
@@ -296,6 +347,7 @@
         else recommendCheckedKeys.delete(key);
         currentSortKey = 'rank';
         isAscending = true;
+        saveOptions();
         refreshCurrentTable();
     }
 
@@ -351,6 +403,7 @@
         isSmallcapMode = document.getElementById("smallcap-checkbox").checked;
         currentSortKey = 'rank';
         isAscending = true;
+        saveOptions();
         refreshCurrentTable();
     }
 
@@ -358,6 +411,7 @@
         isGpaMode = document.getElementById("gpa-checkbox").checked;
         currentSortKey = 'rank';
         isAscending = true;
+        saveOptions();
         refreshCurrentTable();
     }
 
@@ -365,6 +419,7 @@
         isMomentumSmallcapMode = document.getElementById("momentum-smallcap-checkbox").checked;
         currentSortKey = 'rank';
         isAscending = true;
+        saveOptions();
         refreshCurrentTable();
     }
 
@@ -372,6 +427,7 @@
         isUltraSmallcapMode = document.getElementById("ultra-smallcap-checkbox").checked;
         currentSortKey = 'rank';
         isAscending = true;
+        saveOptions();
         refreshCurrentTable();
     }
 
@@ -379,6 +435,7 @@
         isExcludeSeasonMode = document.getElementById("recommend-exclude-season-checkbox").checked;
         currentSortKey = 'rank';
         isAscending = true;
+        saveOptions();
         refreshCurrentTable();
     }
 
@@ -443,18 +500,18 @@
     // 🚀 최적화 리팩토링: innerHTML 속도를 위해 큰 하나의 문자열 블록으로 조립 후 일괄 쓰기 수행
     function renderRecommendTable(data) {
         const activeSources = getActiveRecommendSources();
-        const colWidth = Math.floor(44 / activeSources.length);
+        const colWidth = Math.floor(43 / activeSources.length);
         const FLAG_CLASS = { '금융/지주': 'tag-finance', '관리': 'tag-admin', '관리우려': 'tag-admin-warn' };
         let html = `
             <thead>
                 <tr>
-                    <th style="width: 7%;" onclick="sortData('rank')">순위</th>
-                    <th style="width: 5%;" onclick="sortData('orientation')">성향</th>
-                    <th style="width: 15%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
-                    <th style="width: 8%;">업종<br>공시</th>
-                    <th style="width: 8%;">PBR<br>GP/A</th>
+                    <th style="width: 5%;" onclick="sortData('rank')">순위</th>
+                    <th style="width: 7%;" onclick="sortData('orientation')">성향</th>
+                    <th style="width: 17%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
+                    <th style="width: 10%;">업종<br>공시</th>
+                    <th style="width: 6%;">PBR<br>GP/A</th>
                     <th style="width: 6%;">F-S<br>성장</th>
-                    <th style="width: 7%;" onclick="sortData('count')">중복<br>전략수</th>
+                    <th style="width: 6%;" onclick="sortData('count')">중복<br>전략수</th>
                     ${activeSources.map(src => `
                         <th style="width: ${colWidth}%; font-size:9px;">
                             ${src.num}<br>
@@ -498,7 +555,7 @@
             html += `<tr>
                 <td class="rank-main">${s.rank}</td>
                 <td>${orientationBadge}</td>
-                <td>${getStarHtml(s.name)}${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
+                <td>${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
                 <td style="white-space:normal; line-height:1.6;">${noteBadges}</td>
                 <td style="line-height:1.6;">${pbrGpaCell}</td>
                 <td style="line-height:1.6;">${fsGrowthCell}</td>
@@ -535,6 +592,22 @@
         return null;
     }
 
+    function findStockCode(name) {
+        const allDatasets = [
+            fscoreData,
+            isMomentumSmallcapMode ? momentumSmallcapData : momentumData,
+            ncavData, ncavGpaData,
+            isSmallcapMode ? superSmallcapData : superData,
+            qualityData, famaData, superQualityData, valueMomentumData, qualityMomentumData,
+            isUltraSmallcapMode ? ultraSmallcapData : ultraData,
+        ];
+        for (const ds of allDatasets) {
+            const found = ds.find(s => s.name === name);
+            if (found) return found.code;
+        }
+        return null;
+    }
+
     function handleImportBookmarks() {
         portfolioNames = [...bookmarks];
         refreshCurrentTable();
@@ -552,6 +625,7 @@
     function handlePortfolioLeftoverChange() {
         const checked = document.querySelector('input[name="leftover-option"]:checked');
         portfolioLeftoverOption = checked ? checked.value : 'top1';
+        saveOptions();
         refreshCurrentTable();
     }
 
@@ -637,9 +711,141 @@
             `<tbody><tr><td style="padding:30px; color:#94a3b8;">⏳ 준비 중인 전략입니다.</td></tr></tbody>`;
     }
 
+    const ORDER_SERVER_URL = 'http://127.0.0.1:5050';
+    let holdingsByCode = {};   // stk_cd -> {name, qty, price}
+    let holdingsLoaded = false;
+
+    async function handleFetchHoldings() {
+        const statusEl = document.getElementById("order-server-status");
+        statusEl.textContent = '조회 중...';
+        try {
+            const resp = await fetch(`${ORDER_SERVER_URL}/api/holdings`);
+            const data = await resp.json();
+            if (data.error || (data.return_code !== undefined && data.return_code !== 0)) {
+                throw new Error(data.error || data.return_msg || '조회 실패');
+            }
+            const rows = data.acnt_evlt_remn_indv_tot || [];
+            holdingsByCode = {};
+            rows.forEach(r => {
+                const code = (r.stk_cd || '').replace(/^A/, '');
+                if (!code) return;
+                holdingsByCode[code] = {
+                    name: r.stk_nm || '',
+                    qty: parseInt(r.rmnd_qty || r.hold_qty || '0', 10) || 0,
+                    price: parseInt(r.cur_prc || r.cur_pric || '0', 10) || 0,
+                };
+            });
+            holdingsLoaded = true;
+            statusEl.textContent = `조회 완료 (${rows.length}종목 보유)`;
+        } catch (e) {
+            holdingsLoaded = false;
+            statusEl.textContent = `❌ 로컬 주문 서버에 연결할 수 없습니다. (python order_server.py 실행 필요) - ${e.message}`;
+        }
+        refreshCurrentTable();
+    }
+
+    // 목표 비중(포트폴리오 메뉴에서 계산한 균등비중 목표수량) vs 현재 보유수량을 비교해 매수/매도 수량을 산출
+    function computeOrderData() {
+        const targets = computePortfolioData();  // [{name, price, shares, rank}, ...]
+        const rows = [];
+        const seenCodes = new Set();
+
+        targets.forEach(t => {
+            const code = findStockCode(t.name);
+            if (!code) return;
+            seenCodes.add(code);
+            const held = holdingsByCode[code];
+            const curQty = held ? held.qty : 0;
+            const diff = t.shares - curQty;
+            rows.push({
+                name: t.name, code, price: t.price,
+                targetQty: t.shares, curQty, diff,
+                side: diff > 0 ? 'buy' : (diff < 0 ? 'sell' : ''),
+            });
+        });
+
+        // 목표에는 없지만 현재 보유 중인 종목 (전량 매도 후보)
+        Object.keys(holdingsByCode).forEach(code => {
+            if (seenCodes.has(code)) return;
+            const held = holdingsByCode[code];
+            if (held.qty <= 0) return;
+            rows.push({
+                name: held.name, code, price: held.price,
+                targetQty: 0, curQty: held.qty, diff: -held.qty, side: 'sell',
+            });
+        });
+
+        return rows;
+    }
+
+    async function handleSendOrder(code, side, qty, price) {
+        if (!confirm(`${side === 'buy' ? '매수' : '매도'} 주문을 실제로 전송합니다.\n종목코드: ${code} / 수량: ${qty}주 / 가격: ${price}원\n계속하시겠습니까?`)) return;
+        try {
+            const resp = await fetch(`${ORDER_SERVER_URL}/api/order`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ stk_cd: code, qty, side, price }),
+            });
+            const data = await resp.json();
+            if (data.error || (data.return_code !== undefined && data.return_code !== 0)) {
+                alert(`주문 실패: ${data.error || data.return_msg}`);
+            } else {
+                alert('주문이 전송되었습니다.');
+                await handleFetchHoldings();
+            }
+        } catch (e) {
+            alert(`주문 전송 중 오류: ${e.message}`);
+        }
+    }
+
     function renderOrderTable() {
-        document.getElementById("quant-table").innerHTML =
-            `<tbody><tr><td style="padding:30px; color:#94a3b8;">🛒 주문 실행 화면은 준비 중입니다. (키움 API 연동 예정)</td></tr></tbody>`;
+        if (!holdingsLoaded) {
+            document.getElementById("quant-table").innerHTML =
+                `<tbody><tr><td style="padding:30px; color:#94a3b8;">"보유 내역 조회" 버튼을 눌러주세요. (로컬 주문 서버 실행 필요: python order_server.py)</td></tr></tbody>`;
+            document.getElementById("order-summary").innerText = '';
+            return;
+        }
+
+        const rows = computeOrderData();
+        let html = `
+            <thead>
+                <tr>
+                    <th style="width: 18%;">종목명</th>
+                    <th style="width: 12%;">현재가</th>
+                    <th style="width: 12%;">보유수량</th>
+                    <th style="width: 12%;">목표수량</th>
+                    <th style="width: 14%;">매수/매도</th>
+                    <th style="width: 14%;">주문</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+        if (rows.length === 0) {
+            html += `<tr><td colspan="6" style="padding:20px; color:#94a3b8;">포트폴리오 메뉴에서 즐겨찾기/투자금을 먼저 설정해주세요.</td></tr>`;
+        } else {
+            rows.forEach(r => {
+                const diffLabel = r.diff > 0 ? `<span style="color:#dc2626;">매수 ${r.diff}주</span>`
+                    : r.diff < 0 ? `<span style="color:#2563eb;">매도 ${Math.abs(r.diff)}주</span>`
+                    : '-';
+                const orderBtn = r.diff !== 0
+                    ? `<button class="mode-btn" style="background:${r.side === 'buy' ? '#dc2626' : '#2563eb'}; color:#fff; padding:4px 8px; font-size:10px;" onclick="handleSendOrder('${r.code}','${r.side}',${Math.abs(r.diff)},${r.price})">${r.side === 'buy' ? '매수' : '매도'} 전송</button>`
+                    : '-';
+                html += `<tr>
+                    <td>${r.name}</td>
+                    <td>${formatNumber(r.price)}원</td>
+                    <td>${formatNumber(r.curQty)}주</td>
+                    <td>${formatNumber(r.targetQty)}주</td>
+                    <td>${diffLabel}</td>
+                    <td>${orderBtn}</td>
+                </tr>`;
+            });
+        }
+        html += `</tbody>`;
+        document.getElementById("quant-table").innerHTML = html;
+
+        const buyCount = rows.filter(r => r.diff > 0).length;
+        const sellCount = rows.filter(r => r.diff < 0).length;
+        document.getElementById("order-summary").innerText = `매수 대상 ${buyCount}종목 / 매도 대상 ${sellCount}종목`;
     }
 
     function renderUltraTable(data) {
@@ -679,7 +885,7 @@
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
+                    <td>${getNameHtml(s.name)}</td>
                     <td>${s.per.toFixed(1)}<span class="sub-text">${s.per_r}위</span></td>
                     <td>${s.pfcr.toFixed(1)}<span class="sub-text">${s.pfcr_r}위</span></td>
                     <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
@@ -696,7 +902,7 @@
             } else {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
+                    <td>${getNameHtml(s.name)}</td>
                     <td>${formatNumber(s.price)}</td>
                     <td>${formatNumber(s.market_cap)}억</td>
                     <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
@@ -740,7 +946,7 @@
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
+                    <td>${getNameHtml(s.name)}</td>
                     <td>${s.gpa.toFixed(1)}<span class="sub-text">${s.gpa_r}위</span></td>
                     <td>${s.op_debt_growth_yoy.toFixed(1)}%<span class="sub-text">${s.op_debt_r}위</span></td>
                     <td>${s.asset_growth_yoy.toFixed(1)}%<span class="sub-text">${s.asset_growth_r}위</span></td>
@@ -753,7 +959,7 @@
             } else {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
+                    <td>${getNameHtml(s.name)}</td>
                     <td>${formatNumber(s.price)}</td>
                     <td>${formatNumber(s.market_cap)}억</td>
                     <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
@@ -797,7 +1003,7 @@
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
+                    <td>${getNameHtml(s.name)}</td>
                     <td>${s.per.toFixed(1)}<span class="sub-text">${s.per_r}위</span></td>
                     <td>${s.pfcr.toFixed(2)}<span class="sub-text">${s.pfcr_r}위</span></td>
                     <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
@@ -810,7 +1016,7 @@
             } else {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
+                    <td>${getNameHtml(s.name)}</td>
                     <td>${formatNumber(s.price)}</td>
                     <td>${formatNumber(s.market_cap)}억</td>
                     <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
@@ -855,7 +1061,7 @@
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
+                    <td>${getNameHtml(s.name)}</td>
                     <td>${s.per.toFixed(1)}<span class="sub-text">${s.per_r}위</span></td>
                     <td>${s.pcr.toFixed(1)}<span class="sub-text">${s.pcr_r}위</span></td>
                     <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
@@ -868,7 +1074,7 @@
             } else {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
+                    <td>${getNameHtml(s.name)}</td>
                     <td>${formatNumber(s.price)}</td>
                     <td>${formatNumber(s.market_cap)}억</td>
                     <td>3점</td>
@@ -899,7 +1105,7 @@
         data.forEach(s => {
             html += `<tr>
                 <td class="rank-main">${s.rank}</td>
-                <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
+                <td>${getNameHtml(s.name)}</td>
                 <td>${formatNumber(s.price)}</td>
                 <td>${formatNumber(s.market_cap)}억</td>
                 <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
@@ -941,7 +1147,7 @@
             <tbody>`;
 
         data.forEach(s => {
-            const nameCell = `${getStarHtml(s.name)}${getNameHtml(s.name)}`;
+            const nameCell = `${getNameHtml(s.name)}`;
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
@@ -995,7 +1201,7 @@
             <tbody>`;
 
         data.forEach(s => {
-            const nameCell = `${getStarHtml(s.name)}${getNameHtml(s.name)}`;
+            const nameCell = `${getNameHtml(s.name)}`;
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
@@ -1040,7 +1246,7 @@
             <tbody>`;
 
         data.forEach(s => {
-            const nameCell = `${getStarHtml(s.name)}${getNameHtml(s.name)}`;
+            const nameCell = `${getNameHtml(s.name)}`;
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
@@ -1100,7 +1306,7 @@
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
+                    <td>${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
                     <td>${formatNumber(s.market_cap)}억</td>
                     <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.quarter_net_income)))}</td>
                     <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.equity)))}</td>
@@ -1110,7 +1316,7 @@
             } else {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
+                    <td>${getNameHtml(s.name)}</td>
                     <td>${formatNumber(s.price)}</td>
                     <td>${formatNumber(s.market_cap)}억</td>
                     <td>${s.per.toFixed(1)}<span class="sub-text">${s.per_r}위</span></td>
@@ -1154,7 +1360,7 @@
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}위</td>
-                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
+                    <td>${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
                     <td>${formatNumber(s.market_cap)}억</td>
                     <td>${s.quarter_net_income == null ? 'N/A' : formatNumber(s.quarter_net_income) + '억'}</td>
                     <td>${frac(barePart(amt(s.current_assets) + ' − ' + amt(s.liabilities)), barePart(amt(s.market_cap)))}</td>
@@ -1164,7 +1370,7 @@
             } else {
                 html += `<tr>
                     <td class="rank-main">${s.rank}위</td>
-                    <td>${getStarHtml(s.name)}${getNameHtml(s.name)}</td>
+                    <td>${getNameHtml(s.name)}</td>
                     <td>${formatNumber(s.price)}</td>
                     <td>${formatNumber(s.market_cap)}억</td>
                     <td>${formatNumber(s.ncav)}억</td>
@@ -1216,6 +1422,8 @@
     }
 
     window.onload = function() {
+        loadOptions();
+        updateBookmarkCount();
         if (typeof KOSPI_QUANT_PACKAGE !== 'undefined') {
             const server = KOSPI_QUANT_PACKAGE.server;
             superData = KOSPI_QUANT_PACKAGE.super_value;

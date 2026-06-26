@@ -1064,6 +1064,7 @@ def fetch_krx_market_data():
             packaged.append({
                 "rank": idx + 1,
                 "name": s["name"],
+                "code": s["code"],
                 "price": s["price"],
                 "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
                 "pbr": s["pbr"],
@@ -1094,6 +1095,7 @@ def fetch_krx_market_data():
             packaged.append({
                 "rank": idx + 1,
                 "name": s["name"],
+                "code": s["code"],
                 "price": s["price"],
                 "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
                 "op_growth_qoq": s["op_growth_qoq"],
@@ -1124,6 +1126,7 @@ def fetch_krx_market_data():
         fscore_value.append({
             "rank": idx + 1,
             "name": s["name"],
+            "code": s["code"],
             "price": s["price"],
             "cap_increase_flag": s["cap_increase_flag"],
             "ni_pos_flag": s["ni_pos_flag"],
@@ -1142,6 +1145,7 @@ def fetch_krx_market_data():
         quality_value.append({
             "rank": idx + 1,
             "name": s["name"],
+            "code": s["code"],
             "price": s["price"],
             "cap_increase_flag": s["cap_increase_flag"],
             "ni_pos_flag": s["ni_pos_flag"],
@@ -1163,6 +1167,7 @@ def fetch_krx_market_data():
         fama_value.append({
             "rank": idx + 1,
             "name": s["name"],
+            "code": s["code"],
             "price": s["price"],
             "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
             "pbr": s["pbr"],
@@ -1180,6 +1185,7 @@ def fetch_krx_market_data():
         super_quality_value.append({
             "rank": idx + 1,
             "name": s["name"],
+            "code": s["code"],
             "price": s["price"],
             "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
             "per": s["per"], "per_r": s["per_r"],
@@ -1199,6 +1205,7 @@ def fetch_krx_market_data():
         value_momentum_value.append({
             "rank": idx + 1,
             "name": s["name"],
+            "code": s["code"],
             "price": s["price"],
             "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
             "per": s["per"], "per_r": s["per_r"],
@@ -1218,6 +1225,7 @@ def fetch_krx_market_data():
         quality_momentum_value.append({
             "rank": idx + 1,
             "name": s["name"],
+            "code": s["code"],
             "price": s["price"],
             "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
             "gpa": s["gpa"], "gpa_r": s["gpa_r"],
@@ -1238,6 +1246,7 @@ def fetch_krx_market_data():
             packaged.append({
                 "rank": idx + 1,
                 "name": s["name"],
+                "code": s["code"],
                 "price": s["price"],
                 "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
                 "per": s["per"], "per_r": s["per_r"],
@@ -1266,6 +1275,7 @@ def fetch_krx_market_data():
             packaged.append({
                 "rank": idx + 1,
                 "name": s["name"],
+                "code": s["code"],
                 "price": s["price"],
                 "ncav": s["ncav"],
                 "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
