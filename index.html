@@ -308,6 +308,7 @@
         document.getElementById("recommend-filter-lbl").style.display = (menuType === 'recommend') ? 'block' : 'none';
         document.getElementById("portfolio-controls").style.display = (menuType === 'portfolio') ? 'block' : 'none';
         document.getElementById("order-controls").style.display = (menuType === 'order') ? 'block' : 'none';
+        if (menuType !== 'order') stopOrderPolling();
         document.getElementById("strategy-tabs").style.display = (menuType === 'portfolio' || menuType === 'order' || menuType === 'rebalance') ? 'none' : 'grid';
         document.getElementById("sell-strategy-lbl").style.display = (nonStrategyMenus.includes(menuType)) ? 'none' : 'inline-flex';
         document.getElementById("control-bar").style.display = (menuType === 'rebalance' || menuType === 'portfolio' || menuType === 'order') ? 'none' : 'flex';
@@ -712,12 +713,62 @@
     }
 
     const ORDER_SERVER_URL = 'http://127.0.0.1:5050';
+    const ORDER_POLL_INTERVAL_MS = 30000;
+    const WEIGHT_DEVIATION_ALERT_PCT = 10;  // 목표 대비 비중 차이가 이 %를 넘으면 알림
     let holdingsByCode = {};   // stk_cd -> {name, qty, price}
     let holdingsLoaded = false;
+    let orderPollTimer = null;
+    let lastFilledCount = null;
+    let notifiedDeviationCodes = new Set();
 
-    async function handleFetchHoldings() {
+    function requestNotificationPermission() {
+        if ('Notification' in window && Notification.permission === 'default') {
+            Notification.requestPermission();
+        }
+    }
+
+    function notify(title, body) {
+        if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification(title, { body });
+        }
+    }
+
+    function startOrderPolling() {
+        requestNotificationPermission();
+        stopOrderPolling();
+        orderPollTimer = setInterval(() => {
+            if (currentMenu !== 'order' || !holdingsLoaded) return;
+            handleFetchHoldings(true);
+            checkOrderFillStatus();
+        }, ORDER_POLL_INTERVAL_MS);
+    }
+
+    function stopOrderPolling() {
+        if (orderPollTimer) {
+            clearInterval(orderPollTimer);
+            orderPollTimer = null;
+        }
+    }
+
+    async function checkOrderFillStatus() {
+        try {
+            const resp = await fetch(`${ORDER_SERVER_URL}/api/order_status`);
+            const data = await resp.json();
+            if (data.error) return;
+            const rows = data.acnt_ord_cntr_prps_dtl || data.acnt_ord_cntr_dtl || [];
+            const filledCount = rows.filter(r => (r.ord_stt || r.cntr_qty || '') && (r.cntr_qty && parseInt(r.cntr_qty, 10) > 0)).length;
+            if (lastFilledCount !== null && filledCount > lastFilledCount) {
+                notify('주문 체결', `새로운 체결이 감지되었습니다 (체결 ${filledCount}건)`);
+            }
+            lastFilledCount = filledCount;
+        } catch (e) {
+            // 로컬 서버 미실행 등 - 조용히 무시
+        }
+    }
+
+    async function handleFetchHoldings(silent) {
         const statusEl = document.getElementById("order-server-status");
-        statusEl.textContent = '조회 중...';
+        if (!silent) statusEl.textContent = '조회 중...';
         try {
             const resp = await fetch(`${ORDER_SERVER_URL}/api/holdings`);
             const data = await resp.json();
@@ -736,10 +787,12 @@
                 };
             });
             holdingsLoaded = true;
-            statusEl.textContent = `조회 완료 (${rows.length}종목 보유)`;
+            statusEl.textContent = `조회 완료 (${rows.length}종목 보유, ${new Date().toLocaleTimeString()} 기준)`;
+            startOrderPolling();
         } catch (e) {
             holdingsLoaded = false;
             statusEl.textContent = `❌ 로컬 주문 서버에 연결할 수 없습니다. (python order_server.py 실행 필요) - ${e.message}`;
+            stopOrderPolling();
         }
         refreshCurrentTable();
     }
@@ -757,9 +810,12 @@
             const held = holdingsByCode[code];
             const curQty = held ? held.qty : 0;
             const diff = t.shares - curQty;
+            const targetValue = t.shares * t.price;
+            const curValue = curQty * t.price;
+            const weightDiffPct = targetValue > 0 ? ((curValue - targetValue) / targetValue) * 100 : (curValue > 0 ? 100 : 0);
             rows.push({
                 name: t.name, code, price: t.price,
-                targetQty: t.shares, curQty, diff,
+                targetQty: t.shares, curQty, diff, weightDiffPct,
                 side: diff > 0 ? 'buy' : (diff < 0 ? 'sell' : ''),
             });
         });
@@ -771,11 +827,24 @@
             if (held.qty <= 0) return;
             rows.push({
                 name: held.name, code, price: held.price,
-                targetQty: 0, curQty: held.qty, diff: -held.qty, side: 'sell',
+                targetQty: 0, curQty: held.qty, diff: -held.qty, weightDiffPct: 100, side: 'sell',
             });
         });
 
+        checkWeightDeviations(rows);
         return rows;
+    }
+
+    function checkWeightDeviations(rows) {
+        rows.forEach(r => {
+            const exceeded = Math.abs(r.weightDiffPct) >= WEIGHT_DEVIATION_ALERT_PCT;
+            if (exceeded && !notifiedDeviationCodes.has(r.code)) {
+                notifiedDeviationCodes.add(r.code);
+                notify('목표 비중 이탈', `${r.name}: 목표 대비 ${r.weightDiffPct > 0 ? '+' : ''}${r.weightDiffPct.toFixed(1)}% 차이`);
+            } else if (!exceeded && notifiedDeviationCodes.has(r.code)) {
+                notifiedDeviationCodes.delete(r.code);
+            }
+        });
     }
 
     async function handleSendOrder(code, side, qty, price) {
@@ -810,10 +879,11 @@
         let html = `
             <thead>
                 <tr>
-                    <th style="width: 18%;">종목명</th>
-                    <th style="width: 12%;">현재가</th>
-                    <th style="width: 12%;">보유수량</th>
-                    <th style="width: 12%;">목표수량</th>
+                    <th style="width: 15%;">종목명</th>
+                    <th style="width: 10%;">현재가</th>
+                    <th style="width: 10%;">보유수량</th>
+                    <th style="width: 10%;">목표수량</th>
+                    <th style="width: 12%;">목표비중차이</th>
                     <th style="width: 14%;">매수/매도</th>
                     <th style="width: 14%;">주문</th>
                 </tr>
@@ -821,12 +891,15 @@
             <tbody>`;
 
         if (rows.length === 0) {
-            html += `<tr><td colspan="6" style="padding:20px; color:#94a3b8;">포트폴리오 메뉴에서 즐겨찾기/투자금을 먼저 설정해주세요.</td></tr>`;
+            html += `<tr><td colspan="7" style="padding:20px; color:#94a3b8;">포트폴리오 메뉴에서 즐겨찾기/투자금을 먼저 설정해주세요.</td></tr>`;
         } else {
             rows.forEach(r => {
                 const diffLabel = r.diff > 0 ? `<span style="color:#dc2626;">매수 ${r.diff}주</span>`
                     : r.diff < 0 ? `<span style="color:#2563eb;">매도 ${Math.abs(r.diff)}주</span>`
                     : '-';
+                const weightLabel = Math.abs(r.weightDiffPct) >= WEIGHT_DEVIATION_ALERT_PCT
+                    ? `<span style="color:#dc2626; font-weight:bold;">${r.weightDiffPct > 0 ? '+' : ''}${r.weightDiffPct.toFixed(1)}%</span>`
+                    : `${r.weightDiffPct > 0 ? '+' : ''}${r.weightDiffPct.toFixed(1)}%`;
                 const orderBtn = r.diff !== 0
                     ? `<button class="mode-btn" style="background:${r.side === 'buy' ? '#dc2626' : '#2563eb'}; color:#fff; padding:4px 8px; font-size:10px;" onclick="handleSendOrder('${r.code}','${r.side}',${Math.abs(r.diff)},${r.price})">${r.side === 'buy' ? '매수' : '매도'} 전송</button>`
                     : '-';
@@ -835,6 +908,7 @@
                     <td>${formatNumber(r.price)}원</td>
                     <td>${formatNumber(r.curQty)}주</td>
                     <td>${formatNumber(r.targetQty)}주</td>
+                    <td>${weightLabel}</td>
                     <td>${diffLabel}</td>
                     <td>${orderBtn}</td>
                 </tr>`;

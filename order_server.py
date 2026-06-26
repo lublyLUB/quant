@@ -26,6 +26,14 @@ def holdings():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/order_status", methods=["GET"])
+def order_status():
+    try:
+        return jsonify(kiwoom_api.get_order_status())
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/order", methods=["POST"])
 def order():
     data = request.get_json(force=True) or {}

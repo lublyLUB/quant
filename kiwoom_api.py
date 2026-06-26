@@ -86,6 +86,37 @@ def get_holdings():
     return fetch_account_balance(token, KIWOOM_ACCOUNT_NO, KIWOOM_IS_MOCK)
 
 
+def fetch_order_status(access_token, account_no, is_mock=True):
+    """계좌별주문체결현황요청 (kt00009) - 당일 주문/체결 현황 조회."""
+    url = f"{get_base_url(is_mock)}/api/dostk/acnt"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": "kt00009",
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {access_token}",
+    }
+    body = {
+        "acnt_no": account_no,
+        "qry_tp": "1",
+        "stk_bond_tp": "0",
+        "sell_tp": "0",
+        "mrkt_tp": "0",
+        "dmst_stex_tp": "KRX",
+    }
+    resp = requests.post(url, headers=headers, json=body, timeout=15)
+    resp.raise_for_status()
+    return resp.json()
+
+
+def get_order_status():
+    """당일 주문/체결 현황을 조회해서 반환."""
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    return fetch_order_status(token, KIWOOM_ACCOUNT_NO, KIWOOM_IS_MOCK)
+
+
 def place_order(stk_cd, qty, side, price=None, is_mock=KIWOOM_IS_MOCK):
     """주식 매수/매도 주문 (kt10000/kt10001).
 
