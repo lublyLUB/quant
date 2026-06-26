@@ -54,6 +54,9 @@
         .filter-checkboxes { display: flex; flex-wrap: wrap; gap: 8px; font-size: 11px; color: #475569; flex: 1 1 auto; justify-content: flex-end; align-self: flex-end; }
         .filter-checkboxes label { white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; }
         .filter-checkboxes input[type="checkbox"] { margin: 0; position: relative; top: 3px; }
+        .smallcap-toggle-group { display: inline-flex; align-items: center; gap: 6px; background-color: #f1f5f9; border-radius: 8px; padding: 2px; }
+        .smallcap-toggle-btn { border: none; background: none; color: #64748b; font-size: 10px; font-weight: bold; padding: 5px 8px; border-radius: 6px; cursor: pointer; }
+        .smallcap-toggle-btn.active { background-color: #fff; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
 
         table { width: 100%; border-collapse: collapse; font-size: 11px; table-layout: fixed; }
         th, td { padding: 9px 1px; border-bottom: 1px solid #e2e8f0; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
@@ -87,6 +90,8 @@
     <div class="info-strip">
         <span id="data-date-view" class="info-pill pill-date">📅 데이터 로딩 중...</span>
         <span id="sell-strategy-lbl" class="info-pill pill-sell">📌 매도: 4월·10월 마지막 거래일 리밸런싱</span>
+        <button id="btn-update-data" class="mode-btn" style="background:#1e3a8a; color:#fff; padding:5px 10px; font-size:10px;" onclick="handleUpdateData()">🔄 가격 데이터 갱신</button>
+        <span id="update-data-status" style="font-size:10px; color:#64748b;"></span>
     </div>
 
     <div id="ncav-info-lbl" class="condition-sub">
@@ -102,10 +107,28 @@
         </div>
         <span id="bookmark-count" style="font-size:11px; color:#64748b; margin-left:8px; align-self:flex-end;"></span>
         <div class="filter-checkboxes">
-            <label id="super-smallcap-lbl" style="display:none;"><input type="checkbox" id="smallcap-checkbox" onchange="handleSmallcapToggle()"> 소형주(하위 20%)</label>
-            <label id="momentum-smallcap-lbl" style="display:none;"><input type="checkbox" id="momentum-smallcap-checkbox" onchange="handleMomentumSmallcapToggle()"> 소형주(하위 20%)</label>
+            <span id="super-smallcap-lbl" style="display:none; align-items:center; gap:6px;">소형주:
+                <span class="smallcap-toggle-group">
+                    <button type="button" id="smallcap-toggle-none" class="smallcap-toggle-btn" onclick="setSmallcapMode('super','none')">미적용</button>
+                    <button type="button" id="smallcap-toggle-20" class="smallcap-toggle-btn" onclick="setSmallcapMode('super','20')">하위 20%</button>
+                    <button type="button" id="smallcap-toggle-30" class="smallcap-toggle-btn" onclick="setSmallcapMode('super','30')">하위 30%</button>
+                </span>
+            </span>
+            <span id="momentum-smallcap-lbl" style="display:none; align-items:center; gap:6px;">소형주:
+                <span class="smallcap-toggle-group">
+                    <button type="button" id="momentum-smallcap-toggle-none" class="smallcap-toggle-btn" onclick="setSmallcapMode('momentum','none')">미적용</button>
+                    <button type="button" id="momentum-smallcap-toggle-20" class="smallcap-toggle-btn" onclick="setSmallcapMode('momentum','20')">하위 20%</button>
+                    <button type="button" id="momentum-smallcap-toggle-30" class="smallcap-toggle-btn" onclick="setSmallcapMode('momentum','30')">하위 30%</button>
+                </span>
+            </span>
             <label id="ncav-gpa-lbl" style="display:none;"><input type="checkbox" id="gpa-checkbox" onchange="handleGpaToggle()"> GP/A 필터(상위 50%)</label>
-            <label id="ultra-smallcap-lbl" style="display:none;"><input type="checkbox" id="ultra-smallcap-checkbox" onchange="handleUltraSmallcapToggle()"> 소형주(하위 20%)</label>
+            <span id="ultra-smallcap-lbl" style="display:none; align-items:center; gap:6px;">소형주:
+                <span class="smallcap-toggle-group">
+                    <button type="button" id="ultra-smallcap-toggle-none" class="smallcap-toggle-btn" onclick="setSmallcapMode('ultra','none')">미적용</button>
+                    <button type="button" id="ultra-smallcap-toggle-20" class="smallcap-toggle-btn" onclick="setSmallcapMode('ultra','20')">하위 20%</button>
+                    <button type="button" id="ultra-smallcap-toggle-30" class="smallcap-toggle-btn" onclick="setSmallcapMode('ultra','30')">하위 30%</button>
+                </span>
+            </span>
             <label id="recommend-exclude-season-lbl" style="display:none;"><input type="checkbox" id="recommend-exclude-season-checkbox" onchange="handleExcludeSeasonToggle()"> 4~10월 제외</label>
         </div>
     </div>
@@ -166,12 +189,18 @@
     let currentSortKey = 'rank';
     let isAscending = true;
     let searchQuery = "";
-    let superData = [], superSmallcapData = [], ncavData = [], ncavGpaData = [], fscoreData = [], qualityData = [], famaData = [], superQualityData = [], valueMomentumData = [], qualityMomentumData = [], ultraData = [], ultraSmallcapData = [];
-    let momentumData = [], momentumSmallcapData = [];
-    let isSmallcapMode = false;
+    let superData = [], superSmallcapData = [], superSmallcap30Data = [], ncavData = [], ncavGpaData = [], fscoreData = [], qualityData = [], famaData = [], superQualityData = [], valueMomentumData = [], qualityMomentumData = [], ultraData = [], ultraSmallcapData = [], ultraSmallcap30Data = [];
+    let momentumData = [], momentumSmallcapData = [], momentumSmallcap30Data = [];
+    // 소형주 모드: 'none' | '20' | '30'
+    function pickSmallcapData(mode, full, d20, d30) {
+        if (mode === '20') return d20;
+        if (mode === '30') return d30;
+        return full;
+    }
+    let smallcapMode = 'none';
     let isGpaMode = false;
-    let isMomentumSmallcapMode = false;
-    let isUltraSmallcapMode = false;
+    let momentumSmallcapMode = 'none';
+    let ultraSmallcapMode = 'none';
     let isExcludeSeasonMode = false;
     let portfolioNames = [];
     let portfolioInvestment = 0;
@@ -195,10 +224,10 @@
     // 체크박스/옵션 상태를 localStorage에 저장해서 재접속 시에도 유지
     function saveOptions() {
         localStorage.setItem('quant_options', JSON.stringify({
-            isSmallcapMode,
+            smallcapMode,
             isGpaMode,
-            isMomentumSmallcapMode,
-            isUltraSmallcapMode,
+            momentumSmallcapMode,
+            ultraSmallcapMode,
             isExcludeSeasonMode,
             recommendCheckedKeys: Array.from(recommendCheckedKeys),
             portfolioLeftoverOption,
@@ -212,10 +241,10 @@
         } catch (e) {
             saved = {};
         }
-        isSmallcapMode = !!saved.isSmallcapMode;
+        smallcapMode = saved.smallcapMode || 'none';
         isGpaMode = !!saved.isGpaMode;
-        isMomentumSmallcapMode = !!saved.isMomentumSmallcapMode;
-        isUltraSmallcapMode = !!saved.isUltraSmallcapMode;
+        momentumSmallcapMode = saved.momentumSmallcapMode || 'none';
+        ultraSmallcapMode = saved.ultraSmallcapMode || 'none';
         isExcludeSeasonMode = !!saved.isExcludeSeasonMode;
         recommendCheckedKeys = new Set(saved.recommendCheckedKeys || []);
         portfolioLeftoverOption = saved.portfolioLeftoverOption || 'top1';
@@ -224,10 +253,10 @@
             const el = document.getElementById(id);
             if (el) el.checked = value;
         };
-        setChecked('smallcap-checkbox', isSmallcapMode);
+        updateSmallcapToggleUI('super', smallcapMode);
         setChecked('gpa-checkbox', isGpaMode);
-        setChecked('momentum-smallcap-checkbox', isMomentumSmallcapMode);
-        setChecked('ultra-smallcap-checkbox', isUltraSmallcapMode);
+        updateSmallcapToggleUI('momentum', momentumSmallcapMode);
+        updateSmallcapToggleUI('ultra', ultraSmallcapMode);
         setChecked('recommend-exclude-season-checkbox', isExcludeSeasonMode);
         const leftoverRadio = document.querySelector(`input[name="leftover-option"][value="${portfolioLeftoverOption}"]`);
         if (leftoverRadio) leftoverRadio.checked = true;
@@ -300,10 +329,10 @@
         const subMenus = [...nonStrategyMenus, ...STRATEGIES.map(s => s.key)];
         subMenus.forEach(m => document.getElementById(`btn-${m}`).classList.toggle("active", m === menuType));
         document.getElementById("ncav-info-lbl").style.display = (menuType === 'ncav') ? 'block' : 'none';
-        document.getElementById("super-smallcap-lbl").style.display = (menuType === 'super') ? 'block' : 'none';
+        document.getElementById("super-smallcap-lbl").style.display = (menuType === 'super') ? 'inline-flex' : 'none';
         document.getElementById("ncav-gpa-lbl").style.display = (menuType === 'ncav') ? 'block' : 'none';
-        document.getElementById("momentum-smallcap-lbl").style.display = (menuType === 'momentum') ? 'block' : 'none';
-        document.getElementById("ultra-smallcap-lbl").style.display = (menuType === 'strategy21') ? 'block' : 'none';
+        document.getElementById("momentum-smallcap-lbl").style.display = (menuType === 'momentum') ? 'inline-flex' : 'none';
+        document.getElementById("ultra-smallcap-lbl").style.display = (menuType === 'strategy21') ? 'inline-flex' : 'none';
         document.getElementById("recommend-exclude-season-lbl").style.display = (menuType === 'recommend') ? 'block' : 'none';
         document.getElementById("recommend-filter-lbl").style.display = (menuType === 'recommend') ? 'block' : 'none';
         document.getElementById("portfolio-controls").style.display = (menuType === 'portfolio') ? 'block' : 'none';
@@ -319,15 +348,15 @@
 
     const RECOMMEND_SOURCES = [
         { key: 'fscore', num: 6, getData: () => fscoreData },
-        { key: 'momentum', num: 11, getData: () => isMomentumSmallcapMode ? momentumSmallcapData : momentumData },
+        { key: 'momentum', num: 11, getData: () => pickSmallcapData(momentumSmallcapMode, momentumData, momentumSmallcapData, momentumSmallcap30Data) },
         { key: 'ncav', num: 12, getData: () => isGpaMode ? ncavGpaData : ncavData },
-        { key: 'super', num: 13, getData: () => isSmallcapMode ? superSmallcapData : superData },
+        { key: 'super', num: 13, getData: () => pickSmallcapData(smallcapMode, superData, superSmallcapData, superSmallcap30Data) },
         { key: 'strategy15', num: 15, getData: () => qualityData },
         { key: 'strategy16', num: 16, getData: () => famaData },
         { key: 'strategy18', num: 18, getData: () => superQualityData },
         { key: 'strategy19', num: 20, getData: () => valueMomentumData },
         { key: 'strategy20', num: 21, getData: () => qualityMomentumData },
-        { key: 'strategy21', num: 22, getData: () => isUltraSmallcapMode ? ultraSmallcapData : ultraData },
+        { key: 'strategy21', num: 22, getData: () => pickSmallcapData(ultraSmallcapMode, ultraData, ultraSmallcapData, ultraSmallcap30Data) },
     ];
 
     // "4~10월 제외" 체크 시 12.NCAV는 항상 빼고, 13.슈퍼가치는 소형주 옵션이 켜져 있을 때만 같이 뺀다
@@ -335,7 +364,7 @@
         return RECOMMEND_SOURCES.filter(src => {
             if (!isExcludeSeasonMode) return true;
             if (src.key === 'ncav') return false;
-            if (src.key === 'super' && isSmallcapMode) return false;
+            if (src.key === 'super' && smallcapMode !== 'none') return false;
             return true;
         });
     }
@@ -400,8 +429,21 @@
         return top;
     }
 
-    function handleSmallcapToggle() {
-        isSmallcapMode = document.getElementById("smallcap-checkbox").checked;
+    const SMALLCAP_GROUP_PREFIX = { super: 'smallcap-toggle', momentum: 'momentum-smallcap-toggle', ultra: 'ultra-smallcap-toggle' };
+
+    function updateSmallcapToggleUI(which, mode) {
+        const prefix = SMALLCAP_GROUP_PREFIX[which];
+        ['none', '20', '30'].forEach(m => {
+            const btn = document.getElementById(`${prefix}-${m}`);
+            if (btn) btn.classList.toggle('active', m === mode);
+        });
+    }
+
+    function setSmallcapMode(which, mode) {
+        if (which === 'super') smallcapMode = mode;
+        else if (which === 'momentum') momentumSmallcapMode = mode;
+        else if (which === 'ultra') ultraSmallcapMode = mode;
+        updateSmallcapToggleUI(which, mode);
         currentSortKey = 'rank';
         isAscending = true;
         saveOptions();
@@ -410,22 +452,6 @@
 
     function handleGpaToggle() {
         isGpaMode = document.getElementById("gpa-checkbox").checked;
-        currentSortKey = 'rank';
-        isAscending = true;
-        saveOptions();
-        refreshCurrentTable();
-    }
-
-    function handleMomentumSmallcapToggle() {
-        isMomentumSmallcapMode = document.getElementById("momentum-smallcap-checkbox").checked;
-        currentSortKey = 'rank';
-        isAscending = true;
-        saveOptions();
-        refreshCurrentTable();
-    }
-
-    function handleUltraSmallcapToggle() {
-        isUltraSmallcapMode = document.getElementById("ultra-smallcap-checkbox").checked;
         currentSortKey = 'rank';
         isAscending = true;
         saveOptions();
@@ -458,11 +484,11 @@
             document.getElementById("strategy-title").innerText = "🏆 6. 신 F-스코어+저PBR";
             renderFscoreTable(filterBySearch(fscoreData));
         } else if (currentMenu === 'momentum') {
-            document.getElementById("strategy-title").innerText = "🚀 11. 이익 모멘텀 전략" + (isMomentumSmallcapMode ? " (소형주)" : "");
-            renderMomentumTable(filterBySearch(isMomentumSmallcapMode ? momentumSmallcapData : momentumData));
+            document.getElementById("strategy-title").innerText = "🚀 11. 이익 모멘텀 전략" + (momentumSmallcapMode !== 'none' ? ` (소형주 ${momentumSmallcapMode}%)` : "");
+            renderMomentumTable(filterBySearch(pickSmallcapData(momentumSmallcapMode, momentumData, momentumSmallcapData, momentumSmallcap30Data)));
         } else if (currentMenu === 'super') {
-            document.getElementById("strategy-title").innerText = "📈 13. 슈퍼 가치 4대 통합 스크리너" + (isSmallcapMode ? " (소형주)" : "");
-            renderSuperTable(filterBySearch(isSmallcapMode ? superSmallcapData : superData));
+            document.getElementById("strategy-title").innerText = "📈 13. 슈퍼 가치 4대 통합 스크리너" + (smallcapMode !== 'none' ? ` (소형주 ${smallcapMode}%)` : "");
+            renderSuperTable(filterBySearch(pickSmallcapData(smallcapMode, superData, superSmallcapData, superSmallcap30Data)));
         } else if (currentMenu === 'ncav') {
             document.getElementById("strategy-title").innerText = "🛡️ 12. NCAV 청산가치 & 퀄리티 스크리너" + (isGpaMode ? " (GP/A 필터)" : "");
             renderNcavTable(filterBySearch(isGpaMode ? ncavGpaData : ncavData));
@@ -482,8 +508,8 @@
             document.getElementById("strategy-title").innerText = "🌟 21. 슈퍼 퀄리티+모멘텀";
             renderQualityMomentumTable(filterBySearch(qualityMomentumData));
         } else if (currentMenu === 'strategy21') {
-            document.getElementById("strategy-title").innerText = "🔥 22. 울트라" + (isUltraSmallcapMode ? " (소형주)" : "");
-            renderUltraTable(filterBySearch(isUltraSmallcapMode ? ultraSmallcapData : ultraData));
+            document.getElementById("strategy-title").innerText = "🔥 22. 울트라" + (ultraSmallcapMode !== 'none' ? ` (소형주 ${ultraSmallcapMode}%)` : "");
+            renderUltraTable(filterBySearch(pickSmallcapData(ultraSmallcapMode, ultraData, ultraSmallcapData, ultraSmallcap30Data)));
         } else {
             const strategy = STRATEGIES.find(s => s.key === currentMenu);
             if (strategy) {
@@ -580,11 +606,11 @@
     function findStockPrice(name) {
         const allDatasets = [
             fscoreData,
-            isMomentumSmallcapMode ? momentumSmallcapData : momentumData,
+            pickSmallcapData(momentumSmallcapMode, momentumData, momentumSmallcapData, momentumSmallcap30Data),
             ncavData, ncavGpaData,
-            isSmallcapMode ? superSmallcapData : superData,
+            pickSmallcapData(smallcapMode, superData, superSmallcapData, superSmallcap30Data),
             qualityData, famaData, superQualityData, valueMomentumData, qualityMomentumData,
-            isUltraSmallcapMode ? ultraSmallcapData : ultraData,
+            pickSmallcapData(ultraSmallcapMode, ultraData, ultraSmallcapData, ultraSmallcap30Data),
         ];
         for (const ds of allDatasets) {
             const found = ds.find(s => s.name === name);
@@ -596,11 +622,11 @@
     function findStockCode(name) {
         const allDatasets = [
             fscoreData,
-            isMomentumSmallcapMode ? momentumSmallcapData : momentumData,
+            pickSmallcapData(momentumSmallcapMode, momentumData, momentumSmallcapData, momentumSmallcap30Data),
             ncavData, ncavGpaData,
-            isSmallcapMode ? superSmallcapData : superData,
+            pickSmallcapData(smallcapMode, superData, superSmallcapData, superSmallcap30Data),
             qualityData, famaData, superQualityData, valueMomentumData, qualityMomentumData,
-            isUltraSmallcapMode ? ultraSmallcapData : ultraData,
+            pickSmallcapData(ultraSmallcapMode, ultraData, ultraSmallcapData, ultraSmallcap30Data),
         ];
         for (const ds of allDatasets) {
             const found = ds.find(s => s.name === name);
@@ -710,6 +736,48 @@
     function renderPlaceholderTable() {
         document.getElementById("quant-table").innerHTML =
             `<tbody><tr><td style="padding:30px; color:#94a3b8;">⏳ 준비 중인 전략입니다.</td></tr></tbody>`;
+    }
+
+    let updateDataPollTimer = null;
+
+    async function handleUpdateData() {
+        const statusEl = document.getElementById('update-data-status');
+        const btn = document.getElementById('btn-update-data');
+        try {
+            const resp = await fetch(`${ORDER_SERVER_URL}/api/update_data`, { method: 'POST' });
+            const data = await resp.json();
+            if (data.error) {
+                statusEl.textContent = data.error;
+                return;
+            }
+            btn.disabled = true;
+            statusEl.textContent = '갱신 중... (DART는 캐시 재사용이라 보통 몇 분 내 완료)';
+            if (updateDataPollTimer) clearInterval(updateDataPollTimer);
+            updateDataPollTimer = setInterval(pollUpdateDataStatus, 5000);
+        } catch (e) {
+            statusEl.textContent = `❌ 로컬 주문 서버에 연결할 수 없습니다. (python order_server.py 실행 필요)`;
+        }
+    }
+
+    async function pollUpdateDataStatus() {
+        const statusEl = document.getElementById('update-data-status');
+        const btn = document.getElementById('btn-update-data');
+        try {
+            const resp = await fetch(`${ORDER_SERVER_URL}/api/update_status`);
+            const data = await resp.json();
+            if (data.done) {
+                clearInterval(updateDataPollTimer);
+                updateDataPollTimer = null;
+                btn.disabled = false;
+                statusEl.textContent = data.success
+                    ? '✅ 갱신 완료 - 새로고침(F5) 해주세요. (이 PC에 저장만 됨, 깃허브 미배포)'
+                    : '❌ 갱신 실패 - PC에서 로그 확인 필요';
+            } else if (data.running) {
+                statusEl.textContent = '갱신 중...';
+            }
+        } catch (e) {
+            // 무시
+        }
     }
 
     const ORDER_SERVER_URL = 'http://127.0.0.1:5050';
@@ -1478,9 +1546,9 @@
         else if (currentMenu === 'strategy18') targetDataset = superQualityData;
         else if (currentMenu === 'strategy19') targetDataset = valueMomentumData;
         else if (currentMenu === 'strategy20') targetDataset = qualityMomentumData;
-        else if (currentMenu === 'strategy21') targetDataset = isUltraSmallcapMode ? ultraSmallcapData : ultraData;
-        else if (currentMenu === 'momentum') targetDataset = isMomentumSmallcapMode ? momentumSmallcapData : momentumData;
-        else if (currentMenu === 'super') targetDataset = isSmallcapMode ? superSmallcapData : superData;
+        else if (currentMenu === 'strategy21') targetDataset = pickSmallcapData(ultraSmallcapMode, ultraData, ultraSmallcapData, ultraSmallcap30Data);
+        else if (currentMenu === 'momentum') targetDataset = pickSmallcapData(momentumSmallcapMode, momentumData, momentumSmallcapData, momentumSmallcap30Data);
+        else if (currentMenu === 'super') targetDataset = pickSmallcapData(smallcapMode, superData, superSmallcapData, superSmallcap30Data);
         else if (currentMenu === 'ncav') targetDataset = isGpaMode ? ncavGpaData : ncavData;
         
         if (targetDataset.length === 0) return;
@@ -1502,8 +1570,10 @@
             const server = KOSPI_QUANT_PACKAGE.server;
             superData = KOSPI_QUANT_PACKAGE.super_value;
             superSmallcapData = KOSPI_QUANT_PACKAGE.super_value_smallcap;
+            superSmallcap30Data = KOSPI_QUANT_PACKAGE.super_value_smallcap30 || [];
             momentumData = KOSPI_QUANT_PACKAGE.momentum_value;
             momentumSmallcapData = KOSPI_QUANT_PACKAGE.momentum_value_smallcap;
+            momentumSmallcap30Data = KOSPI_QUANT_PACKAGE.momentum_value_smallcap30 || [];
             fscoreData = KOSPI_QUANT_PACKAGE.fscore_value;
             qualityData = KOSPI_QUANT_PACKAGE.quality_value;
             famaData = KOSPI_QUANT_PACKAGE.fama_value;
@@ -1512,6 +1582,7 @@
             qualityMomentumData = KOSPI_QUANT_PACKAGE.quality_momentum_value;
             ultraData = KOSPI_QUANT_PACKAGE.ultra_value;
             ultraSmallcapData = KOSPI_QUANT_PACKAGE.ultra_value_smallcap;
+            ultraSmallcap30Data = KOSPI_QUANT_PACKAGE.ultra_value_smallcap30 || [];
             stockFlags = KOSPI_QUANT_PACKAGE.stock_flags || {};
             stockMetrics = KOSPI_QUANT_PACKAGE.stock_metrics || {};
             ncavData = KOSPI_QUANT_PACKAGE.ncav_value;

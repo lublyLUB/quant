@@ -787,7 +787,9 @@ def fetch_krx_market_data():
     # 소형주(시가총액 하위 20%) 한정 슈퍼 가치 랭킹
     market_caps = sorted(s["market_cap"] for s in valid_stocks)
     smallcap_cutoff = market_caps[max(int(len(market_caps) * 0.2) - 1, 0)] if market_caps else 0
+    smallcap_cutoff_30 = market_caps[max(int(len(market_caps) * 0.3) - 1, 0)] if market_caps else 0
     super_base_smallcap = rank_super_value([s for s in valid_stocks if s["market_cap"] <= smallcap_cutoff])
+    super_base_smallcap30 = rank_super_value([s for s in valid_stocks if s["market_cap"] <= smallcap_cutoff_30])
 
     # 11. 이익 모멘텀 전략 연산부
     def rank_momentum(pool):
@@ -810,6 +812,7 @@ def fetch_krx_market_data():
 
     momentum_base = rank_momentum(valid_stocks)
     momentum_base_smallcap = rank_momentum([s for s in valid_stocks if s["market_cap"] <= smallcap_cutoff])
+    momentum_base_smallcap30 = rank_momentum([s for s in valid_stocks if s["market_cap"] <= smallcap_cutoff_30])
 
     # 6. 신 F-스코어+저PBR 연산부 - 3개 지표(유상증자 없음/순이익>=0/영업CF>=0) 모두 충족하는 종목만, PBR 오름차순
     fscore_base = [s for s in valid_stocks if s["f_score"] == 3 and s["pbr"] > 0]
@@ -1012,6 +1015,7 @@ def fetch_krx_market_data():
 
     ultra_base = rank_ultra(valid_stocks)
     ultra_base_smallcap = rank_ultra([s for s in valid_stocks if s["market_cap"] <= smallcap_cutoff])
+    ultra_base_smallcap30 = rank_ultra([s for s in valid_stocks if s["market_cap"] <= smallcap_cutoff_30])
 
     # 12. NCAV 청산가치 & 퀄리티 스크리너 연산부
     # 조건: 1) 순유동자산 > 시가총액  2) 최신 분기 순이익 > 0  3) 차입금비율 200% 이하  4) 상위 20개만 노출
@@ -1088,6 +1092,7 @@ def fetch_krx_market_data():
     # 슈퍼 가치 상위 30개 패키징 (전체 / 소형주 한정)
     super_value = package_super_value(super_base)
     super_value_smallcap = package_super_value(super_base_smallcap)
+    super_value_smallcap30 = package_super_value(super_base_smallcap30)
 
     def package_momentum(base):
         packaged = []
@@ -1119,6 +1124,7 @@ def fetch_krx_market_data():
     # 이익 모멘텀 상위 30개 패키징 (전체 / 소형주 한정)
     momentum_value = package_momentum(momentum_base)
     momentum_value_smallcap = package_momentum(momentum_base_smallcap)
+    momentum_value_smallcap30 = package_momentum(momentum_base_smallcap30)
 
     # 신 F-스코어+저PBR 상위 30개 패키징
     fscore_value = []
@@ -1267,6 +1273,7 @@ def fetch_krx_market_data():
 
     ultra_value = package_ultra(ultra_base)
     ultra_value_smallcap = package_ultra(ultra_base_smallcap)
+    ultra_value_smallcap30 = package_ultra(ultra_base_smallcap30)
 
     # NCAV 상위 20개 패키징 (GP/A 필터 미적용 / 적용)
     def package_ncav_value(base):
@@ -1329,8 +1336,10 @@ def fetch_krx_market_data():
         },
         "super_value": super_value,
         "super_value_smallcap": super_value_smallcap,
+        "super_value_smallcap30": super_value_smallcap30,
         "momentum_value": momentum_value,
         "momentum_value_smallcap": momentum_value_smallcap,
+        "momentum_value_smallcap30": momentum_value_smallcap30,
         "fscore_value": fscore_value,
         "quality_value": quality_value,
         "fama_value": fama_value,
@@ -1339,6 +1348,7 @@ def fetch_krx_market_data():
         "quality_momentum_value": quality_momentum_value,
         "ultra_value": ultra_value,
         "ultra_value_smallcap": ultra_value_smallcap,
+        "ultra_value_smallcap30": ultra_value_smallcap30,
         "stock_flags": stock_flags,
         "stock_metrics": stock_metrics,
         "ncav_value": ncav_value,
@@ -1370,5 +1380,6 @@ def deploy_to_github():
         print("❌ 깃허브 업로드 중 오류가 발생했습니다.")
 
 if __name__ == "__main__":
-    if fetch_krx_market_data():
+    skip_deploy = "--no-deploy" in sys.argv
+    if fetch_krx_market_data() and not skip_deploy:
         deploy_to_github()
