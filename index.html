@@ -42,6 +42,7 @@
         .condition-sub { font-size: 10px; color: #1e3a8a; background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 6px; border-radius: 6px; text-align: center; margin: 4px 0 8px 0; line-height: 1.4; display: none; }
         /* 데이터 기준 / 매도 전략 - 같은 줄에 둥근 배지(pill) 형태로 정리 */
         .info-strip { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 10px; }
+        .top-status-bar { display: flex; align-items: center; gap: 8px; justify-content: flex-end; margin-bottom: 6px; }
         .info-pill { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; padding: 5px 11px; border-radius: 999px; white-space: nowrap; }
         .info-pill.pill-date { background-color: #eef2ff; color: #3730a3; }
         .info-pill.pill-sell { background-color: #fff7ed; color: #c2410c; }
@@ -51,6 +52,14 @@
         .mode-toggle-group { display: flex; background-color: #f1f5f9; border-radius: 8px; padding: 2px; flex: 0 0 auto; }
         .mode-btn { border: none; background: none; padding: 7px 10px; font-size: 11px; font-weight: bold; color: #64748b; cursor: pointer; border-radius: 6px; }
         .mode-btn.active { background-color: #fff; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .action-btn { color: #fff; padding: 8px 12px; }
+        .action-btn-blue { background: #1e3a8a; }
+        .action-btn-teal { background: #0f766e; }
+        .action-btn-orange { background: #b45309; }
+        .action-btn-red { background: #dc2626; }
+        .action-btn-skyblue { background: #2563eb; }
+        .status-text { font-size: 11px; color: #94a3b8; margin-left: 8px; }
+        .summary-text { font-size: 11px; color: #1e3a8a; font-weight: bold; margin-top: 4px; }
         .filter-checkboxes { display: flex; flex-wrap: wrap; gap: 8px; font-size: 11px; color: #475569; flex: 1 1 auto; justify-content: flex-end; align-self: flex-end; }
         .filter-checkboxes label { white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; }
         .filter-checkboxes input[type="checkbox"] { margin: 0; position: relative; top: 3px; }
@@ -77,6 +86,11 @@
 <body>
 
 <div class="container">
+    <div class="top-status-bar">
+        <span id="data-date-view" class="info-pill pill-date">📅 데이터 로딩 중...</span>
+        <button id="btn-update-data" title="가격 데이터 갱신" style="border:none; background:#f1f5f9; color:#64748b; font-size:11px; line-height:1; cursor:pointer; padding:4px 6px; border-radius:5px;" onclick="handleUpdateData()">↻</button>
+        <span id="update-data-status" class="status-text" style="font-size:10px;"></span>
+    </div>
     <div class="menu-tabs" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr;">
         <button id="btn-recommend" class="tab-btn active" onclick="switchMenu('recommend')">⭐ 추천</button>
         <button id="btn-rebalance" class="tab-btn" onclick="switchMenu('rebalance')">🔁 리밸런싱</button>
@@ -86,13 +100,10 @@
     </div>
     <div class="menu-tabs" id="strategy-tabs"></div>
 
-    <h1 id="strategy-title">⭐ 추천 종목</h1>
+    <h1 id="strategy-title" style="display:none;">⭐ 추천 종목</h1>
 
     <div class="info-strip">
-        <span id="data-date-view" class="info-pill pill-date">📅 데이터 로딩 중...</span>
         <span id="sell-strategy-lbl" class="info-pill pill-sell">📌 매도: 4월·10월 마지막 거래일 리밸런싱</span>
-        <button id="btn-update-data" class="mode-btn" style="background:#1e3a8a; color:#fff; padding:5px 10px; font-size:10px;" onclick="handleUpdateData()">🔄 가격 데이터 갱신</button>
-        <span id="update-data-status" style="font-size:10px; color:#64748b;"></span>
     </div>
 
     <div id="ncav-info-lbl" class="condition-sub">
@@ -106,7 +117,7 @@
             <button id="btn-mode-simple" class="mode-btn active" onclick="setDisplayMode('simple')">간단</button>
             <button id="btn-mode-detail" class="mode-btn" onclick="setDisplayMode('detail')">자세히</button>
         </div>
-        <span id="bookmark-count" style="font-size:11px; color:#64748b; margin-left:8px; align-self:flex-end;"></span>
+        <span id="bookmark-count" class="status-text" style="color:#64748b; align-self:flex-end;"></span>
         <div class="filter-checkboxes">
             <span id="super-smallcap-lbl" style="display:none; align-items:center; gap:6px;">소형주:
                 <span class="smallcap-toggle-group">
@@ -133,12 +144,9 @@
             <label id="recommend-exclude-season-lbl" style="display:none;"><input type="checkbox" id="recommend-exclude-season-checkbox" onchange="handleExcludeSeasonToggle()"> 4~10월 제외</label>
         </div>
     </div>
-    <div id="recommend-filter-lbl" style="display:block; font-size: 11px; margin-bottom: 10px; color:#64748b;">
-        전략 번호 아래 체크박스를 선택하면 선택한 전략을 모두 만족하는 종목만 표시합니다 (미선택 시 2개 이상 전략에 중복 추천된 종목 표시)
-    </div>
 
     <div id="portfolio-controls" style="display:none; margin-bottom: 12px;">
-        <button class="mode-btn" style="background:#1e3a8a; color:#fff; padding:8px 12px; margin-bottom:8px;" onclick="handleImportBookmarks()">⭐ 즐겨찾기 가져오기</button>
+        <button class="mode-btn action-btn action-btn-blue" style="margin-bottom:8px;" onclick="handleImportBookmarks()">⭐ 선택한 종목 가져오기</button>
         <div style="display:flex; align-items:center; gap:6px; margin-bottom:8px; flex-wrap:wrap; font-size:11px; color:#475569;">
             <label>투자금</label>
             <input type="text" inputmode="numeric" id="portfolio-investment-input" class="search-box" style="flex:0 1 110px;" placeholder="10,000,000" oninput="handlePortfolioInvestmentChange()">
@@ -147,26 +155,26 @@
             <label><input type="radio" name="leftover-option" value="top1" checked onchange="handlePortfolioLeftoverChange()"> 1위 추가매수</label>
             <label><input type="radio" name="leftover-option" value="cash" onchange="handlePortfolioLeftoverChange()"> 현금 보유</label>
         </div>
-        <div id="portfolio-summary" style="font-size:11px; color:#1e3a8a; font-weight:bold;"></div>
+        <div id="portfolio-summary" class="summary-text"></div>
     </div>
 
     <div id="order-controls" style="display:none; margin-bottom: 12px;">
-        <button class="mode-btn" style="background:#1e3a8a; color:#fff; padding:8px 12px; margin-bottom:8px;" onclick="handleFetchHoldings()">🔄 보유 내역 조회</button>
-        <span id="order-server-status" style="font-size:11px; color:#94a3b8; margin-left:8px;"></span>
-        <div id="order-summary" style="font-size:11px; color:#1e3a8a; font-weight:bold; margin-top:4px;"></div>
+        <button class="mode-btn action-btn action-btn-blue" style="margin-bottom:8px;" onclick="handleFetchHoldings()">🔄 보유 내역 조회</button>
+        <span id="order-server-status" class="status-text"></span>
+        <div id="order-summary" class="summary-text"></div>
     </div>
 
     <div id="rebalance-controls" style="display:none; margin-bottom: 12px;">
-        <button class="mode-btn" style="background:#1e3a8a; color:#fff; padding:8px 12px;" onclick="handleFetchHoldings()">🔄 보유 내역 조회</button>
-        <button class="mode-btn" style="background:#b45309; color:#fff; padding:8px 12px;" onclick="handleConfirmRebalance()">✅ 교체 확정</button>
-        <span id="rebalance-status" style="font-size:11px; color:#94a3b8; margin-left:8px;"></span>
-        <div id="rebalance-season-info" style="font-size:11px; color:#1e3a8a; font-weight:bold; margin-top:4px;"></div>
+        <button class="mode-btn action-btn action-btn-blue" onclick="handleFetchHoldings()">🔄 보유 내역 조회</button>
+        <button class="mode-btn action-btn action-btn-orange" onclick="handleConfirmRebalance()">✅ 교체 확정</button>
+        <span id="rebalance-status" class="status-text"></span>
+        <div id="rebalance-season-info" class="summary-text"></div>
     </div>
 
     <div id="performance-controls" style="display:none; margin-bottom: 12px;">
-        <button class="mode-btn" style="background:#1e3a8a; color:#fff; padding:8px 12px;" onclick="handleRecordBaseline()">① 기준점 기록</button>
-        <button class="mode-btn" style="background:#0f766e; color:#fff; padding:8px 12px;" onclick="handleSaveSnapshot()">② 오늘 스냅샷 저장</button>
-        <span id="performance-status" style="font-size:11px; color:#94a3b8; margin-left:8px;"></span>
+        <button class="mode-btn action-btn action-btn-blue" onclick="handleRecordBaseline()">① 기준점 기록</button>
+        <button class="mode-btn action-btn action-btn-teal" onclick="handleSaveSnapshot()">② 오늘 스냅샷 저장</button>
+        <span id="performance-status" class="status-text"></span>
     </div>
 
     <table id="quant-table">
@@ -319,7 +327,7 @@
 
     function updateBookmarkCount() {
         const el = document.getElementById('bookmark-count');
-        if (el) el.textContent = `즐겨찾기 ${bookmarks.length}개`;
+        if (el) el.textContent = `선택한 종목 ${bookmarks.length}개`;
     }
 
     function getNameHtml(name) {
@@ -348,7 +356,6 @@
         document.getElementById("momentum-smallcap-lbl").style.display = (menuType === 'momentum') ? 'inline-flex' : 'none';
         document.getElementById("ultra-smallcap-lbl").style.display = (menuType === 'strategy21') ? 'inline-flex' : 'none';
         document.getElementById("recommend-exclude-season-lbl").style.display = (menuType === 'recommend') ? 'block' : 'none';
-        document.getElementById("recommend-filter-lbl").style.display = (menuType === 'recommend') ? 'block' : 'none';
         document.getElementById("portfolio-controls").style.display = (menuType === 'portfolio') ? 'block' : 'none';
         document.getElementById("order-controls").style.display = (menuType === 'order') ? 'block' : 'none';
         document.getElementById("performance-controls").style.display = (menuType === 'performance') ? 'block' : 'none';
@@ -640,6 +647,13 @@
 
     let rebalanceDroppedNames = [];
     let rebalanceNewNames = [];
+    let rebalanceSeasonCashNames = [];
+
+    // 12.NCAV, 13.슈퍼가치(소형주)는 5~10월에는 추천 순위와 무관하게 현금보유를 권장하는 전략
+    function isCashHoldSeasonNow() {
+        const m = new Date().getMonth() + 1;
+        return m >= 5 && m <= 10;
+    }
 
     function computeRebalanceComparison() {
         const recommendList = computeRecommendData();
@@ -654,26 +668,50 @@
             .map(name => ({ name, code: findStockCode(name) }))
             .filter(s => s.code && recommendCodes.has(s.code) && !heldCodes.has(s.code));
 
-        return { dropped, newEntries };
+        let seasonCash = [];
+        if (isCashHoldSeasonNow()) {
+            const ncavSourceData = isGpaMode ? ncavGpaData : ncavData;
+            const ncavCodes = new Set(ncavSourceData.map(s => s.code).filter(Boolean));
+            const superSourceData = smallcapMode !== 'none' ? pickSmallcapData(smallcapMode, superData, superSmallcapData, superSmallcap30Data) : [];
+            const superCodes = new Set(superSourceData.map(s => s.code).filter(Boolean));
+            seasonCash = Object.entries(holdingsByCode)
+                .filter(([code, h]) => h.qty > 0 && (ncavCodes.has(code) || superCodes.has(code)))
+                .map(([code, h]) => ({ code, name: h.name }));
+        }
+
+        return { dropped, newEntries, seasonCash };
     }
 
     function renderRebalanceTable() {
         const nextDate = getNextRebalanceDate();
         const dDay = Math.ceil((nextDate - new Date(new Date().toDateString())) / 86400000);
+        const seasonNotice = isCashHoldSeasonNow()
+            ? ' · 📌 5~10월: NCAV/슈퍼가치(소형주) 전략은 지금 현금보유 권장 기간'
+            : '';
         document.getElementById("rebalance-season-info").innerText =
-            `다음 매도 리밸런싱일(근사): ${nextDate.toLocaleDateString()} (D-${dDay})`;
+            `다음 매도 리밸런싱일(근사): ${nextDate.toLocaleDateString()} (D-${dDay})${seasonNotice}`;
 
         if (!holdingsLoaded) {
-            document.getElementById("quant-table").innerHTML =
-                `<tbody><tr><td style="padding:30px; color:#94a3b8;">"보유 내역 조회" 버튼을 눌러주세요. (로컬 주문 서버 실행 필요: python order_server.py)</td></tr></tbody>`;
+            document.getElementById("quant-table").innerHTML = holdingsRequiredPlaceholderHtml();
             return;
         }
 
-        const { dropped, newEntries } = computeRebalanceComparison();
+        const { dropped, newEntries, seasonCash } = computeRebalanceComparison();
         rebalanceDroppedNames = dropped.map(s => s.name);
         rebalanceNewNames = newEntries.map(s => s.name);
+        rebalanceSeasonCashNames = seasonCash.map(s => s.name);
 
         let html = `<tbody><tr><td style="padding:14px; text-align:left;">`;
+        if (isCashHoldSeasonNow()) {
+            html += `<div style="margin-bottom:8px;"><b>📌 시즌 현금보유 대상 (5~10월, NCAV/슈퍼가치 추천 종목)</b></div>`;
+            if (seasonCash.length === 0) {
+                html += `<div style="margin-bottom:14px; color:#94a3b8;">없음</div>`;
+            } else {
+                html += `<table style="width:100%; font-size:11px; margin-bottom:14px;"><tbody>`;
+                seasonCash.forEach(s => html += `<tr><td>${s.name}</td></tr>`);
+                html += `</tbody></table>`;
+            }
+        }
         html += `<div style="margin-bottom:8px;"><b>📉 추천 순위에서 탈락한 보유종목 (매도 후보)</b></div>`;
         if (dropped.length === 0) {
             html += `<div style="margin-bottom:14px; color:#94a3b8;">없음</div>`;
@@ -682,7 +720,7 @@
             dropped.forEach(s => html += `<tr><td>${s.name}</td></tr>`);
             html += `</tbody></table>`;
         }
-        html += `<div style="margin-bottom:8px;"><b>📈 즐겨찾기 중 추천에 새로 진입한 미보유종목 (매수 후보)</b></div>`;
+        html += `<div style="margin-bottom:8px;"><b>📈 선택한 종목 중 추천에 새로 진입한 미보유종목 (매수 후보)</b></div>`;
         if (newEntries.length === 0) {
             html += `<div style="margin-bottom:14px; color:#94a3b8;">없음</div>`;
         } else {
@@ -690,7 +728,7 @@
             newEntries.forEach(s => html += `<tr><td>${s.name}</td></tr>`);
             html += `</tbody></table>`;
         }
-        html += `<div style="font-size:11px; color:#94a3b8;">"교체 확정"을 누르면 탈락 종목을 즐겨찾기에서 제외하고, 포트폴리오 목표를 갱신한 뒤 성과추적 기준점을 새로 기록합니다.</div>`;
+        html += `<div style="font-size:11px; color:#94a3b8;">"교체 확정"을 누르면 탈락 종목을 선택한 종목에서 제외하고, 포트폴리오 목표를 갱신한 뒤 성과추적 기준점을 새로 기록합니다.</div>`;
         html += `</td></tr></tbody>`;
         document.getElementById("quant-table").innerHTML = html;
     }
@@ -701,14 +739,15 @@
             statusEl.textContent = '먼저 보유 내역을 조회해주세요.';
             return;
         }
-        const { dropped, newEntries } = computeRebalanceComparison();
-        if (dropped.length === 0 && newEntries.length === 0) {
+        const { dropped, newEntries, seasonCash } = computeRebalanceComparison();
+        if (dropped.length === 0 && newEntries.length === 0 && seasonCash.length === 0) {
             statusEl.textContent = '교체할 종목이 없습니다.';
             return;
         }
-        if (!confirm(`탈락 ${dropped.length}종목을 즐겨찾기에서 제외하고, 신규 ${newEntries.length}종목을 포함해 포트폴리오를 갱신합니다.\n계속하시겠습니까?`)) return;
+        const toRemove = [...dropped, ...seasonCash.filter(s => !dropped.some(d => d.code === s.code))];
+        if (!confirm(`탈락/시즌현금보유 ${toRemove.length}종목을 선택한 종목에서 제외하고, 신규 ${newEntries.length}종목을 포함해 포트폴리오를 갱신합니다.\n계속하시겠습니까?`)) return;
 
-        dropped.forEach(s => {
+        toRemove.forEach(s => {
             const idx = bookmarks.indexOf(s.name);
             if (idx >= 0) bookmarks.splice(idx, 1);
         });
@@ -826,7 +865,7 @@
             <tbody>`;
 
         if (stocks.length === 0) {
-            html += `<tr><td colspan="4" style="padding:20px; color:#94a3b8;">즐겨찾기를 가져와 주세요.</td></tr>`;
+            html += `<tr><td colspan="4" style="padding:20px; color:#94a3b8;">선택한 종목을 가져와 주세요.</td></tr>`;
         } else {
             stocks.forEach(s => {
                 html += `<tr>
@@ -844,7 +883,7 @@
         if (portfolioNames.length === 0) {
             summaryEl.innerText = '';
         } else if (portfolioInvestment <= 0) {
-            summaryEl.innerText = `즐겨찾기 ${portfolioNames.length}종목 불러옴 - 투자금을 입력하세요.`;
+            summaryEl.innerText = `선택한 종목 ${portfolioNames.length}종목 불러옴 - 투자금을 입력하세요.`;
         } else {
             const spent = stocks.reduce((sum, s) => sum + s.shares * s.price, 0);
             summaryEl.innerText = `총 ${stocks.length}종목 / 투자금 ${formatNumber(portfolioInvestment)}원 / 매수금액 ${formatNumber(spent)}원 / 현금 잔액 ${formatNumber(Math.round(portfolioLeftoverCash || 0))}원`;
@@ -952,9 +991,21 @@
         }
     }
 
+    // 보유내역 조회는 주문실행/리밸런싱 메뉴 양쪽에서 트리거할 수 있으므로, 상태 문구는 두 메뉴의
+    // status 영역에 동시에 표시한다 (한쪽에서 조회하면 다른 쪽에서도 별도로 다시 누를 필요 없음).
+    function holdingsRequiredPlaceholderHtml() {
+        return `<tbody><tr><td style="padding:30px; color:#94a3b8;">"보유 내역 조회" 버튼을 눌러주세요. (로컬 주문 서버 실행 필요: python order_server.py)</td></tr></tbody>`;
+    }
+
+    function setHoldingsStatusText(text) {
+        ['order-server-status', 'rebalance-status'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = text;
+        });
+    }
+
     async function handleFetchHoldings(silent) {
-        const statusEl = document.getElementById("order-server-status");
-        if (!silent) statusEl.textContent = '조회 중...';
+        if (!silent) setHoldingsStatusText('조회 중...');
         try {
             const resp = await fetch(`${ORDER_SERVER_URL}/api/holdings`);
             const data = await resp.json();
@@ -973,11 +1024,11 @@
                 };
             });
             holdingsLoaded = true;
-            statusEl.textContent = `조회 완료 (${rows.length}종목 보유, ${new Date().toLocaleTimeString()} 기준)`;
+            setHoldingsStatusText(`조회 완료 (${rows.length}종목 보유, ${new Date().toLocaleTimeString()} 기준)`);
             startOrderPolling();
         } catch (e) {
             holdingsLoaded = false;
-            statusEl.textContent = `❌ 로컬 주문 서버에 연결할 수 없습니다. (python order_server.py 실행 필요) - ${e.message}`;
+            setHoldingsStatusText(`❌ 로컬 주문 서버에 연결할 수 없습니다. (python order_server.py 실행 필요) - ${e.message}`);
             stopOrderPolling();
         }
         refreshCurrentTable();
@@ -1055,8 +1106,7 @@
 
     function renderOrderTable() {
         if (!holdingsLoaded) {
-            document.getElementById("quant-table").innerHTML =
-                `<tbody><tr><td style="padding:30px; color:#94a3b8;">"보유 내역 조회" 버튼을 눌러주세요. (로컬 주문 서버 실행 필요: python order_server.py)</td></tr></tbody>`;
+            document.getElementById("quant-table").innerHTML = holdingsRequiredPlaceholderHtml();
             document.getElementById("order-summary").innerText = '';
             return;
         }
@@ -1077,7 +1127,7 @@
             <tbody>`;
 
         if (rows.length === 0) {
-            html += `<tr><td colspan="7" style="padding:20px; color:#94a3b8;">포트폴리오 메뉴에서 즐겨찾기/투자금을 먼저 설정해주세요.</td></tr>`;
+            html += `<tr><td colspan="7" style="padding:20px; color:#94a3b8;">포트폴리오 메뉴에서 종목 선택/투자금을 먼저 설정해주세요.</td></tr>`;
         } else {
             rows.forEach(r => {
                 const diffLabel = r.diff > 0 ? `<span style="color:#dc2626;">매수 ${r.diff}주</span>`
@@ -1087,7 +1137,7 @@
                     ? `<span style="color:#dc2626; font-weight:bold;">${r.weightDiffPct > 0 ? '+' : ''}${r.weightDiffPct.toFixed(1)}%</span>`
                     : `${r.weightDiffPct > 0 ? '+' : ''}${r.weightDiffPct.toFixed(1)}%`;
                 const orderBtn = r.diff !== 0
-                    ? `<button class="mode-btn" style="background:${r.side === 'buy' ? '#dc2626' : '#2563eb'}; color:#fff; padding:4px 8px; font-size:10px;" onclick="handleSendOrder('${r.code}','${r.side}',${Math.abs(r.diff)},${r.price})">${r.side === 'buy' ? '매수' : '매도'} 전송</button>`
+                    ? `<button class="mode-btn action-btn ${r.side === 'buy' ? 'action-btn-red' : 'action-btn-skyblue'}" style="padding:4px 8px; font-size:10px;" onclick="handleSendOrder('${r.code}','${r.side}',${Math.abs(r.diff)},${r.price})">${r.side === 'buy' ? '매수' : '매도'} 전송</button>`
                     : '-';
                 html += `<tr>
                     <td>${r.name}</td>
