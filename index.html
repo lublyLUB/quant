@@ -77,11 +77,12 @@
 <body>
 
 <div class="container">
-    <div class="menu-tabs" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
+    <div class="menu-tabs" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr;">
         <button id="btn-recommend" class="tab-btn active" onclick="switchMenu('recommend')">⭐ 추천</button>
+        <button id="btn-rebalance" class="tab-btn" onclick="switchMenu('rebalance')">🔁 리밸런싱</button>
         <button id="btn-portfolio" class="tab-btn" onclick="switchMenu('portfolio')">💼 포트폴리오</button>
         <button id="btn-order" class="tab-btn" onclick="switchMenu('order')">🛒 주문 실행</button>
-        <button id="btn-rebalance" class="tab-btn" onclick="switchMenu('rebalance')">🔁 리밸런싱</button>
+        <button id="btn-performance" class="tab-btn" onclick="switchMenu('performance')">📊 성과추적</button>
     </div>
     <div class="menu-tabs" id="strategy-tabs"></div>
 
@@ -153,6 +154,19 @@
         <button class="mode-btn" style="background:#1e3a8a; color:#fff; padding:8px 12px; margin-bottom:8px;" onclick="handleFetchHoldings()">🔄 보유 내역 조회</button>
         <span id="order-server-status" style="font-size:11px; color:#94a3b8; margin-left:8px;"></span>
         <div id="order-summary" style="font-size:11px; color:#1e3a8a; font-weight:bold; margin-top:4px;"></div>
+    </div>
+
+    <div id="rebalance-controls" style="display:none; margin-bottom: 12px;">
+        <button class="mode-btn" style="background:#1e3a8a; color:#fff; padding:8px 12px;" onclick="handleFetchHoldings()">🔄 보유 내역 조회</button>
+        <button class="mode-btn" style="background:#b45309; color:#fff; padding:8px 12px;" onclick="handleConfirmRebalance()">✅ 교체 확정</button>
+        <span id="rebalance-status" style="font-size:11px; color:#94a3b8; margin-left:8px;"></span>
+        <div id="rebalance-season-info" style="font-size:11px; color:#1e3a8a; font-weight:bold; margin-top:4px;"></div>
+    </div>
+
+    <div id="performance-controls" style="display:none; margin-bottom: 12px;">
+        <button class="mode-btn" style="background:#1e3a8a; color:#fff; padding:8px 12px;" onclick="handleRecordBaseline()">① 기준점 기록</button>
+        <button class="mode-btn" style="background:#0f766e; color:#fff; padding:8px 12px;" onclick="handleSaveSnapshot()">② 오늘 스냅샷 저장</button>
+        <span id="performance-status" style="font-size:11px; color:#94a3b8; margin-left:8px;"></span>
     </div>
 
     <table id="quant-table">
@@ -325,7 +339,7 @@
         document.getElementById("search-bar").value = "";
         searchQuery = "";
         
-        const nonStrategyMenus = ['recommend', 'portfolio', 'order', 'rebalance'];
+        const nonStrategyMenus = ['recommend', 'portfolio', 'order', 'rebalance', 'performance'];
         const subMenus = [...nonStrategyMenus, ...STRATEGIES.map(s => s.key)];
         subMenus.forEach(m => document.getElementById(`btn-${m}`).classList.toggle("active", m === menuType));
         document.getElementById("ncav-info-lbl").style.display = (menuType === 'ncav') ? 'block' : 'none';
@@ -337,10 +351,12 @@
         document.getElementById("recommend-filter-lbl").style.display = (menuType === 'recommend') ? 'block' : 'none';
         document.getElementById("portfolio-controls").style.display = (menuType === 'portfolio') ? 'block' : 'none';
         document.getElementById("order-controls").style.display = (menuType === 'order') ? 'block' : 'none';
+        document.getElementById("performance-controls").style.display = (menuType === 'performance') ? 'block' : 'none';
+        document.getElementById("rebalance-controls").style.display = (menuType === 'rebalance') ? 'block' : 'none';
         if (menuType !== 'order') stopOrderPolling();
-        document.getElementById("strategy-tabs").style.display = (menuType === 'portfolio' || menuType === 'order' || menuType === 'rebalance') ? 'none' : 'grid';
+        document.getElementById("strategy-tabs").style.display = (nonStrategyMenus.includes(menuType) && menuType !== 'recommend') ? 'none' : 'grid';
         document.getElementById("sell-strategy-lbl").style.display = (nonStrategyMenus.includes(menuType)) ? 'none' : 'inline-flex';
-        document.getElementById("control-bar").style.display = (menuType === 'rebalance' || menuType === 'portfolio' || menuType === 'order') ? 'none' : 'flex';
+        document.getElementById("control-bar").style.display = (nonStrategyMenus.includes(menuType) && menuType !== 'recommend') ? 'none' : 'flex';
         document.querySelector(".mode-toggle-group").style.display = (nonStrategyMenus.includes(menuType)) ? 'none' : 'flex';
 
         refreshCurrentTable();
@@ -480,6 +496,9 @@
         } else if (currentMenu === 'order') {
             document.getElementById("strategy-title").innerText = "🛒 주문 실행";
             renderOrderTable();
+        } else if (currentMenu === 'performance') {
+            document.getElementById("strategy-title").innerText = "📊 성과추적";
+            renderPerformanceTable();
         } else if (currentMenu === 'fscore') {
             document.getElementById("strategy-title").innerText = "🏆 6. 신 F-스코어+저PBR";
             renderFscoreTable(filterBySearch(fscoreData));
@@ -597,9 +616,108 @@
         document.getElementById("quant-table").innerHTML = html;
     }
 
+    // ===== 리밸런싱 메뉴: 보유종목 vs 추천순위 비교 → 교체 확정 → 포트폴리오/성과추적 연계 =====
+    function getLastBusinessDayOfMonth(year, month) {
+        // month: 1~12. 주말만 보정 (공휴일은 미반영, 근사치)
+        const d = new Date(year, month, 0);
+        while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() - 1);
+        return d;
+    }
+
+    function getNextRebalanceDate() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const candidates = [
+            getLastBusinessDayOfMonth(year, 4),
+            getLastBusinessDayOfMonth(year, 10),
+            getLastBusinessDayOfMonth(year + 1, 4),
+        ];
+        for (const c of candidates) {
+            if (c >= new Date(now.toDateString())) return c;
+        }
+        return candidates[candidates.length - 1];
+    }
+
+    let rebalanceDroppedNames = [];
+    let rebalanceNewNames = [];
+
+    function computeRebalanceComparison() {
+        const recommendList = computeRecommendData();
+        const recommendCodes = new Set(recommendList.map(r => findStockCode(r.name)).filter(Boolean));
+        const heldCodes = new Set(Object.entries(holdingsByCode).filter(([, h]) => h.qty > 0).map(([code]) => code));
+
+        const dropped = Object.entries(holdingsByCode)
+            .filter(([code, h]) => h.qty > 0 && !recommendCodes.has(code))
+            .map(([code, h]) => ({ code, name: h.name }));
+
+        const newEntries = bookmarks
+            .map(name => ({ name, code: findStockCode(name) }))
+            .filter(s => s.code && recommendCodes.has(s.code) && !heldCodes.has(s.code));
+
+        return { dropped, newEntries };
+    }
+
     function renderRebalanceTable() {
-        document.getElementById("quant-table").innerHTML =
-            `<tbody><tr><td style="padding:30px; color:#94a3b8;">🔁 리밸런싱 화면은 준비 중입니다.</td></tr></tbody>`;
+        const nextDate = getNextRebalanceDate();
+        const dDay = Math.ceil((nextDate - new Date(new Date().toDateString())) / 86400000);
+        document.getElementById("rebalance-season-info").innerText =
+            `다음 매도 리밸런싱일(근사): ${nextDate.toLocaleDateString()} (D-${dDay})`;
+
+        if (!holdingsLoaded) {
+            document.getElementById("quant-table").innerHTML =
+                `<tbody><tr><td style="padding:30px; color:#94a3b8;">"보유 내역 조회" 버튼을 눌러주세요. (로컬 주문 서버 실행 필요: python order_server.py)</td></tr></tbody>`;
+            return;
+        }
+
+        const { dropped, newEntries } = computeRebalanceComparison();
+        rebalanceDroppedNames = dropped.map(s => s.name);
+        rebalanceNewNames = newEntries.map(s => s.name);
+
+        let html = `<tbody><tr><td style="padding:14px; text-align:left;">`;
+        html += `<div style="margin-bottom:8px;"><b>📉 추천 순위에서 탈락한 보유종목 (매도 후보)</b></div>`;
+        if (dropped.length === 0) {
+            html += `<div style="margin-bottom:14px; color:#94a3b8;">없음</div>`;
+        } else {
+            html += `<table style="width:100%; font-size:11px; margin-bottom:14px;"><tbody>`;
+            dropped.forEach(s => html += `<tr><td>${s.name}</td></tr>`);
+            html += `</tbody></table>`;
+        }
+        html += `<div style="margin-bottom:8px;"><b>📈 즐겨찾기 중 추천에 새로 진입한 미보유종목 (매수 후보)</b></div>`;
+        if (newEntries.length === 0) {
+            html += `<div style="margin-bottom:14px; color:#94a3b8;">없음</div>`;
+        } else {
+            html += `<table style="width:100%; font-size:11px; margin-bottom:14px;"><tbody>`;
+            newEntries.forEach(s => html += `<tr><td>${s.name}</td></tr>`);
+            html += `</tbody></table>`;
+        }
+        html += `<div style="font-size:11px; color:#94a3b8;">"교체 확정"을 누르면 탈락 종목을 즐겨찾기에서 제외하고, 포트폴리오 목표를 갱신한 뒤 성과추적 기준점을 새로 기록합니다.</div>`;
+        html += `</td></tr></tbody>`;
+        document.getElementById("quant-table").innerHTML = html;
+    }
+
+    async function handleConfirmRebalance() {
+        const statusEl = document.getElementById('rebalance-status');
+        if (!holdingsLoaded) {
+            statusEl.textContent = '먼저 보유 내역을 조회해주세요.';
+            return;
+        }
+        const { dropped, newEntries } = computeRebalanceComparison();
+        if (dropped.length === 0 && newEntries.length === 0) {
+            statusEl.textContent = '교체할 종목이 없습니다.';
+            return;
+        }
+        if (!confirm(`탈락 ${dropped.length}종목을 즐겨찾기에서 제외하고, 신규 ${newEntries.length}종목을 포함해 포트폴리오를 갱신합니다.\n계속하시겠습니까?`)) return;
+
+        dropped.forEach(s => {
+            const idx = bookmarks.indexOf(s.name);
+            if (idx >= 0) bookmarks.splice(idx, 1);
+        });
+        localStorage.setItem('quant_bookmarks', JSON.stringify(bookmarks));
+        updateBookmarkCount();
+        handleImportBookmarks();
+
+        statusEl.textContent = '✅ 포트폴리오 갱신 완료. 주문 실행 메뉴에서 매수/매도를 진행한 뒤, 성과추적 메뉴에서 기준점을 기록해주세요.';
+        renderRebalanceTable();
     }
 
     // 포트폴리오: 전략 데이터셋 전체에서 종목명으로 종가를 찾는다 (소형주 옵션이 켜져 있으면 그 데이터셋 우선)
@@ -988,6 +1106,158 @@
         const buyCount = rows.filter(r => r.diff > 0).length;
         const sellCount = rows.filter(r => r.diff < 0).length;
         document.getElementById("order-summary").innerText = `매수 대상 ${buyCount}종목 / 매도 대상 ${sellCount}종목`;
+    }
+
+    // ===== 성과추적 메뉴 =====
+    // 보유 내역을 조회해둔 상태면 "실제 체결된 보유종목" 기준으로, 아니면 포트폴리오 목표 기준으로 기준점을 만든다.
+    // (리밸런싱 직후 바로 기록하면 실제 체결가가 아닌 목표가가 들어가므로, 주문 실행 후 기록하는 것을 권장)
+    function buildBaselinePayload() {
+        const recommendList = computeRecommendData();
+        const ranksByName = new Map(recommendList.map(r => [r.name, r.ranks]));
+        const usingHoldings = holdingsLoaded && Object.values(holdingsByCode).some(h => h.qty > 0);
+
+        let stocks;
+        if (usingHoldings) {
+            stocks = Object.entries(holdingsByCode)
+                .filter(([, h]) => h.qty > 0)
+                .map(([code, h]) => ({ name: h.name, code, qty: h.qty, price: h.price, strategyRanks: ranksByName.get(h.name) || {} }));
+        } else {
+            stocks = computePortfolioData().filter(s => s.shares > 0)
+                .map(s => ({ name: s.name, code: findStockCode(s.name), qty: s.shares, price: s.price, strategyRanks: ranksByName.get(s.name) || {} }))
+                .filter(s => s.code);
+        }
+        const totalInvestment = usingHoldings ? stocks.reduce((sum, s) => sum + s.qty * s.price, 0) : portfolioInvestment;
+        stocks.forEach(s => { s.weight = totalInvestment > 0 ? (s.qty * s.price) / totalInvestment : null; });
+        return { totalInvestment, stocks, usingHoldings };
+    }
+
+    async function handleRecordBaseline() {
+        const statusEl = document.getElementById('performance-status');
+        const payload = buildBaselinePayload();
+        if (payload.stocks.length === 0) {
+            statusEl.textContent = '기록할 종목이 없습니다. 보유 내역을 조회하거나 포트폴리오 목표를 먼저 설정해주세요.';
+            return;
+        }
+        const sourceLabel = payload.usingHoldings ? '실제 보유 내역' : '포트폴리오 목표(보유 내역 미조회)';
+        if (!confirm(`${sourceLabel} 기준으로 ${payload.stocks.length}종목을 성과추적 기준점으로 기록합니다.\n계속하시겠습니까?`)) return;
+        statusEl.textContent = '기록 중...';
+        try {
+            const resp = await fetch(`${ORDER_SERVER_URL}/api/performance/baseline`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
+            });
+            const data = await resp.json();
+            if (data.error) throw new Error(data.error);
+            statusEl.textContent = `✅ 기준점 기록 완료 (${data.date}, ${sourceLabel} 기준)`;
+            renderPerformanceTable();
+        } catch (e) {
+            statusEl.textContent = `❌ 로컬 주문 서버 연결 실패 - ${e.message}`;
+        }
+    }
+
+    async function handleSaveSnapshot() {
+        const statusEl = document.getElementById('performance-status');
+        statusEl.textContent = '스냅샷 저장 중...';
+        try {
+            const resp = await fetch(`${ORDER_SERVER_URL}/api/performance/snapshot`, { method: 'POST' });
+            const data = await resp.json();
+            if (data.error) throw new Error(data.error);
+            statusEl.textContent = `✅ 스냅샷 저장 완료 (${data.datetime})`;
+            renderPerformanceTable();
+        } catch (e) {
+            statusEl.textContent = `❌ 스냅샷 저장 실패 - ${e.message}`;
+        }
+    }
+
+    function pctLabel(v) {
+        if (v == null || isNaN(v)) return '-';
+        const color = v > 0 ? '#dc2626' : (v < 0 ? '#2563eb' : '#64748b');
+        return `<span style="color:${color};">${v > 0 ? '+' : ''}${v.toFixed(2)}%</span>`;
+    }
+
+    async function renderPerformanceTable() {
+        const statusEl = document.getElementById('performance-status');
+        let history;
+        try {
+            const resp = await fetch(`${ORDER_SERVER_URL}/api/performance/history`);
+            history = await resp.json();
+        } catch (e) {
+            document.getElementById("quant-table").innerHTML =
+                `<tbody><tr><td style="padding:30px; color:#94a3b8;">로컬 주문 서버에 연결할 수 없습니다. (python order_server.py 실행 필요)</td></tr></tbody>`;
+            return;
+        }
+        if (!history.baselines || history.baselines.length === 0) {
+            document.getElementById("quant-table").innerHTML =
+                `<tbody><tr><td style="padding:30px; color:#94a3b8;">"① 기준점 기록" 버튼을 눌러 추적을 시작해주세요.</td></tr></tbody>`;
+            return;
+        }
+
+        const baseline = history.baselines[history.baselines.length - 1];
+        const lastSnapshot = baseline.snapshots.length > 0 ? baseline.snapshots[baseline.snapshots.length - 1] : null;
+        const baselineTotal = baseline.stocks.reduce((sum, s) => sum + (s.price * s.qty), 0);
+
+        let html = `<tbody><tr><td style="padding:14px; text-align:left;">`;
+
+        // 기준점 정보 + ③ 수익률
+        html += `<div style="margin-bottom:14px;"><b>① 기준점</b> (${baseline.date}) - 투자금 ${formatNumber(baseline.totalInvestment || baselineTotal)}원, ${baseline.stocks.length}종목</div>`;
+
+        if (lastSnapshot) {
+            const portfolioReturn = baselineTotal > 0 ? ((lastSnapshot.totalValue - baselineTotal) / baselineTotal) * 100 : null;
+            const kospiReturn = (baseline.benchmark.kospi && lastSnapshot.benchmark.kospi)
+                ? ((lastSnapshot.benchmark.kospi - baseline.benchmark.kospi) / baseline.benchmark.kospi) * 100 : null;
+            const kosdaqReturn = (baseline.benchmark.kosdaq && lastSnapshot.benchmark.kosdaq)
+                ? ((lastSnapshot.benchmark.kosdaq - baseline.benchmark.kosdaq) / baseline.benchmark.kosdaq) * 100 : null;
+
+            html += `<div style="margin-bottom:14px;"><b>③ 수익률</b> (최근 스냅샷: ${lastSnapshot.datetime})<br>
+                포트폴리오 전체: ${pctLabel(portfolioReturn)} (평가금액 ${formatNumber(lastSnapshot.totalValue)}원)<br>
+                KOSPI(KODEX200 근사): ${pctLabel(kospiReturn)} / KOSDAQ(KODEX코스닥150 근사): ${pctLabel(kosdaqReturn)}</div>`;
+
+            html += `<table style="width:100%; font-size:11px; margin-bottom:14px;"><thead><tr>
+                <th>종목명</th><th>매수가</th><th>현재가</th><th>수량</th><th>개별 수익률</th></tr></thead><tbody>`;
+            baseline.stocks.forEach(s => {
+                const sv = lastSnapshot.stocks.find(x => x.code === s.code);
+                const ret = (sv && sv.price && s.price) ? ((sv.price - s.price) / s.price) * 100 : null;
+                html += `<tr><td>${s.name}</td><td>${formatNumber(s.price)}</td><td>${sv && sv.price ? formatNumber(sv.price) : '-'}</td><td>${formatNumber(s.qty)}주</td><td>${pctLabel(ret)}</td></tr>`;
+            });
+            html += `</tbody></table>`;
+
+            // ④ 전략별 기여도
+            const strategyStats = {};
+            baseline.stocks.forEach(s => {
+                const sv = lastSnapshot.stocks.find(x => x.code === s.code);
+                const ret = (sv && sv.price && s.price) ? ((sv.price - s.price) / s.price) * 100 : null;
+                if (ret == null) return;
+                Object.keys(s.strategyRanks || {}).forEach(key => {
+                    if (!strategyStats[key]) strategyStats[key] = [];
+                    strategyStats[key].push(ret);
+                });
+            });
+            html += `<div style="margin-bottom:6px;"><b>④ 전략별 기여도</b> (해당 전략이 추천했던 보유종목들의 평균 수익률)</div>`;
+            html += `<table style="width:100%; font-size:11px; margin-bottom:14px;"><thead><tr><th>전략</th><th>해당 종목수</th><th>평균 수익률</th></tr></thead><tbody>`;
+            const strategyNameMap = Object.fromEntries(STRATEGIES.map(s => [s.key, `${s.num}. ${s.name}`]));
+            Object.entries(strategyStats)
+                .sort((a, b) => (b[1].reduce((s, v) => s + v, 0) / b[1].length) - (a[1].reduce((s, v) => s + v, 0) / a[1].length))
+                .forEach(([key, rets]) => {
+                    const avg = rets.reduce((s, v) => s + v, 0) / rets.length;
+                    html += `<tr><td>${strategyNameMap[key] || key}</td><td>${rets.length}</td><td>${pctLabel(avg)}</td></tr>`;
+                });
+            html += `</tbody></table>`;
+        } else {
+            html += `<div style="margin-bottom:14px; color:#94a3b8;">"② 오늘 스냅샷 저장"을 눌러 수익률 추적을 시작해주세요.</div>`;
+        }
+
+        // ⑤ 리밸런싱 전후 비교
+        if (baseline.previousComparison) {
+            const pc = baseline.previousComparison;
+            html += `<div style="margin-bottom:6px;"><b>⑤ 직전 기준점 대비 리밸런싱 효과</b></div>`;
+            html += `<table style="width:100%; font-size:11px;"><thead><tr><th>구분</th><th>종목명</th><th>보유 중 수익률</th></tr></thead><tbody>`;
+            pc.kept.forEach(s => html += `<tr><td>유지</td><td>${s.name}</td><td>${pctLabel(s.return_pct)}</td></tr>`);
+            pc.removed.forEach(s => html += `<tr><td style="color:#2563eb;">교체(제외)</td><td>${s.name}</td><td>${pctLabel(s.return_pct)}</td></tr>`);
+            pc.added.forEach(s => html += `<tr><td style="color:#dc2626;">신규 추가</td><td>${s.name}</td><td>-</td></tr>`);
+            html += `</tbody></table>`;
+        }
+
+        html += `</td></tr></tbody>`;
+        document.getElementById("quant-table").innerHTML = html;
     }
 
     function renderUltraTable(data) {

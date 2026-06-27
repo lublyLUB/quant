@@ -117,6 +117,38 @@ def get_order_status():
     return fetch_order_status(token, KIWOOM_ACCOUNT_NO, KIWOOM_IS_MOCK)
 
 
+def fetch_stock_quote(access_token, stk_cd, is_mock=True):
+    """종목기본정보요청 (ka10001) - 현재가 등 기본 시세 조회 (성과추적용 가격 스냅샷에 사용)."""
+    url = f"{get_base_url(is_mock)}/api/dostk/stkinfo"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": "ka10001",
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {access_token}",
+    }
+    body = {"stk_cd": stk_cd}
+    resp = requests.post(url, headers=headers, json=body, timeout=15)
+    resp.raise_for_status()
+    return resp.json()
+
+
+def get_stock_quotes(stk_cds):
+    """여러 종목코드의 현재가를 한 번에 조회해서 {코드: 가격} 형태로 반환."""
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET을 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    prices = {}
+    for code in stk_cds:
+        try:
+            data = fetch_stock_quote(token, code, KIWOOM_IS_MOCK)
+            price = data.get("cur_prc") or data.get("stck_prpr")
+            prices[code] = abs(int(price)) if price else None
+        except Exception:
+            prices[code] = None
+    return prices
+
+
 def place_order(stk_cd, qty, side, price=None, is_mock=KIWOOM_IS_MOCK):
     """주식 매수/매도 주문 (kt10000/kt10001).
 
