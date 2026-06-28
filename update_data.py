@@ -269,7 +269,9 @@ def _fetch_period_accounts(corp_code, year, reprt_code, fs_div, keys):
     for row in data.get("list", []):
         sj_div = row.get("sj_div")
         for key, (target_sj, account_id) in targets.items():
-            if sj_div == target_sj and row.get("account_id") == account_id and key not in result:
+            # 손익계산서는 회사마다 "IS"(손익계산서) 또는 "CIS"(포괄손익계산서)로 다르게 공시되므로 둘 다 인정
+            sj_matches = sj_div == target_sj or (target_sj == "IS" and sj_div == "CIS")
+            if sj_matches and row.get("account_id") == account_id and key not in result:
                 try:
                     single = float(row.get("thstrm_amount", "0").replace(",", ""))
                 except (ValueError, AttributeError):
@@ -407,7 +409,9 @@ def fetch_dart_financials(corp_code, cache=None):
                 account_id = row.get("account_id")
                 sj_div = row.get("sj_div")
                 for key, (target_sj, target_id) in DART_ACCOUNTS.items():
-                    if sj_div == target_sj and account_id == target_id and key not in values:
+                    # 손익계산서는 회사마다 "IS" 또는 "CIS"(포괄손익계산서)로 다르게 공시되므로 둘 다 인정
+                    sj_matches = sj_div == target_sj or (target_sj == "IS" and sj_div == "CIS")
+                    if sj_matches and account_id == target_id and key not in values:
                         try:
                             values[key] = float(row.get("thstrm_amount", "0").replace(",", ""))
                         except (ValueError, AttributeError):
@@ -766,6 +770,26 @@ def fetch_krx_market_data():
         save_json_cache(ADMIN_ISSUE_CACHE_FILE, admin_issue_cache)
         print(f"[DART] 재무제표 보강 완료: {len(valid_stocks)}개 종목 확보 (캐시 적중 {cache_hits}건, 금융/지주/관리종목 표시 {flagged_count}건)")
 
+        # 전체 종목(시가총액 기준) 중 상/하위 몇 %에 속하는지 - 자세히 모드에서 시가총액 아래 표기용
+        total_count = len(valid_stocks)
+        by_market_cap = sorted(valid_stocks, key=lambda x: x["market_cap"], reverse=True)
+        for rank, s in enumerate(by_market_cap, start=1):
+            s["market_cap_pct_from_top"] = round(rank / total_count * 100)
+
+        # 11~14. 영업이익/순이익 QoQ·YoY 순위는 항상 전체 종목 기준으로 한 번만 계산해서 종목에 붙여둔다.
+        # 소형주 등 옵션이 적용된 화면도 이 전체 순위를 그대로 보여줘야 하고(부분집합 재계산 금지),
+        # 4개 중 하나라도 음수면 해당 지표 기반 전략에서 제외한다.
+        MOMENTUM_KEYS = ("op_growth_qoq", "op_growth_yoy", "ni_growth_qoq", "ni_growth_yoy")
+        MOMENTUM_RANK_KEYS = ("op_qoq_r", "op_yoy_r", "ni_qoq_r", "ni_yoy_r")
+        momentum_pool = [
+            s for s in valid_stocks
+            if all(s.get(k) is not None and s[k] >= 0 for k in MOMENTUM_KEYS)
+        ]
+        for src_key, rank_key in zip(MOMENTUM_KEYS, MOMENTUM_RANK_KEYS):
+            momentum_pool.sort(key=lambda x: x[src_key], reverse=True)
+            for idx, s in enumerate(momentum_pool):
+                s[rank_key] = idx + 1
+
     # 13. 슈퍼 가치 4대 통합 스크리너 연산부
     def rank_super_value(pool):
         # 음수가 있을 수 있으므로 원값 오름차순이 아니라 역수의 내림차순으로 순위를 매긴다 (음수도 포함)
@@ -794,21 +818,10 @@ def fetch_krx_market_data():
     super_base_smallcap = rank_super_value([s for s in valid_stocks if s["market_cap"] <= smallcap_cutoff])
     super_base_smallcap30 = rank_super_value([s for s in valid_stocks if s["market_cap"] <= smallcap_cutoff_30])
 
-    # 11. 이익 모멘텀 전략 연산부
+    # 11. 이익 모멘텀 전략 연산부 - 4개 지표 순위는 전체 종목 기준으로 이미 계산되어 있음(위 MOMENTUM_RANK_KEYS)
     def rank_momentum(pool):
         # dict()로 복사 - 전체/소형주 풀 간 종목 객체 공유로 순위가 서로 덮어써지는 문제 방지
-        base = [
-            dict(s) for s in pool
-            if all(s.get(k) is not None for k in ("op_growth_qoq", "op_growth_yoy", "ni_growth_qoq", "ni_growth_yoy"))
-        ]
-        base.sort(key=lambda x: x["op_growth_qoq"], reverse=True)
-        for idx, s in enumerate(base): s["op_qoq_r"] = idx + 1
-        base.sort(key=lambda x: x["op_growth_yoy"], reverse=True)
-        for idx, s in enumerate(base): s["op_yoy_r"] = idx + 1
-        base.sort(key=lambda x: x["ni_growth_qoq"], reverse=True)
-        for idx, s in enumerate(base): s["ni_qoq_r"] = idx + 1
-        base.sort(key=lambda x: x["ni_growth_yoy"], reverse=True)
-        for idx, s in enumerate(base): s["ni_yoy_r"] = idx + 1
+        base = [dict(s) for s in pool if s.get("op_qoq_r") is not None]
         for s in base: s["momentum_score"] = s["op_qoq_r"] + s["op_yoy_r"] + s["ni_qoq_r"] + s["ni_yoy_r"]
         base.sort(key=lambda x: x["momentum_score"])
         return base
@@ -828,7 +841,7 @@ def fetch_krx_market_data():
         if s["f_score"] == 3
         and s["gpa"] is not None
         and s["op_debt_growth_yoy"] is not None
-        and s["asset_growth_yoy"] is not None
+        and s["asset_growth_yoy"] is not None and s["asset_growth_yoy"] > -20
         and s["price_volatility"] is not None
     ]
     quality_base = [dict(s) for s in quality_base]
@@ -904,8 +917,7 @@ def fetch_krx_market_data():
     value_momentum_base = [
         s for s in valid_stocks
         if s["per"] != 0 and s["pfcr"] != 0 and s["pbr"] != 0 and s["psr"] != 0
-        and s["op_growth_qoq"] is not None and s["op_growth_yoy"] is not None
-        and s["ni_growth_qoq"] is not None and s["ni_growth_yoy"] is not None
+        and s.get("op_qoq_r") is not None  # 11~14 지표는 전체 종목 기준 순위(음수 제외 적용됨)를 그대로 사용
     ]
     value_momentum_base = [dict(s) for s in value_momentum_base]
     value_momentum_base.sort(key=lambda x: 1 / x["per"], reverse=True)
@@ -916,14 +928,6 @@ def fetch_krx_market_data():
     for idx, s in enumerate(value_momentum_base): s["pbr_r"] = idx + 1
     value_momentum_base.sort(key=lambda x: 1 / x["psr"], reverse=True)
     for idx, s in enumerate(value_momentum_base): s["psr_r"] = idx + 1
-    value_momentum_base.sort(key=lambda x: x["op_growth_qoq"], reverse=True)
-    for idx, s in enumerate(value_momentum_base): s["op_qoq_r"] = idx + 1
-    value_momentum_base.sort(key=lambda x: x["op_growth_yoy"], reverse=True)
-    for idx, s in enumerate(value_momentum_base): s["op_yoy_r"] = idx + 1
-    value_momentum_base.sort(key=lambda x: x["ni_growth_qoq"], reverse=True)
-    for idx, s in enumerate(value_momentum_base): s["ni_qoq_r"] = idx + 1
-    value_momentum_base.sort(key=lambda x: x["ni_growth_yoy"], reverse=True)
-    for idx, s in enumerate(value_momentum_base): s["ni_yoy_r"] = idx + 1
     for s in value_momentum_base:
         s["value_momentum_score"] = (
             s["per_r"] + s["pfcr_r"] + s["pbr_r"] + s["psr_r"]
@@ -941,8 +945,7 @@ def fetch_krx_market_data():
         and s["op_debt_growth_yoy"] is not None
         and s["asset_growth_yoy"] is not None
         and s["price_volatility"] is not None
-        and s["op_growth_qoq"] is not None and s["op_growth_yoy"] is not None
-        and s["ni_growth_qoq"] is not None and s["ni_growth_yoy"] is not None
+        and s.get("op_qoq_r") is not None  # 11~14 지표는 전체 종목 기준 순위(음수 제외 적용됨)를 그대로 사용
     ]
     quality_momentum_base = [dict(s) for s in quality_momentum_base]
     quality_momentum_base.sort(key=lambda x: x["gpa"], reverse=True)
@@ -953,14 +956,6 @@ def fetch_krx_market_data():
     for idx, s in enumerate(quality_momentum_base): s["asset_growth_r"] = idx + 1
     quality_momentum_base.sort(key=lambda x: x["price_volatility"])
     for idx, s in enumerate(quality_momentum_base): s["volatility_r"] = idx + 1
-    quality_momentum_base.sort(key=lambda x: x["op_growth_qoq"], reverse=True)
-    for idx, s in enumerate(quality_momentum_base): s["op_qoq_r"] = idx + 1
-    quality_momentum_base.sort(key=lambda x: x["op_growth_yoy"], reverse=True)
-    for idx, s in enumerate(quality_momentum_base): s["op_yoy_r"] = idx + 1
-    quality_momentum_base.sort(key=lambda x: x["ni_growth_qoq"], reverse=True)
-    for idx, s in enumerate(quality_momentum_base): s["ni_qoq_r"] = idx + 1
-    quality_momentum_base.sort(key=lambda x: x["ni_growth_yoy"], reverse=True)
-    for idx, s in enumerate(quality_momentum_base): s["ni_yoy_r"] = idx + 1
     for s in quality_momentum_base:
         s["quality_momentum_score"] = (
             s["gpa_r"] + s["op_debt_r"] + s["asset_growth_r"] + s["volatility_r"]
@@ -979,8 +974,7 @@ def fetch_krx_market_data():
             and s["op_debt_growth_yoy"] is not None
             and s["asset_growth_yoy"] is not None
             and s["price_volatility"] is not None
-            and s["op_growth_qoq"] is not None and s["op_growth_yoy"] is not None
-            and s["ni_growth_qoq"] is not None and s["ni_growth_yoy"] is not None
+            and s.get("op_qoq_r") is not None  # 11~14 지표는 전체 종목 기준 순위가 이미 계산되어 있어야 함(음수 제외 포함)
         ]
         base = [dict(s) for s in base]
         base.sort(key=lambda x: 1 / x["per"], reverse=True)
@@ -999,14 +993,7 @@ def fetch_krx_market_data():
         for idx, s in enumerate(base): s["asset_growth_r"] = idx + 1
         base.sort(key=lambda x: x["price_volatility"])
         for idx, s in enumerate(base): s["volatility_r"] = idx + 1
-        base.sort(key=lambda x: x["op_growth_qoq"], reverse=True)
-        for idx, s in enumerate(base): s["op_qoq_r"] = idx + 1
-        base.sort(key=lambda x: x["op_growth_yoy"], reverse=True)
-        for idx, s in enumerate(base): s["op_yoy_r"] = idx + 1
-        base.sort(key=lambda x: x["ni_growth_qoq"], reverse=True)
-        for idx, s in enumerate(base): s["ni_qoq_r"] = idx + 1
-        base.sort(key=lambda x: x["ni_growth_yoy"], reverse=True)
-        for idx, s in enumerate(base): s["ni_yoy_r"] = idx + 1
+        # op_qoq_r/op_yoy_r/ni_qoq_r/ni_yoy_r는 전체 종목 기준으로 이미 계산된 값을 그대로 사용(재계산 금지)
         for s in base:
             s["ultra_score"] = (
                 s["per_r"] + s["pfcr_r"] + s["pbr_r"] + s["psr_r"]
@@ -1021,28 +1008,23 @@ def fetch_krx_market_data():
     ultra_base_smallcap30 = rank_ultra([s for s in valid_stocks if s["market_cap"] <= smallcap_cutoff_30])
 
     # 12. NCAV 청산가치 & 퀄리티 스크리너 연산부
-    # 조건: 1) 순유동자산 > 시가총액  2) 최신 분기 순이익 > 0  3) 차입금비율 200% 이하  4) 상위 20개만 노출
-    # GP/A 상위 50% 필터는 기본 비적용 - 프론트엔드 체크박스로 켤 때만 별도 리스트(ncav_base_gpa) 적용
+    # 조건: 1) 순유동자산 > 시가총액  2) 최신 분기 순이익 > 0  3) 차입금비율 200% 이하
+    #       4) GP/A 전체 종목 상위 50% 이내 (항상 적용)  5) 상위 20개만 노출
+    gpa_pool = sorted((s["gpa"] for s in valid_stocks if s["gpa"] is not None), reverse=True)
+    gpa_cutoff = gpa_pool[len(gpa_pool) // 2 - 1] if gpa_pool else None
+
     def ncav_filter_base(pool):
         return [
             s for s in pool
             if s["ncav_ratio"] > 1
             and s["quarter_net_income"] is not None and s["quarter_net_income"] > 0
             and s["debt_ratio"] is not None and s["debt_ratio"] <= 200
+            and s["gpa"] is not None and gpa_cutoff is not None and s["gpa"] >= gpa_cutoff
             and not s["is_fin_holding"] and not s["is_admin_issue"]
         ]
 
-    gpa_pool = sorted((s["gpa"] for s in valid_stocks if s["gpa"] is not None), reverse=True)
-    gpa_cutoff = gpa_pool[len(gpa_pool) // 2 - 1] if gpa_pool else None
-
     ncav_base = ncav_filter_base(valid_stocks)
     ncav_base.sort(key=lambda x: x["ncav_ratio"], reverse=True)
-
-    ncav_base_gpa = [
-        s for s in ncav_base
-        if s["gpa"] is not None and gpa_cutoff is not None and s["gpa"] >= gpa_cutoff
-    ]
-    ncav_base_gpa.sort(key=lambda x: x["ncav_ratio"], reverse=True)
 
     # ------------------------------------------------------------------------
     # 최종 index.html 전용 'KOSPI_QUANT_PACKAGE' 단일 객체 패키징 공정
@@ -1074,6 +1056,7 @@ def fetch_krx_market_data():
                 "code": s["code"],
                 "price": s["price"],
                 "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
+                "market_cap_pct_from_top": s.get("market_cap_pct_from_top"),
                 "pbr": s["pbr"],
                 "pbr_r": s["pbr_r"],
                 "per": s["per"],
@@ -1106,6 +1089,7 @@ def fetch_krx_market_data():
                 "code": s["code"],
                 "price": s["price"],
                 "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
+                "market_cap_pct_from_top": s.get("market_cap_pct_from_top"),
                 "op_growth_qoq": s["op_growth_qoq"],
                 "op_qoq_r": s["op_qoq_r"],
                 "op_growth_yoy": s["op_growth_yoy"],
@@ -1145,6 +1129,7 @@ def fetch_krx_market_data():
             "f_score": s["f_score"],
             "pbr": s["pbr"],
             "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
+            "market_cap_pct_from_top": s.get("market_cap_pct_from_top"),
             "equity": int(s["equity"] / 100000000),  # 억 단위
         })
 
@@ -1185,6 +1170,7 @@ def fetch_krx_market_data():
             "code": s["code"],
             "price": s["price"],
             "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
+            "market_cap_pct_from_top": s.get("market_cap_pct_from_top"),
             "pbr": s["pbr"],
             "pbr_r": s["pbr_r"],
             "gpa": s["gpa"],
@@ -1208,6 +1194,7 @@ def fetch_krx_market_data():
             "code": s["code"],
             "price": s["price"],
             "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
+            "market_cap_pct_from_top": s.get("market_cap_pct_from_top"),
             "per": s["per"], "per_r": s["per_r"],
             "pcr": s["pcr"], "pcr_r": s["pcr_r"],
             "pbr": s["pbr"], "pbr_r": s["pbr_r"],
@@ -1237,6 +1224,7 @@ def fetch_krx_market_data():
             "code": s["code"],
             "price": s["price"],
             "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
+            "market_cap_pct_from_top": s.get("market_cap_pct_from_top"),
             "per": s["per"], "per_r": s["per_r"],
             "pfcr": s["pfcr"], "pfcr_r": s["pfcr_r"],
             "pbr": s["pbr"], "pbr_r": s["pbr_r"],
@@ -1267,6 +1255,7 @@ def fetch_krx_market_data():
             "code": s["code"],
             "price": s["price"],
             "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
+            "market_cap_pct_from_top": s.get("market_cap_pct_from_top"),
             "gpa": s["gpa"], "gpa_r": s["gpa_r"],
             "op_debt_growth_yoy": s["op_debt_growth_yoy"], "op_debt_r": s["op_debt_r"],
             "asset_growth_yoy": s["asset_growth_yoy"], "asset_growth_r": s["asset_growth_r"],
@@ -1300,6 +1289,7 @@ def fetch_krx_market_data():
                 "code": s["code"],
                 "price": s["price"],
                 "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
+                "market_cap_pct_from_top": s.get("market_cap_pct_from_top"),
                 "per": s["per"], "per_r": s["per_r"],
                 "pfcr": s["pfcr"], "pfcr_r": s["pfcr_r"],
                 "pbr": s["pbr"], "pbr_r": s["pbr_r"],
@@ -1345,7 +1335,9 @@ def fetch_krx_market_data():
                 "code": s["code"],
                 "price": s["price"],
                 "ncav": s["ncav"],
+                "ncav_ratio": s["ncav_ratio"],
                 "market_cap": int(s["market_cap"] / 100000000),  # 억 단위
+                "market_cap_pct_from_top": s.get("market_cap_pct_from_top"),
                 "quarter_net_income": int(s["quarter_net_income"] / 100000000),  # 억 단위
                 "gpa": s["gpa"],
                 "debt_ratio": s["debt_ratio"],
@@ -1360,7 +1352,6 @@ def fetch_krx_market_data():
         return packaged
 
     ncav_value = package_ncav_value(ncav_base)
-    ncav_value_gpa = package_ncav_value(ncav_base_gpa)
 
     # 금융회사/지주회사/관리종목 배지 표기용 (추천 메뉴에서 사용, 12.NCAV 외에는 제외하지 않고 표기만)
     stock_flags = {}
@@ -1412,7 +1403,6 @@ def fetch_krx_market_data():
         "stock_flags": stock_flags,
         "stock_metrics": stock_metrics,
         "ncav_value": ncav_value,
-        "ncav_value_gpa": ncav_value_gpa
     }
     
     # data.js 전용 스크립트로 굽기

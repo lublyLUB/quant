@@ -17,7 +17,7 @@
         .tab-btn.active { background-color: #fff; color: #1e3a8a; box-shadow: 0 2px 4px rgba(0,0,0,0.06); }
         .strategy-name { display: inline; }
         .strategy-tags { display: inline-block; margin-left: 4px; vertical-align: middle; }
-        .strategy-tab-btn { display: grid; grid-template-columns: 1fr 18px 18px 18px; align-items: center; gap: 2px; text-align: left; padding: 7px 6px 7px 6px; white-space: nowrap; overflow: hidden; }
+        .strategy-tab-btn { display: grid; grid-template-columns: 1fr 18px 18px 18px; align-items: center; gap: 2px; text-align: left; padding: 7px 6px 7px 20px; white-space: nowrap; overflow: hidden; }
         .strategy-tab-btn .strategy-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
         .tag-chip-slot { display: flex; justify-content: center; overflow: hidden; }
         .tag-chip-slot .tag-chip { margin: 0; padding: 1px 3px; }
@@ -42,7 +42,7 @@
         /* 유상증자/순이익/영업CF를 '신F-스코어'로 묶어서 표현 */
 
         /* 🔍 스마트 종목 검색창 스타일 */
-        .search-box { flex: 0 1 80px; padding: 9px 10px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; outline: none; }
+        .search-box { flex: 0 1 80px; height: 26px; padding: 0 10px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; outline: none; }
         .search-box:focus { border-color: #2563eb; box-shadow: 0 0 0 2px rgba(37,99,235,0.1); }
 
         h1 { font-size: 14px; color: #1e3a8a; text-align: center; margin: 4px 0; }
@@ -56,8 +56,14 @@
 
         /* 검색창 + 간단/자세히 토글 + 필터 체크박스를 한 줄로 정리하는 컨트롤 바 */
         .control-bar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
-        .mode-toggle-group { display: flex; background-color: #f1f5f9; border-radius: 8px; padding: 2px; flex: 0 0 auto; }
-        .mode-btn { border: none; background: none; padding: 7px 10px; font-size: 11px; font-weight: bold; color: #64748b; cursor: pointer; border-radius: 6px; }
+        .mode-toggle-group { display: flex; align-items: center; height: 26px; background-color: #f1f5f9; border-radius: 8px; padding: 0 2px; flex: 0 0 auto; box-sizing: border-box; }
+        .mode-btn { border: none; background: none; height: 100%; padding: 0 10px; font-size: 11px; font-weight: bold; color: #64748b; cursor: pointer; border-radius: 6px; box-sizing: border-box; }
+        #btn-mode-toggle { display: inline-flex; align-items: center; gap: 4px; }
+        .mode-toggle-dots { display: inline-flex; flex-direction: column; gap: 2px; }
+        .mode-toggle-dot { width: 4px; height: 4px; border-radius: 50%; background: #cbd5e1; transition: background 0.15s; }
+        #btn-mode-toggle .dot-top { background: #cbd5e1; }
+        #btn-mode-toggle.dots-up .dot-top { background: #1e3a8a; }
+        #btn-mode-toggle:not(.dots-up) .dot-bottom { background: #1e3a8a; }
         .mode-btn.active { background-color: #fff; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
         .action-btn { color: #fff; padding: 8px 12px; }
         .action-btn-blue { background: #1e3a8a; }
@@ -114,18 +120,14 @@
     <h1 id="strategy-title" style="display:none;">⭐ 추천 종목</h1>
 
     <div class="info-strip">
-        <span id="sell-strategy-lbl" class="info-pill pill-sell">📌 매도: 4월·10월 마지막 거래일 리밸런싱</span>
+        <span id="sell-strategy-lbl" class="info-pill pill-sell"></span>
     </div>
 
-    <div id="ncav-info-lbl" class="condition-sub">
-        <b>💡 12. NCAV 전략 필터 마스터 가이드</b><br>
-        순유동 > 시가총액 (1배 완화) | 분기 흑자 기업 | 차입금비율 200% 이하 | GP/A 상위 50% 필터는 체크박스 선택 시 적용
-    </div>
 
     <div class="control-bar" id="control-bar">
         <input type="text" id="search-bar" class="search-box" placeholder="🔍 종목명 검색..." oninput="handleSearch()">
         <div class="mode-toggle-group">
-            <button id="btn-mode-toggle" class="mode-btn" onclick="toggleDisplayMode()">자세히</button>
+            <button id="btn-mode-toggle" class="mode-btn dots-up" onclick="toggleDisplayMode()"><span id="mode-toggle-label">자세히</span><span class="mode-toggle-dots"><span class="mode-toggle-dot dot-top"></span><span class="mode-toggle-dot dot-bottom"></span></span></button>
         </div>
         <span id="bookmark-count" class="status-text" style="color:#64748b; align-self:flex-end;"></span>
         <div class="filter-checkboxes">
@@ -143,7 +145,6 @@
                     <button type="button" id="momentum-smallcap-toggle-30" class="smallcap-toggle-btn" onclick="setSmallcapMode('momentum','30')">하위 30%</button>
                 </span>
             </span>
-            <label id="ncav-gpa-lbl" style="display:none;"><input type="checkbox" id="gpa-checkbox" onchange="handleGpaToggle()"> GP/A 필터(상위 50%)</label>
             <span id="ultra-smallcap-lbl" style="display:none; align-items:center; gap:6px;">소형주:
                 <span class="smallcap-toggle-group">
                     <button type="button" id="ultra-smallcap-toggle-none" class="smallcap-toggle-btn" onclick="setSmallcapMode('ultra','none')">미적용</button>
@@ -196,7 +197,7 @@
 <script>
     const TAG_LABELS = { value: '밸류', quality: '퀄리티', momentum: '모멘텀' };
     const STRATEGIES = [
-        { key: 'fscore', num: 6, name: '신F-스코어+저PBR', tags: ['value', 'quality'], ready: true },
+        { key: 'fscore', num: '06', name: '신F-스코어+저PBR', tags: ['value', 'quality'], ready: true },
         { key: 'momentum', num: 11, name: '이익 모멘텀', tags: ['momentum'], ready: true },
         { key: 'ncav', num: 12, name: 'NCAV전략 업그레이드', tags: ['value', 'quality'], ready: true },
         { key: 'super', num: 13, name: '슈퍼 가치 전략 업그레이드', tags: ['value'], ready: true },
@@ -207,6 +208,15 @@
         { key: 'strategy20', num: 21, name: '슈퍼 퀄리티+모멘텀', tags: ['quality', 'momentum'], ready: true },
         { key: 'strategy21', num: 22, name: '울트라', tags: ['value', 'quality', 'momentum'], ready: true },
     ];
+
+    // 전략별 매수 기준 설명 (매도: 안내가 있던 자리를 같은 스타일로 재사용)
+    const BUY_STRATEGY_DESC = {
+        fscore: '신F-스코어 3점 기업 중에서 PBR이 가장 낮은 주식 매수(20개)',
+        momentum: '전체 주식에서 아래 지표들의 평균 순위가 가장 높은 주식 매수(20개)',
+        ncav: "유동자산-총부채>시가총액, 분기 순이익>0, GP/A 상위 50% 이내, 차입금비율 200% 이하를 만족하는 주식 중<br>'(유동자산-총부채)/시가총액' 비중이 가장 높은 주식 매수(20개, 5~10월 비추)",
+        super: '전체 주식에서 아래 지표들의 평균 순위가 가장 높은 주식 매수(20개)<br>※ PER, PFCR, PSR은 최근 분기 실적',
+        strategy15: '전체 주식에서 아래 지표들의 평균 순위가 가장 높은 주식 매수(20개)<br>※ 신F-스코어 3점, 자산성장률 -20% 이하는 필터링',
+    };
 
     const TAG_ORDER = ['value', 'quality', 'momentum'];  // 라벨마다 고정된 열(슬롯)에만 표기
     const TAG_LABELS_SHORT = { value: '밸', quality: '퀄', momentum: '모' };  // 전략 탭은 공간이 좁아 첫 글자만 표기
@@ -237,7 +247,7 @@
     let currentSortKey = 'rank';
     let isAscending = true;
     let searchQuery = "";
-    let superData = [], superSmallcapData = [], superSmallcap30Data = [], ncavData = [], ncavGpaData = [], fscoreData = [], qualityData = [], famaData = [], superQualityData = [], valueMomentumData = [], qualityMomentumData = [], ultraData = [], ultraSmallcapData = [], ultraSmallcap30Data = [];
+    let superData = [], superSmallcapData = [], superSmallcap30Data = [], ncavData = [], fscoreData = [], qualityData = [], famaData = [], superQualityData = [], valueMomentumData = [], qualityMomentumData = [], ultraData = [], ultraSmallcapData = [], ultraSmallcap30Data = [];
     let momentumData = [], momentumSmallcapData = [], momentumSmallcap30Data = [];
     // 소형주 모드: 'none' | '20' | '30'
     function pickSmallcapData(mode, full, d20, d30) {
@@ -246,7 +256,6 @@
         return full;
     }
     let smallcapMode = 'none';
-    let isGpaMode = false;
     let momentumSmallcapMode = 'none';
     let ultraSmallcapMode = 'none';
     let isExcludeSeasonMode = false;
@@ -261,8 +270,11 @@
 
     function setDisplayMode(mode) {
         displayMode = mode;
+        const label = document.getElementById("mode-toggle-label");
         const btn = document.getElementById("btn-mode-toggle");
-        if (btn) btn.textContent = mode === 'detail' ? '간단히' : '자세히';
+        // 버튼은 "다음에 갈 모드"를 보여준다 - 자세히로 갈 땐 점이 위로, 간단히로 갈 땐 점이 아래로 가서 오가는 느낌을 줌
+        if (label) label.textContent = mode === 'detail' ? '간단히' : '자세히';
+        if (btn) btn.classList.toggle('dots-up', mode !== 'detail');
         refreshCurrentTable();
     }
 
@@ -277,7 +289,6 @@
     function saveOptions() {
         localStorage.setItem('quant_options', JSON.stringify({
             smallcapMode,
-            isGpaMode,
             momentumSmallcapMode,
             ultraSmallcapMode,
             isExcludeSeasonMode,
@@ -294,7 +305,6 @@
             saved = {};
         }
         smallcapMode = saved.smallcapMode || 'none';
-        isGpaMode = !!saved.isGpaMode;
         momentumSmallcapMode = saved.momentumSmallcapMode || 'none';
         ultraSmallcapMode = saved.ultraSmallcapMode || 'none';
         isExcludeSeasonMode = !!saved.isExcludeSeasonMode;
@@ -306,7 +316,6 @@
             if (el) el.checked = value;
         };
         updateSmallcapToggleUI('super', smallcapMode);
-        setChecked('gpa-checkbox', isGpaMode);
         updateSmallcapToggleUI('momentum', momentumSmallcapMode);
         updateSmallcapToggleUI('ultra', ultraSmallcapMode);
         setChecked('recommend-exclude-season-checkbox', isExcludeSeasonMode);
@@ -338,6 +347,15 @@
     // frac(분자 part, 분모 part): 두 단을 가로선으로 나눠 쌓기
     function frac(numPart, denomPart) {
         return `<span class="fraction">${numPart}<span class="fbar"></span>${denomPart}</span>`;
+    }
+
+    // 자세히 모드에서 시가총액 아래에 전체 종목 중 상/하위 몇 %인지 표시 (1~50%: 上, 51~100%: 下)
+    function marketCapPercentileLabel(pct) {
+        if (pct == null) return '';
+        const html = pct <= 50
+            ? `上 ${pct}%`
+            : `下 ${101 - pct}%`;
+        return `<span class="sub-text">${html}</span>`;
     }
 
     function formatNumber(num) {
@@ -380,9 +398,7 @@
         const nonStrategyMenus = ['recommend', 'portfolio', 'order', 'rebalance', 'performance'];
         const subMenus = [...nonStrategyMenus, ...STRATEGIES.map(s => s.key)];
         subMenus.forEach(m => document.getElementById(`btn-${m}`).classList.toggle("active", m === menuType));
-        document.getElementById("ncav-info-lbl").style.display = (menuType === 'ncav') ? 'block' : 'none';
         document.getElementById("super-smallcap-lbl").style.display = (menuType === 'super') ? 'inline-flex' : 'none';
-        document.getElementById("ncav-gpa-lbl").style.display = (menuType === 'ncav') ? 'block' : 'none';
         document.getElementById("momentum-smallcap-lbl").style.display = (menuType === 'momentum') ? 'inline-flex' : 'none';
         document.getElementById("ultra-smallcap-lbl").style.display = (menuType === 'strategy21') ? 'inline-flex' : 'none';
         document.getElementById("recommend-exclude-season-lbl").style.display = (menuType === 'recommend') ? 'block' : 'none';
@@ -392,7 +408,10 @@
         document.getElementById("rebalance-controls").style.display = (menuType === 'rebalance') ? 'block' : 'none';
         if (menuType !== 'order') stopOrderPolling();
         document.getElementById("strategy-tabs").style.display = (nonStrategyMenus.includes(menuType) && menuType !== 'recommend') ? 'none' : 'grid';
-        document.getElementById("sell-strategy-lbl").style.display = (nonStrategyMenus.includes(menuType)) ? 'none' : 'inline-flex';
+        const buyDesc = BUY_STRATEGY_DESC[menuType];
+        const buyLbl = document.getElementById("sell-strategy-lbl");
+        buyLbl.style.display = (!nonStrategyMenus.includes(menuType) && buyDesc) ? 'inline-flex' : 'none';
+        buyLbl.innerHTML = buyDesc ? `📌 매수: ${buyDesc}` : '';
         document.getElementById("control-bar").style.display = (nonStrategyMenus.includes(menuType) && menuType !== 'recommend') ? 'none' : 'flex';
         document.querySelector(".mode-toggle-group").style.display = (nonStrategyMenus.includes(menuType)) ? 'none' : 'flex';
 
@@ -402,7 +421,7 @@
     const RECOMMEND_SOURCES = [
         { key: 'fscore', num: 6, getData: () => fscoreData },
         { key: 'momentum', num: 11, getData: () => pickSmallcapData(momentumSmallcapMode, momentumData, momentumSmallcapData, momentumSmallcap30Data) },
-        { key: 'ncav', num: 12, getData: () => isGpaMode ? ncavGpaData : ncavData },
+        { key: 'ncav', num: 12, getData: () => ncavData },
         { key: 'super', num: 13, getData: () => pickSmallcapData(smallcapMode, superData, superSmallcapData, superSmallcap30Data) },
         { key: 'strategy15', num: 15, getData: () => qualityData },
         { key: 'strategy16', num: 16, getData: () => famaData },
@@ -503,13 +522,6 @@
         refreshCurrentTable();
     }
 
-    function handleGpaToggle() {
-        isGpaMode = document.getElementById("gpa-checkbox").checked;
-        currentSortKey = 'rank';
-        isAscending = true;
-        saveOptions();
-        refreshCurrentTable();
-    }
 
     function handleExcludeSeasonToggle() {
         isExcludeSeasonMode = document.getElementById("recommend-exclude-season-checkbox").checked;
@@ -546,8 +558,8 @@
             document.getElementById("strategy-title").innerText = "📈 13. 슈퍼 가치 4대 통합 스크리너" + (smallcapMode !== 'none' ? ` (소형주 ${smallcapMode}%)` : "");
             renderSuperTable(filterBySearch(pickSmallcapData(smallcapMode, superData, superSmallcapData, superSmallcap30Data)));
         } else if (currentMenu === 'ncav') {
-            document.getElementById("strategy-title").innerText = "🛡️ 12. NCAV 청산가치 & 퀄리티 스크리너" + (isGpaMode ? " (GP/A 필터)" : "");
-            renderNcavTable(filterBySearch(isGpaMode ? ncavGpaData : ncavData));
+            document.getElementById("strategy-title").innerText = "🛡️ 12. NCAV 청산가치 & 퀄리티 스크리너";
+            renderNcavTable(filterBySearch(ncavData));
         } else if (currentMenu === 'strategy15') {
             document.getElementById("strategy-title").innerText = "💎 15. 슈퍼 퀄리티";
             renderQualityTable(filterBySearch(qualityData));
@@ -700,8 +712,7 @@
 
         let seasonCash = [];
         if (isCashHoldSeasonNow()) {
-            const ncavSourceData = isGpaMode ? ncavGpaData : ncavData;
-            const ncavCodes = new Set(ncavSourceData.map(s => s.code).filter(Boolean));
+            const ncavCodes = new Set(ncavData.map(s => s.code).filter(Boolean));
             const superSourceData = smallcapMode !== 'none' ? pickSmallcapData(smallcapMode, superData, superSmallcapData, superSmallcap30Data) : [];
             const superCodes = new Set(superSourceData.map(s => s.code).filter(Boolean));
             seasonCash = Object.entries(holdingsByCode)
@@ -794,7 +805,7 @@
         const allDatasets = [
             fscoreData,
             pickSmallcapData(momentumSmallcapMode, momentumData, momentumSmallcapData, momentumSmallcap30Data),
-            ncavData, ncavGpaData,
+            ncavData,
             pickSmallcapData(smallcapMode, superData, superSmallcapData, superSmallcap30Data),
             qualityData, famaData, superQualityData, valueMomentumData, qualityMomentumData,
             pickSmallcapData(ultraSmallcapMode, ultraData, ultraSmallcapData, ultraSmallcap30Data),
@@ -810,7 +821,7 @@
         const allDatasets = [
             fscoreData,
             pickSmallcapData(momentumSmallcapMode, momentumData, momentumSmallcapData, momentumSmallcap30Data),
-            ncavData, ncavGpaData,
+            ncavData,
             pickSmallcapData(smallcapMode, superData, superSmallcapData, superSmallcap30Data),
             qualityData, famaData, superQualityData, valueMomentumData, qualityMomentumData,
             pickSmallcapData(ultraSmallcapMode, ultraData, ultraSmallcapData, ultraSmallcap30Data),
@@ -1698,7 +1709,7 @@
                     <td class="rank-main">${s.rank}</td>
                     <td>${getNameHtml(s.name)}</td>
                     <td>${formatNumber(s.price)}</td>
-                    <td>${formatNumber(s.market_cap)}억</td>
+                    <td>${formatNumber(s.market_cap)}억${marketCapPercentileLabel(s.market_cap_pct_from_top)}</td>
                     <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.equity)))}</td>
                     <td>${s.gpa == null ? 'N/A' : frac(barePart(amt(s.quarter_revenue) + ' − ' + amt(s.quarter_cost_of_sales)), barePart(amt(s.assets)))}</td>
                     <td>${frac(barePart(amt(s.assets) + ' − ' + amt(s.assets_yoy)), barePart(amt(s.assets_yoy)))}</td>
@@ -1726,17 +1737,20 @@
         const pct = v => v == null ? 'N/A' : v.toFixed(1) + '%';
         const amt = v => v == null ? 'N/A' : formatNumber(v);
         const ratioFmt = v => v == null ? 'N/A' : v.toFixed(4);
+        const fScoreCell = s => [s.cap_increase_flag, s.ni_pos_flag, s.cf_pos_flag].some(v => v == null)
+            ? 'N/A' : `${s.cap_increase_flag + s.ni_pos_flag + s.cf_pos_flag}점`;
         let html = `
             <thead>
                 <tr>
                     <th style="width: 6%;" onclick="sortData('rank')">순위</th>
-                    <th style="width: 16%;" onclick="sortData('name')">종목명</th>
+                    <th style="width: 14%;" onclick="sortData('name')">종목명</th>
                     <th style="width: 9%;" onclick="sortData('price')">종가</th>
-                    <th style="width: 10%;" onclick="sortData('cap_increase_flag')">유상증자</th>
-                    <th style="width: 11%;" onclick="sortData('gpa')">${isDetail ? headerFracOnly('매출-매출원가', '자산') : 'GP/A'}</th>
-                    <th style="width: 16%;" onclick="sortData('op_debt_growth_yoy')">${isDetail ? headerFracOnly('영업이익/차입금−전년동기', '전년동기 영업이익/차입금') : '영업이익/<br>차입금 YoY'}</th>
-                    <th style="width: 16%;" onclick="sortData('asset_growth_yoy')">${isDetail ? headerFracOnly('자산-전년동기자산', '전년동기자산') : '자산<br>성장률'}</th>
-                    <th style="width: 16%;" onclick="sortData('price_volatility')">주가<br>변동성</th>
+                    <th style="width: 10%;" onclick="sortData('f_score')">신F-스코어</th>
+                    <th style="width: 14%;" onclick="sortData('gpa')">${isDetail ? headerFracOnly('매출-매출원가', '자산') : 'GP/A'}</th>
+                    <th style="width: 14%;" onclick="sortData('op_debt_growth_yoy')">${isDetail ? headerFracOnly('영업이익/차입금−전년동기', '전년동기 영업이익/차입금') : '영업이익/<br>차입금 YoY'}</th>
+                    <th style="width: 14%;" onclick="sortData('asset_growth_yoy')">${isDetail ? headerFracOnly('자산-전년동기자산', '전년동기자산') : '자산<br>성장률'}</th>
+                    <th style="width: 8%;" onclick="sortData('price_volatility')">주가<br>변동성</th>
+                    <th style="width: 9%;" onclick="sortData('avg_r')">평균</th>
                 </tr>
             </thead>
             <tbody>`;
@@ -1748,22 +1762,24 @@
                     <td class="rank-main">${s.rank}</td>
                     <td>${nameCell}</td>
                     <td>${formatNumber(s.price)}</td>
-                    <td>${s.cap_increase_flag === 1 ? 'X' : 'O'}</td>
+                    <td>${fScoreCell(s)}</td>
                     <td>${s.gpa == null ? 'N/A' : frac(barePart(amt(s.quarter_revenue) + ' − ' + amt(s.quarter_cost_of_sales)), barePart(amt(s.assets)))}</td>
                     <td>${frac(barePart(ratioFmt(s.op_to_debt_now) + ' − ' + ratioFmt(s.op_to_debt_yoy)), barePart(ratioFmt(s.op_to_debt_yoy)))}</td>
                     <td>${frac(barePart(amt(s.assets) + ' − ' + amt(s.assets_yoy)), barePart(amt(s.assets_yoy)))}</td>
                     <td>${pct(s.price_volatility)}</td>
+                    <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
                 </tr>`;
             } else {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
                     <td>${nameCell}</td>
                     <td>${formatNumber(s.price)}</td>
-                    <td>${s.cap_increase_flag === 1 ? 'X' : 'O'}</td>
+                    <td>${fScoreCell(s)}</td>
                     <td>${s.gpa == null ? 'N/A' : s.gpa.toFixed(2)}<span class="sub-text">${s.gpa_r}위</span></td>
                     <td>${pct(s.op_debt_growth_yoy)}<span class="sub-text">${s.op_debt_r}위</span></td>
                     <td>${pct(s.asset_growth_yoy)}<span class="sub-text">${s.asset_growth_r}위</span></td>
                     <td>${pct(s.price_volatility)}<span class="sub-text">${s.volatility_r}위</span></td>
+                    <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
                 </tr>`;
             }
         });
@@ -1832,14 +1848,14 @@
             <thead>
                 <tr>
                     <th style="width: 6%;" onclick="sortData('rank')">종합<br>순위</th>
-                    <th style="width: ${isDetail ? 16 : 14}%;" onclick="sortData('name')">종목명${isDetail ? '<br><span style="font-size:8px; font-weight:normal;">(종가)</span>' : ''}</th>
+                    <th style="width: 15%;" onclick="sortData('name')">종목명${isDetail ? '<br><span style="font-size:8px; font-weight:normal;">(종가)</span>' : ''}</th>
                     ${isDetail ? '' : '<th style="width: 9%;" onclick="sortData(\'price\')">종가</th>'}
                     <th style="width: ${isDetail ? 15 : 13}%;" onclick="sortData('market_cap')">시가<br>총액</th>
-                    <th style="width: ${isDetail ? 13 : 12}%;" onclick="sortData('op_growth_qoq')">${isDetail ? headerFracOnly('영업이익−전분기', '전분기 영업이익') : '영업이익<br>QoQ'}</th>
-                    <th style="width: ${isDetail ? 13 : 12}%;" onclick="sortData('op_growth_yoy')">${isDetail ? headerFracOnly('영업이익−전년동기', '전년동기 영업이익') : '영업이익<br>YoY'}</th>
-                    <th style="width: ${isDetail ? 13 : 12}%;" onclick="sortData('ni_growth_qoq')">${isDetail ? headerFracOnly('순이익−전분기', '전분기 순이익') : '순이익<br>QoQ'}</th>
-                    <th style="width: ${isDetail ? 13 : 12}%;" onclick="sortData('ni_growth_yoy')">${isDetail ? headerFracOnly('순이익−전년동기', '전년동기 순이익') : '순이익<br>YoY'}</th>
-                    <th style="width: ${isDetail ? 9 : 7}%;" onclick="sortData('avg_r')">평균</th>
+                    <th style="width: 12.5%;" onclick="sortData('op_growth_qoq')">${isDetail ? headerFracOnly('영업이익−전분기', '전분기 영업이익') : '영업이익<br>QoQ'}</th>
+                    <th style="width: 12.5%;" onclick="sortData('op_growth_yoy')">${isDetail ? headerFracOnly('영업이익−전년동기', '전년동기 영업이익') : '영업이익<br>YoY'}</th>
+                    <th style="width: 12.5%;" onclick="sortData('ni_growth_qoq')">${isDetail ? headerFracOnly('순이익−전분기', '전분기 순이익') : '순이익<br>QoQ'}</th>
+                    <th style="width: 12.5%;" onclick="sortData('ni_growth_yoy')">${isDetail ? headerFracOnly('순이익−전년동기', '전년동기 순이익') : '순이익<br>YoY'}</th>
+                    <th style="width: 8%;" onclick="sortData('avg_r')">평균</th>
                 </tr>
             </thead>
             <tbody>`;
@@ -1850,7 +1866,7 @@
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
                     <td>${nameCell}<span class="price-text">${formatNumber(s.price)}원</span></td>
-                    <td>${formatNumber(s.market_cap)}억</td>
+                    <td>${formatNumber(s.market_cap)}억${marketCapPercentileLabel(s.market_cap_pct_from_top)}</td>
                     <td>${frac(barePart(amt(s.quarter_operating_income) + ' − ' + amt(s.prev_operating_income)), barePart(amt(s.prev_operating_income)))}</td>
                     <td>${frac(barePart(amt(s.quarter_operating_income) + ' − ' + amt(s.operating_income_yoy)), barePart(amt(s.operating_income_yoy)))}</td>
                     <td>${frac(barePart(amt(s.quarter_net_income) + ' − ' + amt(s.prev_net_income)), barePart(amt(s.prev_net_income)))}</td>
@@ -1906,7 +1922,7 @@
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
                     <td>${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
-                    <td>${formatNumber(s.market_cap)}억</td>
+                    <td>${formatNumber(s.market_cap)}억${marketCapPercentileLabel(s.market_cap_pct_from_top)}</td>
                     <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.quarter_net_income)))}</td>
                     <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.equity)))}</td>
                     <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.quarter_operating_cf) + ' − ' + amt(s.quarter_capex)))}</td>
@@ -1937,16 +1953,15 @@
             <thead>
                 <tr>
                     <th style="width: 7%;" onclick="sortData('rank')">NCAV</th>
-                    <th style="width: ${isDetail ? 17 : 15}%;" onclick="sortData('name')">종목명</th>
+                    <th style="width: 19%;" onclick="sortData('name')">종목명</th>
                     ${isDetail ? '' : '<th style="width: 9%;" onclick="sortData(\'price\')">종가</th>'}
-                    <th style="width: ${isDetail ? 12 : 12}%;" onclick="sortData('market_cap')">시가총액</th>
                     ${isDetail ? `
-                    <th style="width: 13%;" onclick="sortData('quarter_net_income')">분기순이익</th>
                     <th style="width: 16%;" onclick="sortData('ncav')">${headerFracOnly('유동자산−총부채', '시가총액')}</th>
+                    <th style="width: 13%;" onclick="sortData('quarter_net_income')">분기순이익</th>
                     <th style="width: 17%;" onclick="sortData('gpa')">${headerFracOnly('매출−매출원가', '자산총계')}</th>
                     <th style="width: 13%;" onclick="sortData('debt_ratio')">${headerFracOnly('차입금', '자본총계')}</th>
                     ` : `
-                    <th style="width: 14%;" onclick="sortData('ncav')">순유동</th>
+                    <th style="width: 22%;" onclick="sortData('ncav')">순유동/시가총액</th>
                     <th style="width: 11%;" onclick="sortData('quarter_net_income')">분기순이익</th>
                     <th style="width: 10%;" onclick="sortData('gpa')">GP/A</th>
                     <th style="width: 12%;" onclick="sortData('debt_ratio')">차입금비율</th>
@@ -1960,9 +1975,8 @@
                 html += `<tr>
                     <td class="rank-main">${s.rank}위</td>
                     <td>${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
-                    <td>${formatNumber(s.market_cap)}억</td>
-                    <td>${s.quarter_net_income == null ? 'N/A' : formatNumber(s.quarter_net_income) + '억'}</td>
                     <td>${frac(barePart(amt(s.current_assets) + ' − ' + amt(s.liabilities)), barePart(amt(s.market_cap)))}</td>
+                    <td>${s.quarter_net_income == null ? 'N/A' : formatNumber(s.quarter_net_income) + '억'}</td>
                     <td>${s.gpa === null ? 'N/A' : frac(barePart(amt(s.quarter_revenue) + ' − ' + amt(s.quarter_cost_of_sales)), barePart(amt(s.assets)))}</td>
                     <td>${s.debt_ratio === null ? 'N/A' : frac(barePart(amt(s.borrowings)), barePart(amt(s.equity)))}</td>
                 </tr>`;
@@ -1971,8 +1985,7 @@
                     <td class="rank-main">${s.rank}위</td>
                     <td>${getNameHtml(s.name)}</td>
                     <td>${formatNumber(s.price)}</td>
-                    <td>${formatNumber(s.market_cap)}억</td>
-                    <td>${formatNumber(s.ncav)}억</td>
+                    <td>${s.ncav_ratio == null ? 'N/A' : s.ncav_ratio.toFixed(2)}</td>
                     <td>${formatNumber(s.quarter_net_income)}억</td>
                     <td>${s.gpa === null ? 'N/A' : s.gpa.toFixed(2)}</td>
                     <td>${s.debt_ratio === null ? 'N/A' : s.debt_ratio.toFixed(1) + '%'}</td>
@@ -2006,7 +2019,7 @@
         else if (currentMenu === 'strategy21') targetDataset = pickSmallcapData(ultraSmallcapMode, ultraData, ultraSmallcapData, ultraSmallcap30Data);
         else if (currentMenu === 'momentum') targetDataset = pickSmallcapData(momentumSmallcapMode, momentumData, momentumSmallcapData, momentumSmallcap30Data);
         else if (currentMenu === 'super') targetDataset = pickSmallcapData(smallcapMode, superData, superSmallcapData, superSmallcap30Data);
-        else if (currentMenu === 'ncav') targetDataset = isGpaMode ? ncavGpaData : ncavData;
+        else if (currentMenu === 'ncav') targetDataset = ncavData;
         
         if (targetDataset.length === 0) return;
         if (currentSortKey === key) { isAscending = !isAscending; } 
@@ -2048,7 +2061,6 @@
             stockFlags = KOSPI_QUANT_PACKAGE.stock_flags || {};
             stockMetrics = KOSPI_QUANT_PACKAGE.stock_metrics || {};
             ncavData = KOSPI_QUANT_PACKAGE.ncav_value;
-            ncavGpaData = KOSPI_QUANT_PACKAGE.ncav_value_gpa;
 
             document.getElementById("data-date-view").innerHTML =
                 `📅 공공데이터 ${server.krx_basis_date} · DART ${server.dart_basis}`;
