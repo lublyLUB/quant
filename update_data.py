@@ -27,6 +27,7 @@ CORP_CODE_CACHE = os.path.join(BASE_DIR, "dart_corp_map.json")
 DART_FINANCIALS_CACHE_FILE = os.path.join(BASE_DIR, "cache_dart_financials.json")
 CAPITAL_INCREASE_CACHE_FILE = os.path.join(BASE_DIR, "cache_capital_increase.json")
 MONTHLY_PRICE_CACHE_FILE = os.path.join(BASE_DIR, "cache_monthly_price.json")
+MONTHLY_INDEX_CACHE_FILE = os.path.join(BASE_DIR, "cache_monthly_index.json")
 INDUTY_CODE_CACHE_FILE = os.path.join(BASE_DIR, "cache_induty_code.json")
 ADMIN_ISSUE_CACHE_FILE = os.path.join(BASE_DIR, "cache_admin_issue.json")
 
@@ -483,7 +484,26 @@ def fetch_krx_market_data():
     print("[시스템] 공공데이터포털(금융위) API 연동을 시작합니다...")
     
     url = "http://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo"
-    
+    index_url = "http://apis.data.go.kr/1160100/service/GetMarketIndexInfoService/getStockMarketIndex"
+
+    def fetch_index_snapshot(target_date):
+        """해당 날짜의 코스피/코스닥 종합지수 종가. 10. 주가변동성을 베타로 계산하는 데 쓰는 시장수익률."""
+        try:
+            r = requests.get(index_url, params={
+                "serviceKey": API_KEY, "resultType": "json",
+                "numOfRows": "300", "pageNo": "1", "basDt": target_date,
+            }, timeout=15)
+            items = r.json().get("response", {}).get("body", {}).get("items", {}).get("item", [])
+        except Exception:
+            return {}
+        snap = {}
+        for it in items:
+            if it.get("idxNm") == "코스피" and it.get("idxCsf") == "KOSPI시리즈":
+                snap["kospi"] = float(it.get("clpr", 0) or 0)
+            elif it.get("idxNm") == "코스닥" and it.get("idxCsf") == "KOSDAQ시리즈":
+                snap["kosdaq"] = float(it.get("clpr", 0) or 0)
+        return snap
+
     def fetch_market(mrkt_cls, target_date):
         params = {
             "serviceKey": API_KEY,
@@ -520,57 +540,99 @@ def fetch_krx_market_data():
 
     print(f"✅ [성공] 국토 데이터 수집 완료! 종목 수: {len(items)}개")
 
-    # 10. 주가 변동성 - 최근 12개월 + 오늘, 총 13개 월간 스냅샷 종가로 월간수익률 표준편차 계산
+    # 10. 주가 변동성(베타) - 최근 12개월 + 오늘, 총 13개 월간 스냅샷으로 종목수익률을 같은 시점의
+    # 코스피/코스닥 지수수익률과 비교해서 베타(시장 대비 민감도)를 계산한다.
     # 과거 날짜의 시세는 불변값이므로 연-월 단위로 캐싱해서 매번 새로 받아오지 않는다.
     monthly_price_cache = load_json_cache(MONTHLY_PRICE_CACHE_FILE)
-    print("[변동성] 최근 12개월 월간 시세 조회를 시작합니다 (캐싱된 과거 월은 스킵)...")
-    monthly_snapshots = []
+    monthly_index_cache = load_json_cache(MONTHLY_INDEX_CACHE_FILE)
+    print("[베타] 최근 12개월 월간 시세/지수 조회를 시작합니다 (캐싱된 과거 월은 스킵)...")
+    monthly_snapshots = []      # [{종목코드: 종가}, ...] 13개, 과거->현재 순
+    monthly_index_snapshots = []  # [{"kospi":.., "kosdaq":..}, ...] 13개, 위와 같은 시점
     cache_dirty = False
+    index_cache_dirty = False
     for months_back in range(12, -1, -1):
         if months_back == 0:
             # 오늘자 시세는 이미 위에서 받아온 items를 그대로 재사용 (중복 호출 없음)
             monthly_snapshots.append({
                 it.get("srtnCd"): float(it.get("clpr", 0) or 0) for it in items if it.get("clpr")
             })
+            monthly_index_snapshots.append(fetch_index_snapshot(krx_basis_date))
             continue
 
         anchor = datetime.now() - timedelta(days=months_back * 30)
         cache_key = anchor.strftime("%Y-%m")
         if cache_key in monthly_price_cache:
             monthly_snapshots.append(monthly_price_cache[cache_key])
-            continue
+        else:
+            snapshot = {}
+            for backoff in range(7):
+                target_date = (anchor - timedelta(days=backoff)).strftime("%Y%m%d")
+                kospi_snap = fetch_market("KOSPI", target_date)
+                if kospi_snap:
+                    kosdaq_snap = fetch_market("KOSDAQ", target_date)
+                    snapshot = {
+                        it.get("srtnCd"): float(it.get("clpr", 0) or 0)
+                        for it in (kospi_snap + kosdaq_snap) if it.get("clpr")
+                    }
+                    break
+            monthly_price_cache[cache_key] = snapshot
+            cache_dirty = True
+            monthly_snapshots.append(snapshot)
 
-        snapshot = {}
-        for backoff in range(7):
-            target_date = (anchor - timedelta(days=backoff)).strftime("%Y%m%d")
-            kospi_snap = fetch_market("KOSPI", target_date)
-            if kospi_snap:
-                kosdaq_snap = fetch_market("KOSDAQ", target_date)
-                snapshot = {
-                    it.get("srtnCd"): float(it.get("clpr", 0) or 0)
-                    for it in (kospi_snap + kosdaq_snap) if it.get("clpr")
-                }
-                break
-        monthly_price_cache[cache_key] = snapshot
-        cache_dirty = True
-        monthly_snapshots.append(snapshot)
+        if cache_key in monthly_index_cache:
+            monthly_index_snapshots.append(monthly_index_cache[cache_key])
+        else:
+            index_snap = {}
+            for backoff in range(7):
+                target_date = (anchor - timedelta(days=backoff)).strftime("%Y%m%d")
+                index_snap = fetch_index_snapshot(target_date)
+                if index_snap.get("kospi") and index_snap.get("kosdaq"):
+                    break
+            monthly_index_cache[cache_key] = index_snap
+            index_cache_dirty = True
+            monthly_index_snapshots.append(index_snap)
 
     if cache_dirty:
         save_json_cache(MONTHLY_PRICE_CACHE_FILE, monthly_price_cache)
+    if index_cache_dirty:
+        save_json_cache(MONTHLY_INDEX_CACHE_FILE, monthly_index_cache)
 
-    volatility_map = {}
+    # 같은 시점끼리의 월간 시장수익률 (포지션 i: i-1->i 구간)
+    def market_returns(key):
+        prices = [snap.get(key) for snap in monthly_index_snapshots]
+        rets = []
+        for i in range(1, len(prices)):
+            if prices[i - 1] and prices[i]:
+                rets.append((i, prices[i] / prices[i - 1] - 1))
+        return dict(rets)  # {포지션: 수익률}
+
+    kospi_rets = market_returns("kospi")
+    kosdaq_rets = market_returns("kosdaq")
+    stock_market_map = {it.get("srtnCd"): it.get("mrktCtg", "KOSPI") for it in items}
+
+    volatility_map = {}  # 이름은 유지하지만 실제 값은 베타
     all_codes = set()
     for snap in monthly_snapshots:
         all_codes.update(snap.keys())
     for code in all_codes:
-        prices = [snap.get(code) for snap in monthly_snapshots if snap.get(code)]
-        if len(prices) < 4:
+        prices = [snap.get(code) for snap in monthly_snapshots]
+        mkt_rets = kospi_rets if stock_market_map.get(code) == "KOSPI" else kosdaq_rets
+        pairs = []
+        for i in range(1, len(prices)):
+            if prices[i - 1] and prices[i] and i in mkt_rets:
+                pairs.append((prices[i] / prices[i - 1] - 1, mkt_rets[i]))
+        if len(pairs) < 4:
             continue
-        returns = [prices[i] / prices[i - 1] - 1 for i in range(1, len(prices))]
-        mean_r = sum(returns) / len(returns)
-        variance = sum((r - mean_r) ** 2 for r in returns) / len(returns)
-        volatility_map[code] = round((variance ** 0.5) * 100, 2)  # %
-    print(f"[변동성] {len(volatility_map)}개 종목 변동성 계산 완료.")
+        stock_rets = [p[0] for p in pairs]
+        mkt_only = [p[1] for p in pairs]
+        mean_s = sum(stock_rets) / len(stock_rets)
+        mean_m = sum(mkt_only) / len(mkt_only)
+        cov = sum((s - mean_s) * (m - mean_m) for s, m in pairs) / len(pairs)
+        var_m = sum((m - mean_m) ** 2 for m in mkt_only) / len(mkt_only)
+        if var_m == 0:
+            continue
+        volatility_map[code] = round(cov / var_m, 2)  # 베타
+    print(f"[베타] {len(volatility_map)}개 종목 베타 계산 완료.")
 
     # 시세 API에는 PER/PBR/PSR/EPS 항목이 없으므로 가격/시총/종목코드만 추출
     raw_stocks = []
@@ -874,7 +936,7 @@ def fetch_krx_market_data():
     fama_base.sort(key=lambda x: x["asset_growth_yoy"])  # 9. 자산성장률 오름차순
     for idx, s in enumerate(fama_base): s["asset_growth_r"] = idx + 1
     for s in fama_base:
-        s["fama_score"] = s["pbr_r"] + s["gpa_r"] + s["asset_growth_r"]
+        s["fama_score"] = s["pbr_r"] * 0.5 + s["gpa_r"] * 0.25 + s["asset_growth_r"] * 0.25  # PBR 50%, GP/A 25%, 자산성장률 25% 가중평균
     fama_base.sort(key=lambda x: x["fama_score"])
 
     # 18. 슈퍼 가치+퀄리티 연산부
@@ -1049,7 +1111,7 @@ def fetch_krx_market_data():
 
     def package_super_value(base):
         packaged = []
-        for idx, s in enumerate(base[:30]):
+        for idx, s in enumerate(base[:50]):
             packaged.append({
                 "rank": idx + 1,
                 "name": s["name"],
@@ -1082,7 +1144,7 @@ def fetch_krx_market_data():
 
     def package_momentum(base):
         packaged = []
-        for idx, s in enumerate(base[:30]):
+        for idx, s in enumerate(base[:50]):
             packaged.append({
                 "rank": idx + 1,
                 "name": s["name"],
@@ -1115,7 +1177,7 @@ def fetch_krx_market_data():
 
     # 신 F-스코어+저PBR 상위 30개 패키징
     fscore_value = []
-    for idx, s in enumerate(fscore_base[:30]):
+    for idx, s in enumerate(fscore_base[:50]):
         fscore_value.append({
             "rank": idx + 1,
             "name": s["name"],
@@ -1135,7 +1197,7 @@ def fetch_krx_market_data():
 
     # 15. 슈퍼 퀄리티 상위 30개 패키징
     quality_value = []
-    for idx, s in enumerate(quality_base[:30]):
+    for idx, s in enumerate(quality_base[:50]):
         quality_value.append({
             "rank": idx + 1,
             "name": s["name"],
@@ -1163,7 +1225,7 @@ def fetch_krx_market_data():
 
     # 16. 파마의 최종 병기 상위 30개 패키징
     fama_value = []
-    for idx, s in enumerate(fama_base[:30]):
+    for idx, s in enumerate(fama_base[:20]):
         fama_value.append({
             "rank": idx + 1,
             "name": s["name"],
@@ -1177,7 +1239,7 @@ def fetch_krx_market_data():
             "gpa_r": s["gpa_r"],
             "asset_growth_yoy": s["asset_growth_yoy"],
             "asset_growth_r": s["asset_growth_r"],
-            "avg_r": round(s["fama_score"] / 3, 1),
+            "avg_r": round(s["fama_score"], 1),
             "equity": to_eok(s["equity"]),
             "quarter_revenue": to_eok(s["quarter_revenue"]),
             "quarter_cost_of_sales": to_eok(s["quarter_cost_of_sales"]),
@@ -1187,7 +1249,7 @@ def fetch_krx_market_data():
 
     # 18. 슈퍼 가치+퀄리티 상위 30개 패키징
     super_quality_value = []
-    for idx, s in enumerate(super_quality_base[:30]):
+    for idx, s in enumerate(super_quality_base[:50]):
         super_quality_value.append({
             "rank": idx + 1,
             "name": s["name"],
@@ -1217,7 +1279,7 @@ def fetch_krx_market_data():
 
     # 20. 밸류+모멘텀 상위 30개 패키징
     value_momentum_value = []
-    for idx, s in enumerate(value_momentum_base[:30]):
+    for idx, s in enumerate(value_momentum_base[:50]):
         value_momentum_value.append({
             "rank": idx + 1,
             "name": s["name"],
@@ -1248,7 +1310,7 @@ def fetch_krx_market_data():
 
     # 21. 슈퍼 퀄리티+모멘텀 상위 30개 패키징
     quality_momentum_value = []
-    for idx, s in enumerate(quality_momentum_base[:30]):
+    for idx, s in enumerate(quality_momentum_base[:50]):
         quality_momentum_value.append({
             "rank": idx + 1,
             "name": s["name"],
@@ -1282,7 +1344,7 @@ def fetch_krx_market_data():
     # 22. 울트라 상위 30개 패키징 (전체 / 소형주 한정)
     def package_ultra(base):
         packaged = []
-        for idx, s in enumerate(base[:30]):
+        for idx, s in enumerate(base[:50]):
             packaged.append({
                 "rank": idx + 1,
                 "name": s["name"],

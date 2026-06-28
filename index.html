@@ -131,28 +131,32 @@
         </div>
         <span id="bookmark-count" class="status-text" style="color:#64748b; align-self:flex-end;"></span>
         <div class="filter-checkboxes">
-            <span id="super-smallcap-lbl" style="display:none; align-items:center; gap:6px;">소형주:
+            <span id="super-smallcap-lbl" style="display:none; align-items:center; gap:6px;">
                 <span class="smallcap-toggle-group">
                     <button type="button" id="smallcap-toggle-none" class="smallcap-toggle-btn" onclick="setSmallcapMode('super','none')">미적용</button>
                     <button type="button" id="smallcap-toggle-20" class="smallcap-toggle-btn" onclick="setSmallcapMode('super','20')">하위 20%</button>
-                    <button type="button" id="smallcap-toggle-30" class="smallcap-toggle-btn" onclick="setSmallcapMode('super','30')">하위 30%</button>
                 </span>
             </span>
-            <span id="momentum-smallcap-lbl" style="display:none; align-items:center; gap:6px;">소형주:
+            <span id="momentum-smallcap-lbl" style="display:none; align-items:center; gap:6px;">
                 <span class="smallcap-toggle-group">
                     <button type="button" id="momentum-smallcap-toggle-none" class="smallcap-toggle-btn" onclick="setSmallcapMode('momentum','none')">미적용</button>
                     <button type="button" id="momentum-smallcap-toggle-20" class="smallcap-toggle-btn" onclick="setSmallcapMode('momentum','20')">하위 20%</button>
-                    <button type="button" id="momentum-smallcap-toggle-30" class="smallcap-toggle-btn" onclick="setSmallcapMode('momentum','30')">하위 30%</button>
                 </span>
             </span>
-            <span id="ultra-smallcap-lbl" style="display:none; align-items:center; gap:6px;">소형주:
+            <span id="ultra-smallcap-lbl" style="display:none; align-items:center; gap:6px;">
                 <span class="smallcap-toggle-group">
                     <button type="button" id="ultra-smallcap-toggle-none" class="smallcap-toggle-btn" onclick="setSmallcapMode('ultra','none')">미적용</button>
                     <button type="button" id="ultra-smallcap-toggle-20" class="smallcap-toggle-btn" onclick="setSmallcapMode('ultra','20')">하위 20%</button>
-                    <button type="button" id="ultra-smallcap-toggle-30" class="smallcap-toggle-btn" onclick="setSmallcapMode('ultra','30')">하위 30%</button>
                 </span>
             </span>
             <label id="recommend-exclude-season-lbl" style="display:none;"><input type="checkbox" id="recommend-exclude-season-checkbox" onchange="handleExcludeSeasonToggle()"> 4~10월 제외</label>
+            <span id="display-count-lbl" style="display:none; align-items:center; gap:6px;">
+                <span class="smallcap-toggle-group">
+                    <button type="button" id="display-count-toggle-20" class="smallcap-toggle-btn" onclick="setDisplayCountMode('20')">20</button>
+                    <button type="button" id="display-count-toggle-30" class="smallcap-toggle-btn" onclick="setDisplayCountMode('30')">30</button>
+                    <button type="button" id="display-count-toggle-50" class="smallcap-toggle-btn" onclick="setDisplayCountMode('50')">50</button>
+                </span>
+            </span>
         </div>
     </div>
 
@@ -216,6 +220,7 @@
         ncav: "유동자산-총부채>시가총액, 분기 순이익>0, GP/A 상위 50% 이내, 차입금비율 200% 이하를 만족하는 주식 중<br>'(유동자산-총부채)/시가총액' 비중이 가장 높은 주식 매수(20개, 5~10월 비추)",
         super: '전체 주식에서 아래 지표들의 평균 순위가 가장 높은 주식 매수(20개)<br>※ PER, PFCR, PSR은 최근 분기 실적',
         strategy15: '전체 주식에서 아래 지표들의 평균 순위가 가장 높은 주식 매수(20개)<br>※ 신F-스코어 3점, 자산성장률 -20% 이하는 필터링',
+        strategy16: '전체 주식에서 아래 지표들의 가중평균 순위가 가장 높은 주식 매수(20개)<br>※시가총액 상위 80%, PBR 0.25 이하, GP/A 0 이하, 자산성장률 -20% 이하 제외',
     };
 
     const TAG_ORDER = ['value', 'quality', 'momentum'];  // 라벨마다 고정된 열(슬롯)에만 표기
@@ -259,6 +264,11 @@
     let momentumSmallcapMode = 'none';
     let ultraSmallcapMode = 'none';
     let isExcludeSeasonMode = false;
+    // 06/11/13/15/18/20/21/22번 전략 공통 표시 개수: '20' | '30' | '50'
+    let displayCountMode = '20';
+    function limitDisplayCount(data) {
+        return data.slice(0, parseInt(displayCountMode, 10));
+    }
     let portfolioNames = [];
     let portfolioInvestment = 0;
     let portfolioLeftoverOption = 'top1';
@@ -291,6 +301,7 @@
             smallcapMode,
             momentumSmallcapMode,
             ultraSmallcapMode,
+            displayCountMode,
             isExcludeSeasonMode,
             recommendCheckedKeys: Array.from(recommendCheckedKeys),
             portfolioLeftoverOption,
@@ -304,9 +315,11 @@
         } catch (e) {
             saved = {};
         }
-        smallcapMode = saved.smallcapMode || 'none';
-        momentumSmallcapMode = saved.momentumSmallcapMode || 'none';
-        ultraSmallcapMode = saved.ultraSmallcapMode || 'none';
+        const sanitizeSmallcapMode = m => (m === '20' ? '20' : 'none');  // 하위 30% 옵션 삭제됨 - 예전 저장값 방어
+        smallcapMode = sanitizeSmallcapMode(saved.smallcapMode);
+        momentumSmallcapMode = sanitizeSmallcapMode(saved.momentumSmallcapMode);
+        ultraSmallcapMode = sanitizeSmallcapMode(saved.ultraSmallcapMode);
+        displayCountMode = ['20', '30', '50'].includes(saved.displayCountMode) ? saved.displayCountMode : '20';
         isExcludeSeasonMode = !!saved.isExcludeSeasonMode;
         recommendCheckedKeys = new Set(saved.recommendCheckedKeys || []);
         portfolioLeftoverOption = saved.portfolioLeftoverOption || 'top1';
@@ -318,6 +331,7 @@
         updateSmallcapToggleUI('super', smallcapMode);
         updateSmallcapToggleUI('momentum', momentumSmallcapMode);
         updateSmallcapToggleUI('ultra', ultraSmallcapMode);
+        updateDisplayCountUI(displayCountMode);
         setChecked('recommend-exclude-season-checkbox', isExcludeSeasonMode);
         const leftoverRadio = document.querySelector(`input[name="leftover-option"][value="${portfolioLeftoverOption}"]`);
         if (leftoverRadio) leftoverRadio.checked = true;
@@ -354,7 +368,7 @@
         if (pct == null) return '';
         const html = pct <= 50
             ? `上 ${pct}%`
-            : `下 ${101 - pct}%`;
+            : `下 ${100 - pct}%`;
         return `<span class="sub-text">${html}</span>`;
     }
 
@@ -402,6 +416,7 @@
         document.getElementById("momentum-smallcap-lbl").style.display = (menuType === 'momentum') ? 'inline-flex' : 'none';
         document.getElementById("ultra-smallcap-lbl").style.display = (menuType === 'strategy21') ? 'inline-flex' : 'none';
         document.getElementById("recommend-exclude-season-lbl").style.display = (menuType === 'recommend') ? 'block' : 'none';
+        document.getElementById("display-count-lbl").style.display = (menuType === 'recommend') ? 'inline-flex' : 'none';
         document.getElementById("portfolio-controls").style.display = (menuType === 'portfolio') ? 'block' : 'none';
         document.getElementById("order-controls").style.display = (menuType === 'order') ? 'block' : 'none';
         document.getElementById("performance-controls").style.display = (menuType === 'performance') ? 'block' : 'none';
@@ -505,7 +520,7 @@
 
     function updateSmallcapToggleUI(which, mode) {
         const prefix = SMALLCAP_GROUP_PREFIX[which];
-        ['none', '20', '30'].forEach(m => {
+        ['none', '20'].forEach(m => {
             const btn = document.getElementById(`${prefix}-${m}`);
             if (btn) btn.classList.toggle('active', m === mode);
         });
@@ -522,6 +537,21 @@
         refreshCurrentTable();
     }
 
+    function updateDisplayCountUI(mode) {
+        ['20', '30', '50'].forEach(m => {
+            const btn = document.getElementById(`display-count-toggle-${m}`);
+            if (btn) btn.classList.toggle('active', m === mode);
+        });
+    }
+
+    function setDisplayCountMode(mode) {
+        displayCountMode = mode;
+        updateDisplayCountUI(mode);
+        currentSortKey = 'rank';
+        isAscending = true;
+        saveOptions();
+        refreshCurrentTable();
+    }
 
     function handleExcludeSeasonToggle() {
         isExcludeSeasonMode = document.getElementById("recommend-exclude-season-checkbox").checked;
@@ -550,34 +580,34 @@
             renderPerformanceTable();
         } else if (currentMenu === 'fscore') {
             document.getElementById("strategy-title").innerText = "🏆 6. 신 F-스코어+저PBR";
-            renderFscoreTable(filterBySearch(fscoreData));
+            renderFscoreTable(filterBySearch(limitDisplayCount(fscoreData)));
         } else if (currentMenu === 'momentum') {
             document.getElementById("strategy-title").innerText = "🚀 11. 이익 모멘텀 전략" + (momentumSmallcapMode !== 'none' ? ` (소형주 ${momentumSmallcapMode}%)` : "");
-            renderMomentumTable(filterBySearch(pickSmallcapData(momentumSmallcapMode, momentumData, momentumSmallcapData, momentumSmallcap30Data)));
+            renderMomentumTable(filterBySearch(limitDisplayCount(pickSmallcapData(momentumSmallcapMode, momentumData, momentumSmallcapData, momentumSmallcap30Data))));
         } else if (currentMenu === 'super') {
             document.getElementById("strategy-title").innerText = "📈 13. 슈퍼 가치 4대 통합 스크리너" + (smallcapMode !== 'none' ? ` (소형주 ${smallcapMode}%)` : "");
-            renderSuperTable(filterBySearch(pickSmallcapData(smallcapMode, superData, superSmallcapData, superSmallcap30Data)));
+            renderSuperTable(filterBySearch(limitDisplayCount(pickSmallcapData(smallcapMode, superData, superSmallcapData, superSmallcap30Data))));
         } else if (currentMenu === 'ncav') {
             document.getElementById("strategy-title").innerText = "🛡️ 12. NCAV 청산가치 & 퀄리티 스크리너";
             renderNcavTable(filterBySearch(ncavData));
         } else if (currentMenu === 'strategy15') {
             document.getElementById("strategy-title").innerText = "💎 15. 슈퍼 퀄리티";
-            renderQualityTable(filterBySearch(qualityData));
+            renderQualityTable(filterBySearch(limitDisplayCount(qualityData)));
         } else if (currentMenu === 'strategy16') {
             document.getElementById("strategy-title").innerText = "🧪 16. 파마의 최종 병기";
             renderFamaTable(filterBySearch(famaData));
         } else if (currentMenu === 'strategy18') {
             document.getElementById("strategy-title").innerText = "⚡ 18. 슈퍼 가치+퀄리티";
-            renderSuperQualityTable(filterBySearch(superQualityData));
+            renderSuperQualityTable(filterBySearch(limitDisplayCount(superQualityData)));
         } else if (currentMenu === 'strategy19') {
             document.getElementById("strategy-title").innerText = "🚀 20. 밸류+모멘텀";
-            renderValueMomentumTable(filterBySearch(valueMomentumData));
+            renderValueMomentumTable(filterBySearch(limitDisplayCount(valueMomentumData)));
         } else if (currentMenu === 'strategy20') {
             document.getElementById("strategy-title").innerText = "🌟 21. 슈퍼 퀄리티+모멘텀";
-            renderQualityMomentumTable(filterBySearch(qualityMomentumData));
+            renderQualityMomentumTable(filterBySearch(limitDisplayCount(qualityMomentumData)));
         } else if (currentMenu === 'strategy21') {
             document.getElementById("strategy-title").innerText = "🔥 22. 울트라" + (ultraSmallcapMode !== 'none' ? ` (소형주 ${ultraSmallcapMode}%)` : "");
-            renderUltraTable(filterBySearch(pickSmallcapData(ultraSmallcapMode, ultraData, ultraSmallcapData, ultraSmallcap30Data)));
+            renderUltraTable(filterBySearch(limitDisplayCount(pickSmallcapData(ultraSmallcapMode, ultraData, ultraSmallcapData, ultraSmallcap30Data))));
         } else {
             const strategy = STRATEGIES.find(s => s.key === currentMenu);
             if (strategy) {
@@ -1461,7 +1491,7 @@
                     <th style="width: 5%;" onclick="sortData('gpa')">${isDetail ? headerFracOnly('매출-매출원가', '자산') : 'GP/A'}</th>
                     <th style="width: 9%;" onclick="sortData('op_debt_growth_yoy')">${isDetail ? headerFracOnly('영업이익/차입금−전년동기', '전년동기 영업이익/차입금') : '영업이익/<br>차입금'}</th>
                     <th style="width: 8%;" onclick="sortData('asset_growth_yoy')">${isDetail ? headerFracOnly('자산-전년동기자산', '전년동기자산') : '자산<br>성장률'}</th>
-                    <th style="width: 7%;" onclick="sortData('price_volatility')">변동성</th>
+                    <th style="width: 7%;" onclick="sortData('price_volatility')">베타</th>
                     <th style="width: 8%;" onclick="sortData('op_growth_qoq')">${isDetail ? headerFracOnly('영업이익−전분기', '전분기 영업이익') : '영업이익<br>QoQ'}</th>
                     <th style="width: 8%;" onclick="sortData('op_growth_yoy')">${isDetail ? headerFracOnly('영업이익−전년동기', '전년동기 영업이익') : '영업이익<br>YoY'}</th>
                     <th style="width: 8%;" onclick="sortData('ni_growth_qoq')">${isDetail ? headerFracOnly('순이익−전분기', '전분기 순이익') : '순이익<br>QoQ'}</th>
@@ -1482,7 +1512,7 @@
                     <td>${frac(barePart(amt(s.quarter_revenue) + ' − ' + amt(s.quarter_cost_of_sales)), barePart(amt(s.assets)))}</td>
                     <td>${frac(barePart(ratioFmt(s.op_to_debt_now) + ' − ' + ratioFmt(s.op_to_debt_yoy)), barePart(ratioFmt(s.op_to_debt_yoy)))}</td>
                     <td>${frac(barePart(amt(s.assets) + ' − ' + amt(s.assets_yoy)), barePart(amt(s.assets_yoy)))}</td>
-                    <td>${s.price_volatility.toFixed(1)}%</td>
+                    <td>${s.price_volatility.toFixed(2)}</td>
                     <td>${frac(barePart(amt(s.quarter_operating_income) + ' − ' + amt(s.prev_operating_income)), barePart(amt(s.prev_operating_income)))}</td>
                     <td>${frac(barePart(amt(s.quarter_operating_income) + ' − ' + amt(s.operating_income_yoy)), barePart(amt(s.operating_income_yoy)))}</td>
                     <td>${frac(barePart(amt(s.quarter_net_income) + ' − ' + amt(s.prev_net_income)), barePart(amt(s.prev_net_income)))}</td>
@@ -1499,7 +1529,7 @@
                     <td>${s.gpa.toFixed(1)}<span class="sub-text">${s.gpa_r}위</span></td>
                     <td>${s.op_debt_growth_yoy.toFixed(1)}%<span class="sub-text">${s.op_debt_r}위</span></td>
                     <td>${s.asset_growth_yoy.toFixed(1)}%<span class="sub-text">${s.asset_growth_r}위</span></td>
-                    <td>${s.price_volatility.toFixed(1)}%<span class="sub-text">${s.volatility_r}위</span></td>
+                    <td>${s.price_volatility.toFixed(2)}<span class="sub-text">${s.volatility_r}위</span></td>
                     <td>${s.op_growth_qoq.toFixed(1)}%<span class="sub-text">${s.op_qoq_r}위</span></td>
                     <td>${s.op_growth_yoy.toFixed(1)}%<span class="sub-text">${s.op_yoy_r}위</span></td>
                     <td>${s.ni_growth_qoq.toFixed(1)}%<span class="sub-text">${s.ni_qoq_r}위</span></td>
@@ -1523,7 +1553,7 @@
                     <th style="width: 10%;" onclick="sortData('gpa')">${isDetail ? headerFracOnly('매출-매출원가', '자산') : 'GP/A'}</th>
                     <th style="width: 13%;" onclick="sortData('op_debt_growth_yoy')">${isDetail ? headerFracOnly('영업이익/차입금−전년동기', '전년동기 영업이익/차입금') : '영업이익/<br>차입금'}</th>
                     <th style="width: 11.5%;" onclick="sortData('asset_growth_yoy')">${isDetail ? headerFracOnly('자산-전년동기자산', '전년동기자산') : '자산<br>성장률'}</th>
-                    <th style="width: 11%;" onclick="sortData('price_volatility')">변동성</th>
+                    <th style="width: 11%;" onclick="sortData('price_volatility')">베타</th>
                     <th style="width: 11%;" onclick="sortData('op_growth_qoq')">${isDetail ? headerFracOnly('영업이익−전분기', '전분기 영업이익') : '영업이익<br>QoQ'}</th>
                     <th style="width: 11%;" onclick="sortData('op_growth_yoy')">${isDetail ? headerFracOnly('영업이익−전년동기', '전년동기 영업이익') : '영업이익<br>YoY'}</th>
                     <th style="width: 11%;" onclick="sortData('ni_growth_qoq')">${isDetail ? headerFracOnly('순이익−전분기', '전분기 순이익') : '순이익<br>QoQ'}</th>
@@ -1540,7 +1570,7 @@
                     <td>${frac(barePart(amt(s.quarter_revenue) + ' − ' + amt(s.quarter_cost_of_sales)), barePart(amt(s.assets)))}</td>
                     <td>${frac(barePart(ratioFmt(s.op_to_debt_now) + ' − ' + ratioFmt(s.op_to_debt_yoy)), barePart(ratioFmt(s.op_to_debt_yoy)))}</td>
                     <td>${frac(barePart(amt(s.assets) + ' − ' + amt(s.assets_yoy)), barePart(amt(s.assets_yoy)))}</td>
-                    <td>${s.price_volatility.toFixed(1)}%</td>
+                    <td>${s.price_volatility.toFixed(2)}</td>
                     <td>${frac(barePart(amt(s.quarter_operating_income) + ' − ' + amt(s.prev_operating_income)), barePart(amt(s.prev_operating_income)))}</td>
                     <td>${frac(barePart(amt(s.quarter_operating_income) + ' − ' + amt(s.operating_income_yoy)), barePart(amt(s.operating_income_yoy)))}</td>
                     <td>${frac(barePart(amt(s.quarter_net_income) + ' − ' + amt(s.prev_net_income)), barePart(amt(s.prev_net_income)))}</td>
@@ -1553,7 +1583,7 @@
                     <td>${s.gpa.toFixed(1)}<span class="sub-text">${s.gpa_r}위</span></td>
                     <td>${s.op_debt_growth_yoy.toFixed(1)}%<span class="sub-text">${s.op_debt_r}위</span></td>
                     <td>${s.asset_growth_yoy.toFixed(1)}%<span class="sub-text">${s.asset_growth_r}위</span></td>
-                    <td>${s.price_volatility.toFixed(1)}%<span class="sub-text">${s.volatility_r}위</span></td>
+                    <td>${s.price_volatility.toFixed(2)}<span class="sub-text">${s.volatility_r}위</span></td>
                     <td>${s.op_growth_qoq.toFixed(1)}%<span class="sub-text">${s.op_qoq_r}위</span></td>
                     <td>${s.op_growth_yoy.toFixed(1)}%<span class="sub-text">${s.op_yoy_r}위</span></td>
                     <td>${s.ni_growth_qoq.toFixed(1)}%<span class="sub-text">${s.ni_qoq_r}위</span></td>
@@ -1634,7 +1664,7 @@
                     <th style="width: 8%;" onclick="sortData('gpa')">${isDetail ? headerFracOnly('매출-매출원가', '자산') : 'GP/A'}</th>
                     <th style="width: 13%;" onclick="sortData('op_debt_growth_yoy')">${isDetail ? headerFracOnly('영업이익/차입금−전년동기', '전년동기 영업이익/차입금') : '영업이익/<br>차입금'}</th>
                     <th style="width: 9%;" onclick="sortData('asset_growth_yoy')">${isDetail ? headerFracOnly('자산-전년동기자산', '전년동기자산') : '자산<br>성장률'}</th>
-                    <th style="width: 9%;" onclick="sortData('price_volatility')">변동성</th>
+                    <th style="width: 9%;" onclick="sortData('price_volatility')">베타</th>
                 </tr>
             </thead>
             <tbody>`;
@@ -1651,7 +1681,7 @@
                     <td>${frac(barePart(amt(s.quarter_revenue) + ' − ' + amt(s.quarter_cost_of_sales)), barePart(amt(s.assets)))}</td>
                     <td>${frac(barePart(ratioFmt(s.op_to_debt_now) + ' − ' + ratioFmt(s.op_to_debt_yoy)), barePart(ratioFmt(s.op_to_debt_yoy)))}</td>
                     <td>${frac(barePart(amt(s.assets) + ' − ' + amt(s.assets_yoy)), barePart(amt(s.assets_yoy)))}</td>
-                    <td>${s.price_volatility.toFixed(1)}%</td>
+                    <td>${s.price_volatility.toFixed(2)}</td>
                 </tr>`;
             } else {
                 html += `<tr>
@@ -1664,7 +1694,7 @@
                     <td>${s.gpa.toFixed(1)}<span class="sub-text">${s.gpa_r}위</span></td>
                     <td>${s.op_debt_growth_yoy.toFixed(1)}%<span class="sub-text">${s.op_debt_r}위</span></td>
                     <td>${s.asset_growth_yoy.toFixed(1)}%<span class="sub-text">${s.asset_growth_r}위</span></td>
-                    <td>${s.price_volatility.toFixed(1)}%<span class="sub-text">${s.volatility_r}위</span></td>
+                    <td>${s.price_volatility.toFixed(2)}<span class="sub-text">${s.volatility_r}위</span></td>
                 </tr>`;
             }
         });
@@ -1735,6 +1765,7 @@
     function renderQualityTable(data) {
         const isDetail = displayMode === 'detail';
         const pct = v => v == null ? 'N/A' : v.toFixed(1) + '%';
+        const betaFmt = v => v == null ? 'N/A' : v.toFixed(2);
         const amt = v => v == null ? 'N/A' : formatNumber(v);
         const ratioFmt = v => v == null ? 'N/A' : v.toFixed(4);
         const fScoreCell = s => [s.cap_increase_flag, s.ni_pos_flag, s.cf_pos_flag].some(v => v == null)
@@ -1749,7 +1780,7 @@
                     <th style="width: 14%;" onclick="sortData('gpa')">${isDetail ? headerFracOnly('매출-매출원가', '자산') : 'GP/A'}</th>
                     <th style="width: 14%;" onclick="sortData('op_debt_growth_yoy')">${isDetail ? headerFracOnly('영업이익/차입금−전년동기', '전년동기 영업이익/차입금') : '영업이익/<br>차입금 YoY'}</th>
                     <th style="width: 14%;" onclick="sortData('asset_growth_yoy')">${isDetail ? headerFracOnly('자산-전년동기자산', '전년동기자산') : '자산<br>성장률'}</th>
-                    <th style="width: 8%;" onclick="sortData('price_volatility')">주가<br>변동성</th>
+                    <th style="width: 8%;" onclick="sortData('price_volatility')">주가<br>베타</th>
                     <th style="width: 9%;" onclick="sortData('avg_r')">평균</th>
                 </tr>
             </thead>
@@ -1766,7 +1797,7 @@
                     <td>${s.gpa == null ? 'N/A' : frac(barePart(amt(s.quarter_revenue) + ' − ' + amt(s.quarter_cost_of_sales)), barePart(amt(s.assets)))}</td>
                     <td>${frac(barePart(ratioFmt(s.op_to_debt_now) + ' − ' + ratioFmt(s.op_to_debt_yoy)), barePart(ratioFmt(s.op_to_debt_yoy)))}</td>
                     <td>${frac(barePart(amt(s.assets) + ' − ' + amt(s.assets_yoy)), barePart(amt(s.assets_yoy)))}</td>
-                    <td>${pct(s.price_volatility)}</td>
+                    <td>${betaFmt(s.price_volatility)}</td>
                     <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
                 </tr>`;
             } else {
@@ -1778,7 +1809,7 @@
                     <td>${s.gpa == null ? 'N/A' : s.gpa.toFixed(2)}<span class="sub-text">${s.gpa_r}위</span></td>
                     <td>${pct(s.op_debt_growth_yoy)}<span class="sub-text">${s.op_debt_r}위</span></td>
                     <td>${pct(s.asset_growth_yoy)}<span class="sub-text">${s.asset_growth_r}위</span></td>
-                    <td>${pct(s.price_volatility)}<span class="sub-text">${s.volatility_r}위</span></td>
+                    <td>${betaFmt(s.price_volatility)}<span class="sub-text">${s.volatility_r}위</span></td>
                     <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
                 </tr>`;
             }
@@ -1952,7 +1983,7 @@
         let html = `
             <thead>
                 <tr>
-                    <th style="width: 7%;" onclick="sortData('rank')">NCAV</th>
+                    <th style="width: 7%;" onclick="sortData('rank')">순위</th>
                     <th style="width: 19%;" onclick="sortData('name')">종목명</th>
                     ${isDetail ? '' : '<th style="width: 9%;" onclick="sortData(\'price\')">종가</th>'}
                     ${isDetail ? `
