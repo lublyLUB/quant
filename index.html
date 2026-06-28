@@ -17,7 +17,7 @@
         .tab-btn.active { background-color: #fff; color: #1e3a8a; box-shadow: 0 2px 4px rgba(0,0,0,0.06); }
         .strategy-name { display: inline; }
         .strategy-tags { display: inline-block; margin-left: 4px; vertical-align: middle; }
-        .strategy-tab-btn { display: grid; grid-template-columns: 1fr 30px 30px 30px; align-items: center; gap: 2px; text-align: left; padding: 7px 6px 7px 6px; white-space: nowrap; overflow: hidden; }
+        .strategy-tab-btn { display: grid; grid-template-columns: 1fr 18px 18px 18px; align-items: center; gap: 2px; text-align: left; padding: 7px 6px 7px 6px; white-space: nowrap; overflow: hidden; }
         .strategy-tab-btn .strategy-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
         .tag-chip-slot { display: flex; justify-content: center; overflow: hidden; }
         .tag-chip-slot .tag-chip { margin: 0; padding: 1px 3px; }
@@ -209,23 +209,27 @@
     ];
 
     const TAG_ORDER = ['value', 'quality', 'momentum'];  // 라벨마다 고정된 열(슬롯)에만 표기
+    const TAG_LABELS_SHORT = { value: '밸', quality: '퀄', momentum: '모' };  // 전략 탭은 공간이 좁아 첫 글자만 표기
 
     function renderStrategyTabs() {
         const container = document.getElementById('strategy-tabs');
         container.innerHTML = STRATEGIES.map(s => `
             <button id="btn-${s.key}" class="tab-btn strategy-tab-btn" onclick="switchMenu('${s.key}')">
                 <span class="strategy-name">${s.num}. ${s.name}</span>
-                ${TAG_ORDER.map(t => `<span class="tag-chip-slot">${s.tags.includes(t) ? `<span class="tag-chip tag-${t}">${TAG_LABELS[t]}</span>` : ''}</span>`).join('')}
+                ${TAG_ORDER.map(t => `<span class="tag-chip-slot">${s.tags.includes(t) ? `<span class="tag-chip tag-${t}">${TAG_LABELS_SHORT[t]}</span>` : ''}</span>`).join('')}
             </button>
         `).join('');
 
-        // 왼쪽 열(5개)의 가장 긴 전략제목 너비를 측정해서, 오른쪽 열에도 동일하게 적용 (양쪽 슬롯 위치 통일)
+        // 좌/우 열을 각각 독립적으로 관리: 각 열에서 가장 긴 전략제목 너비 + 5px만 적용
         const buttons = Array.from(container.querySelectorAll('.strategy-tab-btn'));
         // 1단계: 일단 이름 칸을 내용 크기에 맞게(max-content) 풀어줘서 각자의 실제 텍스트 너비를 잴 수 있게 함
-        buttons.forEach(btn => { btn.style.gridTemplateColumns = 'max-content 30px 30px 30px'; });
-        const leftGroup = buttons.slice(0, 5);
-        const maxWidth = Math.max(...leftGroup.map(btn => btn.querySelector('.strategy-name').getBoundingClientRect().width));
-        buttons.forEach(btn => { btn.style.gridTemplateColumns = `${Math.ceil(maxWidth) + 5}px 30px 30px 30px`; });
+        buttons.forEach(btn => { btn.style.gridTemplateColumns = 'max-content 18px 18px 18px'; });
+        const groups = [buttons.slice(0, 5), buttons.slice(5, 10)];
+        groups.forEach(group => {
+            if (group.length === 0) return;
+            const maxWidth = Math.max(...group.map(btn => btn.querySelector('.strategy-name').getBoundingClientRect().width));
+            group.forEach(btn => { btn.style.gridTemplateColumns = `${Math.ceil(maxWidth) + 5}px 18px 18px 18px`; });
+        });
     }
     renderStrategyTabs();
 
