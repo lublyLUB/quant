@@ -728,7 +728,10 @@ def fetch_krx_market_data():
                 "gpa": gpa,
                 "debt_ratio": debt_ratio,
                 "op_debt_growth_yoy": op_debt_growth_yoy,
+                "op_to_debt_now": op_to_debt_now,
+                "op_to_debt_yoy": op_to_debt_yoy,
                 "asset_growth_yoy": asset_growth_yoy,
+                "assets_yoy": assets_yoy,
                 "quarter_net_income": quarter_net_income,
                 "quarter_operating_cf": quarter_operating_cf,
                 "quarter_capex": quarter_capex,
@@ -1165,6 +1168,12 @@ def fetch_krx_market_data():
             "price_volatility": s["price_volatility"],
             "volatility_r": s["volatility_r"],
             "avg_r": round(s["quality_score"] / 4, 1),
+            "quarter_revenue": to_eok(s["quarter_revenue"]),
+            "quarter_cost_of_sales": to_eok(s["quarter_cost_of_sales"]),
+            "assets": to_eok(s["assets"]),
+            "assets_yoy": to_eok(s["assets_yoy"]),
+            "op_to_debt_now": s["op_to_debt_now"],
+            "op_to_debt_yoy": s["op_to_debt_yoy"],
         })
 
     # 16. 파마의 최종 병기 상위 30개 패키징
@@ -1183,6 +1192,11 @@ def fetch_krx_market_data():
             "asset_growth_yoy": s["asset_growth_yoy"],
             "asset_growth_r": s["asset_growth_r"],
             "avg_r": round(s["fama_score"] / 3, 1),
+            "equity": to_eok(s["equity"]),
+            "quarter_revenue": to_eok(s["quarter_revenue"]),
+            "quarter_cost_of_sales": to_eok(s["quarter_cost_of_sales"]),
+            "assets": to_eok(s["assets"]),
+            "assets_yoy": to_eok(s.get("assets_yoy")),
         })
 
     # 18. 슈퍼 가치+퀄리티 상위 30개 패키징
@@ -1203,6 +1217,15 @@ def fetch_krx_market_data():
             "asset_growth_yoy": s["asset_growth_yoy"], "asset_growth_r": s["asset_growth_r"],
             "price_volatility": s["price_volatility"], "volatility_r": s["volatility_r"],
             "avg_r": round(s["super_quality_score"] / 8, 1),
+            "equity": to_eok(s["equity"]),
+            "quarter_operating_cf": to_eok(s["quarter_operating_cf"]),
+            "quarter_net_income": to_eok(s["quarter_net_income"]),
+            "quarter_revenue": to_eok(s["quarter_revenue"]),
+            "quarter_cost_of_sales": to_eok(s["quarter_cost_of_sales"]),
+            "assets": to_eok(s["assets"]),
+            "assets_yoy": to_eok(s["assets_yoy"]),
+            "op_to_debt_now": s["op_to_debt_now"],
+            "op_to_debt_yoy": s["op_to_debt_yoy"],
         })
 
     # 20. 밸류+모멘텀 상위 30개 패키징
@@ -1223,6 +1246,16 @@ def fetch_krx_market_data():
             "ni_growth_qoq": s["ni_growth_qoq"], "ni_qoq_r": s["ni_qoq_r"],
             "ni_growth_yoy": s["ni_growth_yoy"], "ni_yoy_r": s["ni_yoy_r"],
             "avg_r": round(s["value_momentum_score"] / 8, 1),
+            "equity": to_eok(s["equity"]),
+            "quarter_operating_cf": to_eok(s["quarter_operating_cf"]),
+            "quarter_capex": to_eok(s["quarter_capex"]),
+            "quarter_net_income": to_eok(s["quarter_net_income"]),
+            "quarter_revenue": to_eok(s["quarter_revenue"]),
+            "quarter_operating_income": to_eok(s["quarter_operating_income"]),
+            "prev_operating_income": to_eok(s["prev_operating_income"]),
+            "operating_income_yoy": to_eok(s["operating_income_yoy"]),
+            "prev_net_income": to_eok(s["prev_net_income"]),
+            "net_income_yoy": to_eok(s["net_income_yoy"]),
         })
 
     # 21. 슈퍼 퀄리티+모멘텀 상위 30개 패키징
@@ -1243,6 +1276,18 @@ def fetch_krx_market_data():
             "ni_growth_qoq": s["ni_growth_qoq"], "ni_qoq_r": s["ni_qoq_r"],
             "ni_growth_yoy": s["ni_growth_yoy"], "ni_yoy_r": s["ni_yoy_r"],
             "avg_r": round(s["quality_momentum_score"] / 8, 1),
+            "quarter_revenue": to_eok(s["quarter_revenue"]),
+            "quarter_cost_of_sales": to_eok(s["quarter_cost_of_sales"]),
+            "assets": to_eok(s["assets"]),
+            "assets_yoy": to_eok(s["assets_yoy"]),
+            "op_to_debt_now": s["op_to_debt_now"],
+            "op_to_debt_yoy": s["op_to_debt_yoy"],
+            "quarter_operating_income": to_eok(s["quarter_operating_income"]),
+            "prev_operating_income": to_eok(s["prev_operating_income"]),
+            "operating_income_yoy": to_eok(s["operating_income_yoy"]),
+            "quarter_net_income": to_eok(s["quarter_net_income"]),
+            "prev_net_income": to_eok(s["prev_net_income"]),
+            "net_income_yoy": to_eok(s["net_income_yoy"]),
         })
 
     # 22. 울트라 상위 30개 패키징 (전체 / 소형주 한정)
@@ -1268,6 +1313,21 @@ def fetch_krx_market_data():
                 "ni_growth_qoq": s["ni_growth_qoq"], "ni_qoq_r": s["ni_qoq_r"],
                 "ni_growth_yoy": s["ni_growth_yoy"], "ni_yoy_r": s["ni_yoy_r"],
                 "avg_r": round(s["ultra_score"] / 12, 1),
+                "equity": to_eok(s["equity"]),
+                "quarter_operating_cf": to_eok(s["quarter_operating_cf"]),
+                "quarter_capex": to_eok(s["quarter_capex"]),
+                "quarter_net_income": to_eok(s["quarter_net_income"]),
+                "quarter_revenue": to_eok(s["quarter_revenue"]),
+                "quarter_cost_of_sales": to_eok(s["quarter_cost_of_sales"]),
+                "assets": to_eok(s["assets"]),
+                "assets_yoy": to_eok(s["assets_yoy"]),
+                "op_to_debt_now": s["op_to_debt_now"],
+                "op_to_debt_yoy": s["op_to_debt_yoy"],
+                "quarter_operating_income": to_eok(s["quarter_operating_income"]),
+                "prev_operating_income": to_eok(s["prev_operating_income"]),
+                "operating_income_yoy": to_eok(s["operating_income_yoy"]),
+                "prev_net_income": to_eok(s["prev_net_income"]),
+                "net_income_yoy": to_eok(s["net_income_yoy"]),
             })
         return packaged
 

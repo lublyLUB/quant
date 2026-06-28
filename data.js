@@ -3,7 +3,7 @@ const KOSPI_QUANT_PACKAGE = {
         "krx_basis_date": "20260625",
         "dart_basis": "2026년 1분기보고서",
         "status": "NORMAL",
-        "checked_at": "01:41:53"
+        "checked_at": "11:51:22"
     },
     "super_value": [
         {
@@ -3082,7 +3082,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 4,
             "price_volatility": 5.79,
             "volatility_r": 8,
-            "avg_r": 7.2
+            "avg_r": 7.2,
+            "quarter_revenue": 15765,
+            "quarter_cost_of_sales": 7632,
+            "assets": 70990,
+            "assets_yoy": 75628,
+            "op_to_debt_now": 1.6008903197234834,
+            "op_to_debt_yoy": 0.5686106189279619
         },
         {
             "rank": 2,
@@ -3100,7 +3106,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 14,
             "price_volatility": 10.92,
             "volatility_r": 41,
-            "avg_r": 16.8
+            "avg_r": 16.8,
+            "quarter_revenue": 8147,
+            "quarter_cost_of_sales": 6009,
+            "assets": 23718,
+            "assets_yoy": 23737,
+            "op_to_debt_now": 0.06089505808282227,
+            "op_to_debt_yoy": 0.009488670564966894
         },
         {
             "rank": 3,
@@ -3118,7 +3130,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 54,
             "price_volatility": 4.46,
             "volatility_r": 3,
-            "avg_r": 22.0
+            "avg_r": 22.0,
+            "quarter_revenue": 5575,
+            "quarter_cost_of_sales": 3908,
+            "assets": 14417,
+            "assets_yoy": 13337,
+            "op_to_debt_now": 0.08475219151534201,
+            "op_to_debt_yoy": 0.054496690490618914
         },
         {
             "rank": 4,
@@ -3136,7 +3154,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 2,
             "price_volatility": 9.51,
             "volatility_r": 31,
-            "avg_r": 23.2
+            "avg_r": 23.2,
+            "quarter_revenue": 1318,
+            "quarter_cost_of_sales": 1111,
+            "assets": 5165,
+            "assets_yoy": 5644,
+            "op_to_debt_now": 0.045514013967868874,
+            "op_to_debt_yoy": 0.02261751174261958
         },
         {
             "rank": 5,
@@ -3154,7 +3178,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 47,
             "price_volatility": 6.76,
             "volatility_r": 13,
-            "avg_r": 24.8
+            "avg_r": 24.8,
+            "quarter_revenue": 4698,
+            "quarter_cost_of_sales": 3490,
+            "assets": 10912,
+            "assets_yoy": 10179,
+            "op_to_debt_now": 0.09401165497803958,
+            "op_to_debt_yoy": 0.06364314072121814
         },
         {
             "rank": 6,
@@ -3172,7 +3202,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 9,
             "price_volatility": 3.99,
             "volatility_r": 2,
-            "avg_r": 25.8
+            "avg_r": 25.8,
+            "quarter_revenue": 2056,
+            "quarter_cost_of_sales": 1705,
+            "assets": 15889,
+            "assets_yoy": 16300,
+            "op_to_debt_now": 0.018796352391561282,
+            "op_to_debt_yoy": 0.011743340579839567
         },
         {
             "rank": 7,
@@ -3190,7 +3226,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 25,
             "price_volatility": 9.37,
             "volatility_r": 30,
-            "avg_r": 26.5
+            "avg_r": 26.5,
+            "quarter_revenue": 421,
+            "quarter_cost_of_sales": 362,
+            "assets": 1638,
+            "assets_yoy": 1598,
+            "op_to_debt_now": 0.03812516384188883,
+            "op_to_debt_yoy": -0.02659343890897264
         },
         {
             "rank": 8,
@@ -3208,7 +3250,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 21,
             "price_volatility": 10.53,
             "volatility_r": 38,
-            "avg_r": 27.5
+            "avg_r": 27.5,
+            "quarter_revenue": 13149,
+            "quarter_cost_of_sales": 11336,
+            "assets": 47840,
+            "assets_yoy": 47220,
+            "op_to_debt_now": 0.5892738714604577,
+            "op_to_debt_yoy": 0.17767409438182377
         },
         {
             "rank": 9,
@@ -3226,7 +3274,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 10,
             "price_volatility": 9.34,
             "volatility_r": 29,
-            "avg_r": 29.5
+            "avg_r": 29.5,
+            "quarter_revenue": 4840,
+            "quarter_cost_of_sales": 4120,
+            "assets": 18483,
+            "assets_yoy": 18906,
+            "op_to_debt_now": 0.09619172430906665,
+            "op_to_debt_yoy": 0.06990517015516287
         },
         {
             "rank": 10,
@@ -3244,7 +3298,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 26,
             "price_volatility": 6.62,
             "volatility_r": 12,
-            "avg_r": 29.8
+            "avg_r": 29.8,
+            "quarter_revenue": 683,
+            "quarter_cost_of_sales": 590,
+            "assets": 5367,
+            "assets_yoy": 5222,
+            "op_to_debt_now": 144.9191212,
+            "op_to_debt_yoy": 0.07644591040267605
         },
         {
             "rank": 11,
@@ -3262,7 +3322,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 88,
             "price_volatility": 9.3,
             "volatility_r": 28,
-            "avg_r": 30.2
+            "avg_r": 30.2,
+            "quarter_revenue": 788,
+            "quarter_cost_of_sales": 541,
+            "assets": 2108,
+            "assets_yoy": 1462,
+            "op_to_debt_now": 0.25330394722902744,
+            "op_to_debt_yoy": -0.056524134713351215
         },
         {
             "rank": 12,
@@ -3280,7 +3346,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 58,
             "price_volatility": 8.61,
             "volatility_r": 22,
-            "avg_r": 31.2
+            "avg_r": 31.2,
+            "quarter_revenue": 9340,
+            "quarter_cost_of_sales": 6506,
+            "assets": 40034,
+            "assets_yoy": 36763,
+            "op_to_debt_now": 0.48260785999989503,
+            "op_to_debt_yoy": 0.32461733801096476
         },
         {
             "rank": 13,
@@ -3298,7 +3370,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 66,
             "price_volatility": 6.53,
             "volatility_r": 11,
-            "avg_r": 32.5
+            "avg_r": 32.5,
+            "quarter_revenue": 2402,
+            "quarter_cost_of_sales": 1287,
+            "assets": 16789,
+            "assets_yoy": 15137,
+            "op_to_debt_now": 0.03426212625075214,
+            "op_to_debt_yoy": 0.024654741686863248
         },
         {
             "rank": 14,
@@ -3316,7 +3394,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 20,
             "price_volatility": 6.34,
             "volatility_r": 10,
-            "avg_r": 32.8
+            "avg_r": 32.8,
+            "quarter_revenue": 25,
+            "quarter_cost_of_sales": 7,
+            "assets": 284,
+            "assets_yoy": 281,
+            "op_to_debt_now": 0.02306159459293845,
+            "op_to_debt_yoy": 0.05501661394325068
         },
         {
             "rank": 15,
@@ -3334,7 +3418,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 1,
             "price_volatility": 9.14,
             "volatility_r": 26,
-            "avg_r": 33.0
+            "avg_r": 33.0,
+            "quarter_revenue": 1051,
+            "quarter_cost_of_sales": 901,
+            "assets": 3459,
+            "assets_yoy": 3836,
+            "op_to_debt_now": 0.05076624080710199,
+            "op_to_debt_yoy": 0.06812008040343427
         },
         {
             "rank": 16,
@@ -3352,7 +3442,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 60,
             "price_volatility": 6.19,
             "volatility_r": 9,
-            "avg_r": 33.2
+            "avg_r": 33.2,
+            "quarter_revenue": 912,
+            "quarter_cost_of_sales": 611,
+            "assets": 2212,
+            "assets_yoy": 2013,
+            "op_to_debt_now": 0.14416354821959593,
+            "op_to_debt_yoy": 0.15398155743994676
         },
         {
             "rank": 17,
@@ -3370,7 +3466,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 29,
             "price_volatility": 12.68,
             "volatility_r": 56,
-            "avg_r": 33.8
+            "avg_r": 33.8,
+            "quarter_revenue": 68423,
+            "quarter_cost_of_sales": 48441,
+            "assets": 368091,
+            "assets_yoy": 354815,
+            "op_to_debt_now": 0.15091137436746252,
+            "op_to_debt_yoy": 0.091492325146238
         },
         {
             "rank": 18,
@@ -3388,7 +3490,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 37,
             "price_volatility": 8.91,
             "volatility_r": 25,
-            "avg_r": 35.5
+            "avg_r": 35.5,
+            "quarter_revenue": 850,
+            "quarter_cost_of_sales": 322,
+            "assets": 8400,
+            "assets_yoy": 7922,
+            "op_to_debt_now": 0.1280518765195447,
+            "op_to_debt_yoy": 0.13443568239582915
         },
         {
             "rank": 19,
@@ -3406,7 +3514,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 6,
             "price_volatility": 9.68,
             "volatility_r": 34,
-            "avg_r": 35.5
+            "avg_r": 35.5,
+            "quarter_revenue": 6739,
+            "quarter_cost_of_sales": 5450,
+            "assets": 73521,
+            "assets_yoy": 77661,
+            "op_to_debt_now": 0.0419728562780067,
+            "op_to_debt_yoy": 0.026842306193487445
         },
         {
             "rank": 20,
@@ -3424,7 +3538,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 59,
             "price_volatility": 11.22,
             "volatility_r": 43,
-            "avg_r": 35.5
+            "avg_r": 35.5,
+            "quarter_revenue": 295018,
+            "quarter_cost_of_sales": 236979,
+            "assets": 1053599,
+            "assets_yoy": 962858,
+            "op_to_debt_now": 2.998434895174691,
+            "op_to_debt_yoy": 1.3134784222130056
         },
         {
             "rank": 21,
@@ -3442,7 +3562,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 27,
             "price_volatility": 9.67,
             "volatility_r": 33,
-            "avg_r": 35.8
+            "avg_r": 35.8,
+            "quarter_revenue": 15,
+            "quarter_cost_of_sales": 11,
+            "assets": 86,
+            "assets_yoy": 83,
+            "op_to_debt_now": 0.13578077936656524,
+            "op_to_debt_yoy": 0.11235306019881339
         },
         {
             "rank": 22,
@@ -3460,7 +3586,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 81,
             "price_volatility": 12.07,
             "volatility_r": 54,
-            "avg_r": 36.8
+            "avg_r": 36.8,
+            "quarter_revenue": 1338734,
+            "quarter_cost_of_sales": 519602,
+            "assets": 6333396,
+            "assets_yoy": 5163767,
+            "op_to_debt_now": 2.123853025123623,
+            "op_to_debt_yoy": 0.7340035459108498
         },
         {
             "rank": 23,
@@ -3478,7 +3610,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 28,
             "price_volatility": 11.96,
             "volatility_r": 51,
-            "avg_r": 37.0
+            "avg_r": 37.0,
+            "quarter_revenue": 71234,
+            "quarter_cost_of_sales": 49222,
+            "assets": 348831,
+            "assets_yoy": 336549,
+            "op_to_debt_now": 0.0191056003903552,
+            "op_to_debt_yoy": 0.018051157836474097
         },
         {
             "rank": 24,
@@ -3496,7 +3634,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 31,
             "price_volatility": 4.96,
             "volatility_r": 6,
-            "avg_r": 37.5
+            "avg_r": 37.5,
+            "quarter_revenue": 806,
+            "quarter_cost_of_sales": 634,
+            "assets": 3253,
+            "assets_yoy": 3119,
+            "op_to_debt_now": 0.006732338397633856,
+            "op_to_debt_yoy": 0.04745041635722867
         },
         {
             "rank": 25,
@@ -3514,7 +3658,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 23,
             "price_volatility": 11.37,
             "volatility_r": 46,
-            "avg_r": 37.8
+            "avg_r": 37.8,
+            "quarter_revenue": 114511,
+            "quarter_cost_of_sales": 82654,
+            "assets": 483902,
+            "assets_yoy": 475102,
+            "op_to_debt_now": 0.031043294602937695,
+            "op_to_debt_yoy": 0.03810092838854733
         },
         {
             "rank": 26,
@@ -3532,7 +3682,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 5,
             "price_volatility": 12.81,
             "volatility_r": 57,
-            "avg_r": 38.0
+            "avg_r": 38.0,
+            "quarter_revenue": 3887,
+            "quarter_cost_of_sales": 2724,
+            "assets": 15015,
+            "assets_yoy": 15917,
+            "op_to_debt_now": 0.05310632076749351,
+            "op_to_debt_yoy": 0.11805271251000375
         },
         {
             "rank": 27,
@@ -3550,7 +3706,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 22,
             "price_volatility": 13.78,
             "volatility_r": 61,
-            "avg_r": 38.2
+            "avg_r": 38.2,
+            "quarter_revenue": 29022,
+            "quarter_cost_of_sales": 25041,
+            "assets": 165687,
+            "assets_yoy": 162811,
+            "op_to_debt_now": 0.2550678401977456,
+            "op_to_debt_yoy": 0.05582286473014864
         },
         {
             "rank": 28,
@@ -3568,7 +3730,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 39,
             "price_volatility": 4.5,
             "volatility_r": 4,
-            "avg_r": 38.8
+            "avg_r": 38.8,
+            "quarter_revenue": 543,
+            "quarter_cost_of_sales": 404,
+            "assets": 3973,
+            "assets_yoy": 3739,
+            "op_to_debt_now": 0.2017601443308875,
+            "op_to_debt_yoy": 0.2504720769139541
         },
         {
             "rank": 29,
@@ -3586,7 +3754,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 38,
             "price_volatility": 4.6,
             "volatility_r": 5,
-            "avg_r": 38.8
+            "avg_r": 38.8,
+            "quarter_revenue": 393,
+            "quarter_cost_of_sales": 329,
+            "assets": 2200,
+            "assets_yoy": 2074,
+            "op_to_debt_now": 0.029500368326815997,
+            "op_to_debt_yoy": 0.028515108889345647
         },
         {
             "rank": 30,
@@ -3604,7 +3778,13 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 48,
             "price_volatility": 7.9,
             "volatility_r": 19,
-            "avg_r": 39.8
+            "avg_r": 39.8,
+            "quarter_revenue": 3052,
+            "quarter_cost_of_sales": 2676,
+            "assets": 11749,
+            "assets_yoy": 10938,
+            "op_to_debt_now": 0.8086502070577289,
+            "op_to_debt_yoy": 0.6365495738064262
         }
     ],
     "fama_value": [
@@ -3620,7 +3800,12 @@ const KOSPI_QUANT_PACKAGE = {
             "gpa_r": 5,
             "asset_growth_yoy": -9.9,
             "asset_growth_r": 2,
-            "avg_r": 3.3
+            "avg_r": 3.3,
+            "equity": 791,
+            "quarter_revenue": 89,
+            "quarter_cost_of_sales": 59,
+            "assets": 1302,
+            "assets_yoy": 1446
         },
         {
             "rank": 2,
@@ -3634,7 +3819,12 @@ const KOSPI_QUANT_PACKAGE = {
             "gpa_r": 1,
             "asset_growth_yoy": -6.5,
             "asset_growth_r": 3,
-            "avg_r": 3.7
+            "avg_r": 3.7,
+            "equity": 216,
+            "quarter_revenue": 146,
+            "quarter_cost_of_sales": 95,
+            "assets": 630,
+            "assets_yoy": 673
         },
         {
             "rank": 3,
@@ -3648,7 +3838,12 @@ const KOSPI_QUANT_PACKAGE = {
             "gpa_r": 3,
             "asset_growth_yoy": 2.5,
             "asset_growth_r": 7,
-            "avg_r": 3.7
+            "avg_r": 3.7,
+            "equity": 1038,
+            "quarter_revenue": 421,
+            "quarter_cost_of_sales": 362,
+            "assets": 1638,
+            "assets_yoy": 1598
         },
         {
             "rank": 4,
@@ -3662,7 +3857,12 @@ const KOSPI_QUANT_PACKAGE = {
             "gpa_r": 7,
             "asset_growth_yoy": -15.7,
             "asset_growth_r": 1,
-            "avg_r": 4.0
+            "avg_r": 4.0,
+            "equity": 381,
+            "quarter_revenue": 466,
+            "quarter_cost_of_sales": 450,
+            "assets": 1186,
+            "assets_yoy": 1407
         },
         {
             "rank": 5,
@@ -3676,7 +3876,12 @@ const KOSPI_QUANT_PACKAGE = {
             "gpa_r": 4,
             "asset_growth_yoy": 1.0,
             "asset_growth_r": 6,
-            "avg_r": 4.0
+            "avg_r": 4.0,
+            "equity": 587,
+            "quarter_revenue": 176,
+            "quarter_cost_of_sales": 144,
+            "assets": 1150,
+            "assets_yoy": 1139
         },
         {
             "rank": 6,
@@ -3690,7 +3895,12 @@ const KOSPI_QUANT_PACKAGE = {
             "gpa_r": 2,
             "asset_growth_yoy": 0.9,
             "asset_growth_r": 5,
-            "avg_r": 4.3
+            "avg_r": 4.3,
+            "equity": 230,
+            "quarter_revenue": 25,
+            "quarter_cost_of_sales": 7,
+            "assets": 284,
+            "assets_yoy": 281
         },
         {
             "rank": 7,
@@ -3704,7 +3914,12 @@ const KOSPI_QUANT_PACKAGE = {
             "gpa_r": 6,
             "asset_growth_yoy": -1.1,
             "asset_growth_r": 4,
-            "avg_r": 5.0
+            "avg_r": 5.0,
+            "equity": 422,
+            "quarter_revenue": 91,
+            "quarter_cost_of_sales": 83,
+            "assets": 461,
+            "assets_yoy": 466
         }
     ],
     "super_quality_value": [
@@ -3730,7 +3945,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 54,
             "price_volatility": 4.46,
             "volatility_r": 3,
-            "avg_r": 12.8
+            "avg_r": 12.8,
+            "equity": 8672,
+            "quarter_operating_cf": 316,
+            "quarter_net_income": 192,
+            "quarter_revenue": 5575,
+            "quarter_cost_of_sales": 3908,
+            "assets": 14417,
+            "assets_yoy": 13337,
+            "op_to_debt_now": 0.08475219151534201,
+            "op_to_debt_yoy": 0.054496690490618914
         },
         {
             "rank": 2,
@@ -3754,7 +3978,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 14,
             "price_volatility": 10.92,
             "volatility_r": 41,
-            "avg_r": 13.1
+            "avg_r": 13.1,
+            "equity": 8737,
+            "quarter_operating_cf": 1590,
+            "quarter_net_income": 304,
+            "quarter_revenue": 8147,
+            "quarter_cost_of_sales": 6009,
+            "assets": 23718,
+            "assets_yoy": 23737,
+            "op_to_debt_now": 0.06089505808282227,
+            "op_to_debt_yoy": 0.009488670564966894
         },
         {
             "rank": 3,
@@ -3778,7 +4011,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 10,
             "price_volatility": 9.34,
             "volatility_r": 29,
-            "avg_r": 17.0
+            "avg_r": 17.0,
+            "equity": 5124,
+            "quarter_operating_cf": 1062,
+            "quarter_net_income": 354,
+            "quarter_revenue": 4840,
+            "quarter_cost_of_sales": 4120,
+            "assets": 18483,
+            "assets_yoy": 18906,
+            "op_to_debt_now": 0.09619172430906665,
+            "op_to_debt_yoy": 0.06990517015516287
         },
         {
             "rank": 4,
@@ -3802,7 +4044,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 47,
             "price_volatility": 6.76,
             "volatility_r": 13,
-            "avg_r": 22.1
+            "avg_r": 22.1,
+            "equity": 6421,
+            "quarter_operating_cf": 239,
+            "quarter_net_income": 189,
+            "quarter_revenue": 4698,
+            "quarter_cost_of_sales": 3490,
+            "assets": 10912,
+            "assets_yoy": 10179,
+            "op_to_debt_now": 0.09401165497803958,
+            "op_to_debt_yoy": 0.06364314072121814
         },
         {
             "rank": 5,
@@ -3826,7 +4077,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 66,
             "price_volatility": 6.53,
             "volatility_r": 11,
-            "avg_r": 23.9
+            "avg_r": 23.9,
+            "equity": 9237,
+            "quarter_operating_cf": 264,
+            "quarter_net_income": 178,
+            "quarter_revenue": 2402,
+            "quarter_cost_of_sales": 1287,
+            "assets": 16789,
+            "assets_yoy": 15137,
+            "op_to_debt_now": 0.03426212625075214,
+            "op_to_debt_yoy": 0.024654741686863248
         },
         {
             "rank": 6,
@@ -3850,7 +4110,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 39,
             "price_volatility": 4.5,
             "volatility_r": 4,
-            "avg_r": 24.2
+            "avg_r": 24.2,
+            "equity": 3237,
+            "quarter_operating_cf": 105,
+            "quarter_net_income": 78,
+            "quarter_revenue": 543,
+            "quarter_cost_of_sales": 404,
+            "assets": 3973,
+            "assets_yoy": 3739,
+            "op_to_debt_now": 0.2017601443308875,
+            "op_to_debt_yoy": 0.2504720769139541
         },
         {
             "rank": 7,
@@ -3874,7 +4143,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 25,
             "price_volatility": 9.37,
             "volatility_r": 30,
-            "avg_r": 24.2
+            "avg_r": 24.2,
+            "equity": 1038,
+            "quarter_operating_cf": 20,
+            "quarter_net_income": 17,
+            "quarter_revenue": 421,
+            "quarter_cost_of_sales": 362,
+            "assets": 1638,
+            "assets_yoy": 1598,
+            "op_to_debt_now": 0.03812516384188883,
+            "op_to_debt_yoy": -0.02659343890897264
         },
         {
             "rank": 8,
@@ -3898,7 +4176,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 29,
             "price_volatility": 12.68,
             "volatility_r": 56,
-            "avg_r": 25.9
+            "avg_r": 25.9,
+            "equity": 198137,
+            "quarter_operating_cf": 8194,
+            "quarter_net_income": 8266,
+            "quarter_revenue": 68423,
+            "quarter_cost_of_sales": 48441,
+            "assets": 368091,
+            "assets_yoy": 354815,
+            "op_to_debt_now": 0.15091137436746252,
+            "op_to_debt_yoy": 0.091492325146238
         },
         {
             "rank": 9,
@@ -3922,7 +4209,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 28,
             "price_volatility": 11.96,
             "volatility_r": 51,
-            "avg_r": 27.2
+            "avg_r": 27.2,
+            "equity": 141352,
+            "quarter_operating_cf": 2571,
+            "quarter_net_income": 793,
+            "quarter_revenue": 71234,
+            "quarter_cost_of_sales": 49222,
+            "assets": 348831,
+            "assets_yoy": 336549,
+            "op_to_debt_now": 0.0191056003903552,
+            "op_to_debt_yoy": 0.018051157836474097
         },
         {
             "rank": 10,
@@ -3946,7 +4242,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 23,
             "price_volatility": 11.37,
             "volatility_r": 46,
-            "avg_r": 27.9
+            "avg_r": 27.9,
+            "equity": 171714,
+            "quarter_operating_cf": 7959,
+            "quarter_net_income": 1743,
+            "quarter_revenue": 114511,
+            "quarter_cost_of_sales": 82654,
+            "assets": 483902,
+            "assets_yoy": 475102,
+            "op_to_debt_now": 0.031043294602937695,
+            "op_to_debt_yoy": 0.03810092838854733
         },
         {
             "rank": 11,
@@ -3970,7 +4275,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 4,
             "price_volatility": 5.79,
             "volatility_r": 8,
-            "avg_r": 28.6
+            "avg_r": 28.6,
+            "equity": 56793,
+            "quarter_operating_cf": 1056,
+            "quarter_net_income": 887,
+            "quarter_revenue": 15765,
+            "quarter_cost_of_sales": 7632,
+            "assets": 70990,
+            "assets_yoy": 75628,
+            "op_to_debt_now": 1.6008903197234834,
+            "op_to_debt_yoy": 0.5686106189279619
         },
         {
             "rank": 12,
@@ -3994,7 +4308,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 88,
             "price_volatility": 9.3,
             "volatility_r": 28,
-            "avg_r": 28.6
+            "avg_r": 28.6,
+            "equity": 1253,
+            "quarter_operating_cf": 433,
+            "quarter_net_income": 178,
+            "quarter_revenue": 788,
+            "quarter_cost_of_sales": 541,
+            "assets": 2108,
+            "assets_yoy": 1462,
+            "op_to_debt_now": 0.25330394722902744,
+            "op_to_debt_yoy": -0.056524134713351215
         },
         {
             "rank": 13,
@@ -4018,7 +4341,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 67,
             "price_volatility": 6.92,
             "volatility_r": 14,
-            "avg_r": 30.6
+            "avg_r": 30.6,
+            "equity": 1216,
+            "quarter_operating_cf": 62,
+            "quarter_net_income": 21,
+            "quarter_revenue": 574,
+            "quarter_cost_of_sales": 519,
+            "assets": 2726,
+            "assets_yoy": 2446,
+            "op_to_debt_now": 0.013951373430034386,
+            "op_to_debt_yoy": 0.008379235484542434
         },
         {
             "rank": 14,
@@ -4042,7 +4374,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 73,
             "price_volatility": 8.38,
             "volatility_r": 21,
-            "avg_r": 30.8
+            "avg_r": 30.8,
+            "equity": 7577,
+            "quarter_operating_cf": 401,
+            "quarter_net_income": 349,
+            "quarter_revenue": 4328,
+            "quarter_cost_of_sales": 3817,
+            "assets": 15391,
+            "assets_yoy": 13517,
+            "op_to_debt_now": 0.07163090633722449,
+            "op_to_debt_yoy": 0.06381394825000473
         },
         {
             "rank": 15,
@@ -4066,7 +4407,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 76,
             "price_volatility": 3.81,
             "volatility_r": 1,
-            "avg_r": 31.1
+            "avg_r": 31.1,
+            "equity": 2551,
+            "quarter_operating_cf": 96,
+            "quarter_net_income": 97,
+            "quarter_revenue": 763,
+            "quarter_cost_of_sales": 637,
+            "assets": 4068,
+            "assets_yoy": 3557,
+            "op_to_debt_now": 0.06787381907266199,
+            "op_to_debt_yoy": 0.07197338675663477
         },
         {
             "rank": 16,
@@ -4090,7 +4440,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 48,
             "price_volatility": 7.9,
             "volatility_r": 19,
-            "avg_r": 31.8
+            "avg_r": 31.8,
+            "equity": 8643,
+            "quarter_operating_cf": 116,
+            "quarter_net_income": 182,
+            "quarter_revenue": 3052,
+            "quarter_cost_of_sales": 2676,
+            "assets": 11749,
+            "assets_yoy": 10938,
+            "op_to_debt_now": 0.8086502070577289,
+            "op_to_debt_yoy": 0.6365495738064262
         },
         {
             "rank": 17,
@@ -4114,7 +4473,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 9,
             "price_volatility": 3.99,
             "volatility_r": 2,
-            "avg_r": 32.1
+            "avg_r": 32.1,
+            "equity": 8249,
+            "quarter_operating_cf": 40,
+            "quarter_net_income": 80,
+            "quarter_revenue": 2056,
+            "quarter_cost_of_sales": 1705,
+            "assets": 15889,
+            "assets_yoy": 16300,
+            "op_to_debt_now": 0.018796352391561282,
+            "op_to_debt_yoy": 0.011743340579839567
         },
         {
             "rank": 18,
@@ -4138,7 +4506,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 77,
             "price_volatility": 10.65,
             "volatility_r": 39,
-            "avg_r": 32.5
+            "avg_r": 32.5,
+            "equity": 1410,
+            "quarter_operating_cf": 148,
+            "quarter_net_income": 47,
+            "quarter_revenue": 1120,
+            "quarter_cost_of_sales": 974,
+            "assets": 3189,
+            "assets_yoy": 2741,
+            "op_to_debt_now": 0.0631280823756219,
+            "op_to_debt_yoy": 0.04205260595848283
         },
         {
             "rank": 19,
@@ -4162,7 +4539,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 2,
             "price_volatility": 9.51,
             "volatility_r": 31,
-            "avg_r": 32.8
+            "avg_r": 32.8,
+            "equity": 2459,
+            "quarter_operating_cf": 75,
+            "quarter_net_income": 74,
+            "quarter_revenue": 1318,
+            "quarter_cost_of_sales": 1111,
+            "assets": 5165,
+            "assets_yoy": 5644,
+            "op_to_debt_now": 0.045514013967868874,
+            "op_to_debt_yoy": 0.02261751174261958
         },
         {
             "rank": 20,
@@ -4186,7 +4572,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 33,
             "price_volatility": 13.52,
             "volatility_r": 59,
-            "avg_r": 33.0
+            "avg_r": 33.0,
+            "equity": 8276,
+            "quarter_operating_cf": 143,
+            "quarter_net_income": 204,
+            "quarter_revenue": 1110,
+            "quarter_cost_of_sales": 706,
+            "assets": 12724,
+            "assets_yoy": 12180,
+            "op_to_debt_now": 0.0884344623995371,
+            "op_to_debt_yoy": 0.04826511774237612
         },
         {
             "rank": 21,
@@ -4210,7 +4605,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 1,
             "price_volatility": 9.14,
             "volatility_r": 26,
-            "avg_r": 33.4
+            "avg_r": 33.4,
+            "equity": 2411,
+            "quarter_operating_cf": 59,
+            "quarter_net_income": 79,
+            "quarter_revenue": 1051,
+            "quarter_cost_of_sales": 901,
+            "assets": 3459,
+            "assets_yoy": 3836,
+            "op_to_debt_now": 0.05076624080710199,
+            "op_to_debt_yoy": 0.06812008040343427
         },
         {
             "rank": 22,
@@ -4234,7 +4638,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 8,
             "price_volatility": 12.07,
             "volatility_r": 53,
-            "avg_r": 34.2
+            "avg_r": 34.2,
+            "equity": 54652,
+            "quarter_operating_cf": 349,
+            "quarter_net_income": 1071,
+            "quarter_revenue": 12573,
+            "quarter_cost_of_sales": 9807,
+            "assets": 123491,
+            "assets_yoy": 127136,
+            "op_to_debt_now": 0.047497167728653505,
+            "op_to_debt_yoy": 0.03685376696231067
         },
         {
             "rank": 23,
@@ -4258,7 +4671,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 42,
             "price_volatility": 7.64,
             "volatility_r": 18,
-            "avg_r": 36.0
+            "avg_r": 36.0,
+            "equity": 2575,
+            "quarter_operating_cf": 265,
+            "quarter_net_income": 169,
+            "quarter_revenue": 650,
+            "quarter_cost_of_sales": 406,
+            "assets": 4655,
+            "assets_yoy": 4371,
+            "op_to_debt_now": -0.06581284650180022,
+            "op_to_debt_yoy": 0.02982675412398444
         },
         {
             "rank": 24,
@@ -4282,7 +4704,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 15,
             "price_volatility": 21.17,
             "volatility_r": 78,
-            "avg_r": 36.0
+            "avg_r": 36.0,
+            "equity": 53477,
+            "quarter_operating_cf": 1707,
+            "quarter_net_income": 1601,
+            "quarter_revenue": 17252,
+            "quarter_cost_of_sales": 14616,
+            "assets": 100271,
+            "assets_yoy": 100098,
+            "op_to_debt_now": 0.1630446117434557,
+            "op_to_debt_yoy": 0.07320296622356083
         },
         {
             "rank": 25,
@@ -4306,7 +4737,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 38,
             "price_volatility": 4.6,
             "volatility_r": 5,
-            "avg_r": 36.2
+            "avg_r": 36.2,
+            "equity": 1207,
+            "quarter_operating_cf": 28,
+            "quarter_net_income": 27,
+            "quarter_revenue": 393,
+            "quarter_cost_of_sales": 329,
+            "assets": 2200,
+            "assets_yoy": 2074,
+            "op_to_debt_now": 0.029500368326815997,
+            "op_to_debt_yoy": 0.028515108889345647
         },
         {
             "rank": 26,
@@ -4330,7 +4770,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 18,
             "price_volatility": 14.28,
             "volatility_r": 65,
-            "avg_r": 36.2
+            "avg_r": 36.2,
+            "equity": 1479,
+            "quarter_operating_cf": 78,
+            "quarter_net_income": 27,
+            "quarter_revenue": 356,
+            "quarter_cost_of_sales": 296,
+            "assets": 2684,
+            "assets_yoy": 2673,
+            "op_to_debt_now": 0.0283815767557573,
+            "op_to_debt_yoy": 0.008355775260662742
         },
         {
             "rank": 27,
@@ -4354,7 +4803,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 12,
             "price_volatility": 15.71,
             "volatility_r": 70,
-            "avg_r": 36.9
+            "avg_r": 36.9,
+            "equity": 50358,
+            "quarter_operating_cf": 1749,
+            "quarter_net_income": 121,
+            "quarter_revenue": 12827,
+            "quarter_cost_of_sales": 9589,
+            "assets": 124955,
+            "assets_yoy": 126789,
+            "op_to_debt_now": 0.019950569407527225,
+            "op_to_debt_yoy": 0.0175722932694091
         },
         {
             "rank": 28,
@@ -4378,7 +4836,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 30,
             "price_volatility": 11.93,
             "volatility_r": 50,
-            "avg_r": 37.0
+            "avg_r": 37.0,
+            "equity": 3275,
+            "quarter_operating_cf": 11,
+            "quarter_net_income": 83,
+            "quarter_revenue": 1942,
+            "quarter_cost_of_sales": 1731,
+            "assets": 6788,
+            "assets_yoy": 6518,
+            "op_to_debt_now": 0.03545980301586944,
+            "op_to_debt_yoy": 0.04705800960829834
         },
         {
             "rank": 29,
@@ -4402,7 +4869,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 46,
             "price_volatility": 5.17,
             "volatility_r": 7,
-            "avg_r": 37.1
+            "avg_r": 37.1,
+            "equity": 2975,
+            "quarter_operating_cf": 16,
+            "quarter_net_income": 29,
+            "quarter_revenue": 1945,
+            "quarter_cost_of_sales": 1828,
+            "assets": 5249,
+            "assets_yoy": 4906,
+            "op_to_debt_now": 0.039691276734508396,
+            "op_to_debt_yoy": 0.11052075890468076
         },
         {
             "rank": 30,
@@ -4426,7 +4902,16 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_r": 55,
             "price_volatility": 11.97,
             "volatility_r": 52,
-            "avg_r": 38.0
+            "avg_r": 38.0,
+            "equity": 3559,
+            "quarter_operating_cf": 201,
+            "quarter_net_income": 45,
+            "quarter_revenue": 2548,
+            "quarter_cost_of_sales": 2284,
+            "assets": 6912,
+            "assets_yoy": 6368,
+            "op_to_debt_now": 0.048519700507682596,
+            "op_to_debt_yoy": 0.08450435698592138
         }
     ],
     "value_momentum_value": [
@@ -4452,7 +4937,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 39,
             "ni_growth_yoy": 1346.6,
             "ni_yoy_r": 8,
-            "avg_r": 17.4
+            "avg_r": 17.4,
+            "equity": 8737,
+            "quarter_operating_cf": 1590,
+            "quarter_capex": 247,
+            "quarter_net_income": 304,
+            "quarter_revenue": 8147,
+            "quarter_operating_income": 458,
+            "prev_operating_income": -289,
+            "operating_income_yoy": 70,
+            "prev_net_income": -546,
+            "net_income_yoy": -24
         },
         {
             "rank": 2,
@@ -4476,7 +4971,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 43,
             "ni_growth_yoy": 153.3,
             "ni_yoy_r": 47,
-            "avg_r": 31.2
+            "avg_r": 31.2,
+            "equity": 18806,
+            "quarter_operating_cf": 833,
+            "quarter_capex": 150,
+            "quarter_net_income": 62,
+            "quarter_revenue": 8571,
+            "quarter_operating_income": 214,
+            "prev_operating_income": 7,
+            "operating_income_yoy": 42,
+            "prev_net_income": -134,
+            "net_income_yoy": 24
         },
         {
             "rank": 3,
@@ -4500,7 +5005,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 10,
             "ni_growth_yoy": 115.0,
             "ni_yoy_r": 57,
-            "avg_r": 33.2
+            "avg_r": 33.2,
+            "equity": 1410,
+            "quarter_operating_cf": 148,
+            "quarter_capex": 21,
+            "quarter_net_income": 47,
+            "quarter_revenue": 1120,
+            "quarter_operating_income": 50,
+            "prev_operating_income": 11,
+            "operating_income_yoy": 32,
+            "prev_net_income": 8,
+            "net_income_yoy": 22
         },
         {
             "rank": 4,
@@ -4524,7 +5039,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 26,
             "ni_growth_yoy": 183.6,
             "ni_yoy_r": 38,
-            "avg_r": 34.8
+            "avg_r": 34.8,
+            "equity": 198137,
+            "quarter_operating_cf": 8194,
+            "quarter_capex": 3387,
+            "quarter_net_income": 8266,
+            "quarter_revenue": 68423,
+            "quarter_operating_income": 12585,
+            "prev_operating_income": 7762,
+            "operating_income_yoy": 8033,
+            "prev_net_income": 2505,
+            "net_income_yoy": 2914
         },
         {
             "rank": 5,
@@ -4548,7 +5073,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 9,
             "ni_growth_yoy": 119.8,
             "ni_yoy_r": 55,
-            "avg_r": 36.1
+            "avg_r": 36.1,
+            "equity": 1479,
+            "quarter_operating_cf": 78,
+            "quarter_capex": 14,
+            "quarter_net_income": 27,
+            "quarter_revenue": 356,
+            "quarter_operating_income": 25,
+            "prev_operating_income": -2,
+            "operating_income_yoy": 8,
+            "prev_net_income": -6,
+            "net_income_yoy": 12
         },
         {
             "rank": 6,
@@ -4572,7 +5107,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 90,
             "ni_growth_yoy": 26.6,
             "ni_yoy_r": 90,
-            "avg_r": 39.9
+            "avg_r": 39.9,
+            "equity": 5124,
+            "quarter_operating_cf": 1062,
+            "quarter_capex": 69,
+            "quarter_net_income": 354,
+            "quarter_revenue": 4840,
+            "quarter_operating_income": 496,
+            "prev_operating_income": 236,
+            "operating_income_yoy": 384,
+            "prev_net_income": 292,
+            "net_income_yoy": 280
         },
         {
             "rank": 7,
@@ -4596,7 +5141,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 112,
             "ni_growth_yoy": 94.3,
             "ni_yoy_r": 61,
-            "avg_r": 40.6
+            "avg_r": 40.6,
+            "equity": 8672,
+            "quarter_operating_cf": 316,
+            "quarter_capex": 47,
+            "quarter_net_income": 192,
+            "quarter_revenue": 5575,
+            "quarter_operating_income": 180,
+            "prev_operating_income": 141,
+            "operating_income_yoy": 118,
+            "prev_net_income": 233,
+            "net_income_yoy": 98
         },
         {
             "rank": 8,
@@ -4620,7 +5175,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 32,
             "ni_growth_yoy": 132.9,
             "ni_yoy_r": 50,
-            "avg_r": 40.8
+            "avg_r": 40.8,
+            "equity": 2551,
+            "quarter_operating_cf": 96,
+            "quarter_capex": 40,
+            "quarter_net_income": 97,
+            "quarter_revenue": 763,
+            "quarter_operating_income": 66,
+            "prev_operating_income": 51,
+            "operating_income_yoy": 57,
+            "prev_net_income": 35,
+            "net_income_yoy": 42
         },
         {
             "rank": 9,
@@ -4644,7 +5209,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 35,
             "ni_growth_yoy": -5.0,
             "ni_yoy_r": 111,
-            "avg_r": 41.5
+            "avg_r": 41.5,
+            "equity": 141352,
+            "quarter_operating_cf": 2571,
+            "quarter_capex": 1178,
+            "quarter_net_income": 793,
+            "quarter_revenue": 71234,
+            "quarter_operating_income": 1783,
+            "prev_operating_income": -98,
+            "operating_income_yoy": 1593,
+            "prev_net_income": -1162,
+            "net_income_yoy": 836
         },
         {
             "rank": 10,
@@ -4668,7 +5243,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 34,
             "ni_growth_yoy": 162.3,
             "ni_yoy_r": 44,
-            "avg_r": 42.8
+            "avg_r": 42.8,
+            "equity": 50358,
+            "quarter_operating_cf": 1749,
+            "quarter_capex": 496,
+            "quarter_net_income": 121,
+            "quarter_revenue": 12827,
+            "quarter_operating_income": 1128,
+            "prev_operating_income": 117,
+            "operating_income_yoy": 1053,
+            "prev_net_income": -175,
+            "net_income_yoy": -194
         },
         {
             "rank": 11,
@@ -4692,7 +5277,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 6,
             "ni_growth_yoy": 1932.1,
             "ni_yoy_r": 6,
-            "avg_r": 43.2
+            "avg_r": 43.2,
+            "equity": 7224,
+            "quarter_operating_cf": -3813,
+            "quarter_capex": 2,
+            "quarter_net_income": 2420,
+            "quarter_revenue": 17953,
+            "quarter_operating_income": 3273,
+            "prev_operating_income": 449,
+            "operating_income_yoy": 195,
+            "prev_net_income": 343,
+            "net_income_yoy": 119
         },
         {
             "rank": 12,
@@ -4716,7 +5311,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 31,
             "ni_growth_yoy": 250.9,
             "ni_yoy_r": 28,
-            "avg_r": 43.5
+            "avg_r": 43.5,
+            "equity": 3915,
+            "quarter_operating_cf": -233,
+            "quarter_capex": 21,
+            "quarter_net_income": 208,
+            "quarter_revenue": 6358,
+            "quarter_operating_income": 254,
+            "prev_operating_income": -34,
+            "operating_income_yoy": 0,
+            "prev_net_income": -223,
+            "net_income_yoy": -138
         },
         {
             "rank": 13,
@@ -4740,7 +5345,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 45,
             "ni_growth_yoy": 716.4,
             "ni_yoy_r": 13,
-            "avg_r": 43.8
+            "avg_r": 43.8,
+            "equity": 8249,
+            "quarter_operating_cf": 40,
+            "quarter_capex": 46,
+            "quarter_net_income": 80,
+            "quarter_revenue": 2056,
+            "quarter_operating_income": 101,
+            "prev_operating_income": -50,
+            "operating_income_yoy": 67,
+            "prev_net_income": -212,
+            "net_income_yoy": 9
         },
         {
             "rank": 14,
@@ -4764,7 +5379,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 91,
             "ni_growth_yoy": 128.2,
             "ni_yoy_r": 52,
-            "avg_r": 45.8
+            "avg_r": 45.8,
+            "equity": 9237,
+            "quarter_operating_cf": 264,
+            "quarter_capex": 212,
+            "quarter_net_income": 178,
+            "quarter_revenue": 2402,
+            "quarter_operating_income": 192,
+            "prev_operating_income": 117,
+            "operating_income_yoy": 119,
+            "prev_net_income": 150,
+            "net_income_yoy": 78
         },
         {
             "rank": 15,
@@ -4788,7 +5413,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 3,
             "ni_growth_yoy": 9441.3,
             "ni_yoy_r": 2,
-            "avg_r": 46.0
+            "avg_r": 46.0,
+            "equity": 1065,
+            "quarter_operating_cf": -55,
+            "quarter_capex": 0,
+            "quarter_net_income": 43,
+            "quarter_revenue": 184,
+            "quarter_operating_income": 11,
+            "prev_operating_income": -5,
+            "operating_income_yoy": 15,
+            "prev_net_income": -6,
+            "net_income_yoy": 0
         },
         {
             "rank": 16,
@@ -4812,7 +5447,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 85,
             "ni_growth_yoy": 126.1,
             "ni_yoy_r": 53,
-            "avg_r": 46.4
+            "avg_r": 46.4,
+            "equity": 7577,
+            "quarter_operating_cf": 401,
+            "quarter_capex": 271,
+            "quarter_net_income": 349,
+            "quarter_revenue": 4328,
+            "quarter_operating_income": 232,
+            "prev_operating_income": 154,
+            "operating_income_yoy": 183,
+            "prev_net_income": 259,
+            "net_income_yoy": 154
         },
         {
             "rank": 17,
@@ -4836,7 +5481,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 42,
             "ni_growth_yoy": 254.4,
             "ni_yoy_r": 27,
-            "avg_r": 47.8
+            "avg_r": 47.8,
+            "equity": 587,
+            "quarter_operating_cf": -25,
+            "quarter_capex": 9,
+            "quarter_net_income": 21,
+            "quarter_revenue": 176,
+            "quarter_operating_income": 3,
+            "prev_operating_income": -11,
+            "operating_income_yoy": -19,
+            "prev_net_income": -42,
+            "net_income_yoy": -13
         },
         {
             "rank": 18,
@@ -4860,7 +5515,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 7,
             "ni_growth_yoy": 115.1,
             "ni_yoy_r": 56,
-            "avg_r": 48.1
+            "avg_r": 48.1,
+            "equity": 2459,
+            "quarter_operating_cf": 75,
+            "quarter_capex": 26,
+            "quarter_net_income": 74,
+            "quarter_revenue": 1318,
+            "quarter_operating_income": 89,
+            "prev_operating_income": 22,
+            "operating_income_yoy": 58,
+            "prev_net_income": 10,
+            "net_income_yoy": 34
         },
         {
             "rank": 19,
@@ -4884,7 +5549,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 98,
             "ni_growth_yoy": 375.2,
             "ni_yoy_r": 18,
-            "avg_r": 48.9
+            "avg_r": 48.9,
+            "equity": 8276,
+            "quarter_operating_cf": 143,
+            "quarter_capex": 8,
+            "quarter_net_income": 204,
+            "quarter_revenue": 1110,
+            "quarter_operating_income": 178,
+            "prev_operating_income": 189,
+            "operating_income_yoy": 108,
+            "prev_net_income": 181,
+            "net_income_yoy": 43
         },
         {
             "rank": 20,
@@ -4908,7 +5583,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 47,
             "ni_growth_yoy": 178.5,
             "ni_yoy_r": 40,
-            "avg_r": 49.0
+            "avg_r": 49.0,
+            "equity": 2503,
+            "quarter_operating_cf": -443,
+            "quarter_capex": 0,
+            "quarter_net_income": 94,
+            "quarter_revenue": 1836,
+            "quarter_operating_income": 110,
+            "prev_operating_income": -266,
+            "operating_income_yoy": 11,
+            "prev_net_income": -268,
+            "net_income_yoy": 34
         },
         {
             "rank": 21,
@@ -4932,7 +5617,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 5,
             "ni_growth_yoy": 242.8,
             "ni_yoy_r": 29,
-            "avg_r": 51.0
+            "avg_r": 51.0,
+            "equity": 11947,
+            "quarter_operating_cf": -396,
+            "quarter_capex": 205,
+            "quarter_net_income": 247,
+            "quarter_revenue": 5066,
+            "quarter_operating_income": 278,
+            "prev_operating_income": 28,
+            "operating_income_yoy": 102,
+            "prev_net_income": 34,
+            "net_income_yoy": -173
         },
         {
             "rank": 22,
@@ -4956,7 +5651,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 89,
             "ni_growth_yoy": 80.9,
             "ni_yoy_r": 70,
-            "avg_r": 51.5
+            "avg_r": 51.5,
+            "equity": 6421,
+            "quarter_operating_cf": 239,
+            "quarter_capex": 21,
+            "quarter_net_income": 189,
+            "quarter_revenue": 4698,
+            "quarter_operating_income": 187,
+            "prev_operating_income": 147,
+            "operating_income_yoy": 129,
+            "prev_net_income": 154,
+            "net_income_yoy": 104
         },
         {
             "rank": 23,
@@ -4980,7 +5685,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 17,
             "ni_growth_yoy": 255.2,
             "ni_yoy_r": 26,
-            "avg_r": 51.6
+            "avg_r": 51.6,
+            "equity": 1425,
+            "quarter_operating_cf": 50,
+            "quarter_capex": 28,
+            "quarter_net_income": 11,
+            "quarter_revenue": 462,
+            "quarter_operating_income": -6,
+            "prev_operating_income": -11,
+            "operating_income_yoy": -9,
+            "prev_net_income": 2,
+            "net_income_yoy": -7
         },
         {
             "rank": 24,
@@ -5004,7 +5719,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 103,
             "ni_growth_yoy": 815.5,
             "ni_yoy_r": 10,
-            "avg_r": 52.6
+            "avg_r": 52.6,
+            "equity": 6081,
+            "quarter_operating_cf": -102,
+            "quarter_capex": 1,
+            "quarter_net_income": 117,
+            "quarter_revenue": 859,
+            "quarter_operating_income": 44,
+            "prev_operating_income": 7,
+            "operating_income_yoy": 34,
+            "prev_net_income": 127,
+            "net_income_yoy": 12
         },
         {
             "rank": 25,
@@ -5028,7 +5753,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 127,
             "ni_growth_yoy": 212.0,
             "ni_yoy_r": 32,
-            "avg_r": 53.8
+            "avg_r": 53.8,
+            "equity": 1038,
+            "quarter_operating_cf": 20,
+            "quarter_capex": 4,
+            "quarter_net_income": 17,
+            "quarter_revenue": 421,
+            "quarter_operating_income": 12,
+            "prev_operating_income": 31,
+            "operating_income_yoy": -9,
+            "prev_net_income": 27,
+            "net_income_yoy": -15
         },
         {
             "rank": 26,
@@ -5052,7 +5787,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 22,
             "ni_growth_yoy": -23.9,
             "ni_yoy_r": 132,
-            "avg_r": 55.0
+            "avg_r": 55.0,
+            "equity": 6003,
+            "quarter_operating_cf": 128,
+            "quarter_capex": 60,
+            "quarter_net_income": 190,
+            "quarter_revenue": 2357,
+            "quarter_operating_income": 111,
+            "prev_operating_income": -42,
+            "operating_income_yoy": 206,
+            "prev_net_income": 54,
+            "net_income_yoy": 250
         },
         {
             "rank": 27,
@@ -5076,7 +5821,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 50,
             "ni_growth_yoy": 108.4,
             "ni_yoy_r": 59,
-            "avg_r": 55.5
+            "avg_r": 55.5,
+            "equity": 2057,
+            "quarter_operating_cf": 3,
+            "quarter_capex": 0,
+            "quarter_net_income": 7,
+            "quarter_revenue": 110,
+            "quarter_operating_income": 7,
+            "prev_operating_income": -11,
+            "operating_income_yoy": 6,
+            "prev_net_income": -24,
+            "net_income_yoy": 3
         },
         {
             "rank": 28,
@@ -5100,7 +5855,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 113,
             "ni_growth_yoy": 3041.4,
             "ni_yoy_r": 3,
-            "avg_r": 55.9
+            "avg_r": 55.9,
+            "equity": 1216,
+            "quarter_operating_cf": 62,
+            "quarter_capex": 60,
+            "quarter_net_income": 21,
+            "quarter_revenue": 574,
+            "quarter_operating_income": 15,
+            "prev_operating_income": 36,
+            "operating_income_yoy": 7,
+            "prev_net_income": 26,
+            "net_income_yoy": 0
         },
         {
             "rank": 29,
@@ -5124,7 +5889,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 20,
             "ni_growth_yoy": 201.4,
             "ni_yoy_r": 34,
-            "avg_r": 56.0
+            "avg_r": 56.0,
+            "equity": 3144,
+            "quarter_operating_cf": 68,
+            "quarter_capex": 4,
+            "quarter_net_income": 53,
+            "quarter_revenue": 713,
+            "quarter_operating_income": 70,
+            "prev_operating_income": -7,
+            "operating_income_yoy": 59,
+            "prev_net_income": -35,
+            "net_income_yoy": 17
         },
         {
             "rank": 30,
@@ -5148,7 +5923,17 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 4,
             "ni_growth_yoy": -9.6,
             "ni_yoy_r": 117,
-            "avg_r": 56.1
+            "avg_r": 56.1,
+            "equity": 3275,
+            "quarter_operating_cf": 11,
+            "quarter_capex": 81,
+            "quarter_net_income": 83,
+            "quarter_revenue": 1942,
+            "quarter_operating_income": 78,
+            "prev_operating_income": 20,
+            "operating_income_yoy": 138,
+            "prev_net_income": -15,
+            "net_income_yoy": 92
         }
     ],
     "quality_momentum_value": [
@@ -5174,7 +5959,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 28,
             "ni_growth_yoy": 1346.6,
             "ni_yoy_r": 3,
-            "avg_r": 14.9
+            "avg_r": 14.9,
+            "quarter_revenue": 8147,
+            "quarter_cost_of_sales": 6009,
+            "assets": 23718,
+            "assets_yoy": 23737,
+            "op_to_debt_now": 0.06089505808282227,
+            "op_to_debt_yoy": 0.009488670564966894,
+            "quarter_operating_income": 458,
+            "prev_operating_income": -289,
+            "operating_income_yoy": 70,
+            "quarter_net_income": 304,
+            "prev_net_income": -546,
+            "net_income_yoy": -24
         },
         {
             "rank": 2,
@@ -5198,7 +5995,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 8,
             "ni_growth_yoy": 1334.2,
             "ni_yoy_r": 4,
-            "avg_r": 17.5
+            "avg_r": 17.5,
+            "quarter_revenue": 788,
+            "quarter_cost_of_sales": 541,
+            "assets": 2108,
+            "assets_yoy": 1462,
+            "op_to_debt_now": 0.25330394722902744,
+            "op_to_debt_yoy": -0.056524134713351215,
+            "quarter_operating_income": 216,
+            "prev_operating_income": -35,
+            "operating_income_yoy": -14,
+            "quarter_net_income": 178,
+            "prev_net_income": -56,
+            "net_income_yoy": -14
         },
         {
             "rank": 3,
@@ -5222,7 +6031,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 4,
             "ni_growth_yoy": 115.1,
             "ni_yoy_r": 29,
-            "avg_r": 20.4
+            "avg_r": 20.4,
+            "quarter_revenue": 1318,
+            "quarter_cost_of_sales": 1111,
+            "assets": 5165,
+            "assets_yoy": 5644,
+            "op_to_debt_now": 0.045514013967868874,
+            "op_to_debt_yoy": 0.02261751174261958,
+            "quarter_operating_income": 89,
+            "prev_operating_income": 22,
+            "operating_income_yoy": 58,
+            "quarter_net_income": 74,
+            "prev_net_income": 10,
+            "net_income_yoy": 34
         },
         {
             "rank": 4,
@@ -5246,7 +6067,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 32,
             "ni_growth_yoy": 716.4,
             "ni_yoy_r": 6,
-            "avg_r": 22.5
+            "avg_r": 22.5,
+            "quarter_revenue": 2056,
+            "quarter_cost_of_sales": 1705,
+            "assets": 15889,
+            "assets_yoy": 16300,
+            "op_to_debt_now": 0.018796352391561282,
+            "op_to_debt_yoy": 0.011743340579839567,
+            "quarter_operating_income": 101,
+            "prev_operating_income": -50,
+            "operating_income_yoy": 67,
+            "quarter_net_income": 80,
+            "prev_net_income": -212,
+            "net_income_yoy": 9
         },
         {
             "rank": 5,
@@ -5270,7 +6103,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 6,
             "ni_growth_yoy": 119.8,
             "ni_yoy_r": 28,
-            "avg_r": 25.6
+            "avg_r": 25.6,
+            "quarter_revenue": 356,
+            "quarter_cost_of_sales": 296,
+            "assets": 2684,
+            "assets_yoy": 2673,
+            "op_to_debt_now": 0.0283815767557573,
+            "op_to_debt_yoy": 0.008355775260662742,
+            "quarter_operating_income": 25,
+            "prev_operating_income": -2,
+            "operating_income_yoy": 8,
+            "quarter_net_income": 27,
+            "prev_net_income": -6,
+            "net_income_yoy": 12
         },
         {
             "rank": 6,
@@ -5294,7 +6139,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 31,
             "ni_growth_yoy": 474.3,
             "ni_yoy_r": 7,
-            "avg_r": 25.9
+            "avg_r": 25.9,
+            "quarter_revenue": 1338734,
+            "quarter_cost_of_sales": 519602,
+            "assets": 6333396,
+            "assets_yoy": 5163767,
+            "op_to_debt_now": 2.123853025123623,
+            "op_to_debt_yoy": 0.7340035459108498,
+            "quarter_operating_income": 572327,
+            "prev_operating_income": 200736,
+            "operating_income_yoy": 66852,
+            "quarter_net_income": 472252,
+            "prev_net_income": 196417,
+            "net_income_yoy": 82228
         },
         {
             "rank": 7,
@@ -5318,7 +6175,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 12,
             "ni_growth_yoy": 784.9,
             "ni_yoy_r": 5,
-            "avg_r": 27.1
+            "avg_r": 27.1,
+            "quarter_revenue": 214,
+            "quarter_cost_of_sales": 149,
+            "assets": 713,
+            "assets_yoy": 550,
+            "op_to_debt_now": 0.6278179023188406,
+            "op_to_debt_yoy": -0.3286379852631579,
+            "quarter_operating_income": 43,
+            "prev_operating_income": 10,
+            "operating_income_yoy": -6,
+            "quarter_net_income": 52,
+            "prev_net_income": 12,
+            "net_income_yoy": -7
         },
         {
             "rank": 8,
@@ -5342,7 +6211,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 33,
             "ni_growth_yoy": -14.2,
             "ni_yoy_r": 69,
-            "avg_r": 27.4
+            "avg_r": 27.4,
+            "quarter_revenue": 15765,
+            "quarter_cost_of_sales": 7632,
+            "assets": 70990,
+            "assets_yoy": 75628,
+            "op_to_debt_now": 1.6008903197234834,
+            "op_to_debt_yoy": 0.5686106189279619,
+            "quarter_operating_income": 1078,
+            "prev_operating_income": -726,
+            "operating_income_yoy": 1423,
+            "quarter_net_income": 887,
+            "prev_net_income": -2512,
+            "net_income_yoy": 1034
         },
         {
             "rank": 9,
@@ -5366,7 +6247,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 22,
             "ni_growth_yoy": 183.6,
             "ni_yoy_r": 16,
-            "avg_r": 28.2
+            "avg_r": 28.2,
+            "quarter_revenue": 68423,
+            "quarter_cost_of_sales": 48441,
+            "assets": 368091,
+            "assets_yoy": 354815,
+            "op_to_debt_now": 0.15091137436746252,
+            "op_to_debt_yoy": 0.091492325146238,
+            "quarter_operating_income": 12585,
+            "prev_operating_income": 7762,
+            "operating_income_yoy": 8033,
+            "quarter_net_income": 8266,
+            "prev_net_income": 2505,
+            "net_income_yoy": 2914
         },
         {
             "rank": 10,
@@ -5390,7 +6283,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 7,
             "ni_growth_yoy": 115.0,
             "ni_yoy_r": 30,
-            "avg_r": 30.8
+            "avg_r": 30.8,
+            "quarter_revenue": 1120,
+            "quarter_cost_of_sales": 974,
+            "assets": 3189,
+            "assets_yoy": 2741,
+            "op_to_debt_now": 0.0631280823756219,
+            "op_to_debt_yoy": 0.04205260595848283,
+            "quarter_operating_income": 50,
+            "prev_operating_income": 11,
+            "operating_income_yoy": 32,
+            "quarter_net_income": 47,
+            "prev_net_income": 8,
+            "net_income_yoy": 22
         },
         {
             "rank": 11,
@@ -5414,7 +6319,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 53,
             "ni_growth_yoy": 128.2,
             "ni_yoy_r": 25,
-            "avg_r": 32.1
+            "avg_r": 32.1,
+            "quarter_revenue": 2402,
+            "quarter_cost_of_sales": 1287,
+            "assets": 16789,
+            "assets_yoy": 15137,
+            "op_to_debt_now": 0.03426212625075214,
+            "op_to_debt_yoy": 0.024654741686863248,
+            "quarter_operating_income": 192,
+            "prev_operating_income": 117,
+            "operating_income_yoy": 119,
+            "quarter_net_income": 178,
+            "prev_net_income": 150,
+            "net_income_yoy": 78
         },
         {
             "rank": 12,
@@ -5438,7 +6355,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 69,
             "ni_growth_yoy": 94.3,
             "ni_yoy_r": 34,
-            "avg_r": 32.5
+            "avg_r": 32.5,
+            "quarter_revenue": 5575,
+            "quarter_cost_of_sales": 3908,
+            "assets": 14417,
+            "assets_yoy": 13337,
+            "op_to_debt_now": 0.08475219151534201,
+            "op_to_debt_yoy": 0.054496690490618914,
+            "quarter_operating_income": 180,
+            "prev_operating_income": 141,
+            "operating_income_yoy": 118,
+            "quarter_net_income": 192,
+            "prev_net_income": 233,
+            "net_income_yoy": 98
         },
         {
             "rank": 13,
@@ -5462,7 +6391,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 51,
             "ni_growth_yoy": 80.9,
             "ni_yoy_r": 37,
-            "avg_r": 32.5
+            "avg_r": 32.5,
+            "quarter_revenue": 4698,
+            "quarter_cost_of_sales": 3490,
+            "assets": 10912,
+            "assets_yoy": 10179,
+            "op_to_debt_now": 0.09401165497803958,
+            "op_to_debt_yoy": 0.06364314072121814,
+            "quarter_operating_income": 187,
+            "prev_operating_income": 147,
+            "operating_income_yoy": 129,
+            "quarter_net_income": 189,
+            "prev_net_income": 154,
+            "net_income_yoy": 104
         },
         {
             "rank": 14,
@@ -5486,7 +6427,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 11,
             "ni_growth_yoy": -9.0,
             "ni_yoy_r": 65,
-            "avg_r": 33.9
+            "avg_r": 33.9,
+            "quarter_revenue": 6739,
+            "quarter_cost_of_sales": 5450,
+            "assets": 73521,
+            "assets_yoy": 77661,
+            "op_to_debt_now": 0.0419728562780067,
+            "op_to_debt_yoy": 0.026842306193487445,
+            "quarter_operating_income": 801,
+            "prev_operating_income": 413,
+            "operating_income_yoy": 539,
+            "quarter_net_income": 492,
+            "prev_net_income": 114,
+            "net_income_yoy": 541
         },
         {
             "rank": 15,
@@ -5510,7 +6463,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 52,
             "ni_growth_yoy": 26.6,
             "ni_yoy_r": 50,
-            "avg_r": 34.5
+            "avg_r": 34.5,
+            "quarter_revenue": 4840,
+            "quarter_cost_of_sales": 4120,
+            "assets": 18483,
+            "assets_yoy": 18906,
+            "op_to_debt_now": 0.09619172430906665,
+            "op_to_debt_yoy": 0.06990517015516287,
+            "quarter_operating_income": 496,
+            "prev_operating_income": 236,
+            "operating_income_yoy": 384,
+            "quarter_net_income": 354,
+            "prev_net_income": 292,
+            "net_income_yoy": 280
         },
         {
             "rank": 16,
@@ -5534,7 +6499,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 37,
             "ni_growth_yoy": 16.3,
             "ni_yoy_r": 52,
-            "avg_r": 34.8
+            "avg_r": 34.8,
+            "quarter_revenue": 9340,
+            "quarter_cost_of_sales": 6506,
+            "assets": 40034,
+            "assets_yoy": 36763,
+            "op_to_debt_now": 0.48260785999989503,
+            "op_to_debt_yoy": 0.32461733801096476,
+            "quarter_operating_income": 674,
+            "prev_operating_income": 333,
+            "operating_income_yoy": 560,
+            "quarter_net_income": 606,
+            "prev_net_income": 308,
+            "net_income_yoy": 521
         },
         {
             "rank": 17,
@@ -5558,7 +6535,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 17,
             "ni_growth_yoy": 201.4,
             "ni_yoy_r": 15,
-            "avg_r": 35.0
+            "avg_r": 35.0,
+            "quarter_revenue": 713,
+            "quarter_cost_of_sales": 610,
+            "assets": 5602,
+            "assets_yoy": 5772,
+            "op_to_debt_now": 0.040914990120355293,
+            "op_to_debt_yoy": 0.03558952247264358,
+            "quarter_operating_income": 70,
+            "prev_operating_income": -7,
+            "operating_income_yoy": 59,
+            "quarter_net_income": 53,
+            "prev_net_income": -35,
+            "net_income_yoy": 17
         },
         {
             "rank": 18,
@@ -5582,7 +6571,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 30,
             "ni_growth_yoy": 153.3,
             "ni_yoy_r": 21,
-            "avg_r": 35.1
+            "avg_r": 35.1,
+            "quarter_revenue": 8571,
+            "quarter_cost_of_sales": 7813,
+            "assets": 42178,
+            "assets_yoy": 32645,
+            "op_to_debt_now": 0.01268513565682714,
+            "op_to_debt_yoy": 0.004328932081771568,
+            "quarter_operating_income": 214,
+            "prev_operating_income": 7,
+            "operating_income_yoy": 42,
+            "quarter_net_income": 62,
+            "prev_net_income": -134,
+            "net_income_yoy": 24
         },
         {
             "rank": 19,
@@ -5606,7 +6607,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 2,
             "ni_growth_yoy": 28.1,
             "ni_yoy_r": 49,
-            "avg_r": 35.1
+            "avg_r": 35.1,
+            "quarter_revenue": 543,
+            "quarter_cost_of_sales": 404,
+            "assets": 3973,
+            "assets_yoy": 3739,
+            "op_to_debt_now": 0.2017601443308875,
+            "op_to_debt_yoy": 0.2504720769139541,
+            "quarter_operating_income": 31,
+            "prev_operating_income": -9,
+            "operating_income_yoy": 39,
+            "quarter_net_income": 78,
+            "prev_net_income": 4,
+            "net_income_yoy": 61
         },
         {
             "rank": 20,
@@ -5630,7 +6643,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 79,
             "ni_growth_yoy": 212.0,
             "ni_yoy_r": 14,
-            "avg_r": 35.5
+            "avg_r": 35.5,
+            "quarter_revenue": 421,
+            "quarter_cost_of_sales": 362,
+            "assets": 1638,
+            "assets_yoy": 1598,
+            "op_to_debt_now": 0.03812516384188883,
+            "op_to_debt_yoy": -0.02659343890897264,
+            "quarter_operating_income": 12,
+            "prev_operating_income": 31,
+            "operating_income_yoy": -9,
+            "quarter_net_income": 17,
+            "prev_net_income": 27,
+            "net_income_yoy": -15
         },
         {
             "rank": 21,
@@ -5654,7 +6679,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 15,
             "ni_growth_yoy": 88.5,
             "ni_yoy_r": 36,
-            "avg_r": 35.5
+            "avg_r": 35.5,
+            "quarter_revenue": 18471,
+            "quarter_cost_of_sales": 6922,
+            "assets": 159871,
+            "assets_yoy": 149829,
+            "op_to_debt_now": 0.04373008555466864,
+            "op_to_debt_yoy": 0.030016298757695715,
+            "quarter_operating_income": 1978,
+            "prev_operating_income": 1725,
+            "operating_income_yoy": 1323,
+            "quarter_net_income": 1453,
+            "prev_net_income": -690,
+            "net_income_yoy": 770
         },
         {
             "rank": 22,
@@ -5678,7 +6715,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 20,
             "ni_growth_yoy": 14.8,
             "ni_yoy_r": 54,
-            "avg_r": 35.9
+            "avg_r": 35.9,
+            "quarter_revenue": 237272,
+            "quarter_cost_of_sales": 175641,
+            "assets": 712345,
+            "assets_yoy": 659493,
+            "op_to_debt_now": 0.13135235741162582,
+            "op_to_debt_yoy": 0.09060830949369385,
+            "quarter_operating_income": 16737,
+            "prev_operating_income": -1089,
+            "operating_income_yoy": 12590,
+            "quarter_net_income": 10050,
+            "prev_net_income": -7259,
+            "net_income_yoy": 8756
         },
         {
             "rank": 23,
@@ -5702,7 +6751,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 27,
             "ni_growth_yoy": -5.0,
             "ni_yoy_r": 63,
-            "avg_r": 36.1
+            "avg_r": 36.1,
+            "quarter_revenue": 71234,
+            "quarter_cost_of_sales": 49222,
+            "assets": 348831,
+            "assets_yoy": 336549,
+            "op_to_debt_now": 0.0191056003903552,
+            "op_to_debt_yoy": 0.018051157836474097,
+            "quarter_operating_income": 1783,
+            "prev_operating_income": -98,
+            "operating_income_yoy": 1593,
+            "quarter_net_income": 793,
+            "prev_net_income": -1162,
+            "net_income_yoy": 836
         },
         {
             "rank": 24,
@@ -5726,7 +6787,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 75,
             "ni_growth_yoy": 429.5,
             "ni_yoy_r": 8,
-            "avg_r": 36.5
+            "avg_r": 36.5,
+            "quarter_revenue": 17252,
+            "quarter_cost_of_sales": 14616,
+            "assets": 100271,
+            "assets_yoy": 100098,
+            "op_to_debt_now": 0.1630446117434557,
+            "op_to_debt_yoy": 0.07320296622356083,
+            "quarter_operating_income": 1573,
+            "prev_operating_income": 630,
+            "operating_income_yoy": 809,
+            "quarter_net_income": 1601,
+            "prev_net_income": 2053,
+            "net_income_yoy": 302
         },
         {
             "rank": 25,
@@ -5750,7 +6823,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 26,
             "ni_growth_yoy": 162.3,
             "ni_yoy_r": 19,
-            "avg_r": 37.0
+            "avg_r": 37.0,
+            "quarter_revenue": 12827,
+            "quarter_cost_of_sales": 9589,
+            "assets": 124955,
+            "assets_yoy": 126789,
+            "op_to_debt_now": 0.019950569407527225,
+            "op_to_debt_yoy": 0.0175722932694091,
+            "quarter_operating_income": 1128,
+            "prev_operating_income": 117,
+            "operating_income_yoy": 1053,
+            "quarter_net_income": 121,
+            "prev_net_income": -175,
+            "net_income_yoy": -194
         },
         {
             "rank": 26,
@@ -5774,7 +6859,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 5,
             "ni_growth_yoy": 40.5,
             "ni_yoy_r": 45,
-            "avg_r": 37.4
+            "avg_r": 37.4,
+            "quarter_revenue": 393,
+            "quarter_cost_of_sales": 329,
+            "assets": 2200,
+            "assets_yoy": 2074,
+            "op_to_debt_now": 0.029500368326815997,
+            "op_to_debt_yoy": 0.028515108889345647,
+            "quarter_operating_income": 17,
+            "prev_operating_income": 13,
+            "operating_income_yoy": 16,
+            "quarter_net_income": 27,
+            "prev_net_income": 4,
+            "net_income_yoy": 19
         },
         {
             "rank": 27,
@@ -5798,7 +6895,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 46,
             "ni_growth_yoy": 180.9,
             "ni_yoy_r": 17,
-            "avg_r": 37.6
+            "avg_r": 37.6,
+            "quarter_revenue": 1018,
+            "quarter_cost_of_sales": 501,
+            "assets": 6278,
+            "assets_yoy": 5662,
+            "op_to_debt_now": 0.16127085095442975,
+            "op_to_debt_yoy": 0.07244427212020976,
+            "quarter_operating_income": 188,
+            "prev_operating_income": 175,
+            "operating_income_yoy": 92,
+            "quarter_net_income": 228,
+            "prev_net_income": 168,
+            "net_income_yoy": 81
         },
         {
             "rank": 28,
@@ -5822,7 +6931,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 42,
             "ni_growth_yoy": 256.4,
             "ni_yoy_r": 11,
-            "avg_r": 37.8
+            "avg_r": 37.8,
+            "quarter_revenue": 268,
+            "quarter_cost_of_sales": 224,
+            "assets": 943,
+            "assets_yoy": 784,
+            "op_to_debt_now": 0.19748760825842696,
+            "op_to_debt_yoy": 0.07706941069230769,
+            "quarter_operating_income": 35,
+            "prev_operating_income": 22,
+            "operating_income_yoy": 10,
+            "quarter_net_income": 28,
+            "prev_net_income": 18,
+            "net_income_yoy": 7
         },
         {
             "rank": 29,
@@ -5846,7 +6967,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 59,
             "ni_growth_yoy": 375.2,
             "ni_yoy_r": 9,
-            "avg_r": 37.9
+            "avg_r": 37.9,
+            "quarter_revenue": 1110,
+            "quarter_cost_of_sales": 706,
+            "assets": 12724,
+            "assets_yoy": 12180,
+            "op_to_debt_now": 0.0884344623995371,
+            "op_to_debt_yoy": 0.04826511774237612,
+            "quarter_operating_income": 178,
+            "prev_operating_income": 189,
+            "operating_income_yoy": 108,
+            "quarter_net_income": 204,
+            "prev_net_income": 181,
+            "net_income_yoy": 43
         },
         {
             "rank": 30,
@@ -5870,7 +7003,19 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 39,
             "ni_growth_yoy": 167.6,
             "ni_yoy_r": 18,
-            "avg_r": 38.2
+            "avg_r": 38.2,
+            "quarter_revenue": 55348,
+            "quarter_cost_of_sales": 49774,
+            "assets": 118220,
+            "assets_yoy": 108651,
+            "op_to_debt_now": 0.13628981753723027,
+            "op_to_debt_yoy": 0.05141321941503733,
+            "quarter_operating_income": 2953,
+            "prev_operating_income": 3247,
+            "operating_income_yoy": 1251,
+            "quarter_net_income": 2291,
+            "prev_net_income": 1359,
+            "net_income_yoy": 856
         }
     ],
     "ultra_value": [
@@ -5904,7 +7049,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 26,
             "ni_growth_yoy": 1346.6,
             "ni_yoy_r": 3,
-            "avg_r": 12.1
+            "avg_r": 12.1,
+            "equity": 8737,
+            "quarter_operating_cf": 1590,
+            "quarter_capex": 247,
+            "quarter_net_income": 304,
+            "quarter_revenue": 8147,
+            "quarter_cost_of_sales": 6009,
+            "assets": 23718,
+            "assets_yoy": 23737,
+            "op_to_debt_now": 0.06089505808282227,
+            "op_to_debt_yoy": 0.009488670564966894,
+            "quarter_operating_income": 458,
+            "prev_operating_income": -289,
+            "operating_income_yoy": 70,
+            "prev_net_income": -546,
+            "net_income_yoy": -24
         },
         {
             "rank": 2,
@@ -5936,7 +7096,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 67,
             "ni_growth_yoy": 94.3,
             "ni_yoy_r": 32,
-            "avg_r": 21.4
+            "avg_r": 21.4,
+            "equity": 8672,
+            "quarter_operating_cf": 316,
+            "quarter_capex": 47,
+            "quarter_net_income": 192,
+            "quarter_revenue": 5575,
+            "quarter_cost_of_sales": 3908,
+            "assets": 14417,
+            "assets_yoy": 13337,
+            "op_to_debt_now": 0.08475219151534201,
+            "op_to_debt_yoy": 0.054496690490618914,
+            "quarter_operating_income": 180,
+            "prev_operating_income": 141,
+            "operating_income_yoy": 118,
+            "prev_net_income": 233,
+            "net_income_yoy": 98
         },
         {
             "rank": 3,
@@ -5968,7 +7143,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 20,
             "ni_growth_yoy": 183.6,
             "ni_yoy_r": 14,
-            "avg_r": 23.2
+            "avg_r": 23.2,
+            "equity": 198137,
+            "quarter_operating_cf": 8194,
+            "quarter_capex": 3387,
+            "quarter_net_income": 8266,
+            "quarter_revenue": 68423,
+            "quarter_cost_of_sales": 48441,
+            "assets": 368091,
+            "assets_yoy": 354815,
+            "op_to_debt_now": 0.15091137436746252,
+            "op_to_debt_yoy": 0.091492325146238,
+            "quarter_operating_income": 12585,
+            "prev_operating_income": 7762,
+            "operating_income_yoy": 8033,
+            "prev_net_income": 2505,
+            "net_income_yoy": 2914
         },
         {
             "rank": 4,
@@ -6000,7 +7190,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 50,
             "ni_growth_yoy": 26.6,
             "ni_yoy_r": 47,
-            "avg_r": 23.2
+            "avg_r": 23.2,
+            "equity": 5124,
+            "quarter_operating_cf": 1062,
+            "quarter_capex": 69,
+            "quarter_net_income": 354,
+            "quarter_revenue": 4840,
+            "quarter_cost_of_sales": 4120,
+            "assets": 18483,
+            "assets_yoy": 18906,
+            "op_to_debt_now": 0.09619172430906665,
+            "op_to_debt_yoy": 0.06990517015516287,
+            "quarter_operating_income": 496,
+            "prev_operating_income": 236,
+            "operating_income_yoy": 384,
+            "prev_net_income": 292,
+            "net_income_yoy": 280
         },
         {
             "rank": 5,
@@ -6032,7 +7237,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 3,
             "ni_growth_yoy": 115.1,
             "ni_yoy_r": 27,
-            "avg_r": 25.6
+            "avg_r": 25.6,
+            "equity": 2459,
+            "quarter_operating_cf": 75,
+            "quarter_capex": 26,
+            "quarter_net_income": 74,
+            "quarter_revenue": 1318,
+            "quarter_cost_of_sales": 1111,
+            "assets": 5165,
+            "assets_yoy": 5644,
+            "op_to_debt_now": 0.045514013967868874,
+            "op_to_debt_yoy": 0.02261751174261958,
+            "quarter_operating_income": 89,
+            "prev_operating_income": 22,
+            "operating_income_yoy": 58,
+            "prev_net_income": 10,
+            "net_income_yoy": 34
         },
         {
             "rank": 6,
@@ -6064,7 +7284,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 5,
             "ni_growth_yoy": 119.8,
             "ni_yoy_r": 26,
-            "avg_r": 25.7
+            "avg_r": 25.7,
+            "equity": 1479,
+            "quarter_operating_cf": 78,
+            "quarter_capex": 14,
+            "quarter_net_income": 27,
+            "quarter_revenue": 356,
+            "quarter_cost_of_sales": 296,
+            "assets": 2684,
+            "assets_yoy": 2673,
+            "op_to_debt_now": 0.0283815767557573,
+            "op_to_debt_yoy": 0.008355775260662742,
+            "quarter_operating_income": 25,
+            "prev_operating_income": -2,
+            "operating_income_yoy": 8,
+            "prev_net_income": -6,
+            "net_income_yoy": 12
         },
         {
             "rank": 7,
@@ -6096,7 +7331,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 6,
             "ni_growth_yoy": 115.0,
             "ni_yoy_r": 28,
-            "avg_r": 25.8
+            "avg_r": 25.8,
+            "equity": 1410,
+            "quarter_operating_cf": 148,
+            "quarter_capex": 21,
+            "quarter_net_income": 47,
+            "quarter_revenue": 1120,
+            "quarter_cost_of_sales": 974,
+            "assets": 3189,
+            "assets_yoy": 2741,
+            "op_to_debt_now": 0.0631280823756219,
+            "op_to_debt_yoy": 0.04205260595848283,
+            "quarter_operating_income": 50,
+            "prev_operating_income": 11,
+            "operating_income_yoy": 32,
+            "prev_net_income": 8,
+            "net_income_yoy": 22
         },
         {
             "rank": 8,
@@ -6128,7 +7378,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 49,
             "ni_growth_yoy": 80.9,
             "ni_yoy_r": 35,
-            "avg_r": 25.9
+            "avg_r": 25.9,
+            "equity": 6421,
+            "quarter_operating_cf": 239,
+            "quarter_capex": 21,
+            "quarter_net_income": 189,
+            "quarter_revenue": 4698,
+            "quarter_cost_of_sales": 3490,
+            "assets": 10912,
+            "assets_yoy": 10179,
+            "op_to_debt_now": 0.09401165497803958,
+            "op_to_debt_yoy": 0.06364314072121814,
+            "quarter_operating_income": 187,
+            "prev_operating_income": 147,
+            "operating_income_yoy": 129,
+            "prev_net_income": 154,
+            "net_income_yoy": 104
         },
         {
             "rank": 9,
@@ -6160,7 +7425,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 51,
             "ni_growth_yoy": 128.2,
             "ni_yoy_r": 23,
-            "avg_r": 26.9
+            "avg_r": 26.9,
+            "equity": 9237,
+            "quarter_operating_cf": 264,
+            "quarter_capex": 212,
+            "quarter_net_income": 178,
+            "quarter_revenue": 2402,
+            "quarter_cost_of_sales": 1287,
+            "assets": 16789,
+            "assets_yoy": 15137,
+            "op_to_debt_now": 0.03426212625075214,
+            "op_to_debt_yoy": 0.024654741686863248,
+            "quarter_operating_income": 192,
+            "prev_operating_income": 117,
+            "operating_income_yoy": 119,
+            "prev_net_income": 150,
+            "net_income_yoy": 78
         },
         {
             "rank": 10,
@@ -6192,7 +7472,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 30,
             "ni_growth_yoy": 716.4,
             "ni_yoy_r": 5,
-            "avg_r": 27.1
+            "avg_r": 27.1,
+            "equity": 8249,
+            "quarter_operating_cf": 40,
+            "quarter_capex": 46,
+            "quarter_net_income": 80,
+            "quarter_revenue": 2056,
+            "quarter_cost_of_sales": 1705,
+            "assets": 15889,
+            "assets_yoy": 16300,
+            "op_to_debt_now": 0.018796352391561282,
+            "op_to_debt_yoy": 0.011743340579839567,
+            "quarter_operating_income": 101,
+            "prev_operating_income": -50,
+            "operating_income_yoy": 67,
+            "prev_net_income": -212,
+            "net_income_yoy": 9
         },
         {
             "rank": 11,
@@ -6224,7 +7519,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 25,
             "ni_growth_yoy": -5.0,
             "ni_yoy_r": 60,
-            "avg_r": 28.3
+            "avg_r": 28.3,
+            "equity": 141352,
+            "quarter_operating_cf": 2571,
+            "quarter_capex": 1178,
+            "quarter_net_income": 793,
+            "quarter_revenue": 71234,
+            "quarter_cost_of_sales": 49222,
+            "assets": 348831,
+            "assets_yoy": 336549,
+            "op_to_debt_now": 0.0191056003903552,
+            "op_to_debt_yoy": 0.018051157836474097,
+            "quarter_operating_income": 1783,
+            "prev_operating_income": -98,
+            "operating_income_yoy": 1593,
+            "prev_net_income": -1162,
+            "net_income_yoy": 836
         },
         {
             "rank": 12,
@@ -6256,7 +7566,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 76,
             "ni_growth_yoy": 212.0,
             "ni_yoy_r": 12,
-            "avg_r": 28.8
+            "avg_r": 28.8,
+            "equity": 1038,
+            "quarter_operating_cf": 20,
+            "quarter_capex": 4,
+            "quarter_net_income": 17,
+            "quarter_revenue": 421,
+            "quarter_cost_of_sales": 362,
+            "assets": 1638,
+            "assets_yoy": 1598,
+            "op_to_debt_now": 0.03812516384188883,
+            "op_to_debt_yoy": -0.02659343890897264,
+            "quarter_operating_income": 12,
+            "prev_operating_income": 31,
+            "operating_income_yoy": -9,
+            "prev_net_income": 27,
+            "net_income_yoy": -15
         },
         {
             "rank": 13,
@@ -6288,7 +7613,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 28,
             "ni_growth_yoy": 153.3,
             "ni_yoy_r": 19,
-            "avg_r": 29.9
+            "avg_r": 29.9,
+            "equity": 18806,
+            "quarter_operating_cf": 833,
+            "quarter_capex": 150,
+            "quarter_net_income": 62,
+            "quarter_revenue": 8571,
+            "quarter_cost_of_sales": 7813,
+            "assets": 42178,
+            "assets_yoy": 32645,
+            "op_to_debt_now": 0.01268513565682714,
+            "op_to_debt_yoy": 0.004328932081771568,
+            "quarter_operating_income": 214,
+            "prev_operating_income": 7,
+            "operating_income_yoy": 42,
+            "prev_net_income": -134,
+            "net_income_yoy": 24
         },
         {
             "rank": 14,
@@ -6320,7 +7660,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 22,
             "ni_growth_yoy": 132.9,
             "ni_yoy_r": 21,
-            "avg_r": 30.3
+            "avg_r": 30.3,
+            "equity": 2551,
+            "quarter_operating_cf": 96,
+            "quarter_capex": 40,
+            "quarter_net_income": 97,
+            "quarter_revenue": 763,
+            "quarter_cost_of_sales": 637,
+            "assets": 4068,
+            "assets_yoy": 3557,
+            "op_to_debt_now": 0.06787381907266199,
+            "op_to_debt_yoy": 0.07197338675663477,
+            "quarter_operating_income": 66,
+            "prev_operating_income": 51,
+            "operating_income_yoy": 57,
+            "prev_net_income": 35,
+            "net_income_yoy": 42
         },
         {
             "rank": 15,
@@ -6352,7 +7707,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 57,
             "ni_growth_yoy": 375.2,
             "ni_yoy_r": 7,
-            "avg_r": 30.6
+            "avg_r": 30.6,
+            "equity": 8276,
+            "quarter_operating_cf": 143,
+            "quarter_capex": 8,
+            "quarter_net_income": 204,
+            "quarter_revenue": 1110,
+            "quarter_cost_of_sales": 706,
+            "assets": 12724,
+            "assets_yoy": 12180,
+            "op_to_debt_now": 0.0884344623995371,
+            "op_to_debt_yoy": 0.04826511774237612,
+            "quarter_operating_income": 178,
+            "prev_operating_income": 189,
+            "operating_income_yoy": 108,
+            "prev_net_income": 181,
+            "net_income_yoy": 43
         },
         {
             "rank": 16,
@@ -6384,7 +7754,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 45,
             "ni_growth_yoy": 126.1,
             "ni_yoy_r": 24,
-            "avg_r": 31.5
+            "avg_r": 31.5,
+            "equity": 7577,
+            "quarter_operating_cf": 401,
+            "quarter_capex": 271,
+            "quarter_net_income": 349,
+            "quarter_revenue": 4328,
+            "quarter_cost_of_sales": 3817,
+            "assets": 15391,
+            "assets_yoy": 13517,
+            "op_to_debt_now": 0.07163090633722449,
+            "op_to_debt_yoy": 0.06381394825000473,
+            "quarter_operating_income": 232,
+            "prev_operating_income": 154,
+            "operating_income_yoy": 183,
+            "prev_net_income": 259,
+            "net_income_yoy": 154
         },
         {
             "rank": 17,
@@ -6416,7 +7801,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 24,
             "ni_growth_yoy": 162.3,
             "ni_yoy_r": 17,
-            "avg_r": 32.2
+            "avg_r": 32.2,
+            "equity": 50358,
+            "quarter_operating_cf": 1749,
+            "quarter_capex": 496,
+            "quarter_net_income": 121,
+            "quarter_revenue": 12827,
+            "quarter_cost_of_sales": 9589,
+            "assets": 124955,
+            "assets_yoy": 126789,
+            "op_to_debt_now": 0.019950569407527225,
+            "op_to_debt_yoy": 0.0175722932694091,
+            "quarter_operating_income": 1128,
+            "prev_operating_income": 117,
+            "operating_income_yoy": 1053,
+            "prev_net_income": -175,
+            "net_income_yoy": -194
         },
         {
             "rank": 18,
@@ -6448,7 +7848,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 31,
             "ni_growth_yoy": -14.2,
             "ni_yoy_r": 66,
-            "avg_r": 32.2
+            "avg_r": 32.2,
+            "equity": 56793,
+            "quarter_operating_cf": 1056,
+            "quarter_capex": 219,
+            "quarter_net_income": 887,
+            "quarter_revenue": 15765,
+            "quarter_cost_of_sales": 7632,
+            "assets": 70990,
+            "assets_yoy": 75628,
+            "op_to_debt_now": 1.6008903197234834,
+            "op_to_debt_yoy": 0.5686106189279619,
+            "quarter_operating_income": 1078,
+            "prev_operating_income": -726,
+            "operating_income_yoy": 1423,
+            "prev_net_income": -2512,
+            "net_income_yoy": 1034
         },
         {
             "rank": 19,
@@ -6480,7 +7895,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 4,
             "ni_growth_yoy": 40.5,
             "ni_yoy_r": 43,
-            "avg_r": 34.4
+            "avg_r": 34.4,
+            "equity": 1207,
+            "quarter_operating_cf": 28,
+            "quarter_capex": 12,
+            "quarter_net_income": 27,
+            "quarter_revenue": 393,
+            "quarter_cost_of_sales": 329,
+            "assets": 2200,
+            "assets_yoy": 2074,
+            "op_to_debt_now": 0.029500368326815997,
+            "op_to_debt_yoy": 0.028515108889345647,
+            "quarter_operating_income": 17,
+            "prev_operating_income": 13,
+            "operating_income_yoy": 16,
+            "prev_net_income": 4,
+            "net_income_yoy": 19
         },
         {
             "rank": 20,
@@ -6512,7 +7942,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 9,
             "ni_growth_yoy": -9.0,
             "ni_yoy_r": 62,
-            "avg_r": 35.0
+            "avg_r": 35.0,
+            "equity": 32060,
+            "quarter_operating_cf": 214,
+            "quarter_capex": 247,
+            "quarter_net_income": 492,
+            "quarter_revenue": 6739,
+            "quarter_cost_of_sales": 5450,
+            "assets": 73521,
+            "assets_yoy": 77661,
+            "op_to_debt_now": 0.0419728562780067,
+            "op_to_debt_yoy": 0.026842306193487445,
+            "quarter_operating_income": 801,
+            "prev_operating_income": 413,
+            "operating_income_yoy": 539,
+            "prev_net_income": 114,
+            "net_income_yoy": 541
         },
         {
             "rank": 21,
@@ -6544,7 +7989,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 33,
             "ni_growth_yoy": 31.5,
             "ni_yoy_r": 45,
-            "avg_r": 35.2
+            "avg_r": 35.2,
+            "equity": 171714,
+            "quarter_operating_cf": 7959,
+            "quarter_capex": 3118,
+            "quarter_net_income": 1743,
+            "quarter_revenue": 114511,
+            "quarter_cost_of_sales": 82654,
+            "assets": 483902,
+            "assets_yoy": 475102,
+            "op_to_debt_now": 0.031043294602937695,
+            "op_to_debt_yoy": 0.03810092838854733,
+            "quarter_operating_income": 4606,
+            "prev_operating_income": 7123,
+            "operating_income_yoy": 5309,
+            "prev_net_income": -6553,
+            "net_income_yoy": 1325
         },
         {
             "rank": 22,
@@ -6576,7 +8036,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 35,
             "ni_growth_yoy": 16.3,
             "ni_yoy_r": 49,
-            "avg_r": 35.6
+            "avg_r": 35.6,
+            "equity": 29229,
+            "quarter_operating_cf": 1279,
+            "quarter_capex": 554,
+            "quarter_net_income": 606,
+            "quarter_revenue": 9340,
+            "quarter_cost_of_sales": 6506,
+            "assets": 40034,
+            "assets_yoy": 36763,
+            "op_to_debt_now": 0.48260785999989503,
+            "op_to_debt_yoy": 0.32461733801096476,
+            "quarter_operating_income": 674,
+            "prev_operating_income": 333,
+            "operating_income_yoy": 560,
+            "prev_net_income": 308,
+            "net_income_yoy": 521
         },
         {
             "rank": 23,
@@ -6608,7 +8083,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 68,
             "ni_growth_yoy": 3041.4,
             "ni_yoy_r": 2,
-            "avg_r": 36.8
+            "avg_r": 36.8,
+            "equity": 1216,
+            "quarter_operating_cf": 62,
+            "quarter_capex": 60,
+            "quarter_net_income": 21,
+            "quarter_revenue": 574,
+            "quarter_cost_of_sales": 519,
+            "assets": 2726,
+            "assets_yoy": 2446,
+            "op_to_debt_now": 0.013951373430034386,
+            "op_to_debt_yoy": 0.008379235484542434,
+            "quarter_operating_income": 15,
+            "prev_operating_income": 36,
+            "operating_income_yoy": 7,
+            "prev_net_income": 26,
+            "net_income_yoy": 0
         },
         {
             "rank": 24,
@@ -6640,7 +8130,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 7,
             "ni_growth_yoy": 349.1,
             "ni_yoy_r": 8,
-            "avg_r": 37.2
+            "avg_r": 37.2,
+            "equity": 2575,
+            "quarter_operating_cf": 265,
+            "quarter_capex": 2,
+            "quarter_net_income": 169,
+            "quarter_revenue": 650,
+            "quarter_cost_of_sales": 406,
+            "assets": 4655,
+            "assets_yoy": 4371,
+            "op_to_debt_now": -0.06581284650180022,
+            "op_to_debt_yoy": 0.02982675412398444,
+            "quarter_operating_income": -73,
+            "prev_operating_income": 5,
+            "operating_income_yoy": 33,
+            "prev_net_income": -56,
+            "net_income_yoy": 37
         },
         {
             "rank": 25,
@@ -6672,7 +8177,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 21,
             "ni_growth_yoy": 53.8,
             "ni_yoy_r": 39,
-            "avg_r": 37.3
+            "avg_r": 37.3,
+            "equity": 8230,
+            "quarter_operating_cf": 701,
+            "quarter_capex": 389,
+            "quarter_net_income": 580,
+            "quarter_revenue": 4253,
+            "quarter_cost_of_sales": 2406,
+            "assets": 15995,
+            "assets_yoy": 13689,
+            "op_to_debt_now": 0.18265041758997988,
+            "op_to_debt_yoy": 0.18931606216887437,
+            "quarter_operating_income": 638,
+            "prev_operating_income": 447,
+            "operating_income_yoy": 394,
+            "prev_net_income": 186,
+            "net_income_yoy": 377
         },
         {
             "rank": 26,
@@ -6704,7 +8224,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 2,
             "ni_growth_yoy": -9.6,
             "ni_yoy_r": 63,
-            "avg_r": 37.6
+            "avg_r": 37.6,
+            "equity": 3275,
+            "quarter_operating_cf": 11,
+            "quarter_capex": 81,
+            "quarter_net_income": 83,
+            "quarter_revenue": 1942,
+            "quarter_cost_of_sales": 1731,
+            "assets": 6788,
+            "assets_yoy": 6518,
+            "op_to_debt_now": 0.03545980301586944,
+            "op_to_debt_yoy": 0.04705800960829834,
+            "quarter_operating_income": 78,
+            "prev_operating_income": 20,
+            "operating_income_yoy": 138,
+            "prev_net_income": -15,
+            "net_income_yoy": 92
         },
         {
             "rank": 27,
@@ -6736,7 +8271,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 32,
             "ni_growth_yoy": 108.4,
             "ni_yoy_r": 30,
-            "avg_r": 37.8
+            "avg_r": 37.8,
+            "equity": 2057,
+            "quarter_operating_cf": 3,
+            "quarter_capex": 0,
+            "quarter_net_income": 7,
+            "quarter_revenue": 110,
+            "quarter_cost_of_sales": 79,
+            "assets": 2705,
+            "assets_yoy": 2695,
+            "op_to_debt_now": 0.03289373631799163,
+            "op_to_debt_yoy": 0.026101153221757323,
+            "quarter_operating_income": 7,
+            "prev_operating_income": -11,
+            "operating_income_yoy": 6,
+            "prev_net_income": -24,
+            "net_income_yoy": 3
         },
         {
             "rank": 28,
@@ -6768,7 +8318,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 53,
             "ni_growth_yoy": -2.1,
             "ni_yoy_r": 57,
-            "avg_r": 37.8
+            "avg_r": 37.8,
+            "equity": 54652,
+            "quarter_operating_cf": 349,
+            "quarter_capex": 231,
+            "quarter_net_income": 1071,
+            "quarter_revenue": 12573,
+            "quarter_cost_of_sales": 9807,
+            "assets": 123491,
+            "assets_yoy": 127136,
+            "op_to_debt_now": 0.047497167728653505,
+            "op_to_debt_yoy": 0.03685376696231067,
+            "quarter_operating_income": 1803,
+            "prev_operating_income": 1314,
+            "operating_income_yoy": 1548,
+            "prev_net_income": 923,
+            "net_income_yoy": 1094
         },
         {
             "rank": 29,
@@ -6800,7 +8365,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 10,
             "ni_growth_yoy": 784.9,
             "ni_yoy_r": 4,
-            "avg_r": 37.9
+            "avg_r": 37.9,
+            "equity": 500,
+            "quarter_operating_cf": 8,
+            "quarter_capex": 0,
+            "quarter_net_income": 52,
+            "quarter_revenue": 214,
+            "quarter_cost_of_sales": 149,
+            "assets": 713,
+            "assets_yoy": 550,
+            "op_to_debt_now": 0.6278179023188406,
+            "op_to_debt_yoy": -0.3286379852631579,
+            "quarter_operating_income": 43,
+            "prev_operating_income": 10,
+            "operating_income_yoy": -6,
+            "prev_net_income": 12,
+            "net_income_yoy": -7
         },
         {
             "rank": 30,
@@ -6832,7 +8412,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 15,
             "ni_growth_yoy": 201.4,
             "ni_yoy_r": 13,
-            "avg_r": 38.1
+            "avg_r": 38.1,
+            "equity": 3144,
+            "quarter_operating_cf": 68,
+            "quarter_capex": 4,
+            "quarter_net_income": 53,
+            "quarter_revenue": 713,
+            "quarter_cost_of_sales": 610,
+            "assets": 5602,
+            "assets_yoy": 5772,
+            "op_to_debt_now": 0.040914990120355293,
+            "op_to_debt_yoy": 0.03558952247264358,
+            "quarter_operating_income": 70,
+            "prev_operating_income": -7,
+            "operating_income_yoy": 59,
+            "prev_net_income": -35,
+            "net_income_yoy": 17
         }
     ],
     "ultra_value_smallcap": [
@@ -6866,7 +8461,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 3,
             "ni_growth_yoy": 212.0,
             "ni_yoy_r": 1,
-            "avg_r": 1.7
+            "avg_r": 1.7,
+            "equity": 1038,
+            "quarter_operating_cf": 20,
+            "quarter_capex": 4,
+            "quarter_net_income": 17,
+            "quarter_revenue": 421,
+            "quarter_cost_of_sales": 362,
+            "assets": 1638,
+            "assets_yoy": 1598,
+            "op_to_debt_now": 0.03812516384188883,
+            "op_to_debt_yoy": -0.02659343890897264,
+            "quarter_operating_income": 12,
+            "prev_operating_income": 31,
+            "operating_income_yoy": -9,
+            "prev_net_income": 27,
+            "net_income_yoy": -15
         },
         {
             "rank": 2,
@@ -6898,7 +8508,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 1,
             "ni_growth_yoy": 108.4,
             "ni_yoy_r": 2,
-            "avg_r": 1.9
+            "avg_r": 1.9,
+            "equity": 2057,
+            "quarter_operating_cf": 3,
+            "quarter_capex": 0,
+            "quarter_net_income": 7,
+            "quarter_revenue": 110,
+            "quarter_cost_of_sales": 79,
+            "assets": 2705,
+            "assets_yoy": 2695,
+            "op_to_debt_now": 0.03289373631799163,
+            "op_to_debt_yoy": 0.026101153221757323,
+            "quarter_operating_income": 7,
+            "prev_operating_income": -11,
+            "operating_income_yoy": 6,
+            "prev_net_income": -24,
+            "net_income_yoy": 3
         },
         {
             "rank": 3,
@@ -6930,7 +8555,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 2,
             "ni_growth_yoy": 49.6,
             "ni_yoy_r": 3,
-            "avg_r": 2.4
+            "avg_r": 2.4,
+            "equity": 230,
+            "quarter_operating_cf": 1,
+            "quarter_capex": 0,
+            "quarter_net_income": 6,
+            "quarter_revenue": 25,
+            "quarter_cost_of_sales": 7,
+            "assets": 284,
+            "assets_yoy": 281,
+            "op_to_debt_now": 0.02306159459293845,
+            "op_to_debt_yoy": 0.05501661394325068,
+            "quarter_operating_income": 1,
+            "prev_operating_income": 6,
+            "operating_income_yoy": 3,
+            "prev_net_income": 6,
+            "net_income_yoy": 4
         }
     ],
     "ultra_value_smallcap30": [
@@ -6964,7 +8604,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 5,
             "ni_growth_yoy": 212.0,
             "ni_yoy_r": 2,
-            "avg_r": 2.3
+            "avg_r": 2.3,
+            "equity": 1038,
+            "quarter_operating_cf": 20,
+            "quarter_capex": 4,
+            "quarter_net_income": 17,
+            "quarter_revenue": 421,
+            "quarter_cost_of_sales": 362,
+            "assets": 1638,
+            "assets_yoy": 1598,
+            "op_to_debt_now": 0.03812516384188883,
+            "op_to_debt_yoy": -0.02659343890897264,
+            "quarter_operating_income": 12,
+            "prev_operating_income": 31,
+            "operating_income_yoy": -9,
+            "prev_net_income": 27,
+            "net_income_yoy": -15
         },
         {
             "rank": 2,
@@ -6996,7 +8651,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 4,
             "ni_growth_yoy": 3041.4,
             "ni_yoy_r": 1,
-            "avg_r": 2.6
+            "avg_r": 2.6,
+            "equity": 1216,
+            "quarter_operating_cf": 62,
+            "quarter_capex": 60,
+            "quarter_net_income": 21,
+            "quarter_revenue": 574,
+            "quarter_cost_of_sales": 519,
+            "assets": 2726,
+            "assets_yoy": 2446,
+            "op_to_debt_now": 0.013951373430034386,
+            "op_to_debt_yoy": 0.008379235484542434,
+            "quarter_operating_income": 15,
+            "prev_operating_income": 36,
+            "operating_income_yoy": 7,
+            "prev_net_income": 26,
+            "net_income_yoy": 0
         },
         {
             "rank": 3,
@@ -7028,7 +8698,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 1,
             "ni_growth_yoy": 108.4,
             "ni_yoy_r": 3,
-            "avg_r": 2.8
+            "avg_r": 2.8,
+            "equity": 2057,
+            "quarter_operating_cf": 3,
+            "quarter_capex": 0,
+            "quarter_net_income": 7,
+            "quarter_revenue": 110,
+            "quarter_cost_of_sales": 79,
+            "assets": 2705,
+            "assets_yoy": 2695,
+            "op_to_debt_now": 0.03289373631799163,
+            "op_to_debt_yoy": 0.026101153221757323,
+            "quarter_operating_income": 7,
+            "prev_operating_income": -11,
+            "operating_income_yoy": 6,
+            "prev_net_income": -24,
+            "net_income_yoy": 3
         },
         {
             "rank": 4,
@@ -7060,7 +8745,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 2,
             "ni_growth_yoy": 49.6,
             "ni_yoy_r": 4,
-            "avg_r": 3.3
+            "avg_r": 3.3,
+            "equity": 230,
+            "quarter_operating_cf": 1,
+            "quarter_capex": 0,
+            "quarter_net_income": 6,
+            "quarter_revenue": 25,
+            "quarter_cost_of_sales": 7,
+            "assets": 284,
+            "assets_yoy": 281,
+            "op_to_debt_now": 0.02306159459293845,
+            "op_to_debt_yoy": 0.05501661394325068,
+            "quarter_operating_income": 1,
+            "prev_operating_income": 6,
+            "operating_income_yoy": 3,
+            "prev_net_income": 6,
+            "net_income_yoy": 4
         },
         {
             "rank": 5,
@@ -7092,7 +8792,22 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 3,
             "ni_growth_yoy": -27.5,
             "ni_yoy_r": 5,
-            "avg_r": 4.0
+            "avg_r": 4.0,
+            "equity": 913,
+            "quarter_operating_cf": 12,
+            "quarter_capex": 1,
+            "quarter_net_income": 12,
+            "quarter_revenue": 66,
+            "quarter_cost_of_sales": 61,
+            "assets": 1002,
+            "assets_yoy": 922,
+            "op_to_debt_now": 0.05199898448252955,
+            "op_to_debt_yoy": 0.36294928176034114,
+            "quarter_operating_income": 4,
+            "prev_operating_income": 22,
+            "operating_income_yoy": 17,
+            "prev_net_income": 14,
+            "net_income_yoy": 17
         }
     ],
     "stock_flags": {
@@ -7954,8 +9669,7 @@ const KOSPI_QUANT_PACKAGE = {
             "금융/지주"
         ],
         "IBKS제23호스팩": [
-            "금융/지주",
-            "관리우려"
+            "금융/지주"
         ],
         "유진스팩10호": [
             "금융/지주"
@@ -7964,8 +9678,7 @@ const KOSPI_QUANT_PACKAGE = {
             "금융/지주"
         ],
         "하나30호스팩": [
-            "금융/지주",
-            "관리우려"
+            "금융/지주"
         ],
         "하나31호스팩": [
             "금융/지주"
@@ -8076,12 +9789,6 @@ const KOSPI_QUANT_PACKAGE = {
             "금융/지주"
         ],
         "한화플러스제5호스팩": [
-            "금융/지주"
-        ],
-        "테라뷰": [
-            "금융/지주"
-        ],
-        "씨엑스아이": [
             "금융/지주"
         ],
         "크리스탈신소재": [
@@ -23041,7 +24748,7 @@ const KOSPI_QUANT_PACKAGE = {
         "파인엠텍": {
             "pbr": 1.12,
             "gpa": 1.5,
-            "f_score": 1,
+            "f_score": null,
             "asset_growth_yoy": 28.5
         },
         "레뷰코퍼레이션": {
@@ -23503,7 +25210,7 @@ const KOSPI_QUANT_PACKAGE = {
         "폰드그룹": {
             "pbr": 0.87,
             "gpa": 13.2,
-            "f_score": 2,
+            "f_score": null,
             "asset_growth_yoy": 11.0
         },
         "에스케이증권제12호스팩": {
@@ -23926,18 +25633,6 @@ const KOSPI_QUANT_PACKAGE = {
             "f_score": null,
             "asset_growth_yoy": -10.9
         },
-        "JTC": {
-            "pbr": 13.1,
-            "gpa": null,
-            "f_score": null,
-            "asset_growth_yoy": 25.3
-        },
-        "테라뷰": {
-            "pbr": 24282333.73,
-            "gpa": null,
-            "f_score": null,
-            "asset_growth_yoy": null
-        },
         "엑세스바이오": {
             "pbr": 210.12,
             "gpa": null,
@@ -23967,12 +25662,6 @@ const KOSPI_QUANT_PACKAGE = {
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": -8.7
-        },
-        "씨엑스아이": {
-            "pbr": 5.62,
-            "gpa": null,
-            "f_score": null,
-            "asset_growth_yoy": 2.8
         },
         "크리스탈신소재": {
             "pbr": 18.4,

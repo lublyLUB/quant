@@ -78,6 +78,17 @@ def order_status():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/quotes", methods=["GET"])
+def quotes():
+    codes = [c for c in (request.args.get("codes") or "").split(",") if c]
+    if not codes:
+        return jsonify({"error": "codes 파라미터가 필요합니다."}), 400
+    try:
+        return jsonify({"prices": kiwoom_api.get_stock_quotes(codes)})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/order", methods=["POST"])
 def order():
     data = request.get_json(force=True) or {}

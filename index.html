@@ -5,15 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>바이브 프로 퀀트 플랫폼</title>
     <style>
+        html { overflow-y: scroll; scrollbar-gutter: stable; }
         body { font-family: -apple-system, sans-serif; background-color: #f8fafc; padding: 6px; margin: 0; color: #333; }
         .container { max-width: 650px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         
         
         .menu-tabs { display: grid; grid-template-columns: 1fr 1fr; background-color: #f1f5f9; padding: 3px; border-radius: 8px; margin-bottom: 10px; gap: 2px; }
+        #strategy-tabs { grid-auto-flow: column; grid-template-rows: repeat(5, auto); position: relative; }
+        #strategy-tabs::after { content: ''; position: absolute; top: 4px; bottom: 4px; left: 50%; width: 1px; background: #e2e8f0; transform: translateX(-50%); }
         .tab-btn { border: none; background: none; padding: 7px 1px; font-size: 11px; font-weight: bold; color: #64748b; cursor: pointer; border-radius: 6px; text-align: center; transition: all 0.15s; line-height: 1.3; }
         .tab-btn.active { background-color: #fff; color: #1e3a8a; box-shadow: 0 2px 4px rgba(0,0,0,0.06); }
         .strategy-name { display: inline; }
         .strategy-tags { display: inline-block; margin-left: 4px; vertical-align: middle; }
+        .strategy-tab-btn { display: grid; grid-template-columns: 1fr 30px 30px 30px; align-items: center; gap: 2px; text-align: left; padding: 7px 6px 7px 40px; white-space: nowrap; overflow: hidden; }
+        .strategy-tab-btn .strategy-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+        .tag-chip-slot { display: flex; justify-content: center; overflow: hidden; }
+        .tag-chip-slot .tag-chip { margin: 0; padding: 1px 3px; }
         .tag-chip { display: inline-block; font-size: 8px; font-weight: bold; padding: 1px 5px; border-radius: 8px; margin: 0 1px; }
         .tag-value { background-color: #dbeafe; color: #1d4ed8; }
         .tag-quality { background-color: #dcfce7; color: #15803d; }
@@ -69,6 +76,9 @@
 
         table { width: 100%; border-collapse: collapse; font-size: 11px; table-layout: fixed; }
         th, td { padding: 9px 1px; border-bottom: 1px solid #e2e8f0; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
+        .fscore-group-start { padding-right: 0; }
+        .fscore-group { padding-left: 0; padding-right: 0; }
+        .fscore-group-end { padding-left: 0; }
         th { background-color: #f8fafc; color: #475569; cursor: pointer; user-select: none; font-weight: bold; font-size: 10px; height: 34px; box-sizing: border-box; }
         
         .sub-text { font-size: 9px; color: #94a3b8; display: block; margin-top: 2px; }
@@ -90,6 +100,7 @@
         <span id="data-date-view" class="info-pill pill-date">📅 데이터 로딩 중...</span>
         <button id="btn-update-data" title="가격 데이터 갱신" style="border:none; background:#f1f5f9; color:#64748b; font-size:11px; line-height:1; cursor:pointer; padding:4px 6px; border-radius:5px;" onclick="handleUpdateData()">↻</button>
         <span id="update-data-status" class="status-text" style="font-size:10px;"></span>
+        <button id="btn-enable-notif" style="border:none; background:#f1f5f9; color:#64748b; font-size:10px; line-height:1; cursor:pointer; padding:4px 6px; border-radius:5px;" onclick="handleEnableNotifications()">🔔 알림 켜기</button>
     </div>
     <div class="menu-tabs" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr;">
         <button id="btn-recommend" class="tab-btn active" onclick="switchMenu('recommend')">⭐ 추천</button>
@@ -114,8 +125,7 @@
     <div class="control-bar" id="control-bar">
         <input type="text" id="search-bar" class="search-box" placeholder="🔍 종목명 검색..." oninput="handleSearch()">
         <div class="mode-toggle-group">
-            <button id="btn-mode-simple" class="mode-btn active" onclick="setDisplayMode('simple')">간단</button>
-            <button id="btn-mode-detail" class="mode-btn" onclick="setDisplayMode('detail')">자세히</button>
+            <button id="btn-mode-toggle" class="mode-btn" onclick="toggleDisplayMode()">자세히</button>
         </div>
         <span id="bookmark-count" class="status-text" style="color:#64748b; align-self:flex-end;"></span>
         <div class="filter-checkboxes">
@@ -160,6 +170,7 @@
 
     <div id="order-controls" style="display:none; margin-bottom: 12px;">
         <button class="mode-btn action-btn action-btn-blue" style="margin-bottom:8px;" onclick="handleFetchHoldings()">🔄 보유 내역 조회</button>
+        <button class="mode-btn action-btn action-btn-orange" style="margin-bottom:8px;" onclick="handleSendAllOrders()">📦 일괄 주문 전송</button>
         <span id="order-server-status" class="status-text"></span>
         <div id="order-summary" class="summary-text"></div>
     </div>
@@ -188,7 +199,7 @@
         { key: 'fscore', num: 6, name: '신F-스코어+저PBR', tags: ['value', 'quality'], ready: true },
         { key: 'momentum', num: 11, name: '이익 모멘텀', tags: ['momentum'], ready: true },
         { key: 'ncav', num: 12, name: 'NCAV전략 업그레이드', tags: ['value', 'quality'], ready: true },
-        { key: 'super', num: 13, name: '오리지널 슈퍼 가치 전략 업그레이드', tags: ['value'], ready: true },
+        { key: 'super', num: 13, name: '슈퍼 가치 전략 업그레이드', tags: ['value'], ready: true },
         { key: 'strategy15', num: 15, name: '슈퍼 퀄리티', tags: ['quality'], ready: true },
         { key: 'strategy16', num: 16, name: '파마의 최종 병기', tags: ['value', 'quality'], ready: true },
         { key: 'strategy18', num: 18, name: '슈퍼 가치+퀄리티', tags: ['value', 'quality'], ready: true },
@@ -197,13 +208,24 @@
         { key: 'strategy21', num: 22, name: '울트라', tags: ['value', 'quality', 'momentum'], ready: true },
     ];
 
+    const TAG_ORDER = ['value', 'quality', 'momentum'];  // 라벨마다 고정된 열(슬롯)에만 표기
+
     function renderStrategyTabs() {
-        document.getElementById('strategy-tabs').innerHTML = STRATEGIES.map(s => `
-            <button id="btn-${s.key}" class="tab-btn" onclick="switchMenu('${s.key}')">
+        const container = document.getElementById('strategy-tabs');
+        container.innerHTML = STRATEGIES.map(s => `
+            <button id="btn-${s.key}" class="tab-btn strategy-tab-btn" onclick="switchMenu('${s.key}')">
                 <span class="strategy-name">${s.num}. ${s.name}</span>
-                <span class="strategy-tags">${s.tags.map(t => `<span class="tag-chip tag-${t}">${TAG_LABELS[t]}</span>`).join('')}</span>
+                ${TAG_ORDER.map(t => `<span class="tag-chip-slot">${s.tags.includes(t) ? `<span class="tag-chip tag-${t}">${TAG_LABELS[t]}</span>` : ''}</span>`).join('')}
             </button>
         `).join('');
+
+        // 왼쪽 열(5개)의 가장 긴 전략제목 너비를 측정해서, 오른쪽 열에도 동일하게 적용 (양쪽 슬롯 위치 통일)
+        const buttons = Array.from(container.querySelectorAll('.strategy-tab-btn'));
+        // 1단계: 일단 이름 칸을 내용 크기에 맞게(max-content) 풀어줘서 각자의 실제 텍스트 너비를 잴 수 있게 함
+        buttons.forEach(btn => { btn.style.gridTemplateColumns = 'max-content 30px 30px 30px'; });
+        const leftGroup = buttons.slice(0, 5);
+        const maxWidth = Math.max(...leftGroup.map(btn => btn.querySelector('.strategy-name').getBoundingClientRect().width));
+        buttons.forEach(btn => { btn.style.gridTemplateColumns = `${Math.ceil(maxWidth) + 5}px 30px 30px 30px`; });
     }
     renderStrategyTabs();
 
@@ -235,9 +257,13 @@
 
     function setDisplayMode(mode) {
         displayMode = mode;
-        document.getElementById("btn-mode-simple").classList.toggle("active", mode === 'simple');
-        document.getElementById("btn-mode-detail").classList.toggle("active", mode === 'detail');
+        const btn = document.getElementById("btn-mode-toggle");
+        if (btn) btn.textContent = mode === 'detail' ? '간단히' : '자세히';
         refreshCurrentTable();
+    }
+
+    function toggleDisplayMode() {
+        setDisplayMode(displayMode === 'detail' ? 'simple' : 'detail');
     }
     
     // 🌟 관심 종목 로컬 스토리지 보관 매커니즘
@@ -946,10 +972,14 @@
     let lastFilledCount = null;
     let notifiedDeviationCodes = new Set();
 
-    function requestNotificationPermission() {
-        if ('Notification' in window && Notification.permission === 'default') {
-            Notification.requestPermission();
+    async function handleEnableNotifications() {
+        const btn = document.getElementById('btn-enable-notif');
+        if (!('Notification' in window)) {
+            alert('이 브라우저는 알림 기능을 지원하지 않습니다.');
+            return;
         }
+        const result = await Notification.requestPermission();
+        if (btn) btn.textContent = result === 'granted' ? '🔔 알림 켜짐' : '🔕 알림 꺼짐 (차단됨)';
     }
 
     function notify(title, body) {
@@ -959,7 +989,6 @@
     }
 
     function startOrderPolling() {
-        requestNotificationPermission();
         stopOrderPolling();
         orderPollTimer = setInterval(() => {
             if (currentMenu !== 'order' || !holdingsLoaded) return;
@@ -1084,13 +1113,52 @@
         });
     }
 
-    async function handleSendOrder(code, side, qty, price) {
-        if (!confirm(`${side === 'buy' ? '매수' : '매도'} 주문을 실제로 전송합니다.\n종목코드: ${code} / 수량: ${qty}주 / 가격: ${price}원\n계속하시겠습니까?`)) return;
+    async function fetchFreshQuotes(codes) {
+        const resp = await fetch(`${ORDER_SERVER_URL}/api/quotes?codes=${codes.join(',')}`);
+        const data = await resp.json();
+        if (data.error) throw new Error(data.error);
+        return data.prices;  // {code: price}
+    }
+
+    // 목표금액(=기존 목표수량×기존가격)을 새 가격으로 나눠 수량을 다시 계산. 전량매도(targetQty=0)는 가격과 무관하게 보유수량 그대로 매도.
+    function recomputeRowWithFreshPrice(r, freshPrice) {
+        if (!freshPrice) return null;
+        if (r.targetQty === 0) {
+            return { ...r, price: freshPrice, diff: -r.curQty, side: r.curQty > 0 ? 'sell' : '' };
+        }
+        const targetValue = r.targetQty * r.price;
+        const newTargetQty = Math.floor(targetValue / freshPrice);
+        const newDiff = newTargetQty - r.curQty;
+        return { ...r, price: freshPrice, targetQty: newTargetQty, diff: newDiff, side: newDiff > 0 ? 'buy' : (newDiff < 0 ? 'sell' : '') };
+    }
+
+    async function handleSendOrder(code) {
+        const statusEl = document.getElementById('order-server-status');
+        const baseRow = computeOrderData().find(r => r.code === code);
+        if (!baseRow) {
+            statusEl.textContent = '주문 대상을 찾을 수 없습니다. 화면을 새로고침해주세요.';
+            return;
+        }
+        let row;
+        try {
+            const prices = await fetchFreshQuotes([code]);
+            row = recomputeRowWithFreshPrice(baseRow, prices[code]);
+        } catch (e) {
+            statusEl.textContent = `❌ 현재가 재조회 실패 - ${e.message}`;
+            return;
+        }
+        if (!row || row.diff === 0) {
+            statusEl.textContent = '현재가 기준으로 재계산한 결과 주문할 수량이 없습니다 (0주).';
+            return;
+        }
+        const finalSide = row.diff > 0 ? 'buy' : 'sell';
+        const finalQty = Math.abs(row.diff);
+        if (!confirm(`${finalSide === 'buy' ? '매수' : '매도'} 주문을 실제로 전송합니다. (현재가로 재계산됨)\n종목코드: ${code} / 수량: ${finalQty}주 / 가격: ${row.price}원\n계속하시겠습니까?`)) return;
         try {
             const resp = await fetch(`${ORDER_SERVER_URL}/api/order`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ stk_cd: code, qty, side, price }),
+                body: JSON.stringify({ stk_cd: code, qty: finalQty, side: finalSide, price: row.price }),
             });
             const data = await resp.json();
             if (data.error || (data.return_code !== undefined && data.return_code !== 0)) {
@@ -1102,6 +1170,58 @@
         } catch (e) {
             alert(`주문 전송 중 오류: ${e.message}`);
         }
+    }
+
+    async function handleSendAllOrders() {
+        const statusEl = document.getElementById('order-server-status');
+        const rows = computeOrderData().filter(r => r.diff !== 0);
+        if (rows.length === 0) {
+            statusEl.textContent = '주문할 종목이 없습니다.';
+            return;
+        }
+        statusEl.textContent = '현재가 재조회 중...';
+        let prices;
+        try {
+            prices = await fetchFreshQuotes(rows.map(r => r.code));
+        } catch (e) {
+            statusEl.textContent = `❌ 현재가 재조회 실패 - ${e.message}`;
+            return;
+        }
+
+        const finalRows = rows
+            .map(r => recomputeRowWithFreshPrice(r, prices[r.code]))
+            .filter(r => r && r.diff !== 0);
+
+        if (finalRows.length === 0) {
+            statusEl.textContent = '현재가 기준으로 재계산한 결과 주문할 종목이 없습니다.';
+            return;
+        }
+
+        const listText = finalRows.map(r => `${r.name}: ${r.diff > 0 ? '매수' : '매도'} ${Math.abs(r.diff)}주 (${formatNumber(r.price)}원)`).join('\n');
+        if (!confirm(`아래 ${finalRows.length}건의 주문을 현재가로 재계산해 순차적으로 실제 전송합니다.\n\n${listText}\n\n계속하시겠습니까?`)) return;
+
+        const results = [];
+        for (const r of finalRows) {
+            statusEl.textContent = `주문 전송 중... (${results.length + 1}/${finalRows.length}) ${r.name}`;
+            try {
+                const resp = await fetch(`${ORDER_SERVER_URL}/api/order`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ stk_cd: r.code, qty: Math.abs(r.diff), side: r.diff > 0 ? 'buy' : 'sell', price: r.price }),
+                });
+                const data = await resp.json();
+                const ok = !(data.error || (data.return_code !== undefined && data.return_code !== 0));
+                results.push({ name: r.name, ok, msg: ok ? '성공' : (data.error || data.return_msg) });
+            } catch (e) {
+                results.push({ name: r.name, ok: false, msg: e.message });
+            }
+            await new Promise(resolve => setTimeout(resolve, 1100));  // 키움 API 초당 요청 제한 대응
+        }
+
+        const successCount = results.filter(r => r.ok).length;
+        statusEl.textContent = `✅ 일괄 주문 완료: 성공 ${successCount}/${results.length}건` +
+            (successCount < results.length ? ` (실패: ${results.filter(r => !r.ok).map(r => `${r.name}(${r.msg})`).join(', ')})` : '');
+        await handleFetchHoldings();
     }
 
     function renderOrderTable() {
@@ -1137,7 +1257,7 @@
                     ? `<span style="color:#dc2626; font-weight:bold;">${r.weightDiffPct > 0 ? '+' : ''}${r.weightDiffPct.toFixed(1)}%</span>`
                     : `${r.weightDiffPct > 0 ? '+' : ''}${r.weightDiffPct.toFixed(1)}%`;
                 const orderBtn = r.diff !== 0
-                    ? `<button class="mode-btn action-btn ${r.side === 'buy' ? 'action-btn-red' : 'action-btn-skyblue'}" style="padding:4px 8px; font-size:10px;" onclick="handleSendOrder('${r.code}','${r.side}',${Math.abs(r.diff)},${r.price})">${r.side === 'buy' ? '매수' : '매도'} 전송</button>`
+                    ? `<button class="mode-btn action-btn ${r.side === 'buy' ? 'action-btn-red' : 'action-btn-skyblue'}" style="padding:4px 8px; font-size:10px;" onclick="handleSendOrder('${r.code}')">${r.side === 'buy' ? '매수' : '매도'} 전송</button>`
                     : '-';
                 html += `<tr>
                     <td>${r.name}</td>
@@ -1312,33 +1432,25 @@
 
     function renderUltraTable(data) {
         const isDetail = displayMode === 'detail';
-        let html = isDetail ? `
+        const amt = v => v == null ? 'N/A' : formatNumber(v);
+        const ratioFmt = v => v == null ? 'N/A' : v.toFixed(4);
+        let html = `
             <thead>
                 <tr>
                     <th style="width: 5%;" onclick="sortData('rank')">순위</th>
                     <th style="width: 16%;" onclick="sortData('name')">종목명</th>
-                    <th style="width: 5%;" onclick="sortData('per')">PER</th>
-                    <th style="width: 5%;" onclick="sortData('pfcr')">PFCR</th>
-                    <th style="width: 5%;" onclick="sortData('pbr')">PBR</th>
-                    <th style="width: 5%;" onclick="sortData('psr')">PSR</th>
-                    <th style="width: 5%;" onclick="sortData('gpa')">GP/A</th>
-                    <th style="width: 9%;" onclick="sortData('op_debt_growth_yoy')">영업이익/<br>차입금</th>
-                    <th style="width: 8%;" onclick="sortData('asset_growth_yoy')">자산<br>성장률</th>
+                    <th style="width: 5%;" onclick="sortData('per')">${isDetail ? headerFracOnly('시가총액', '순이익') : 'PER'}</th>
+                    <th style="width: 5%;" onclick="sortData('pfcr')">${isDetail ? headerFracOnly('시가총액', '영업CF−CapEx') : 'PFCR'}</th>
+                    <th style="width: 5%;" onclick="sortData('pbr')">${isDetail ? headerFracOnly('시가총액', '자본총계') : 'PBR'}</th>
+                    <th style="width: 5%;" onclick="sortData('psr')">${isDetail ? headerFracOnly('시가총액', '매출액') : 'PSR'}</th>
+                    <th style="width: 5%;" onclick="sortData('gpa')">${isDetail ? headerFracOnly('매출-매출원가', '자산') : 'GP/A'}</th>
+                    <th style="width: 9%;" onclick="sortData('op_debt_growth_yoy')">${isDetail ? headerFracOnly('영업이익/차입금−전년동기', '전년동기 영업이익/차입금') : '영업이익/<br>차입금'}</th>
+                    <th style="width: 8%;" onclick="sortData('asset_growth_yoy')">${isDetail ? headerFracOnly('자산-전년동기자산', '전년동기자산') : '자산<br>성장률'}</th>
                     <th style="width: 7%;" onclick="sortData('price_volatility')">변동성</th>
-                    <th style="width: 8%;" onclick="sortData('op_growth_qoq')">영업이익<br>QoQ</th>
-                    <th style="width: 8%;" onclick="sortData('op_growth_yoy')">영업이익<br>YoY</th>
-                    <th style="width: 8%;" onclick="sortData('ni_growth_qoq')">순이익<br>QoQ</th>
-                    <th style="width: 6%;" onclick="sortData('ni_growth_yoy')">순이익<br>YoY</th>
-                </tr>
-            </thead>
-            <tbody>` : `
-            <thead>
-                <tr>
-                    <th style="width: 8%;" onclick="sortData('rank')">순위</th>
-                    <th style="width: 25%;" onclick="sortData('name')">종목명</th>
-                    <th style="width: 12%;" onclick="sortData('price')">종가</th>
-                    <th style="width: 18%;" onclick="sortData('market_cap')">시가<br>총액</th>
-                    <th style="width: 18%;" onclick="sortData('avg_r')">평균</th>
+                    <th style="width: 8%;" onclick="sortData('op_growth_qoq')">${isDetail ? headerFracOnly('영업이익−전분기', '전분기 영업이익') : '영업이익<br>QoQ'}</th>
+                    <th style="width: 8%;" onclick="sortData('op_growth_yoy')">${isDetail ? headerFracOnly('영업이익−전년동기', '전년동기 영업이익') : '영업이익<br>YoY'}</th>
+                    <th style="width: 8%;" onclick="sortData('ni_growth_qoq')">${isDetail ? headerFracOnly('순이익−전분기', '전분기 순이익') : '순이익<br>QoQ'}</th>
+                    <th style="width: 6%;" onclick="sortData('ni_growth_yoy')">${isDetail ? headerFracOnly('순이익−전년동기', '전년동기 순이익') : '순이익<br>YoY'}</th>
                 </tr>
             </thead>
             <tbody>`;
@@ -1347,7 +1459,24 @@
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getNameHtml(s.name)}</td>
+                    <td>${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
+                    <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.quarter_net_income)))}</td>
+                    <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.quarter_operating_cf) + ' − ' + amt(s.quarter_capex)))}</td>
+                    <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.equity)))}</td>
+                    <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.quarter_revenue)))}</td>
+                    <td>${frac(barePart(amt(s.quarter_revenue) + ' − ' + amt(s.quarter_cost_of_sales)), barePart(amt(s.assets)))}</td>
+                    <td>${frac(barePart(ratioFmt(s.op_to_debt_now) + ' − ' + ratioFmt(s.op_to_debt_yoy)), barePart(ratioFmt(s.op_to_debt_yoy)))}</td>
+                    <td>${frac(barePart(amt(s.assets) + ' − ' + amt(s.assets_yoy)), barePart(amt(s.assets_yoy)))}</td>
+                    <td>${s.price_volatility.toFixed(1)}%</td>
+                    <td>${frac(barePart(amt(s.quarter_operating_income) + ' − ' + amt(s.prev_operating_income)), barePart(amt(s.prev_operating_income)))}</td>
+                    <td>${frac(barePart(amt(s.quarter_operating_income) + ' − ' + amt(s.operating_income_yoy)), barePart(amt(s.operating_income_yoy)))}</td>
+                    <td>${frac(barePart(amt(s.quarter_net_income) + ' − ' + amt(s.prev_net_income)), barePart(amt(s.prev_net_income)))}</td>
+                    <td>${frac(barePart(amt(s.quarter_net_income) + ' − ' + amt(s.net_income_yoy)), barePart(amt(s.net_income_yoy)))}</td>
+                </tr>`;
+            } else {
+                html += `<tr>
+                    <td class="rank-main">${s.rank}</td>
+                    <td>${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
                     <td>${s.per.toFixed(1)}<span class="sub-text">${s.per_r}위</span></td>
                     <td>${s.pfcr.toFixed(1)}<span class="sub-text">${s.pfcr_r}위</span></td>
                     <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
@@ -1361,14 +1490,6 @@
                     <td>${s.ni_growth_qoq.toFixed(1)}%<span class="sub-text">${s.ni_qoq_r}위</span></td>
                     <td>${s.ni_growth_yoy.toFixed(1)}%<span class="sub-text">${s.ni_yoy_r}위</span></td>
                 </tr>`;
-            } else {
-                html += `<tr>
-                    <td class="rank-main">${s.rank}</td>
-                    <td>${getNameHtml(s.name)}</td>
-                    <td>${formatNumber(s.price)}</td>
-                    <td>${formatNumber(s.market_cap)}억</td>
-                    <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
-                </tr>`;
             }
         });
         html += `</tbody>`;
@@ -1377,29 +1498,21 @@
 
     function renderQualityMomentumTable(data) {
         const isDetail = displayMode === 'detail';
-        let html = isDetail ? `
+        const amt = v => v == null ? 'N/A' : formatNumber(v);
+        const ratioFmt = v => v == null ? 'N/A' : v.toFixed(4);
+        let html = `
             <thead>
                 <tr>
                     <th style="width: 6%;" onclick="sortData('rank')">순위</th>
                     <th style="width: 14%;" onclick="sortData('name')">종목명</th>
-                    <th style="width: 10%;" onclick="sortData('gpa')">GP/A</th>
-                    <th style="width: 13%;" onclick="sortData('op_debt_growth_yoy')">영업이익/<br>차입금</th>
-                    <th style="width: 11.5%;" onclick="sortData('asset_growth_yoy')">자산<br>성장률</th>
+                    <th style="width: 10%;" onclick="sortData('gpa')">${isDetail ? headerFracOnly('매출-매출원가', '자산') : 'GP/A'}</th>
+                    <th style="width: 13%;" onclick="sortData('op_debt_growth_yoy')">${isDetail ? headerFracOnly('영업이익/차입금−전년동기', '전년동기 영업이익/차입금') : '영업이익/<br>차입금'}</th>
+                    <th style="width: 11.5%;" onclick="sortData('asset_growth_yoy')">${isDetail ? headerFracOnly('자산-전년동기자산', '전년동기자산') : '자산<br>성장률'}</th>
                     <th style="width: 11%;" onclick="sortData('price_volatility')">변동성</th>
-                    <th style="width: 11%;" onclick="sortData('op_growth_qoq')">영업이익<br>QoQ</th>
-                    <th style="width: 11%;" onclick="sortData('op_growth_yoy')">영업이익<br>YoY</th>
-                    <th style="width: 11%;" onclick="sortData('ni_growth_qoq')">순이익<br>QoQ</th>
-                    <th style="width: 11%;" onclick="sortData('ni_growth_yoy')">순이익<br>YoY</th>
-                </tr>
-            </thead>
-            <tbody>` : `
-            <thead>
-                <tr>
-                    <th style="width: 8%;" onclick="sortData('rank')">순위</th>
-                    <th style="width: 25%;" onclick="sortData('name')">종목명</th>
-                    <th style="width: 12%;" onclick="sortData('price')">종가</th>
-                    <th style="width: 18%;" onclick="sortData('market_cap')">시가<br>총액</th>
-                    <th style="width: 18%;" onclick="sortData('avg_r')">평균</th>
+                    <th style="width: 11%;" onclick="sortData('op_growth_qoq')">${isDetail ? headerFracOnly('영업이익−전분기', '전분기 영업이익') : '영업이익<br>QoQ'}</th>
+                    <th style="width: 11%;" onclick="sortData('op_growth_yoy')">${isDetail ? headerFracOnly('영업이익−전년동기', '전년동기 영업이익') : '영업이익<br>YoY'}</th>
+                    <th style="width: 11%;" onclick="sortData('ni_growth_qoq')">${isDetail ? headerFracOnly('순이익−전분기', '전분기 순이익') : '순이익<br>QoQ'}</th>
+                    <th style="width: 11%;" onclick="sortData('ni_growth_yoy')">${isDetail ? headerFracOnly('순이익−전년동기', '전년동기 순이익') : '순이익<br>YoY'}</th>
                 </tr>
             </thead>
             <tbody>`;
@@ -1408,7 +1521,20 @@
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getNameHtml(s.name)}</td>
+                    <td>${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
+                    <td>${frac(barePart(amt(s.quarter_revenue) + ' − ' + amt(s.quarter_cost_of_sales)), barePart(amt(s.assets)))}</td>
+                    <td>${frac(barePart(ratioFmt(s.op_to_debt_now) + ' − ' + ratioFmt(s.op_to_debt_yoy)), barePart(ratioFmt(s.op_to_debt_yoy)))}</td>
+                    <td>${frac(barePart(amt(s.assets) + ' − ' + amt(s.assets_yoy)), barePart(amt(s.assets_yoy)))}</td>
+                    <td>${s.price_volatility.toFixed(1)}%</td>
+                    <td>${frac(barePart(amt(s.quarter_operating_income) + ' − ' + amt(s.prev_operating_income)), barePart(amt(s.prev_operating_income)))}</td>
+                    <td>${frac(barePart(amt(s.quarter_operating_income) + ' − ' + amt(s.operating_income_yoy)), barePart(amt(s.operating_income_yoy)))}</td>
+                    <td>${frac(barePart(amt(s.quarter_net_income) + ' − ' + amt(s.prev_net_income)), barePart(amt(s.prev_net_income)))}</td>
+                    <td>${frac(barePart(amt(s.quarter_net_income) + ' − ' + amt(s.net_income_yoy)), barePart(amt(s.net_income_yoy)))}</td>
+                </tr>`;
+            } else {
+                html += `<tr>
+                    <td class="rank-main">${s.rank}</td>
+                    <td>${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
                     <td>${s.gpa.toFixed(1)}<span class="sub-text">${s.gpa_r}위</span></td>
                     <td>${s.op_debt_growth_yoy.toFixed(1)}%<span class="sub-text">${s.op_debt_r}위</span></td>
                     <td>${s.asset_growth_yoy.toFixed(1)}%<span class="sub-text">${s.asset_growth_r}위</span></td>
@@ -1417,14 +1543,6 @@
                     <td>${s.op_growth_yoy.toFixed(1)}%<span class="sub-text">${s.op_yoy_r}위</span></td>
                     <td>${s.ni_growth_qoq.toFixed(1)}%<span class="sub-text">${s.ni_qoq_r}위</span></td>
                     <td>${s.ni_growth_yoy.toFixed(1)}%<span class="sub-text">${s.ni_yoy_r}위</span></td>
-                </tr>`;
-            } else {
-                html += `<tr>
-                    <td class="rank-main">${s.rank}</td>
-                    <td>${getNameHtml(s.name)}</td>
-                    <td>${formatNumber(s.price)}</td>
-                    <td>${formatNumber(s.market_cap)}억</td>
-                    <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
                 </tr>`;
             }
         });
@@ -1434,29 +1552,20 @@
 
     function renderValueMomentumTable(data) {
         const isDetail = displayMode === 'detail';
-        let html = isDetail ? `
+        const amt = v => v == null ? 'N/A' : formatNumber(v);
+        let html = `
             <thead>
                 <tr>
                     <th style="width: 6%;" onclick="sortData('rank')">순위</th>
                     <th style="width: 22%;" onclick="sortData('name')">종목명</th>
-                    <th style="width: 8%;" onclick="sortData('per')">PER</th>
-                    <th style="width: 8%;" onclick="sortData('pfcr')">PFCR</th>
-                    <th style="width: 8%;" onclick="sortData('pbr')">PBR</th>
-                    <th style="width: 8%;" onclick="sortData('psr')">PSR</th>
-                    <th style="width: 10%;" onclick="sortData('op_growth_qoq')">영업이익<br>QoQ</th>
-                    <th style="width: 10%;" onclick="sortData('op_growth_yoy')">영업이익<br>YoY</th>
-                    <th style="width: 10%;" onclick="sortData('ni_growth_qoq')">순이익<br>QoQ</th>
-                    <th style="width: 10%;" onclick="sortData('ni_growth_yoy')">순이익<br>YoY</th>
-                </tr>
-            </thead>
-            <tbody>` : `
-            <thead>
-                <tr>
-                    <th style="width: 8%;" onclick="sortData('rank')">순위</th>
-                    <th style="width: 25%;" onclick="sortData('name')">종목명</th>
-                    <th style="width: 12%;" onclick="sortData('price')">종가</th>
-                    <th style="width: 18%;" onclick="sortData('market_cap')">시가<br>총액</th>
-                    <th style="width: 18%;" onclick="sortData('avg_r')">평균</th>
+                    <th style="width: 8%;" onclick="sortData('per')">${isDetail ? headerFracOnly('시가총액', '순이익') : 'PER'}</th>
+                    <th style="width: 8%;" onclick="sortData('pfcr')">${isDetail ? headerFracOnly('시가총액', '영업CF−CapEx') : 'PFCR'}</th>
+                    <th style="width: 8%;" onclick="sortData('pbr')">${isDetail ? headerFracOnly('시가총액', '자본총계') : 'PBR'}</th>
+                    <th style="width: 8%;" onclick="sortData('psr')">${isDetail ? headerFracOnly('시가총액', '매출액') : 'PSR'}</th>
+                    <th style="width: 10%;" onclick="sortData('op_growth_qoq')">${isDetail ? headerFracOnly('영업이익−전분기', '전분기 영업이익') : '영업이익<br>QoQ'}</th>
+                    <th style="width: 10%;" onclick="sortData('op_growth_yoy')">${isDetail ? headerFracOnly('영업이익−전년동기', '전년동기 영업이익') : '영업이익<br>YoY'}</th>
+                    <th style="width: 10%;" onclick="sortData('ni_growth_qoq')">${isDetail ? headerFracOnly('순이익−전분기', '전분기 순이익') : '순이익<br>QoQ'}</th>
+                    <th style="width: 10%;" onclick="sortData('ni_growth_yoy')">${isDetail ? headerFracOnly('순이익−전년동기', '전년동기 순이익') : '순이익<br>YoY'}</th>
                 </tr>
             </thead>
             <tbody>`;
@@ -1465,7 +1574,20 @@
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getNameHtml(s.name)}</td>
+                    <td>${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
+                    <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.quarter_net_income)))}</td>
+                    <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.quarter_operating_cf) + ' − ' + amt(s.quarter_capex)))}</td>
+                    <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.equity)))}</td>
+                    <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.quarter_revenue)))}</td>
+                    <td>${frac(barePart(amt(s.quarter_operating_income) + ' − ' + amt(s.prev_operating_income)), barePart(amt(s.prev_operating_income)))}</td>
+                    <td>${frac(barePart(amt(s.quarter_operating_income) + ' − ' + amt(s.operating_income_yoy)), barePart(amt(s.operating_income_yoy)))}</td>
+                    <td>${frac(barePart(amt(s.quarter_net_income) + ' − ' + amt(s.prev_net_income)), barePart(amt(s.prev_net_income)))}</td>
+                    <td>${frac(barePart(amt(s.quarter_net_income) + ' − ' + amt(s.net_income_yoy)), barePart(amt(s.net_income_yoy)))}</td>
+                </tr>`;
+            } else {
+                html += `<tr>
+                    <td class="rank-main">${s.rank}</td>
+                    <td>${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
                     <td>${s.per.toFixed(1)}<span class="sub-text">${s.per_r}위</span></td>
                     <td>${s.pfcr.toFixed(2)}<span class="sub-text">${s.pfcr_r}위</span></td>
                     <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
@@ -1475,14 +1597,6 @@
                     <td>${s.ni_growth_qoq.toFixed(1)}%<span class="sub-text">${s.ni_qoq_r}위</span></td>
                     <td>${s.ni_growth_yoy.toFixed(1)}%<span class="sub-text">${s.ni_yoy_r}위</span></td>
                 </tr>`;
-            } else {
-                html += `<tr>
-                    <td class="rank-main">${s.rank}</td>
-                    <td>${getNameHtml(s.name)}</td>
-                    <td>${formatNumber(s.price)}</td>
-                    <td>${formatNumber(s.market_cap)}억</td>
-                    <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
-                </tr>`;
             }
         });
         html += `</tbody>`;
@@ -1491,30 +1605,21 @@
 
     function renderSuperQualityTable(data) {
         const isDetail = displayMode === 'detail';
-        let html = isDetail ? `
+        const amt = v => v == null ? 'N/A' : formatNumber(v);
+        const ratioFmt = v => v == null ? 'N/A' : v.toFixed(4);
+        let html = `
             <thead>
                 <tr>
                     <th style="width: 6%;" onclick="sortData('rank')">순위</th>
                     <th style="width: 23%;" onclick="sortData('name')">종목명</th>
-                    <th style="width: 8%;" onclick="sortData('per')">PER</th>
-                    <th style="width: 8%;" onclick="sortData('pcr')">PCR</th>
-                    <th style="width: 8%;" onclick="sortData('pbr')">PBR</th>
-                    <th style="width: 8%;" onclick="sortData('psr')">PSR</th>
-                    <th style="width: 8%;" onclick="sortData('gpa')">GP/A</th>
-                    <th style="width: 13%;" onclick="sortData('op_debt_growth_yoy')">영업이익/<br>차입금</th>
-                    <th style="width: 9%;" onclick="sortData('asset_growth_yoy')">자산<br>성장률</th>
+                    <th style="width: 8%;" onclick="sortData('per')">${isDetail ? headerFracOnly('시가총액', '순이익') : 'PER'}</th>
+                    <th style="width: 8%;" onclick="sortData('pcr')">${isDetail ? headerFracOnly('시가총액', '영업CF') : 'PCR'}</th>
+                    <th style="width: 8%;" onclick="sortData('pbr')">${isDetail ? headerFracOnly('시가총액', '자본총계') : 'PBR'}</th>
+                    <th style="width: 8%;" onclick="sortData('psr')">${isDetail ? headerFracOnly('시가총액', '매출액') : 'PSR'}</th>
+                    <th style="width: 8%;" onclick="sortData('gpa')">${isDetail ? headerFracOnly('매출-매출원가', '자산') : 'GP/A'}</th>
+                    <th style="width: 13%;" onclick="sortData('op_debt_growth_yoy')">${isDetail ? headerFracOnly('영업이익/차입금−전년동기', '전년동기 영업이익/차입금') : '영업이익/<br>차입금'}</th>
+                    <th style="width: 9%;" onclick="sortData('asset_growth_yoy')">${isDetail ? headerFracOnly('자산-전년동기자산', '전년동기자산') : '자산<br>성장률'}</th>
                     <th style="width: 9%;" onclick="sortData('price_volatility')">변동성</th>
-                </tr>
-            </thead>
-            <tbody>` : `
-            <thead>
-                <tr>
-                    <th style="width: 7%;" onclick="sortData('rank')">순위</th>
-                    <th style="width: 22%;" onclick="sortData('name')">종목명</th>
-                    <th style="width: 9%;" onclick="sortData('price')">종가</th>
-                    <th style="width: 14%;" onclick="sortData('market_cap')">시가<br>총액</th>
-                    <th style="width: 24%;" onclick="sortData('f_score')">신F-스코어</th>
-                    <th style="width: 24%;" onclick="sortData('avg_r')">평균</th>
                 </tr>
             </thead>
             <tbody>`;
@@ -1523,7 +1628,20 @@
             if (isDetail) {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
-                    <td>${getNameHtml(s.name)}</td>
+                    <td>${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
+                    <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.quarter_net_income)))}</td>
+                    <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.quarter_operating_cf)))}</td>
+                    <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.equity)))}</td>
+                    <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.quarter_revenue)))}</td>
+                    <td>${frac(barePart(amt(s.quarter_revenue) + ' − ' + amt(s.quarter_cost_of_sales)), barePart(amt(s.assets)))}</td>
+                    <td>${frac(barePart(ratioFmt(s.op_to_debt_now) + ' − ' + ratioFmt(s.op_to_debt_yoy)), barePart(ratioFmt(s.op_to_debt_yoy)))}</td>
+                    <td>${frac(barePart(amt(s.assets) + ' − ' + amt(s.assets_yoy)), barePart(amt(s.assets_yoy)))}</td>
+                    <td>${s.price_volatility.toFixed(1)}%</td>
+                </tr>`;
+            } else {
+                html += `<tr>
+                    <td class="rank-main">${s.rank}</td>
+                    <td>${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
                     <td>${s.per.toFixed(1)}<span class="sub-text">${s.per_r}위</span></td>
                     <td>${s.pcr.toFixed(1)}<span class="sub-text">${s.pcr_r}위</span></td>
                     <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
@@ -1533,15 +1651,6 @@
                     <td>${s.asset_growth_yoy.toFixed(1)}%<span class="sub-text">${s.asset_growth_r}위</span></td>
                     <td>${s.price_volatility.toFixed(1)}%<span class="sub-text">${s.volatility_r}위</span></td>
                 </tr>`;
-            } else {
-                html += `<tr>
-                    <td class="rank-main">${s.rank}</td>
-                    <td>${getNameHtml(s.name)}</td>
-                    <td>${formatNumber(s.price)}</td>
-                    <td>${formatNumber(s.market_cap)}억</td>
-                    <td>3점</td>
-                    <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
-                </tr>`;
             }
         });
         html += `</tbody>`;
@@ -1549,7 +1658,22 @@
     }
 
     function renderFamaTable(data) {
-        let html = `
+        const isDetail = displayMode === 'detail';
+        const amt = v => v == null ? 'N/A' : formatNumber(v);
+        let html = isDetail ? `
+            <thead>
+                <tr>
+                    <th style="width: 6%;" onclick="sortData('rank')">순위</th>
+                    <th style="width: 18%;" onclick="sortData('name')">종목명</th>
+                    <th style="width: 8%;" onclick="sortData('price')">종가</th>
+                    <th style="width: 12%;" onclick="sortData('market_cap')">시가<br>총액</th>
+                    <th style="width: 14%;" onclick="sortData('pbr')">${headerFracOnly('시가총액', '자본총계')}</th>
+                    <th style="width: 14%;" onclick="sortData('gpa')">${headerFracOnly('매출-매출원가', '자산')}</th>
+                    <th style="width: 14%;" onclick="sortData('asset_growth_yoy')">${headerFracOnly('자산-전년동기자산', '전년동기자산')}</th>
+                    <th style="width: 14%;" onclick="sortData('avg_r')">평균</th>
+                </tr>
+            </thead>
+            <tbody>` : `
             <thead>
                 <tr>
                     <th style="width: 6%;" onclick="sortData('rank')">순위</th>
@@ -1565,16 +1689,29 @@
             <tbody>`;
 
         data.forEach(s => {
-            html += `<tr>
-                <td class="rank-main">${s.rank}</td>
-                <td>${getNameHtml(s.name)}</td>
-                <td>${formatNumber(s.price)}</td>
-                <td>${formatNumber(s.market_cap)}억</td>
-                <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
-                <td>${s.gpa.toFixed(2)}<span class="sub-text">${s.gpa_r}위</span></td>
-                <td>${s.asset_growth_yoy.toFixed(1)}%<span class="sub-text">${s.asset_growth_r}위</span></td>
-                <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
-            </tr>`;
+            if (isDetail) {
+                html += `<tr>
+                    <td class="rank-main">${s.rank}</td>
+                    <td>${getNameHtml(s.name)}</td>
+                    <td>${formatNumber(s.price)}</td>
+                    <td>${formatNumber(s.market_cap)}억</td>
+                    <td>${frac(barePart(amt(s.market_cap)), barePart(amt(s.equity)))}</td>
+                    <td>${s.gpa == null ? 'N/A' : frac(barePart(amt(s.quarter_revenue) + ' − ' + amt(s.quarter_cost_of_sales)), barePart(amt(s.assets)))}</td>
+                    <td>${frac(barePart(amt(s.assets) + ' − ' + amt(s.assets_yoy)), barePart(amt(s.assets_yoy)))}</td>
+                    <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
+                </tr>`;
+            } else {
+                html += `<tr>
+                    <td class="rank-main">${s.rank}</td>
+                    <td>${getNameHtml(s.name)}</td>
+                    <td>${formatNumber(s.price)}</td>
+                    <td>${formatNumber(s.market_cap)}억</td>
+                    <td>${s.pbr.toFixed(2)}<span class="sub-text">${s.pbr_r}위</span></td>
+                    <td>${s.gpa.toFixed(2)}<span class="sub-text">${s.gpa_r}위</span></td>
+                    <td>${s.asset_growth_yoy.toFixed(1)}%<span class="sub-text">${s.asset_growth_r}위</span></td>
+                    <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
+                </tr>`;
+            }
         });
         html += `</tbody>`;
         document.getElementById("quant-table").innerHTML = html;
@@ -1583,27 +1720,19 @@
     function renderQualityTable(data) {
         const isDetail = displayMode === 'detail';
         const pct = v => v == null ? 'N/A' : v.toFixed(1) + '%';
-        let html = isDetail ? `
+        const amt = v => v == null ? 'N/A' : formatNumber(v);
+        const ratioFmt = v => v == null ? 'N/A' : v.toFixed(4);
+        let html = `
             <thead>
                 <tr>
                     <th style="width: 6%;" onclick="sortData('rank')">순위</th>
                     <th style="width: 16%;" onclick="sortData('name')">종목명</th>
                     <th style="width: 9%;" onclick="sortData('price')">종가</th>
                     <th style="width: 10%;" onclick="sortData('cap_increase_flag')">유상증자</th>
-                    <th style="width: 11%;" onclick="sortData('gpa')">GP/A</th>
-                    <th style="width: 16%;" onclick="sortData('op_debt_growth_yoy')">영업이익/<br>차입금 YoY</th>
-                    <th style="width: 16%;" onclick="sortData('asset_growth_yoy')">자산<br>성장률</th>
+                    <th style="width: 11%;" onclick="sortData('gpa')">${isDetail ? headerFracOnly('매출-매출원가', '자산') : 'GP/A'}</th>
+                    <th style="width: 16%;" onclick="sortData('op_debt_growth_yoy')">${isDetail ? headerFracOnly('영업이익/차입금−전년동기', '전년동기 영업이익/차입금') : '영업이익/<br>차입금 YoY'}</th>
+                    <th style="width: 16%;" onclick="sortData('asset_growth_yoy')">${isDetail ? headerFracOnly('자산-전년동기자산', '전년동기자산') : '자산<br>성장률'}</th>
                     <th style="width: 16%;" onclick="sortData('price_volatility')">주가<br>변동성</th>
-                </tr>
-            </thead>
-            <tbody>` : `
-            <thead>
-                <tr>
-                    <th style="width: 8%;" onclick="sortData('rank')">순위</th>
-                    <th style="width: 26%;" onclick="sortData('name')">종목명</th>
-                    <th style="width: 12%;" onclick="sortData('price')">종가</th>
-                    <th style="width: 27%;" onclick="sortData('cap_increase_flag')">신F-스코어</th>
-                    <th style="width: 27%;" onclick="sortData('avg_r')">평균</th>
                 </tr>
             </thead>
             <tbody>`;
@@ -1611,6 +1740,17 @@
         data.forEach(s => {
             const nameCell = `${getNameHtml(s.name)}`;
             if (isDetail) {
+                html += `<tr>
+                    <td class="rank-main">${s.rank}</td>
+                    <td>${nameCell}</td>
+                    <td>${formatNumber(s.price)}</td>
+                    <td>${s.cap_increase_flag === 1 ? 'X' : 'O'}</td>
+                    <td>${s.gpa == null ? 'N/A' : frac(barePart(amt(s.quarter_revenue) + ' − ' + amt(s.quarter_cost_of_sales)), barePart(amt(s.assets)))}</td>
+                    <td>${frac(barePart(ratioFmt(s.op_to_debt_now) + ' − ' + ratioFmt(s.op_to_debt_yoy)), barePart(ratioFmt(s.op_to_debt_yoy)))}</td>
+                    <td>${frac(barePart(amt(s.assets) + ' − ' + amt(s.assets_yoy)), barePart(amt(s.assets_yoy)))}</td>
+                    <td>${pct(s.price_volatility)}</td>
+                </tr>`;
+            } else {
                 html += `<tr>
                     <td class="rank-main">${s.rank}</td>
                     <td>${nameCell}</td>
@@ -1621,14 +1761,6 @@
                     <td>${pct(s.asset_growth_yoy)}<span class="sub-text">${s.asset_growth_r}위</span></td>
                     <td>${pct(s.price_volatility)}<span class="sub-text">${s.volatility_r}위</span></td>
                 </tr>`;
-            } else {
-                html += `<tr>
-                    <td class="rank-main">${s.rank}</td>
-                    <td>${nameCell}</td>
-                    <td>${formatNumber(s.price)}</td>
-                    <td>${s.cap_increase_flag + s.ni_pos_flag + s.cf_pos_flag}점</td>
-                    <td class="rank-avg">${s.avg_r.toFixed(1)}위</td>
-                </tr>`;
             }
         });
         html += `</tbody>`;
@@ -1638,26 +1770,27 @@
     function renderFscoreTable(data) {
         const isDetail = displayMode === 'detail';
         const pbrHeaderDetail = `PBR ${headerFracLabel('시가총액', '자본총계')}`;
+        const FSCORE_ROW_HEIGHT = '46px';  // 간단/자세히 토글 시 헤더·행 높이가 흔들리지 않도록 양쪽 모드 동일 높이로 고정
         let html = isDetail ? `
             <thead>
-                <tr>
+                <tr style="height: ${FSCORE_ROW_HEIGHT};">
                     <th style="width: 7%;" onclick="sortData('rank')">순위</th>
-                    <th style="width: 18%;" onclick="sortData('name')">종목명</th>
+                    <th style="width: 24%;" onclick="sortData('name')">종목명</th>
                     <th style="width: 12%;" onclick="sortData('price')">종가</th>
-                    <th style="width: 11%;" onclick="sortData('cap_increase_flag')">유상증자</th>
-                    <th style="width: 16%;" onclick="sortData('quarter_net_income')">순이익</th>
-                    <th style="width: 16%;" onclick="sortData('quarter_operating_cf')">영업CF</th>
-                    <th style="width: 18%;" onclick="sortData('pbr')">${pbrHeaderDetail}</th>
+                    <th class="fscore-group-start" style="width: 10%;" onclick="sortData('cap_increase_flag')">유상증자</th>
+                    <th class="fscore-group" style="width: 10%;" onclick="sortData('quarter_net_income')">순이익</th>
+                    <th class="fscore-group-end" style="width: 10%;" onclick="sortData('quarter_operating_cf')">영업CF</th>
+                    <th style="width: 20%;" onclick="sortData('pbr')">${pbrHeaderDetail}</th>
                 </tr>
             </thead>
             <tbody>` : `
             <thead>
-                <tr>
+                <tr style="height: ${FSCORE_ROW_HEIGHT};">
                     <th style="width: 7%;" onclick="sortData('rank')">순위</th>
                     <th style="width: 24%;" onclick="sortData('name')">종목명</th>
                     <th style="width: 12%;" onclick="sortData('price')">종가</th>
-                    <th style="width: 28.5%;" onclick="sortData('f_score')">신F-스코어</th>
-                    <th style="width: 28.5%;" onclick="sortData('pbr')">PBR</th>
+                    <th style="width: 30%;" onclick="sortData('f_score')">신F-스코어</th>
+                    <th style="width: 20%;" onclick="sortData('pbr')">PBR</th>
                 </tr>
             </thead>
             <tbody>`;
@@ -1665,17 +1798,17 @@
         data.forEach(s => {
             const nameCell = `${getNameHtml(s.name)}`;
             if (isDetail) {
-                html += `<tr>
+                html += `<tr style="height: ${FSCORE_ROW_HEIGHT};">
                     <td class="rank-main">${s.rank}</td>
                     <td>${nameCell}</td>
                     <td>${formatNumber(s.price)}</td>
-                    <td>${s.cap_increase_flag === 1 ? 'X' : 'O'}</td>
-                    <td>${s.quarter_net_income == null ? 'N/A' : formatNumber(s.quarter_net_income) + '억'}</td>
-                    <td>${s.quarter_operating_cf == null ? 'N/A' : formatNumber(s.quarter_operating_cf) + '억'}</td>
+                    <td class="fscore-group-start">${s.cap_increase_flag === 1 ? 'X' : 'O'}</td>
+                    <td class="fscore-group">${s.quarter_net_income == null ? 'N/A' : formatNumber(s.quarter_net_income) + '억'}</td>
+                    <td class="fscore-group-end">${s.quarter_operating_cf == null ? 'N/A' : formatNumber(s.quarter_operating_cf) + '억'}</td>
                     <td>${s.market_cap == null ? 'N/A' : frac(barePart(formatNumber(s.market_cap)), barePart(formatNumber(s.equity)))}</td>
                 </tr>`;
             } else {
-                html += `<tr>
+                html += `<tr style="height: ${FSCORE_ROW_HEIGHT};">
                     <td class="rank-main">${s.rank}</td>
                     <td>${nameCell}</td>
                     <td>${formatNumber(s.price)}</td>
@@ -1886,6 +2019,11 @@
     window.onload = function() {
         loadOptions();
         updateBookmarkCount();
+        if ('Notification' in window) {
+            const btn = document.getElementById('btn-enable-notif');
+            if (btn && Notification.permission === 'granted') btn.textContent = '🔔 알림 켜짐';
+            if (btn && Notification.permission === 'denied') btn.textContent = '🔕 알림 꺼짐 (차단됨)';
+        }
         if (typeof KOSPI_QUANT_PACKAGE !== 'undefined') {
             const server = KOSPI_QUANT_PACKAGE.server;
             superData = KOSPI_QUANT_PACKAGE.super_value;
