@@ -105,6 +105,21 @@ def order():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/cancel_order", methods=["POST"])
+def cancel_order():
+    data = request.get_json(force=True) or {}
+    stk_cd = data.get("stk_cd")
+    orig_ord_no = data.get("orig_ord_no")
+    cncl_qty = data.get("cncl_qty")
+    if not stk_cd or not orig_ord_no or not cncl_qty:
+        return jsonify({"error": "stk_cd, orig_ord_no, cncl_qty는 필수입니다."}), 400
+    try:
+        result = kiwoom_api.cancel_order(stk_cd, orig_ord_no, cncl_qty)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/update_data", methods=["POST"])
 def update_data():
     if update_state["running"]:

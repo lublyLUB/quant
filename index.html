@@ -814,7 +814,7 @@
             </tr></thead><tbody>`;
             holdingRows.forEach(r => {
                 const weight = totalHoldingValue > 0 ? (r.value / totalHoldingValue) * 100 : 0;
-                const status = alreadyExcludedCodes.has(r.code) ? '<span style="color:#dc2626; font-weight:bold;">🚨 매도대상(선택목록 제외됨)</span>'
+                const status = alreadyExcludedCodes.has(r.code) ? '<span style="color:#dc2626; font-weight:bold;">🚨 매도대상</span>'
                     : seasonOnlyCodes.has(r.code) ? '<span style="color:#d97706;">⚠️ 시즌탈락</span>'
                     : droppedCodes.has(r.code) ? '<span style="color:#dc2626;">📉 탈락</span>'
                     : '<span style="color:#16a34a;">유지</span>';
@@ -824,7 +824,7 @@
                     <td>${formatNumber(r.price)}원</td>
                     <td>${formatNumber(r.value)}원</td>
                     <td>${weight.toFixed(1)}%</td>
-                    <td>${status}</td>
+                    <td style="white-space:normal; overflow:visible; text-overflow:initial;">${status}</td>
                 </tr>`;
             });
             html += `</tbody></table>`;
@@ -1176,7 +1176,8 @@
             const diff = t.shares - curQty;
             const targetValue = t.shares * t.price;
             const curValue = curQty * t.price;
-            const weightDiffPct = targetValue > 0 ? ((curValue - targetValue) / targetValue) * 100 : (curValue > 0 ? 100 : 0);
+            // 매수/매도 수량(diff)과 부호를 통일: 음수 = 매도 필요, 양수 = 매수 필요
+            const weightDiffPct = targetValue > 0 ? ((targetValue - curValue) / targetValue) * 100 : (curValue > 0 ? -100 : 0);
             rows.push({
                 name: t.name, code, price: t.price,
                 targetQty: t.shares, curQty, diff, weightDiffPct,
@@ -1191,7 +1192,7 @@
             if (held.qty <= 0) return;
             rows.push({
                 name: held.name, code, price: held.price,
-                targetQty: 0, curQty: held.qty, diff: -held.qty, weightDiffPct: 100, side: 'sell',
+                targetQty: 0, curQty: held.qty, diff: -held.qty, weightDiffPct: -100, side: 'sell',
             });
         });
 
@@ -1218,6 +1219,44 @@
         return data.prices;  // {code: price}
     }
 
+    // 당일 주문체결현황(kt00009)에서 아직 다 체결되지 않은(주문수량 > 체결수량) 주문만 추려낸다.
+    async function fetchOpenOrders() {
+        const resp = await fetch(`${ORDER_SERVER_URL}/api/order_status`);
+        const data = await resp.json();
+        if (data.error) throw new Error(data.error);
+        const rows = data.acnt_ord_cntr_prst_array || data.acnt_ord_cntr_prps_dtl || data.acnt_ord_cntr_dtl || [];
+        return rows
+            .map(r => ({
+                code: (r.stk_cd || '').replace(/\D/g, ''),
+                ordNo: r.ord_no,
+                remainQty: (parseInt(r.ord_qty, 10) || 0) - (parseInt(r.cntr_qty, 10) || 0),
+            }))
+            .filter(r => r.code && r.ordNo && r.remainQty > 0);
+    }
+
+    // 지정한 종목코드들의 미체결 주문을 모두 취소한다. 실패한 건은 결과에 ok:false로 남기고 계속 진행.
+    async function cancelOpenOrdersForCodes(codes) {
+        const codeSet = new Set(codes);
+        const openOrders = (await fetchOpenOrders()).filter(o => codeSet.has(o.code));
+        const results = [];
+        for (const o of openOrders) {
+            try {
+                const resp = await fetch(`${ORDER_SERVER_URL}/api/cancel_order`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ stk_cd: o.code, orig_ord_no: o.ordNo, cncl_qty: o.remainQty }),
+                });
+                const data = await resp.json();
+                const ok = !(data.error || (data.return_code !== undefined && data.return_code !== 0));
+                results.push({ code: o.code, ok, msg: ok ? '취소 성공' : (data.error || data.return_msg) });
+            } catch (e) {
+                results.push({ code: o.code, ok: false, msg: e.message });
+            }
+            await new Promise(resolve => setTimeout(resolve, 1100));  // 키움 API 초당 요청 제한 대응
+        }
+        return results;
+    }
+
     // 목표금액(=기존 목표수량×기존가격)을 새 가격으로 나눠 수량을 다시 계산. 전량매도(targetQty=0)는 가격과 무관하게 보유수량 그대로 매도.
     function recomputeRowWithFreshPrice(r, freshPrice) {
         if (!freshPrice) return null;
@@ -1235,6 +1274,18 @@
         const baseRow = computeOrderData().find(r => r.code === code);
         if (!baseRow) {
             statusEl.textContent = '주문 대상을 찾을 수 없습니다. 화면을 새로고침해주세요.';
+            return;
+        }
+        statusEl.textContent = '기존 미체결 주문 확인/취소 중...';
+        try {
+            const canceled = await cancelOpenOrdersForCodes([code]);
+            const failed = canceled.filter(c => !c.ok);
+            if (failed.length > 0) {
+                statusEl.textContent = `❌ 기존 미체결 주문 취소 실패 - ${failed[0].msg} (중복주문 위험으로 전송을 중단합니다)`;
+                return;
+            }
+        } catch (e) {
+            statusEl.textContent = `❌ 미체결 주문 확인 실패 - ${e.message} (중복주문 위험으로 전송을 중단합니다)`;
             return;
         }
         let row;
@@ -1277,6 +1328,18 @@
             statusEl.textContent = '주문할 종목이 없습니다.';
             return;
         }
+        statusEl.textContent = '기존 미체결 주문 확인/취소 중...';
+        try {
+            const canceled = await cancelOpenOrdersForCodes(rows.map(r => r.code));
+            const failed = canceled.filter(c => !c.ok);
+            if (failed.length > 0) {
+                statusEl.textContent = `❌ 기존 미체결 주문 취소 실패(${failed.map(f => f.code).join(', ')}) - 중복주문 위험으로 전송을 중단합니다.`;
+                return;
+            }
+        } catch (e) {
+            statusEl.textContent = `❌ 미체결 주문 확인 실패 - ${e.message} (중복주문 위험으로 전송을 중단합니다)`;
+            return;
+        }
         statusEl.textContent = '현재가 재조회 중...';
         let prices;
         try {
@@ -1288,7 +1351,8 @@
 
         const finalRows = rows
             .map(r => recomputeRowWithFreshPrice(r, prices[r.code]))
-            .filter(r => r && r.diff !== 0);
+            .filter(r => r && r.diff !== 0)
+            .sort((a, b) => (a.diff < 0 ? 0 : 1) - (b.diff < 0 ? 0 : 1));  // 매도(diff<0)를 먼저 보내서 현금을 확보한 뒤 매수
 
         if (finalRows.length === 0) {
             statusEl.textContent = '현재가 기준으로 재계산한 결과 주문할 종목이 없습니다.';
@@ -1330,7 +1394,8 @@
             return;
         }
 
-        const rows = computeOrderData();
+        // 매도(diff<0)를 위쪽에 먼저 보여줘서, 실제 전송 순서(매도 먼저→현금 확보→매수)와 화면이 일치하도록 함
+        const rows = computeOrderData().sort((a, b) => (a.diff < 0 ? 0 : 1) - (b.diff < 0 ? 0 : 1));
         let html = `
             <thead>
                 <tr>

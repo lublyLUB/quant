@@ -180,6 +180,30 @@ def place_order(stk_cd, qty, side, price=None, is_mock=KIWOOM_IS_MOCK):
     return resp.json()
 
 
+def cancel_order(stk_cd, orig_ord_no, cncl_qty, is_mock=KIWOOM_IS_MOCK):
+    """주식 취소주문 (kt10003) - 미체결 주문을 취소한다."""
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, is_mock)
+    url = f"{get_base_url(is_mock)}/api/dostk/ordr"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": "kt10003",
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {token}",
+    }
+    body = {
+        "dmst_stex_tp": "KRX",
+        "orig_ord_no": orig_ord_no,
+        "stk_cd": stk_cd,
+        "cncl_qty": str(int(cncl_qty)),
+    }
+    resp = requests.post(url, headers=headers, json=body, timeout=15)
+    resp.raise_for_status()
+    return resp.json()
+
+
 if __name__ == "__main__":
     if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
         sys.stdout.reconfigure(encoding="utf-8")
