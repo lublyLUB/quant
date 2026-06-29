@@ -3,7 +3,7 @@ const KOSPI_QUANT_PACKAGE = {
         "krx_basis_date": "20260626",
         "dart_basis": "2026년 1분기보고서",
         "status": "NORMAL",
-        "checked_at": "16:04:22"
+        "checked_at": "03:57:56"
     },
     "super_value": [
         {
@@ -32213,7 +32213,7 @@ const KOSPI_QUANT_PACKAGE = {
         "아이큐어": {
             "pbr": 3.43,
             "gpa": 4.1,
-            "f_score": 1,
+            "f_score": 0,
             "asset_growth_yoy": -32.1
         },
         "듀켐바이오": {
