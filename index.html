@@ -447,9 +447,9 @@
     ];
 
     // "4~10월 제외" 체크 시 12.NCAV는 항상 빼고, 13.슈퍼가치는 소형주 옵션이 켜져 있을 때만 같이 뺀다
-    function getActiveRecommendSources() {
+    function getActiveRecommendSources(ignoreSeasonExclude) {
         return RECOMMEND_SOURCES.filter(src => {
-            if (!isExcludeSeasonMode) return true;
+            if (ignoreSeasonExclude || !isExcludeSeasonMode) return true;
             if (src.key === 'ncav') return false;
             if (src.key === 'super' && smallcapMode !== 'none') return false;
             return true;
@@ -468,8 +468,8 @@
         refreshCurrentTable();
     }
 
-    function computeRecommendData() {
-        const availableSources = getActiveRecommendSources();
+    function computeRecommendData(ignoreSeasonExclude) {
+        const availableSources = getActiveRecommendSources(ignoreSeasonExclude);
         const checkedSources = availableSources.filter(src => recommendCheckedKeys.has(src.key));
         const activeSources = checkedSources.length > 0 ? checkedSources : availableSources;
         const requireAll = checkedSources.length > 0;
@@ -719,76 +719,61 @@
 
     let rebalanceDroppedNames = [];
     let rebalanceNewNames = [];
-    let rebalanceSeasonCashNames = [];
-
-    // 12.NCAV, 13.슈퍼가치(소형주)는 5~10월에는 추천 순위와 무관하게 현금보유를 권장하는 전략
-    function isCashHoldSeasonNow() {
-        const m = new Date().getMonth() + 1;
-        return m >= 5 && m <= 10;
-    }
 
     function computeRebalanceComparison() {
         const recommendList = computeRecommendData();
         const recommendCodes = new Set(recommendList.map(r => findStockCode(r.name)).filter(Boolean));
         const heldCodes = new Set(Object.entries(holdingsByCode).filter(([, h]) => h.qty > 0).map(([code]) => code));
 
-        const dropped = Object.entries(holdingsByCode)
+        // "4~10월 제외" 옵션을 끄면 추천에 들었을 종목 = 이 옵션 때문에만 탈락한 종목
+        const noSeasonRecommendList = computeRecommendData(true);
+        const noSeasonRecommendCodes = new Set(noSeasonRecommendList.map(r => findStockCode(r.name)).filter(Boolean));
+
+        const droppedAll = Object.entries(holdingsByCode)
             .filter(([code, h]) => h.qty > 0 && !recommendCodes.has(code))
             .map(([code, h]) => ({ code, name: h.name }));
+
+        // 다른 전략 추천이 하나도 없어서가 아니라, 순전히 4~10월 제외 옵션 때문에 탈락한 종목 → 별도 확인 대상
+        const seasonOnlyDropped = droppedAll.filter(s => noSeasonRecommendCodes.has(s.code));
+        const dropped = droppedAll.filter(s => !noSeasonRecommendCodes.has(s.code));
 
         const newEntries = bookmarks
             .map(name => ({ name, code: findStockCode(name) }))
             .filter(s => s.code && recommendCodes.has(s.code) && !heldCodes.has(s.code));
 
-        let seasonCash = [];
-        if (isCashHoldSeasonNow()) {
-            const ncavCodes = new Set(ncavData.map(s => s.code).filter(Boolean));
-            const superSourceData = smallcapMode !== 'none' ? pickSmallcapData(smallcapMode, superData, superSmallcapData, superSmallcap30Data) : [];
-            const superCodes = new Set(superSourceData.map(s => s.code).filter(Boolean));
-            seasonCash = Object.entries(holdingsByCode)
-                .filter(([code, h]) => h.qty > 0 && (ncavCodes.has(code) || superCodes.has(code)))
-                .map(([code, h]) => ({ code, name: h.name }));
-        }
-
-        return { dropped, newEntries, seasonCash };
+        return { dropped, seasonOnlyDropped, newEntries };
     }
 
     function renderRebalanceTable() {
         const nextDate = getNextRebalanceDate();
         const dDay = Math.ceil((nextDate - new Date(new Date().toDateString())) / 86400000);
-        const seasonNotice = isCashHoldSeasonNow()
-            ? ' · 📌 5~10월: NCAV/슈퍼가치(소형주) 전략은 지금 현금보유 권장 기간'
-            : '';
         document.getElementById("rebalance-season-info").innerText =
-            `다음 매도 리밸런싱일(근사): ${nextDate.toLocaleDateString()} (D-${dDay})${seasonNotice}`;
+            `다음 매도 리밸런싱일(근사): ${nextDate.toLocaleDateString()} (D-${dDay})`;
 
         if (!holdingsLoaded) {
             document.getElementById("quant-table").innerHTML = holdingsRequiredPlaceholderHtml();
             return;
         }
 
-        const { dropped, newEntries, seasonCash } = computeRebalanceComparison();
+        const { dropped, seasonOnlyDropped, newEntries } = computeRebalanceComparison();
         rebalanceDroppedNames = dropped.map(s => s.name);
         rebalanceNewNames = newEntries.map(s => s.name);
-        rebalanceSeasonCashNames = seasonCash.map(s => s.name);
 
         let html = `<tbody><tr><td style="padding:14px; text-align:left;">`;
-        if (isCashHoldSeasonNow()) {
-            html += `<div style="margin-bottom:8px;"><b>📌 시즌 현금보유 대상 (5~10월, NCAV/슈퍼가치 추천 종목)</b></div>`;
-            if (seasonCash.length === 0) {
-                html += `<div style="margin-bottom:14px; color:#94a3b8;">없음</div>`;
-            } else {
-                html += `<table style="width:100%; font-size:11px; margin-bottom:14px;"><tbody>`;
-                seasonCash.forEach(s => html += `<tr><td>${s.name}</td></tr>`);
-                html += `</tbody></table>`;
-            }
-        }
         html += `<div style="margin-bottom:8px;"><b>📉 추천 순위에서 탈락한 보유종목 (매도 후보)</b></div>`;
         if (dropped.length === 0) {
             html += `<div style="margin-bottom:14px; color:#94a3b8;">없음</div>`;
         } else {
             html += `<table style="width:100%; font-size:11px; margin-bottom:14px;"><tbody>`;
             dropped.forEach(s => html += `<tr><td>${s.name}</td></tr>`);
+            html += `</tbody></table>`;
+        }
+        html += `<div style="margin-bottom:8px;"><b>⚠️ 4~10월 제외 옵션 때문에만 탈락한 보유종목 (다른 전략 추천 없음, 교체 확정 시 개별 확인)</b></div>`;
+        if (seasonOnlyDropped.length === 0) {
+            html += `<div style="margin-bottom:14px; color:#94a3b8;">없음</div>`;
+        } else {
+            html += `<table style="width:100%; font-size:11px; margin-bottom:14px;"><tbody>`;
+            seasonOnlyDropped.forEach(s => html += `<tr><td>${s.name}</td></tr>`);
             html += `</tbody></table>`;
         }
         html += `<div style="margin-bottom:8px;"><b>📈 선택한 종목 중 추천에 새로 진입한 미보유종목 (매수 후보)</b></div>`;
@@ -810,13 +795,18 @@
             statusEl.textContent = '먼저 보유 내역을 조회해주세요.';
             return;
         }
-        const { dropped, newEntries, seasonCash } = computeRebalanceComparison();
-        if (dropped.length === 0 && newEntries.length === 0 && seasonCash.length === 0) {
+        const { dropped, seasonOnlyDropped, newEntries } = computeRebalanceComparison();
+        if (dropped.length === 0 && seasonOnlyDropped.length === 0 && newEntries.length === 0) {
             statusEl.textContent = '교체할 종목이 없습니다.';
             return;
         }
-        const toRemove = [...dropped, ...seasonCash.filter(s => !dropped.some(d => d.code === s.code))];
-        if (!confirm(`탈락/시즌현금보유 ${toRemove.length}종목을 선택한 종목에서 제외하고, 신규 ${newEntries.length}종목을 포함해 포트폴리오를 갱신합니다.\n계속하시겠습니까?`)) return;
+
+        const confirmedSeasonDrops = seasonOnlyDropped.filter(s =>
+            confirm(`"${s.name}"은 다른 전략 추천은 없고, 4~10월 제외 옵션 때문에만 탈락 후보가 되었습니다.\n매도 후보로 포함하시겠습니까?`)
+        );
+        const toRemove = [...dropped, ...confirmedSeasonDrops];
+
+        if (!confirm(`탈락 ${toRemove.length}종목을 선택한 종목에서 제외하고, 신규 ${newEntries.length}종목을 포함해 포트폴리오를 갱신합니다.\n계속하시겠습니까?`)) return;
 
         toRemove.forEach(s => {
             const idx = bookmarks.indexOf(s.name);
