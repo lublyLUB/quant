@@ -1253,7 +1253,7 @@
                     if (!code) return;
                     holdingsByCode[code] = {
                         name: r.stk_nm || '',
-                        qty: parseInt(r.setl_remn || '0', 10) || 0,  // 결제잔고: 미체결 매수 미포함, 가장 정확
+                        qty: parseInt(r.cur_qty || r.setl_remn || '0', 10) || 0,  // cur_qty: 미결제 매수 포함 전체 보유수량
                         price: parseInt(r.cur_prc || '0', 10) || 0,
                     };
                 });
@@ -1308,7 +1308,7 @@
                 }
             }
 
-            setHoldingsStatusText(`조회 완료 (${rows.length}종목 보유, ${new Date().toLocaleTimeString()} 기준)`);
+            setHoldingsStatusText(`조회 완료 (${Object.keys(holdingsByCode).length}종목 보유, ${new Date().toLocaleTimeString()} 기준)`);
             startOrderPolling();
         } catch (e) {
             holdingsLoaded = false;
