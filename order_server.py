@@ -70,10 +70,74 @@ def holdings():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/stock_warnings", methods=["GET"])
+def stock_warnings():
+    """ka10100 - 매수 대상 종목의 투자유의 여부 확인"""
+    codes = [c for c in (request.args.get("codes") or "").split(",") if c]
+    if not codes:
+        return jsonify({"error": "codes 파라미터가 필요합니다."}), 400
+    try:
+        return jsonify(kiwoom_api.check_stock_warning(codes))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/realized_pl", methods=["GET"])
+def realized_pl():
+    """ka10072 - 종목별 실현손익·실제 수수료·세금 조회"""
+    code = request.args.get("code", "")
+    from_dt = request.args.get("from", "")
+    if not code:
+        return jsonify({"error": "code 파라미터가 필요합니다."}), 400
+    try:
+        return jsonify(kiwoom_api.get_realized_pl(code, from_dt))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/daily_balance", methods=["GET"])
+def daily_balance():
+    """ka01690 - 일별잔고수익률. date 파라미터 없으면 당일."""
+    qry_dt = request.args.get("date", "")
+    try:
+        return jsonify(kiwoom_api.get_daily_balance(qry_dt))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/settlement_balance", methods=["GET"])
+def settlement_balance():
+    """kt00005 - 주문가능현금(ord_alowa) + 종목별 결제잔고(setl_remn) 조회"""
+    try:
+        return jsonify(kiwoom_api.get_settlement_balance())
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/order_status", methods=["GET"])
 def order_status():
+    qry_tp = request.args.get("qry_tp", "1")
     try:
-        return jsonify(kiwoom_api.get_order_status())
+        return jsonify(kiwoom_api.get_order_status(qry_tp))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/open_orders", methods=["GET"])
+def open_orders():
+    """kt00007 - 미체결 주문만 직접 조회 (qry_tp=3)"""
+    sell_tp = request.args.get("sell_tp", "0")
+    try:
+        return jsonify(kiwoom_api.get_open_orders(sell_tp))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/fills", methods=["GET"])
+def fills():
+    sell_tp = request.args.get("sell_tp", "0")
+    try:
+        return jsonify(kiwoom_api.get_fills(sell_tp))
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -100,6 +164,22 @@ def order():
         return jsonify({"error": "stk_cd, qty, side(buy/sell)는 필수입니다."}), 400
     try:
         result = kiwoom_api.place_order(stk_cd, qty, side, price)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/modify_order", methods=["POST"])
+def modify_order():
+    data = request.get_json(force=True) or {}
+    stk_cd = data.get("stk_cd")
+    orig_ord_no = data.get("orig_ord_no")
+    mdfy_qty = data.get("mdfy_qty")
+    mdfy_uv = data.get("mdfy_uv")
+    if not stk_cd or not orig_ord_no or not mdfy_qty or not mdfy_uv:
+        return jsonify({"error": "stk_cd, orig_ord_no, mdfy_qty, mdfy_uv는 필수입니다."}), 400
+    try:
+        result = kiwoom_api.modify_order(stk_cd, orig_ord_no, mdfy_qty, mdfy_uv)
         return jsonify(result)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -190,30 +270,53 @@ def performance_baseline():
 
 @app.route("/api/performance/snapshot", methods=["POST"])
 def performance_snapshot():
-    """② 주기적 스냅샷 저장 - 최신 기준점 종목들의 현재가/평가금액/벤치마크를 기록 (수동 버튼 트리거)."""
+    """② 주기적 스냅샷 저장 - ka01690(일별잔고수익률)으로 브로커 기준 정확한 평가금액 사용."""
     history = _load_performance()
     if not history["baselines"]:
         return jsonify({"error": "기준점이 없습니다. 먼저 기준점을 기록해주세요."}), 400
     baseline = history["baselines"][-1]
     try:
-        codes = [s["code"] for s in baseline["stocks"]] + list(BENCHMARK_CODES.values())
-        quotes = kiwoom_api.get_stock_quotes(codes)
+        # ka01690으로 당일 브로커 기준 평가금액·종목별 현재가 조회
+        daily = kiwoom_api.get_daily_balance()
+        if not daily.get("error") and daily.get("tot_evlt_amt"):
+            total_value = (int(daily.get("tot_evlt_amt") or 0) +
+                           int(daily.get("dbst_bal") or 0))
+            price_map = {
+                (r.get("stk_cd") or "").replace("A", "").replace("*", ""): int(r.get("cur_prc") or 0)
+                for r in (daily.get("day_bal_rt") or [])
+            }
+        else:
+            # ka01690 실패 시 ka10001 폴백
+            codes = [s["code"] for s in baseline["stocks"]]
+            quotes_raw = kiwoom_api.get_stock_quotes(codes)
+            price_map = {
+                code: (v["price"] if isinstance(v, dict) else v)
+                for code, v in quotes_raw.items() if v
+            }
+            total_value = sum(
+                price_map.get(s["code"], 0) * s["qty"]
+                for s in baseline["stocks"]
+            )
 
-        total_value = 0
         stock_values = []
         for s in baseline["stocks"]:
-            price = quotes.get(s["code"])
+            price = price_map.get(s["code"])
             value = (price * s["qty"]) if price else None
-            if value:
-                total_value += value
             stock_values.append({"code": s["code"], "name": s["name"], "price": price, "value": value})
+
+        # 벤치마크는 기존 방식 유지
+        bench_quotes = kiwoom_api.get_stock_quotes(list(BENCHMARK_CODES.values()))
+        bench_prices = {
+            k: (v["price"] if isinstance(v, dict) else v)
+            for k, v in bench_quotes.items() if v
+        }
 
         snapshot = {
             "date": datetime.now().strftime("%Y-%m-%d"),
             "datetime": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "totalValue": total_value,
             "stocks": stock_values,
-            "benchmark": {k: quotes.get(v) for k, v in BENCHMARK_CODES.items()},
+            "benchmark": {k: bench_prices.get(v) for k, v in BENCHMARK_CODES.items()},
         }
         baseline["snapshots"].append(snapshot)
         _save_performance(history)
