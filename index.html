@@ -36,7 +36,7 @@
         .fvalue { font-size: 11px; font-weight: normal; color: #1e293b; line-height: 1; }
         .fbar { width: 90%; border-top: 1px solid #475569; margin: 0; }
 
-        /* 종목명 옆에 종가를 같은 줄로 붙여서 셀 높이를 줄이는 표기 (간단 모드용) */
+        /* 종목명 옆에 주가를 같은 줄로 붙여서 셀 높이를 줄이는 표기 (간단 모드용) */
         .price-inline { font-size: 9px; color: #94a3b8; font-weight: normal; margin-left: 3px; }
 
         /* 유상증자/순이익/영업CF를 '신F-스코어'로 묶어서 표현 */
@@ -113,9 +113,10 @@
         <span id="update-data-status" class="status-text" style="font-size:10px;"></span>
         <button id="btn-enable-notif" style="border:none; background:#f1f5f9; color:#64748b; font-size:10px; line-height:1; cursor:pointer; padding:4px 6px; border-radius:5px;" onclick="handleEnableNotifications()">🔔 알림 켜기</button>
     </div>
-    <div class="menu-tabs" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
+    <div class="menu-tabs" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr;">
         <button id="btn-recommend" class="tab-btn active" onclick="switchMenu('recommend')">⭐ 추천</button>
         <button id="btn-rebalance" class="tab-btn" onclick="switchMenu('rebalance')">🔁 포트폴리오 설정</button>
+        <button id="btn-addorder" class="tab-btn" onclick="switchMenu('addorder')">➕ 추가 투자</button>
         <button id="btn-order" class="tab-btn" onclick="switchMenu('order')">🛒 주문 실행</button>
         <button id="btn-performance" class="tab-btn" onclick="switchMenu('performance')">📊 성과추적</button>
     </div>
@@ -171,6 +172,10 @@
     </div>
 
     <div id="order-controls" style="display:none; margin-bottom: 12px;">
+        <div id="order-mode-banner" style="display:none; margin-bottom:6px; padding:6px 10px; border-radius:6px; background:#fef3c7; font-size:11px; color:#92400e;">
+            ➕ <b>추가 투자 주문 모드</b> — 추가 투자 메뉴에서 확정한 매수 주문만 표시됩니다.
+            <button style="margin-left:8px; font-size:10px; padding:2px 6px; border:1px solid #d97706; border-radius:4px; background:transparent; cursor:pointer; color:#92400e;" onclick="pendingAddOrders=null; document.getElementById('order-mode-banner').style.display='none'; renderOrderTable();">✕ 교체 주문으로 돌아가기</button>
+        </div>
         <div style="display:flex; align-items:flex-end; gap:6px; margin-bottom:8px; flex-wrap:wrap;">
             <button class="mode-btn action-btn action-btn-blue" onclick="handleFetchHoldings()">🔄 보유 내역 조회</button>
             <button class="mode-btn action-btn action-btn-orange" onclick="handleSendAllOrders()">📦 일괄 주문 전송</button>
@@ -190,16 +195,22 @@
                 <button class="mode-btn action-btn action-btn-orange" onclick="handleConfirmRebalance()">✅ 교체 확정</button>
                 <span id="rebalance-status" class="status-text"></span>
             </div>
-            <div style="display:flex; align-items:center; gap:6px; margin-bottom:8px; flex-wrap:wrap; font-size:11px; color:#475569;">
+            <div id="portfolio-summary" class="summary-text"></div>
+        </div>
+    </div>
+
+    <div id="addorder-controls" style="display:none; margin-bottom: 12px;">
+        <div style="border:1px solid #e2e8f0; border-radius:10px; padding:12px 14px;">
+            <div style="margin-bottom:8px;"><b>➕ 추가 투자</b></div>
+            <div style="display:flex; align-items:flex-end; gap:6px; margin-bottom:8px; flex-wrap:wrap; font-size:11px; color:#475569;">
                 <label>추가 투자금</label>
                 <input type="text" inputmode="numeric" id="additional-investment-input" class="search-box" style="flex:0 1 100px; width:100px; min-width:100px;" placeholder="0" oninput="handleAdditionalInvestmentChange()">
                 <span>원</span>
-                <span style="margin-left:8px;">잔액:</span>
-                <label><input type="radio" name="leftover-option" value="top1" checked onchange="handlePortfolioLeftoverChange()"> 1위 추가매수</label>
-                <label><input type="radio" name="leftover-option" value="cash" onchange="handlePortfolioLeftoverChange()"> 현금 보유</label>
-                <span id="leftover-open-orders-notice" style="display:none; font-size:10px; color:#d97706;">⚠️ 미체결 있음 → 현금 보유로 동작</span>
+                <button class="mode-btn action-btn action-btn-blue" style="margin-left:8px;" onclick="handleRebalanceRefresh()">🔄 보유내역 가져오기</button>
+                <button class="mode-btn action-btn action-btn-orange" onclick="handleConfirmAddOrder()">✅ 확정</button>
+                <span id="addorder-status" class="status-text"></span>
             </div>
-            <div id="portfolio-summary" class="summary-text"></div>
+            <div id="addorder-summary" class="summary-text"></div>
         </div>
     </div>
 
@@ -294,6 +305,7 @@
         return data.slice(0, parseInt(displayCountMode, 10));
     }
     let portfolioNames = [];
+    let pendingAddOrders = null;
     let portfolioBaseAmount = 0;   // 보유내역 조회 시점의 추정 총자산 (현금+보유종목 평가금액)
     let additionalInvestment = 0;  // 사용자가 추가로 투입하고 싶은 금액
     let portfolioInvestment = 0;   // 목표 총 투자금 = portfolioBaseAmount + additionalInvestment
@@ -454,9 +466,9 @@
         document.getElementById("search-bar").value = "";
         searchQuery = "";
         
-        const nonStrategyMenus = ['recommend', 'order', 'rebalance', 'performance'];
+        const nonStrategyMenus = ['recommend', 'order', 'rebalance', 'addorder', 'performance'];
         const subMenus = [...nonStrategyMenus, ...STRATEGIES.map(s => s.key)];
-        subMenus.forEach(m => document.getElementById(`btn-${m}`).classList.toggle("active", m === menuType));
+        subMenus.forEach(m => { const el = document.getElementById(`btn-${m}`); if (el) el.classList.toggle("active", m === menuType); });
         document.getElementById("super-smallcap-lbl").style.display = (menuType === 'super') ? 'inline-flex' : 'none';
         document.getElementById("momentum-smallcap-lbl").style.display = (menuType === 'momentum') ? 'inline-flex' : 'none';
         document.getElementById("ultra-smallcap-lbl").style.display = (menuType === 'strategy21') ? 'inline-flex' : 'none';
@@ -466,7 +478,17 @@
         document.getElementById("order-controls").style.display = (menuType === 'order') ? 'block' : 'none';
         document.getElementById("performance-controls").style.display = (menuType === 'performance') ? 'block' : 'none';
         document.getElementById("rebalance-controls").style.display = (menuType === 'rebalance') ? 'block' : 'none';
-        if (menuType !== 'order') { stopOrderPolling(); document.getElementById("open-orders-section").style.display = 'none'; }
+        document.getElementById("addorder-controls").style.display = (menuType === 'addorder') ? 'block' : 'none';
+        if (menuType === 'addorder') {
+            if (!holdingsLoaded) handleFetchHoldings(true);
+            computeAddOrderData();
+        }
+        if (menuType === 'order') {
+            if (!holdingsLoaded) handleFetchHoldings(true);  // 주문실행 메뉴 진입 시 자동 보유조회
+        } else {
+            stopOrderPolling();
+            document.getElementById("open-orders-section").style.display = 'none';
+        }
         document.getElementById("strategy-tabs").style.display = (nonStrategyMenus.includes(menuType) && menuType !== 'recommend') ? 'none' : 'grid';
         const buyDesc = BUY_STRATEGY_DESC[menuType];
         const buyLbl = document.getElementById("sell-strategy-lbl");
@@ -692,7 +714,7 @@
                 <tr>
                     <th style="width: 5%;" onclick="sortData('rank')">순위</th>
                     <th style="width: 7%;" onclick="sortData('orientation')">성향</th>
-                    <th style="width: 17%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(종가)</span></th>
+                    <th style="width: 17%;" onclick="sortData('name')">종목명<br><span style="font-size:8px; font-weight:normal;">(주가)</span></th>
                     <th style="width: 10%;">업종<br>공시</th>
                     <th style="width: 6%;">PBR<br>GP/A</th>
                     <th style="width: 6%;">F-S<br>성장</th>
@@ -854,13 +876,26 @@
             holdingHtml = `<table style="width:100%; font-size:11px;"><thead><tr>
                 <th style="text-align:left;">종목명</th><th>수량</th><th>현재가</th><th>평가금액</th><th>비중</th><th>상태</th>
             </tr></thead><tbody>`;
+            // F-Score 맵 (즉시매도 표시용)
+            const fscoreMap = new Map((fscoreData || []).map(s => [s.name, s.f_score]));
             holdingRows.forEach(r => {
                 const weight = totalHoldingValue > 0 ? (r.value / totalHoldingValue) * 100 : 0;
-                const status = alreadyExcludedCodes.has(r.code) ? '<span style="color:#dc2626; font-weight:bold;">🚨 매도대상</span>'
-                    : seasonOnlyCodes.has(r.code) ? '<span style="color:#d97706;">⚠️ 시즌탈락</span>'
-                    : droppedCodes.has(r.code) ? '<span style="color:#dc2626;">📉 탈락</span>'
-                    : '<span style="color:#16a34a;">유지</span>';
-                holdingHtml += `<tr>
+                const fScore = fscoreMap.get(r.name);
+                const isImmediateSell = fScore != null && fScore <= 1;
+                let status = '';
+                if (isImmediateSell) {
+                    status += `<span style="color:#dc2626; font-weight:bold;">⚡ 즉시매도 (F-Score ${fScore})</span> `;
+                }
+                if (alreadyExcludedCodes.has(r.code)) {
+                    status += '<span style="color:#dc2626; font-weight:bold;">🚨 매도대상</span>';
+                } else if (seasonOnlyCodes.has(r.code)) {
+                    status += '<span style="color:#d97706;">⚠️ 시즌탈락</span>';
+                } else if (droppedCodes.has(r.code)) {
+                    status += '<span style="color:#dc2626;">📉 탈락</span>';
+                } else if (!isImmediateSell) {
+                    status += '<span style="color:#16a34a;">유지</span>';
+                }
+                holdingHtml += `<tr style="${isImmediateSell ? 'background:#fef2f2;' : ''}">
                     <td style="text-align:left;">${r.name}</td>
                     <td>${formatNumber(r.qty)}주</td>
                     <td>${formatNumber(r.price)}원</td>
@@ -872,7 +907,8 @@
             holdingHtml += `</tbody></table>`;
         }
         holdingHtml += `<div style="margin-top:8px; font-size:10px; color:#94a3b8; white-space:normal; overflow:visible; text-overflow:initial; line-height:1.6;">
-            🚨 매도대상: 이미 선택한 종목 목록에 없는데 보유 중 (주문실행에서 바로 전량매도 처리됨)<br>
+            ⚡ 즉시매도: F-Score 0~1 (재무 위험 신호, 즉시 매도 권장)<br>
+            🚨 매도대상: 선택 종목 목록에 없는데 보유 중 (주문실행에서 바로 전량매도 처리됨)<br>
             📉 탈락: 보유+선택목록에는 있지만 다른 전략 추천에서도 빠짐<br>
             ⚠️ 시즌탈락: 4~10월 제외 옵션 때문에만 탈락 (다른 전략 추천 있음, 교체 확정 시 개별 확인)
         </div>`;
@@ -994,9 +1030,13 @@
         } else if (!isNegative) {
             input.value = '';
         }
-        recomputePortfolioInvestment();
-        saveOptions();
-        refreshCurrentTable();
+        if (currentMenu === 'addorder') {
+            computeAddOrderData();
+        } else {
+            recomputePortfolioInvestment();
+            saveOptions();
+            refreshCurrentTable();
+        }
     }
 
     function handlePortfolioLeftoverChange() {
@@ -1015,7 +1055,7 @@
 
         let stocks = portfolioNames.map(name => {
             const code = findStockCode(name);
-            // 가격 우선순위: 미보유 실시간(freshPriceByCode) → 보유 중 실시간(holdingsByCode) → data.js 종가
+            // 가격 우선순위: 미보유 실시간(freshPriceByCode) → 보유 중 실시간(holdingsByCode) → data.js 주가
             const freshPrice = code ? freshPriceByCode[code] : null;
             const heldPrice = code && holdingsByCode[code] ? holdingsByCode[code].price : null;
             return {
@@ -1060,6 +1100,130 @@
 
         portfolioLeftoverCash = leftover;
         return stocks;
+    }
+
+    // 추가 투자: 포트폴리오 종목 중 추천순위 ≤ N인 종목에만 비중 보충
+    function computeAddOrderData() {
+        const summaryEl = document.getElementById('addorder-summary');
+        if (!summaryEl) return [];
+        if (portfolioNames.length === 0) {
+            summaryEl.textContent = '포트폴리오 설정에서 종목을 먼저 확정해 주세요.';
+            return [];
+        }
+        const N = portfolioNames.length;
+        const recommendList = computeRecommendData();
+        const rankByName = new Map(recommendList.map(r => [r.name, r.rank]));
+
+        // 투자 가능 총액 = 보유내역 총자산 + 추가 투자금
+        const addInvestInput = document.getElementById('additional-investment-input');
+        const addInvest = addInvestInput ? (parseFloat((addInvestInput.value || '').replace(/,/g, '')) || 0) : 0;
+        const totalInvest = (holdingsAccountInfo ? holdingsAccountInfo.totalAsset : portfolioBaseAmount) + addInvest;
+
+        // 포트폴리오 전체 균등 배분 기준
+        const targetPerStock = totalInvest / N;
+
+        // 종목별 현재 평가금액, 비중 부족분 계산 (순위 ≤ N인 종목만)
+        const rows = portfolioNames
+            .map(name => {
+                const rank = rankByName.has(name) ? rankByName.get(name) : Infinity;
+                const code = findStockCode(name);
+                const freshPrice = code ? freshPriceByCode[code] : null;
+                const held = code ? holdingsByCode[code] : null;
+                const price = freshPrice != null ? freshPrice : (held ? held.price : findStockPrice(name));
+                const heldQty = held ? held.qty : 0;
+                const heldValue = price ? heldQty * price : 0;
+                return { name, rank, code, price, heldQty, heldValue };
+            })
+            .filter(s => s.rank <= N && s.price);
+
+        if (rows.length === 0) {
+            summaryEl.innerHTML = `⚠️ 추천 순위 ${N}위 이내 종목이 없습니다. (보유 내역을 조회해 주세요)`;
+            return [];
+        }
+
+        // 비중 부족분 계산
+        let totalBuyAmt = 0;
+        rows.forEach(s => {
+            const shortage = targetPerStock - s.heldValue;
+            s.shortage = shortage;
+            s.buyQty = shortage > 0 ? Math.floor(shortage / s.price) : 0;
+            s.buyAmt = s.buyQty * s.price;
+            totalBuyAmt += s.buyAmt;
+        });
+
+        const availableCash = holdingsAccountInfo ? (holdingsAccountInfo.ordAlowa || holdingsAccountInfo.cash) : 0;
+        const totalAvailable = availableCash + addInvest;
+
+        // 가용 현금 부족 시 비례 축소
+        if (totalBuyAmt > totalAvailable && totalAvailable > 0) {
+            const ratio = totalAvailable / totalBuyAmt;
+            rows.forEach(s => {
+                s.buyQty = Math.floor(s.buyQty * ratio);
+                s.buyAmt = s.buyQty * s.price;
+            });
+            totalBuyAmt = rows.reduce((sum, s) => sum + s.buyAmt, 0);
+        }
+
+        const chip = (label, value) => `<span class="summary-chip"><span class="summary-chip-label">${label}</span><span class="summary-chip-value">${value}</span></span>`;
+        const eligibleCount = rows.filter(s => s.buyQty > 0).length;
+        summaryEl.innerHTML = `
+            <div style="margin-bottom:6px;">
+                <div style="font-size:10px; color:#94a3b8; font-weight:600; margin-bottom:2px;">➕ 추가 투자 계획 (추천 ${N}위 이내)</div>
+                <span class="summary-chips" style="margin-top:0;">
+                    ${chip('대상 종목', `${rows.length}개`)}
+                    ${chip('매수 가능 종목', `${eligibleCount}개`)}
+                    ${chip('총 매수 예정', `${formatNumber(totalBuyAmt)}원`)}
+                    ${chip('가용 현금', `${formatNumber(totalAvailable)}원`)}
+                </span>
+            </div>
+            <table style="font-size:11px; width:100%; border-collapse:collapse;">
+                <thead><tr style="background:#f1f5f9; color:#475569;">
+                    <th style="padding:4px 6px; text-align:left;">종목</th>
+                    <th style="padding:4px 6px; text-align:right;">순위</th>
+                    <th style="padding:4px 6px; text-align:right;">현재가</th>
+                    <th style="padding:4px 6px; text-align:right;">보유수량</th>
+                    <th style="padding:4px 6px; text-align:right;">목표대비 부족</th>
+                    <th style="padding:4px 6px; text-align:right;">매수수량</th>
+                    <th style="padding:4px 6px; text-align:right;">매수금액</th>
+                </tr></thead>
+                <tbody>
+                ${rows.map(s => `<tr style="border-bottom:1px solid #f1f5f9; ${s.buyQty > 0 ? '' : 'opacity:0.5;'}">
+                    <td style="padding:4px 6px;">${s.name}</td>
+                    <td style="padding:4px 6px; text-align:right;">${s.rank}위</td>
+                    <td style="padding:4px 6px; text-align:right;">${formatNumber(s.price)}원</td>
+                    <td style="padding:4px 6px; text-align:right;">${s.heldQty}주</td>
+                    <td style="padding:4px 6px; text-align:right;">${formatNumber(Math.round(s.shortage))}원</td>
+                    <td style="padding:4px 6px; text-align:right; font-weight:600; color:${s.buyQty > 0 ? '#dc2626' : '#94a3b8'};">${s.buyQty > 0 ? `+${s.buyQty}주` : '-'}</td>
+                    <td style="padding:4px 6px; text-align:right;">${s.buyAmt > 0 ? formatNumber(s.buyAmt) + '원' : '-'}</td>
+                </tr>`).join('')}
+                </tbody>
+            </table>`;
+
+        return rows.filter(s => s.buyQty > 0);
+    }
+
+    async function handleConfirmAddOrder() {
+        const rows = computeAddOrderData();
+        if (rows.length === 0) {
+            document.getElementById('addorder-status').textContent = '매수할 종목이 없습니다.';
+            return;
+        }
+        const statusEl = document.getElementById('addorder-status');
+        statusEl.textContent = '추가 투자 주문을 주문 실행 메뉴로 전달합니다...';
+        // 추가 투자 주문을 pendingOrders 형태로 세팅 후 주문 실행 메뉴로 이동
+        pendingAddOrders = rows.map(s => ({
+            name: s.name,
+            code: s.code,
+            side: 'buy',
+            qty: s.buyQty,
+            price: s.price,
+            isAddOrder: true,
+        }));
+        switchMenu('order');
+        setTimeout(() => {
+            renderOrderTable();
+            document.getElementById('order-status').textContent = `추가 투자 ${rows.length}건 로드 완료 — 주문 전송을 눌러 실행하세요.`;
+        }, 200);
     }
 
     // 투자금/선택종목 입력 상태를 리밸런싱(입력)과 주문 실행(참고용) 메뉴에 동일하게 요약 표시
@@ -1242,60 +1406,51 @@
     async function handleFetchHoldings(silent) {
         if (!silent) setHoldingsStatusText('조회 중...');
         try {
-            // kt00005(체결잔고) 우선 조회: setl_remn(결제잔고), ord_alowa(주문가능현금) 등 정확한 값 제공
-            const resp5 = await fetch(`${ORDER_SERVER_URL}/api/settlement_balance`);
-            const data5 = await resp5.json();
-            if (!data5.error && data5.return_code === 0) {
-                // kt00005 성공: 결제잔고와 주문가능현금 사용
-                holdingsByCode = {};
-                (data5.stk_cntr_remn || []).forEach(r => {
-                    const code = (r.stk_cd || '').replace(/\D/g, '');
-                    if (!code) return;
-                    holdingsByCode[code] = {
-                        name: r.stk_nm || '',
-                        qty: parseInt(r.cur_qty || r.setl_remn || '0', 10) || 0,  // cur_qty: 미결제 매수 포함 전체 보유수량
-                        price: parseInt(r.cur_prc || '0', 10) || 0,
-                    };
-                });
-                const ordAlowa = parseInt(data5.ord_alowa || '0', 10) || 0;    // 주문가능현금
-                const totalEval = parseInt(data5.evlt_amt_tot || '0', 10) || 0; // 평가금액합계
-                holdingsAccountInfo = {
-                    totalAsset: ordAlowa + totalEval,
-                    totalEval,
-                    cash: ordAlowa,  // 주문가능현금: 실제 매수에 쓸 수 있는 금액
-                    totalPurchase: parseInt(data5.stk_buy_tot_amt || '0', 10) || 0,
-                    totalPL: parseInt(data5.tot_pl_tot || '0', 10) || 0,
-                };
-            } else {
-                // kt00005 실패 시 kt00018 폴백
-                const resp = await fetch(`${ORDER_SERVER_URL}/api/holdings`);
-                const data = await resp.json();
-                if (data.error || (data.return_code !== undefined && data.return_code !== 0)) {
-                    throw new Error(data.error || data.return_msg || '조회 실패');
-                }
-                holdingsByCode = {};
-                (data.acnt_evlt_remn_indv_tot || []).forEach(r => {
-                    const code = (r.stk_cd || '').replace(/^A/, '');
-                    if (!code) return;
-                    holdingsByCode[code] = {
-                        name: r.stk_nm || '',
-                        qty: parseInt(r.trde_able_qty || r.rmnd_qty || '0', 10) || 0,
-                        price: parseInt(r.cur_prc || r.cur_pric || '0', 10) || 0,
-                    };
-                });
-                const totalAsset = parseInt(data.prsm_dpst_aset_amt || '0', 10) || 0;
-                const totalEval = parseInt(data.tot_evlt_amt || '0', 10) || 0;
-                holdingsAccountInfo = {
-                    totalAsset, totalEval, cash: totalAsset - totalEval,
-                    totalPurchase: parseInt(data.tot_pur_amt || '0', 10) || 0,
-                    totalPL: parseInt(data.tot_evlt_pl || '0', 10) || 0,
-                };
+            // kt00018로 전체 보유 목록 조회 (stk_cntr_remn은 결제완료 종목만 반환해 누락 발생)
+            const resp = await fetch(`${ORDER_SERVER_URL}/api/holdings`);
+            const data = await resp.json();
+            if (data.error || (data.return_code !== undefined && data.return_code !== 0)) {
+                throw new Error(data.error || data.return_msg || '조회 실패');
             }
-            portfolioBaseAmount = holdingsAccountInfo.totalAsset;
-            recomputePortfolioInvestment();
+            holdingsByCode = {};
+            (data.acnt_evlt_remn_indv_tot || []).forEach(r => {
+                const code = (r.stk_cd || '').replace(/^A/, '');
+                if (!code) return;
+                holdingsByCode[code] = {
+                    name: r.stk_nm || '',
+                    qty: parseInt(r.rmnd_qty || '0', 10) || 0,
+                    price: parseInt(r.cur_prc || r.cur_pric || '0', 10) || 0,
+                };
+            });
+            const totalAsset = parseInt(data.prsm_dpst_aset_amt || '0', 10) || 0;
+            const totalEval = parseInt(data.tot_evlt_amt || '0', 10) || 0;
+            let ordAlowa = totalAsset - totalEval;  // kt00018 기본 현금 추정
+
+            // kt00005로 정확한 주문가능현금(ord_alowa) 보완
+            try {
+                const resp5 = await fetch(`${ORDER_SERVER_URL}/api/settlement_balance`);
+                const data5 = await resp5.json();
+                if (!data5.error && data5.return_code === 0 && data5.ord_alowa) {
+                    ordAlowa = parseInt(data5.ord_alowa, 10) || ordAlowa;
+                }
+            } catch (e) { /* kt00005 실패 시 kt00018 추정값 사용 */ }
+
+            holdingsAccountInfo = {
+                totalAsset,               // prsm_dpst_aset_amt: 브로커 기준 추정예탁자산
+                totalEval,
+                cash: totalAsset - totalEval,  // 계좌 현금 = 총자산 - 평가금액
+                ordAlowa,                 // 실제 주문가능현금(미체결 매수 차감 후) - 주문 한도 확인용
+                totalPurchase: parseInt(data.tot_pur_amt || '0', 10) || 0,
+                totalPL: parseInt(data.tot_evlt_pl || '0', 10) || 0,
+            };
+            // silent=true(주문 실행 중 내부 호출)일 때는 투자금 기준을 고정 - 주문 중 재계산으로 목표수량이 변하는 것을 방지
+            if (!silent) {
+                portfolioBaseAmount = holdingsAccountInfo.totalAsset;
+                recomputePortfolioInvestment();
+            }
             holdingsLoaded = true;
 
-            // 목표 종목 중 아직 보유하지 않은 종목도 실시간 시세를 같이 받아온다 (데이터 며칠 전 종가 대신)
+            // 목표 종목 중 아직 보유하지 않은 종목도 실시간 시세를 같이 받아온다 (데이터 며칠 전 주가 대신)
             const unheldCodes = portfolioNames
                 .map(name => findStockCode(name))
                 .filter(code => code && !holdingsByCode[code]);
@@ -1304,7 +1459,7 @@
                     const freshPrices = await fetchFreshQuotes(unheldCodes);
                     Object.assign(freshPriceByCode, freshPrices);
                 } catch (e) {
-                    // 미보유 종목 시세 조회 실패는 치명적이지 않으므로 무시하고 기존 종가로 계산
+                    // 미보유 종목 시세 조회 실패는 치명적이지 않으므로 무시하고 기존 주가로 계산
                 }
             }
 
@@ -1412,6 +1567,24 @@
                 remainQty: parseInt(r.ord_remnq, 10) || 0,
             }))
             .filter(r => r.code && r.ordNo && r.remainQty > 0);
+    }
+
+    // 특정 종목코드들의 매도 미체결이 모두 소진될 때까지 대기 (최대 5분, 10초 간격)
+    async function waitForSellsFilled(sellCodes, statusEl) {
+        const maxTries = 30;  // 10초 × 30 = 5분
+        for (let i = 0; i < maxTries; i++) {
+            await new Promise(r => setTimeout(r, 10000));
+            try {
+                const open = await fetchOpenOrders();
+                const pendingSells = open.filter(o => o.side === 'sell' && sellCodes.includes(o.code));
+                if (pendingSells.length === 0) return true;
+                const remaining = pendingSells.map(o => `${o.name||o.code}(${o.remainQty}주)`).join(', ');
+                if (statusEl) statusEl.textContent = `매도 체결 대기 중... (${i+1}/${maxTries}) 미체결: ${remaining}`;
+            } catch (e) {
+                // 조회 실패 시 계속 대기
+            }
+        }
+        return false;  // 타임아웃
     }
 
     // 주문 실행 화면 하단에 현재 미체결 주문 현황을 표로 보여준다.
@@ -1530,7 +1703,7 @@
     }
 
     // 목표금액(=기존 목표수량×기존가격)을 새 가격으로 나눠 수량을 다시 계산. 전량매도(targetQty=0)는 가격과 무관하게 보유수량 그대로 매도.
-    // data.js의 종가가 며칠 전 기준이라 실시간가와 차이가 날 수 있는데, 내림 처리하면 목표 1주짜리 종목이
+    // data.js의 주가가 며칠 전 기준이라 실시간가와 차이가 날 수 있는데, 내림 처리하면 목표 1주짜리 종목이
     // 가격이 살짝만 올라도 0주로 깎여버리므로 반올림 + 원래 목표가 있었다면 최소 1주는 보장한다.
     function recomputeRowWithFreshPrice(r, freshPrice) {
         if (!freshPrice) return null;
@@ -1585,8 +1758,21 @@
         }
         row = remaining[0];
         const finalSide = row.diff > 0 ? 'buy' : 'sell';
-        const finalQty = Math.abs(row.diff);
-        if (!confirm(`${finalSide === 'buy' ? '매수' : '매도'} 주문을 실제로 전송합니다. (현재가로 재계산됨)\n종목코드: ${code} / 수량: ${finalQty}주 / 가격: ${row.price}원\n계속하시겠습니까?`)) return;
+        let finalQty = Math.abs(row.diff);
+        let partialNote = '';
+        if (finalSide === 'buy' && holdingsAccountInfo) {
+            const ordAlowa = holdingsAccountInfo.ordAlowa || 0;  // kt00005 주문가능현금 (증거금율 반영된 실제 한도)
+            const affordableQty = Math.floor(ordAlowa / row.price);
+            if (affordableQty <= 0) {
+                statusEl.textContent = `자금 부족 - 주문가능현금 ${formatNumber(ordAlowa)}원 / 주당 ${formatNumber(row.price)}원`;
+                return;
+            }
+            if (affordableQty < finalQty) {
+                finalQty = affordableQty;
+                partialNote = `\n(주문가능현금 부족으로 목표 ${Math.abs(row.diff)}주 중 ${finalQty}주만 매수)`;
+            }
+        }
+        if (!confirm(`${finalSide === 'buy' ? '매수' : '매도'} 주문을 실제로 전송합니다. (현재가로 재계산됨)\n종목코드: ${code} / 수량: ${finalQty}주 / 가격: ${row.price}원${partialNote}\n계속하시겠습니까?`)) return;
         try {
             const resp = await fetch(`${ORDER_SERVER_URL}/api/order`, {
                 method: 'POST',
@@ -1607,7 +1793,9 @@
 
     async function handleSendAllOrders() {
         const statusEl = document.getElementById('order-server-status');
-        const rows = computeOrderData().filter(r => r.diff !== 0);
+        const rows = (pendingAddOrders && pendingAddOrders.length > 0)
+            ? pendingAddOrders.map(o => ({ ...o, diff: o.qty }))
+            : computeOrderData().filter(r => r.diff !== 0);
         if (rows.length === 0) {
             statusEl.textContent = '주문할 종목이 없습니다.';
             return;
@@ -1696,31 +1884,35 @@
             await new Promise(resolve => setTimeout(resolve, 1100));
         }
 
-        // ② 매도 후 보유내역 재조회 → 최신 매수가능금액 확인
+        // ② 매도 전송 후 보유내역 재조회 → 최신 매수가능금액 확인 (매도 체결 여부와 무관하게 진행)
         if (buyRows.length > 0) {
             statusEl.textContent = '매도 완료 후 매수가능금액 확인 중...';
             await handleFetchHoldings(true);
         }
 
-        // ③ 매수가능금액 범위 안에서 추천 순위 높은 종목부터 매수
-        let availableCash = (holdingsAccountInfo ? holdingsAccountInfo.cash : 0);
+        // ③ 주문가능현금(ord_alowa, 증거금율 반영) 범위 안에서 추천 순위 높은 종목부터 매수
+        let availableCash = holdingsAccountInfo ? (holdingsAccountInfo.ordAlowa || holdingsAccountInfo.cash) : 0;
         for (const r of buyRows) {
-            const cost = Math.abs(r.diff) * r.price;
-            if (cost > availableCash) {
-                results.push({ name: r.name, ok: false, msg: `자금 부족 건너뜀 (필요 ${formatNumber(cost)}원 / 가용 ${formatNumber(Math.round(availableCash))}원)` });
+            const targetQty = Math.abs(r.diff);
+            const affordableQty = Math.floor(availableCash / r.price);
+            const actualQty = Math.min(targetQty, affordableQty);
+            if (actualQty <= 0) {
+                results.push({ name: r.name, ok: false, msg: `자금 부족 건너뜀 (필요 ${formatNumber(r.price)}원/주 / 가용 ${formatNumber(Math.round(availableCash))}원)` });
                 continue;
             }
-            statusEl.textContent = `매수 전송 중... (${results.length + 1}/${finalRows.length}) ${r.name}`;
+            const cost = actualQty * r.price;
+            const partialNote = actualQty < targetQty ? ` (목표 ${targetQty}주 중 ${actualQty}주만)` : '';
+            statusEl.textContent = `매수 전송 중... (${results.length + 1}/${finalRows.length}) ${r.name}${partialNote}`;
             try {
                 const resp = await fetch(`${ORDER_SERVER_URL}/api/order`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ stk_cd: r.code, qty: Math.abs(r.diff), side: 'buy', price: r.price }),
+                    body: JSON.stringify({ stk_cd: r.code, qty: actualQty, side: 'buy', price: r.price }),
                 });
                 const data = await resp.json();
                 const ok = !(data.error || (data.return_code !== undefined && data.return_code !== 0));
-                results.push({ name: r.name, ok, msg: ok ? '성공' : (data.error || data.return_msg) });
-                if (ok) availableCash -= cost;  // 체결 가정으로 가용금액 차감
+                results.push({ name: r.name, ok, msg: ok ? `성공${partialNote}` : (data.error || data.return_msg) });
+                if (ok) availableCash -= cost;
             } catch (e) {
                 results.push({ name: r.name, ok: false, msg: e.message });
             }
@@ -1734,6 +1926,34 @@
             + (results.filter(r => !r.ok && !r.msg.includes('건너뜀')).length > 0
                 ? ` (실패: ${results.filter(r => !r.ok && !r.msg.includes('건너뜀')).map(r => `${r.name}(${r.msg})`).join(', ')})` : '');
         await handleFetchHoldings();
+
+        // 주문 완료 텔레그램 알림
+        if (successCount > 0) {
+            const orderLines = results.map(r => `${r.ok ? '✅' : '❌'} ${r.name}: ${r.msg}`).join('\n');
+            fetch(`${ORDER_SERVER_URL}/api/notify`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: `🛒 일괄 주문 완료 (${new Date().toLocaleTimeString()})\n성공 ${successCount}/${finalRows.length}건\n\n${orderLines}` }),
+            }).catch(() => {});
+        }
+
+        // 주문 완료 후 성과추적 기준점 자동저장
+        if (successCount > 0 && portfolioNames.length > 0) {
+            try {
+                const baselineStocks = portfolioNames.map(name => {
+                    const code = findStockCode(name);
+                    const held = code ? holdingsByCode[code] : null;
+                    return { name, code, qty: held ? held.qty : 0, price: held ? held.price : findStockPrice(name) };
+                }).filter(s => s.code);
+                await fetch(`${ORDER_SERVER_URL}/api/performance/baseline`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ stocks: baselineStocks, totalInvestment: holdingsAccountInfo?.totalAsset }),
+                });
+                statusEl.textContent += ' / 📊 성과추적 기준점 자동저장 완료';
+            } catch (e) {
+                // 기준점 저장 실패는 치명적이지 않으므로 무시
+            }
+        }
     }
 
     function renderOrderTable() {
@@ -1754,8 +1974,23 @@
             return;
         }
 
-        // 매도(diff<0)를 위쪽에 먼저 보여줘서, 실제 전송 순서(매도 먼저→현금 확보→매수)와 화면이 일치하도록 함
-        const rows = computeOrderData().sort((a, b) => (a.diff < 0 ? 0 : 1) - (b.diff < 0 ? 0 : 1));
+        // 추가 투자 모드 배너
+        const banner = document.getElementById('order-mode-banner');
+        if (banner) banner.style.display = (pendingAddOrders && pendingAddOrders.length > 0) ? 'block' : 'none';
+
+        // pendingAddOrders가 있으면 추가 투자 모드, 없으면 교체 모드
+        let rows;
+        if (pendingAddOrders && pendingAddOrders.length > 0) {
+            rows = pendingAddOrders.map(o => ({
+                name: o.name, code: o.code, price: o.price, side: o.side,
+                diff: o.qty, curQty: (holdingsByCode[o.code] ? holdingsByCode[o.code].qty : 0),
+                targetQty: (holdingsByCode[o.code] ? holdingsByCode[o.code].qty : 0) + o.qty,
+                weightDiffPct: 0, isAddOrder: true,
+            }));
+        } else {
+            // 매도(diff<0)를 위쪽에 먼저 보여줘서, 실제 전송 순서(매도 먼저→현금 확보→매수)와 화면이 일치하도록 함
+            rows = computeOrderData().sort((a, b) => (a.diff < 0 ? 0 : 1) - (b.diff < 0 ? 0 : 1));
+        }
         let html = `
             <thead>
                 <tr>
@@ -2258,7 +2493,7 @@
                 <tr style="height:44px;">
                     <th style="width: 6%;" onclick="sortData('rank')">순위</th>
                     <th style="width: 18%;" onclick="sortData('name')">종목명</th>
-                    <th style="width: 8%;" onclick="sortData('price')">종가</th>
+                    <th style="width: 8%;" onclick="sortData('price')">주가</th>
                     <th style="width: 12%;" onclick="sortData('market_cap')">시가<br>총액</th>
                     <th style="width: 14%;" onclick="sortData('pbr')">${headerFracOnly('시가총액', '자본총계')}</th>
                     <th style="width: 14%;" onclick="sortData('gpa')">${headerFracOnly('매출-매출원가', '자산')}</th>
@@ -2271,7 +2506,7 @@
                 <tr style="height:44px;">
                     <th style="width: 6%;" onclick="sortData('rank')">순위</th>
                     <th style="width: 18%;" onclick="sortData('name')">종목명</th>
-                    <th style="width: 8%;" onclick="sortData('price')">종가</th>
+                    <th style="width: 8%;" onclick="sortData('price')">주가</th>
                     <th style="width: 12%;" onclick="sortData('market_cap')">시가<br>총액</th>
                     <th style="width: 14%;" onclick="sortData('pbr')">PBR</th>
                     <th style="width: 14%;" onclick="sortData('gpa')">GP/A</th>
@@ -2323,7 +2558,7 @@
                 <tr style="height:44px;">
                     <th style="width: 6%;" onclick="sortData('rank')">순위</th>
                     <th style="width: 14%;" onclick="sortData('name')">종목명</th>
-                    <th style="width: 9%;" onclick="sortData('price')">종가</th>
+                    <th style="width: 9%;" onclick="sortData('price')">주가</th>
                     <th style="width: 10%;" onclick="sortData('f_score')">신F-스코어</th>
                     <th style="width: 14%;" onclick="sortData('gpa')">${isDetail ? headerFracOnly('매출-매출원가', '자산') : 'GP/A'}</th>
                     <th style="width: 14%;" onclick="sortData('op_debt_growth_yoy')">${isDetail ? headerFracOnly('영업이익/차입금−전년동기', '전년동기 영업이익/차입금') : '영업이익/<br>차입금 YoY'}</th>
@@ -2375,7 +2610,7 @@
                 <tr style="height: ${FSCORE_ROW_HEIGHT};">
                     <th style="width: 7%;" onclick="sortData('rank')">순위</th>
                     <th style="width: 24%;" onclick="sortData('name')">종목명</th>
-                    <th style="width: 12%;" onclick="sortData('price')">종가</th>
+                    <th style="width: 12%;" onclick="sortData('price')">주가</th>
                     <th class="fscore-group-start" style="width: 10%;" onclick="sortData('cap_increase_flag')">유상증자</th>
                     <th class="fscore-group" style="width: 10%;" onclick="sortData('quarter_net_income')">순이익</th>
                     <th class="fscore-group-end" style="width: 10%;" onclick="sortData('quarter_operating_cf')">영업CF</th>
@@ -2387,7 +2622,7 @@
                 <tr style="height: ${FSCORE_ROW_HEIGHT};">
                     <th style="width: 7%;" onclick="sortData('rank')">순위</th>
                     <th style="width: 24%;" onclick="sortData('name')">종목명</th>
-                    <th style="width: 12%;" onclick="sortData('price')">종가</th>
+                    <th style="width: 12%;" onclick="sortData('price')">주가</th>
                     <th style="width: 30%;" onclick="sortData('f_score')">신F-스코어</th>
                     <th style="width: 20%;" onclick="sortData('pbr')">PBR</th>
                 </tr>
@@ -2427,8 +2662,8 @@
             <thead>
                 <tr style="height:44px;">
                     <th style="width: 6%;" onclick="sortData('rank')">순위</th>
-                    <th style="width: 15%;" onclick="sortData('name')">종목명${isDetail ? '<br><span style="font-size:8px; font-weight:normal;">(종가)</span>' : ''}</th>
-                    ${isDetail ? '' : '<th style="width: 9%;" onclick="sortData(\'price\')">종가</th>'}
+                    <th style="width: 15%;" onclick="sortData('name')">종목명${isDetail ? '<br><span style="font-size:8px; font-weight:normal;">(주가)</span>' : ''}</th>
+                    ${isDetail ? '' : '<th style="width: 9%;" onclick="sortData(\'price\')">주가</th>'}
                     <th style="width: ${isDetail ? 15 : 12}%;" onclick="sortData('market_cap')">시가<br>총액</th>
                     <th style="width: ${isDetail ? 14 : 12.5}%;" onclick="sortData('op_growth_qoq')">${isDetail ? headerFracOnly('영업이익−전분기', '전분기 영업이익') : '영업이익<br>QoQ'}</th>
                     <th style="width: ${isDetail ? 14 : 12.5}%;" onclick="sortData('op_growth_yoy')">${isDetail ? headerFracOnly('영업이익−전년동기', '전년동기 영업이익') : '영업이익<br>YoY'}</th>
@@ -2478,7 +2713,7 @@
                 <tr style="height:44px;">
                     <th style="width: 7%;" onclick="sortData('rank')">순위</th>
                     <th style="width: ${isDetail ? 16 : 15}%;" onclick="sortData('name')">종목명</th>
-                    ${isDetail ? '' : '<th style="width: 9%;" onclick="sortData(\'price\')">종가</th>'}
+                    ${isDetail ? '' : '<th style="width: 9%;" onclick="sortData(\'price\')">주가</th>'}
                     <th style="width: ${isDetail ? 11 : 11}%;" onclick="sortData('market_cap')">시가<br>총액</th>
                     ${isDetail ? `
                     <th style="width: 16%;" onclick="sortData('per')">${headerFracOnly('시가총액', '순이익')}</th>
@@ -2533,7 +2768,7 @@
                 <tr style="height:44px;">
                     <th style="width: 7%;" onclick="sortData('rank')">순위</th>
                     <th style="width: ${isDetail ? 23 : 21}%;" onclick="sortData('name')">종목명</th>
-                    ${isDetail ? '' : '<th style="width: 9%;" onclick="sortData(\'price\')">종가</th>'}
+                    ${isDetail ? '' : '<th style="width: 9%;" onclick="sortData(\'price\')">주가</th>'}
                     ${isDetail ? `
                     <th style="width: 19%;" onclick="sortData('ncav')">${headerFracOnly('유동자산−총부채', '시가총액')}</th>
                     <th style="width: 14%;" onclick="sortData('quarter_net_income')">분기순이익</th>

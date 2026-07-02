@@ -487,7 +487,7 @@ def fetch_krx_market_data():
     index_url = "http://apis.data.go.kr/1160100/service/GetMarketIndexInfoService/getStockMarketIndex"
 
     def fetch_index_snapshot(target_date):
-        """해당 날짜의 코스피/코스닥 종합지수 종가. 10. 주가변동성을 베타로 계산하는 데 쓰는 시장수익률."""
+        """해당 날짜의 코스피/코스닥 종합지수 주가. 10. 주가변동성을 베타로 계산하는 데 쓰는 시장수익률."""
         try:
             r = requests.get(index_url, params={
                 "serviceKey": API_KEY, "resultType": "json",

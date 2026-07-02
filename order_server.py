@@ -14,6 +14,8 @@ import sys
 import threading
 from datetime import datetime
 
+import requests
+
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
@@ -25,6 +27,74 @@ CORS(app)  # 로컬 전용 서버이므로 file:// 출처(브라우저)도 허�
 # 성과추적 데이터 (기준점/스냅샷) - 이 PC 안에만 저장, 깃허브에는 올리지 않음
 PERFORMANCE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "performance_history.json")
 BENCHMARK_CODES = {"kospi": "069500", "kosdaq": "229200"}  # KODEX 200 / KODEX 코스닥150 (지수 추종 ETF로 근사)
+
+
+def _send_telegram(text: str):
+    """텔레그램 봇으로 메시지 전송. config_local.py에 토큰/채팅ID 없으면 조용히 무시."""
+    token = getattr(kiwoom_api, "_cfg", None) and None  # 아래에서 직접 import
+    try:
+        from config_local import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+        requests.post(url, json={"chat_id": TELEGRAM_CHAT_ID, "text": text, "parse_mode": "HTML"}, timeout=10)
+    except Exception:
+        pass
+
+
+DATA_JS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data.js")
+ALERT_TOP_N = 50  # 이 순위 밖으로 밀리면 알림
+
+
+def _load_strategy_ranks() -> dict:
+    """data.js에서 전략별 종목 순위를 파싱. {종목명: {전략키: rank}} 반환."""
+    import re
+    if not os.path.exists(DATA_JS_PATH):
+        return {}
+    with open(DATA_JS_PATH, encoding="utf-8") as f:
+        content = f.read()
+    # 전략 블록 파싱: "key": [ {rank, name, ...}, ... ]
+    strategy_pattern = re.compile(r'"([a-z_0-9]+)":\s*\[([^\]]*)\]', re.DOTALL)
+    item_pattern = re.compile(r'"rank"\s*:\s*(\d+)[^}]*"name"\s*:\s*"([^"]+)"', re.DOTALL)
+    result = {}
+    for m in strategy_pattern.finditer(content):
+        key, block = m.group(1), m.group(2)
+        for item in item_pattern.finditer(block):
+            rank, name = int(item.group(1)), item.group(2)
+            result.setdefault(name, {})[key] = rank
+    return result
+
+
+def _check_portfolio_ranks() -> str:
+    """포트폴리오 종목의 전략별 순위를 체크해 텔레그램 메시지 생성."""
+    history = _load_performance()
+    if not history.get("baselines"):
+        return "📋 기준점 없음 - 포트폴리오를 먼저 설정하세요."
+
+    portfolio = [s["name"] for s in history["baselines"][-1].get("stocks", [])]
+    if not portfolio:
+        return "📋 포트폴리오 종목이 없습니다."
+
+    ranks = _load_strategy_ranks()
+    strategy_count = len(set(k for v in ranks.values() for k in v))
+
+    lines_warn, lines_ok = [], []
+    for name in portfolio:
+        stock_ranks = ranks.get(name, {})
+        if not stock_ranks:
+            lines_warn.append(f"⚠️ {name}: 전략 데이터 없음")
+            continue
+        # 보르다 평균 순위
+        avg_rank = sum(stock_ranks.values()) / len(stock_ranks)
+        matched = len(stock_ranks)
+        if avg_rank > ALERT_TOP_N or matched <= 1:
+            lines_warn.append(f"🔴 {name}: 평균순위 {avg_rank:.0f}위 ({matched}/{strategy_count}전략)")
+        else:
+            lines_ok.append(f"✅ {name}: 평균순위 {avg_rank:.0f}위 ({matched}전략)")
+
+    now_str = datetime.now().strftime("%m/%d %H:%M")
+    header = f"📊 <b>포트폴리오 순위 점검</b> ({now_str})  {len(portfolio)}종목\n"
+    if lines_warn:
+        return header + "\n".join(lines_warn)
+    return header + "✅ 전 종목 TOP50 이내 이상 없음"
 
 
 def _load_performance():
@@ -320,7 +390,34 @@ def performance_snapshot():
         }
         baseline["snapshots"].append(snapshot)
         _save_performance(history)
+
+        # 텔레그램 성과 알림
+        base_value = baseline.get("totalInvestment") or total_value
+        ret_pct = ((total_value - base_value) / base_value * 100) if base_value else 0
+        stock_lines = "\n".join(
+            f"  • {s['name']}: {s['price']:,}원" for s in stock_values if s.get("price")
+        )
+        _send_telegram(
+            f"📊 <b>성과 스냅샷</b> ({snapshot['datetime']})\n"
+            f"총평가금액: <b>{total_value:,}원</b>  ({ret_pct:+.2f}%)\n"
+            f"KOSPI ETF: {bench_prices.get('kospi', '-'):,}원 / KOSDAQ ETF: {bench_prices.get('kosdaq', '-'):,}원\n\n"
+            f"{stock_lines}"
+        )
         return jsonify(snapshot)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/notify", methods=["POST"])
+def notify():
+    """브라우저에서 직접 텔레그램 메시지 전송 (주문 완료, 성과 알림 등)."""
+    data = request.get_json(force=True) or {}
+    text = data.get("text", "").strip()
+    if not text:
+        return jsonify({"error": "text가 비어있습니다."}), 400
+    try:
+        _send_telegram(text)
+        return jsonify({"ok": True})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -330,8 +427,93 @@ def performance_history():
     return jsonify(_load_performance())
 
 
+def _build_daily_summary(label: str) -> str:
+    """일별잔고(ka01690) + 성과추적 기준점으로 텔레그램 요약 메시지 생성."""
+    try:
+        today = kiwoom_api.get_daily_balance()
+        total_asset = int(today.get("day_stk_asst") or 0)
+        total_eval = int(today.get("tot_evlt_amt") or 0)
+        accum_pl = int(today.get("tot_evltv_prft") or 0)
+        accum_rt = float(today.get("tot_prft_rt") or 0)
+
+        # 당일 손익: 어제 자산과 비교
+        from datetime import timedelta
+        yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y%m%d")
+        ydata = kiwoom_api.get_daily_balance(yesterday)
+        yesterday_asset = int(ydata.get("day_stk_asst") or 0)
+        day_pl = total_asset - yesterday_asset if yesterday_asset else 0
+        day_rt = (day_pl / yesterday_asset * 100) if yesterday_asset else 0
+
+        # 기준점 대비 손익
+        history = _load_performance()
+        baseline_pl_str = ""
+        if history.get("baselines"):
+            baseline = history["baselines"][-1]
+            base_invest = baseline.get("totalInvestment") or 0
+            if base_invest:
+                base_pl = total_asset - base_invest
+                base_rt = base_pl / base_invest * 100
+                baseline_pl_str = f"\n📌 기준점 대비: <b>{base_pl:+,.0f}원</b> ({base_rt:+.2f}%)"
+
+        # 기준점 대비 손익
+        baseline_pl_str = ""
+        if history.get("baselines"):
+            baseline = history["baselines"][-1]
+            base_invest = baseline.get("totalInvestment") or 0
+            if base_invest:
+                base_pl = total_asset - base_invest
+                base_rt = base_pl / base_invest * 100
+                baseline_pl_str = f"\n📌 기준점 대비: <b>{base_pl:+,.0f}원</b> ({base_rt:+.2f}%)"
+
+        # 종목별 수익률 최고/최저
+        stock_lines = ""
+        holdings = [s for s in today.get("day_bal_rt", []) if s.get("prft_rt")]
+        if holdings:
+            best = max(holdings, key=lambda s: float(s["prft_rt"]))
+            worst = min(holdings, key=lambda s: float(s["prft_rt"]))
+            stock_lines = (
+                f"\n📈 최고: {best['stk_nm']} ({float(best['prft_rt']):+.2f}%)"
+                f"\n📉 최저: {worst['stk_nm']} ({float(worst['prft_rt']):+.2f}%)"
+            )
+
+        return (
+            f"📈 <b>[{label}] 잔고 요약</b> ({datetime.now().strftime('%m/%d %H:%M')})\n"
+            f"총평가금액: <b>{total_asset:,}원</b>\n"
+            f"당일 손익: <b>{day_pl:+,.0f}원</b> ({day_rt:+.2f}%)\n"
+            f"누적 손익: {accum_pl:+,.0f}원 ({accum_rt:+.2f}%)"
+            f"{baseline_pl_str}"
+            f"{stock_lines}"
+        )
+    except Exception as e:
+        return f"⚠️ 잔고 요약 조회 실패: {e}"
+
+
+def _daily_alert_scheduler():
+    """평일 09:00 / 12:00 / 15:30 에 잔고 요약을 텔레그램으로 전송."""
+    ALERT_TIMES = [("08:00", "개장 준비"), ("09:00", "장 개장"), ("12:00", "장 중간"), ("15:30", "장 마감")]
+    sent_today = set()
+    while True:
+        now = datetime.now()
+        # 주말 스킵
+        if now.weekday() < 5:
+            key = now.strftime("%Y%m%d")
+            for t, label in ALERT_TIMES:
+                slot = f"{key}_{t}"
+                if slot not in sent_today and now.strftime("%H:%M") == t:
+                    msg = _build_daily_summary(label)
+                    _send_telegram(msg)
+                    if t == "08:00":
+                        _send_telegram(_check_portfolio_ranks())
+                    sent_today.add(slot)
+        # 자정 지나면 초기화
+        if now.hour == 0 and now.minute == 0:
+            sent_today.clear()
+        threading.Event().wait(30)  # 30초마다 체크
+
+
 if __name__ == "__main__":
     if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
         sys.stdout.reconfigure(encoding="utf-8")
+    threading.Thread(target=_daily_alert_scheduler, daemon=True).start()
     print(f"[시스템] 주문 서버 시작 (모의투자: {kiwoom_api.KIWOOM_IS_MOCK}) - http://localhost:5050")
     app.run(host="127.0.0.1", port=5050, debug=False)
