@@ -3,7 +3,7 @@ const KOSPI_QUANT_PACKAGE = {
         "krx_basis_date": "20260701",
         "dart_basis": "2026년 1분기보고서",
         "status": "NORMAL",
-        "checked_at": "16:17:40"
+        "checked_at": "03:55:47"
     },
     "super_value": [
         {
@@ -20838,6 +20838,9 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "스톤브릿지벤처스": [
             "금융/지주"
+        ],
+        "오에스피": [
+            "관리우려"
         ],
         "비트맥스": [
             "관리"
