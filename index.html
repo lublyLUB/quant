@@ -192,7 +192,7 @@
             </div>
             <div style="display:flex; align-items:flex-end; gap:6px; margin-bottom:8px; flex-wrap:wrap;">
                 <button class="mode-btn action-btn action-btn-blue" onclick="handleRebalanceRefresh()">🔄 선택종목/보유내역 가져오기</button>
-                <button class="mode-btn action-btn action-btn-orange" onclick="handleConfirmRebalance()">✅ 교체 확정</button>
+                <button class="mode-btn action-btn action-btn-orange" onclick="handleConfirmRebalance()">✅ 확정</button>
                 <span id="rebalance-status" class="status-text"></span>
             </div>
             <div id="portfolio-summary" class="summary-text"></div>
@@ -654,6 +654,9 @@
             renderRebalanceTable();
             // 메뉴 진입 시 보유내역이 없으면 자동 조회해서 기존 설정 종목과 비교 현황을 바로 보여준다.
             if (!holdingsLoaded) handleFetchHoldings(true);
+        } else if (currentMenu === 'addorder') {
+            document.getElementById("strategy-title").innerText = "➕ 추가 투자";
+            document.getElementById("quant-table").innerHTML = '';
         } else if (currentMenu === 'order') {
             document.getElementById("strategy-title").innerText = "🛒 주문 실행";
             renderOrderTable();
@@ -1142,27 +1145,26 @@
         }
 
         // 비중 부족분 계산
-        let totalBuyAmt = 0;
         rows.forEach(s => {
             const shortage = targetPerStock - s.heldValue;
             s.shortage = shortage;
-            s.buyQty = shortage > 0 ? Math.floor(shortage / s.price) : 0;
-            s.buyAmt = s.buyQty * s.price;
-            totalBuyAmt += s.buyAmt;
         });
 
         const availableCash = holdingsAccountInfo ? (holdingsAccountInfo.ordAlowa || holdingsAccountInfo.cash) : 0;
         const totalAvailable = availableCash + addInvest;
 
-        // 가용 현금 부족 시 비례 축소
-        if (totalBuyAmt > totalAvailable && totalAvailable > 0) {
-            const ratio = totalAvailable / totalBuyAmt;
-            rows.forEach(s => {
-                s.buyQty = Math.floor(s.buyQty * ratio);
-                s.buyAmt = s.buyQty * s.price;
-            });
-            totalBuyAmt = rows.reduce((sum, s) => sum + s.buyAmt, 0);
-        }
+        // 가용 현금을 부족분 비율에 따라 배분 (현금이 남지 않도록)
+        const totalShortage = rows.reduce((sum, s) => sum + Math.max(s.shortage, 0), 0);
+        rows.forEach(s => {
+            if (s.shortage <= 0 || totalShortage <= 0) {
+                s.buyQty = 0;
+            } else {
+                const allocation = totalAvailable * (s.shortage / totalShortage);
+                s.buyQty = Math.floor(allocation / s.price);
+            }
+            s.buyAmt = s.buyQty * s.price;
+        });
+        let totalBuyAmt = rows.reduce((sum, s) => sum + s.buyAmt, 0);
 
         const chip = (label, value) => `<span class="summary-chip"><span class="summary-chip-label">${label}</span><span class="summary-chip-value">${value}</span></span>`;
         const eligibleCount = rows.filter(s => s.buyQty > 0).length;
@@ -1176,26 +1178,33 @@
                     ${chip('가용 현금', `${formatNumber(totalAvailable)}원`)}
                 </span>
             </div>
-            <table style="font-size:11px; width:100%; border-collapse:collapse;">
-                <thead><tr style="background:#f1f5f9; color:#475569;">
-                    <th style="padding:4px 6px; text-align:left;">종목</th>
-                    <th style="padding:4px 6px; text-align:right;">순위</th>
-                    <th style="padding:4px 6px; text-align:right;">현재가</th>
-                    <th style="padding:4px 6px; text-align:right;">보유수량</th>
-                    <th style="padding:4px 6px; text-align:right;">목표대비 부족</th>
-                    <th style="padding:4px 6px; text-align:right;">매수수량</th>
-                    <th style="padding:4px 6px; text-align:right;">매수금액</th>
+            <table style="width:100%; font-size:11px;"><thead><tr>
+                    <th style="text-align:left;">종목</th>
+                    <th>수량</th>
+                    <th>현재가</th>
+                    <th>평가금액</th>
+                    <th>비중</th>
+                    <th>목표대비 부족</th>
+                    <th>매수수량</th>
+                    <th>매수금액</th>
                 </tr></thead>
                 <tbody>
-                ${rows.map(s => `<tr style="border-bottom:1px solid #f1f5f9; ${s.buyQty > 0 ? '' : 'opacity:0.5;'}">
-                    <td style="padding:4px 6px;">${s.name}</td>
-                    <td style="padding:4px 6px; text-align:right;">${s.rank}위</td>
-                    <td style="padding:4px 6px; text-align:right;">${formatNumber(s.price)}원</td>
-                    <td style="padding:4px 6px; text-align:right;">${s.heldQty}주</td>
-                    <td style="padding:4px 6px; text-align:right;">${formatNumber(Math.round(s.shortage))}원</td>
-                    <td style="padding:4px 6px; text-align:right; font-weight:600; color:${s.buyQty > 0 ? '#dc2626' : '#94a3b8'};">${s.buyQty > 0 ? `+${s.buyQty}주` : '-'}</td>
-                    <td style="padding:4px 6px; text-align:right;">${s.buyAmt > 0 ? formatNumber(s.buyAmt) + '원' : '-'}</td>
-                </tr>`).join('')}
+                ${(() => {
+                    const totalHeldValue = rows.reduce((sum, s) => sum + s.heldValue, 0);
+                    return rows.map(s => {
+                        const weight = totalHeldValue > 0 ? (s.heldValue / totalHeldValue * 100).toFixed(1) : '0.0';
+                        return `<tr style="${s.buyQty > 0 ? '' : 'opacity:0.5;'}">
+                    <td style="text-align:left;">${s.name}</td>
+                    <td>${s.heldQty}주</td>
+                    <td>${formatNumber(s.price)}원</td>
+                    <td>${formatNumber(s.heldValue)}원</td>
+                    <td>${weight}%</td>
+                    <td>${formatNumber(Math.round(s.shortage))}원</td>
+                    <td style="font-weight:600; color:${s.buyQty > 0 ? '#dc2626' : '#94a3b8'};">${s.buyQty > 0 ? `+${s.buyQty}주` : '-'}</td>
+                    <td>${s.buyAmt > 0 ? formatNumber(s.buyAmt) + '원' : '-'}</td>
+                </tr>`;
+                    }).join('');
+                })()}
                 </tbody>
             </table>`;
 
@@ -1891,7 +1900,10 @@
         }
 
         // ③ 주문가능현금(ord_alowa, 증거금율 반영) 범위 안에서 추천 순위 높은 종목부터 매수
-        let availableCash = holdingsAccountInfo ? (holdingsAccountInfo.ordAlowa || holdingsAccountInfo.cash) : 0;
+        const addInvestForOrder = (pendingAddOrders && pendingAddOrders.length > 0)
+            ? (parseFloat((document.getElementById('additional-investment-input')?.value || '').replace(/,/g, '')) || 0)
+            : 0;
+        let availableCash = (holdingsAccountInfo ? (holdingsAccountInfo.ordAlowa || holdingsAccountInfo.cash) : 0) + addInvestForOrder;
         for (const r of buyRows) {
             const targetQty = Math.abs(r.diff);
             const affordableQty = Math.floor(availableCash / r.price);
@@ -2045,7 +2057,10 @@
         const estBuyComm = Math.round(buyTotal * COMMISSION_RATE);
         const estTotalCost = estSellTax + estSellComm + estBuyComm;
 
-        const cash = holdingsAccountInfo ? holdingsAccountInfo.cash : 0;
+        const addInvest = (pendingAddOrders && pendingAddOrders.length > 0)
+            ? (parseFloat((document.getElementById('additional-investment-input')?.value || '').replace(/,/g, '')) || 0)
+            : 0;
+        const cash = (holdingsAccountInfo ? holdingsAccountInfo.cash : 0) + addInvest;
         const availableAfterSell = cash + sellTotal - estTotalCost;
         const finalBalance = availableAfterSell - buyTotal;
 
