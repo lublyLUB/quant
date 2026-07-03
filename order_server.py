@@ -428,42 +428,42 @@ def performance_history():
 
 
 def _build_daily_summary(label: str) -> str:
-    """일별잔고(ka01690) + 성과추적 기준점으로 텔레그램 요약 메시지 생성."""
+    """ka01690(당일잔고) + kt00016(기간수익률) + 성과추적 기준점으로 텔레그램 요약 메시지 생성."""
     try:
+        from datetime import timedelta
+        today_str = datetime.now().strftime("%Y%m%d")
+
+        # 당일 잔고 (총평가금액, 종목별 수익률)
         today = kiwoom_api.get_daily_balance()
         total_asset = int(today.get("day_stk_asst") or 0)
-        total_eval = int(today.get("tot_evlt_amt") or 0)
-        accum_pl = int(today.get("tot_evltv_prft") or 0)
-        accum_rt = float(today.get("tot_prft_rt") or 0)
 
-        # 당일 손익: 어제 자산과 비교
-        from datetime import timedelta
-        yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y%m%d")
-        ydata = kiwoom_api.get_daily_balance(yesterday)
+        # 당일 손익: 전일 자산과 비교
+        yesterday_str = (datetime.now() - timedelta(days=1)).strftime("%Y%m%d")
+        ydata = kiwoom_api.get_daily_balance(yesterday_str)
         yesterday_asset = int(ydata.get("day_stk_asst") or 0)
         day_pl = total_asset - yesterday_asset if yesterday_asset else 0
         day_rt = (day_pl / yesterday_asset * 100) if yesterday_asset else 0
 
-        # 기준점 대비 손익
+        # 기준점 대비 손익 — kt00016으로 입출금 반영한 정확한 수익률 조회
+        baseline_pl_str = ""
         history = _load_performance()
-        baseline_pl_str = ""
         if history.get("baselines"):
             baseline = history["baselines"][-1]
-            base_invest = baseline.get("totalInvestment") or 0
-            if base_invest:
-                base_pl = total_asset - base_invest
-                base_rt = base_pl / base_invest * 100
-                baseline_pl_str = f"\n📌 기준점 대비: <b>{base_pl:+,.0f}원</b> ({base_rt:+.2f}%)"
-
-        # 기준점 대비 손익
-        baseline_pl_str = ""
-        if history.get("baselines"):
-            baseline = history["baselines"][-1]
-            base_invest = baseline.get("totalInvestment") or 0
-            if base_invest:
-                base_pl = total_asset - base_invest
-                base_rt = base_pl / base_invest * 100
-                baseline_pl_str = f"\n📌 기준점 대비: <b>{base_pl:+,.0f}원</b> ({base_rt:+.2f}%)"
+            base_dt = baseline.get("date", "").replace("-", "")[:8]  # YYYYMMDD
+            if base_dt:
+                try:
+                    perf = kiwoom_api.get_period_eval(fr_dt=base_dt, to_dt=today_str)
+                    evltv_prft = int(perf.get("evltv_prft") or 0)
+                    prft_rt = float(perf.get("prft_rt") or 0)
+                    net_deposit = int(perf.get("termin_tot_trns") or 0) - int(perf.get("termin_tot_pymn") or 0)
+                    deposit_str = f" / 순입금 {net_deposit:+,.0f}원" if net_deposit != 0 else ""
+                    baseline_pl_str = f"\n📌 기준점 대비: <b>{evltv_prft:+,.0f}원</b> ({prft_rt:+.2f}%){deposit_str}"
+                except Exception:
+                    base_invest = baseline.get("totalInvestment") or 0
+                    if base_invest:
+                        base_pl = total_asset - base_invest
+                        base_rt = base_pl / base_invest * 100
+                        baseline_pl_str = f"\n📌 기준점 대비: <b>{base_pl:+,.0f}원</b> ({base_rt:+.2f}%) ⚠️입출금 미반영"
 
         # 종목별 수익률 최고/최저
         stock_lines = ""
@@ -479,8 +479,7 @@ def _build_daily_summary(label: str) -> str:
         return (
             f"📈 <b>[{label}] 잔고 요약</b> ({datetime.now().strftime('%m/%d %H:%M')})\n"
             f"총평가금액: <b>{total_asset:,}원</b>\n"
-            f"당일 손익: <b>{day_pl:+,.0f}원</b> ({day_rt:+.2f}%)\n"
-            f"누적 손익: {accum_pl:+,.0f}원 ({accum_rt:+.2f}%)"
+            f"당일 손익: <b>{day_pl:+,.0f}원</b> ({day_rt:+.2f}%)"
             f"{baseline_pl_str}"
             f"{stock_lines}"
         )

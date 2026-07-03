@@ -164,6 +164,31 @@ def get_settlement_balance():
     return resp.json()
 
 
+def get_period_eval(fr_dt, to_dt):
+    """계좌기간별수익률현황요청 (kt00016) - 기간 내 총입금·총출금·평가손익·수익률 조회.
+
+    fr_dt, to_dt: YYYYMMDD
+    termin_tot_trns: 기간내총입금, termin_tot_pymn: 기간내총출금
+    evltv_prft: 평가손익 (입출금 반영), prft_rt: 수익률
+    invt_bsamt: 투자원금평잔
+    """
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/acnt"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": "kt00016",
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {token}",
+    }
+    body = {"fr_dt": fr_dt, "to_dt": to_dt}
+    resp = requests.post(url, headers=headers, json=body, timeout=15)
+    resp.raise_for_status()
+    return resp.json()
+
+
 def fetch_order_status(access_token, account_no, is_mock=True, qry_tp="1"):
     """계좌별주문체결현황요청 (kt00009) - 당일 주문/체결 현황 조회.
 

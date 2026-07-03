@@ -215,8 +215,7 @@
     </div>
 
     <div id="performance-controls" style="display:none; margin-bottom: 12px;">
-        <button class="mode-btn action-btn action-btn-blue" onclick="handleRecordBaseline()">① 기준점 기록</button>
-        <button class="mode-btn action-btn action-btn-teal" onclick="handleSaveSnapshot()">② 오늘 스냅샷 저장</button>
+        <button class="mode-btn action-btn action-btn-teal" onclick="handleSaveSnapshot()">오늘 스냅샷 저장</button>
         <span id="performance-status" class="status-text"></span>
     </div>
 
@@ -1818,10 +1817,12 @@
             return;
         }
 
-        const recomputedRows = rows
-            .map(r => recomputeRowWithFreshPrice(r, prices[r.code]))
-            .filter(r => r && r.diff !== 0)
-            .sort((a, b) => (a.diff < 0 ? 0 : 1) - (b.diff < 0 ? 0 : 1));  // 매도(diff<0)를 먼저 보내서 현금을 확보한 뒤 매수
+        const recomputedRows = (pendingAddOrders && pendingAddOrders.length > 0)
+            ? rows.map(r => ({ ...r, price: prices[r.code] || r.price, diff: r.qty })).filter(r => r.diff > 0)
+            : rows
+                .map(r => recomputeRowWithFreshPrice(r, prices[r.code]))
+                .filter(r => r && r.diff !== 0)
+                .sort((a, b) => (a.diff < 0 ? 0 : 1) - (b.diff < 0 ? 0 : 1));  // 매도(diff<0)를 먼저 보내서 현금을 확보한 뒤 매수
 
         if (recomputedRows.length === 0) {
             statusEl.textContent = '현재가 기준으로 재계산한 결과 주문할 종목이 없습니다.';
