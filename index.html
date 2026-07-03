@@ -28,6 +28,9 @@
         .tag-finance { background-color: #e2e8f0; color: #475569; }
         .tag-admin { background-color: #fee2e2; color: #b91c1c; }
         .tag-admin-warn { background-color: #ffedd5; color: #c2410c; }
+        .tag-halt { background-color: #1e293b; color: #f8fafc; }
+        .tag-inv-warn { background-color: #fef9c3; color: #854d0e; }
+        .tag-low-volume { background-color: #f1f5f9; color: #64748b; }
 
         /* 19개 지표 분수 표기: 분자/분모 각각 라벨(헤더 역할) + 숫자(값) 2단을 가로선으로 분리해 쌓는다 */
         .fraction { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; line-height: 1; margin: 0 2px; }
@@ -215,6 +218,8 @@
     </div>
 
     <div id="performance-controls" style="display:none; margin-bottom: 12px;">
+        <label style="font-size:12px; margin-right:6px;">기준점:</label>
+        <select id="baseline-selector" style="font-size:12px; padding:2px 6px; border:1px solid #e2e8f0; border-radius:6px; margin-right:10px;" onchange="renderPerformanceTable()"></select>
         <button class="mode-btn action-btn action-btn-teal" onclick="handleSaveSnapshot()">오늘 스냅샷 저장</button>
         <span id="performance-status" class="status-text"></span>
     </div>
@@ -710,7 +715,7 @@
     function renderRecommendTable(data) {
         const activeSources = getActiveRecommendSources();
         const colWidth = Math.floor(43 / activeSources.length);
-        const FLAG_CLASS = { '금융/지주': 'tag-finance', '관리': 'tag-admin', '관리우려': 'tag-admin-warn' };
+        const FLAG_CLASS = { '금융/지주': 'tag-finance', '관리': 'tag-admin', '관리우려': 'tag-admin-warn', '거래정지': 'tag-halt', '투자경고': 'tag-inv-warn', '5억↓': 'tag-low-volume' };
         let html = `
             <thead>
                 <tr>
@@ -768,7 +773,7 @@
                 <td style="white-space:normal; line-height:1.6;">${noteBadges}</td>
                 <td style="line-height:1.6;">${pbrGpaCell}</td>
                 <td style="line-height:1.6;">${fsGrowthCell}</td>
-                <td class="rank-avg">${s.count}</td>
+                <td class="rank-avg">${(() => { const c = s.count || 0; const bg = c >= 5 ? '#7c3aed' : c >= 4 ? '#2563eb' : c >= 3 ? '#0891b2' : c >= 2 ? '#64748b' : '#e2e8f0'; const fg = c >= 2 ? '#fff' : '#64748b'; return `<span style="display:inline-block;min-width:10px;padding:2px 7px;border-radius:999px;background:${bg};color:${fg};font-size:11px;font-weight:700;">${c}</span>`; })()}</td>
                 ${activeSources.map(src => `<td>${s.ranks[src.key] !== undefined ? s.ranks[src.key] : ''}</td>`).join('')}
             </tr>`;
         });
@@ -876,7 +881,7 @@
             holdingHtml = `<div style="color:#94a3b8;">보유 종목 없음</div>`;
         } else {
             holdingHtml = `<table style="width:100%; font-size:11px;"><thead><tr>
-                <th style="text-align:left;">종목명</th><th>수량</th><th>현재가</th><th>평가금액</th><th>비중</th><th>상태</th>
+                <th>종목명</th><th>수량</th><th>매입가</th><th>현재가</th><th>평가금액</th><th>손익</th><th>수익률</th><th>당일</th><th>금일매수</th><th>금일매도</th><th>비중</th><th>상태</th>
             </tr></thead><tbody>`;
             // F-Score 맵 (즉시매도 표시용)
             const fscoreMap = new Map((fscoreData || []).map(s => [s.name, s.f_score]));
@@ -897,12 +902,31 @@
                 } else if (!isImmediateSell) {
                     status += '<span style="color:#16a34a;">유지</span>';
                 }
+                const h = holdingsByCode[r.code] || {};
+                const prftRt = h.prftRt || 0;
+                const prftColor = prftRt > 0 ? '#dc2626' : (prftRt < 0 ? '#2563eb' : '#64748b');
+                const fluRt = h.fluRt != null ? h.fluRt : (fluRtByCode[r.code] != null ? fluRtByCode[r.code] : null);
+                const fluColor = fluRt > 0 ? '#dc2626' : (fluRt < 0 ? '#2563eb' : '#64748b');
+                const possRt = h.possRt || weight;
+                // kt00018에서 직접 제공 (kt00004 acntEvalByCode 불필요)
+                const tdyBuyq   = h.tdyBuyq   || 0;
+                const tdySellq  = h.tdySellq  || 0;
+                const predBuyq  = h.predBuyq  || 0;
+                const predSellq = h.predSellq || 0;
+                const trdeAble  = h.trdeAbleQty || 0;
+                const qtyNote   = trdeAble < r.qty ? `<span style="color:#f59e0b;font-size:10px;" title="매매가능수량 ${trdeAble}주 (미결제 제외)"> ⚠${trdeAble}</span>` : '';
                 holdingHtml += `<tr style="${isImmediateSell ? 'background:#fef2f2;' : ''}">
-                    <td style="text-align:left;">${r.name}</td>
-                    <td>${formatNumber(r.qty)}주</td>
+                    <td>${r.name}</td>
+                    <td>${formatNumber(r.qty)}주${qtyNote}</td>
+                    <td>${h.purPrice ? formatNumber(h.purPrice) + '원' : '-'}</td>
                     <td>${formatNumber(r.price)}원</td>
                     <td>${formatNumber(r.value)}원</td>
-                    <td>${weight.toFixed(1)}%</td>
+                    <td style="color:${prftColor};">${h.evltvPrft !== undefined ? (h.evltvPrft >= 0 ? '+' : '') + formatNumber(h.evltvPrft) + '원' : '-'}</td>
+                    <td style="color:${prftColor};font-weight:700;">${prftRt >= 0 ? '+' : ''}${prftRt.toFixed(2)}%</td>
+                    <td style="color:${fluColor};font-weight:700;">${fluRt != null ? (fluRt >= 0 ? '+' : '') + fluRt.toFixed(2) + '%' : '-'}</td>
+                    <td style="color:${tdyBuyq > 0 ? '#dc2626' : '#64748b'};" title="전일매수 ${predBuyq}주">${tdyBuyq > 0 ? formatNumber(tdyBuyq) + '주' : (predBuyq > 0 ? `<span style="color:#94a3b8;">${predBuyq}↑</span>` : '-')}</td>
+                    <td style="color:${tdySellq > 0 ? '#2563eb' : '#64748b'};" title="전일매도 ${predSellq}주">${tdySellq > 0 ? formatNumber(tdySellq) + '주' : (predSellq > 0 ? `<span style="color:#94a3b8;">${predSellq}↓</span>` : '-')}</td>
+                    <td>${possRt.toFixed(1)}%</td>
                     <td style="white-space:normal; overflow:visible; text-overflow:initial;">${status}</td>
                 </tr>`;
             });
@@ -1253,11 +1277,70 @@
 
         let html = '';
         if (holdingsAccountInfo) {
-            html += row('📌 현재 계좌',
+            const prftRtVal = holdingsAccountInfo.totalPrftRt;
+            const prftRtColor = prftRtVal > 0 ? '#dc2626' : (prftRtVal < 0 ? '#2563eb' : '#64748b');
+            const tdy = holdingsAccountInfo.todayStatusInfo;
+            const ct  = holdingsAccountInfo.contractInfo;
+            const si  = holdingsAccountInfo.settlementInfo;
+            const ae  = holdingsAccountInfo.acntEvalInfo;
+            const dep = holdingsAccountInfo.depositInfo;
+
+            const groupRow = (icon, label, chipsHtml) => `<div style="display:flex; align-items:baseline; gap:8px; margin-bottom:5px;">
+                <span style="font-size:10px; color:#94a3b8; font-weight:600; white-space:nowrap; min-width:70px;">${icon} ${label}</span>
+                <span class="summary-chips" style="margin-top:0; flex-wrap:wrap;">${chipsHtml}</span>
+            </div>`;
+
+            // 행 ① 자산현황
+            const assetRow = groupRow('📌', '자산현황',
                 chip('추정예탁자산', `${formatNumber(holdingsAccountInfo.totalAsset)}원`)
-                + chip('보유종목 평가금액', `${formatNumber(holdingsAccountInfo.totalEval)}원`)
+                + chip('평가금액', `${formatNumber(holdingsAccountInfo.totalEval)}원`)
                 + chip('현금', `${formatNumber(holdingsAccountInfo.cash)}원`)
-                + chip('평가손익', `${formatNumber(holdingsAccountInfo.totalPL)}원`));
+                + chip('평가손익', `${formatNumber(holdingsAccountInfo.totalPL)}원`)
+                + chip('수익률', `<span style="color:${prftRtColor};font-weight:700;">${prftRtVal >= 0 ? '+' : ''}${prftRtVal.toFixed(2)}%</span>`));
+
+            // 행 ② 손익
+            let plChips = '';
+            if (ae) {
+                const tdyC = ae.tdyLspft >= 0 ? '#dc2626' : '#2563eb';
+                const monC = ae.lspft2   >= 0 ? '#dc2626' : '#2563eb';
+                const cumC = ae.lspft    >= 0 ? '#dc2626' : '#2563eb';
+                plChips = chip('당일', `<span style="color:${tdyC};font-weight:700;">${ae.tdyLspft >= 0 ? '+' : ''}${formatNumber(ae.tdyLspft)}원 (${ae.tdyLspftRt >= 0 ? '+' : ''}${ae.tdyLspftRt.toFixed(2)}%)</span>`)
+                    + chip('당월', `<span style="color:${monC};font-weight:700;">${ae.lspft2 >= 0 ? '+' : ''}${formatNumber(ae.lspft2)}원 (${ae.lspftRatio >= 0 ? '+' : ''}${ae.lspftRatio.toFixed(2)}%)</span>`)
+                    + chip('누적', `<span style="color:${cumC};font-weight:700;">${ae.lspft >= 0 ? '+' : ''}${formatNumber(ae.lspft)}원 (${ae.lspftRt >= 0 ? '+' : ''}${ae.lspftRt.toFixed(2)}%)</span>`);
+            }
+            const plRow = (plChips && ae && (ae.tdyLspft || ae.lspft2 || ae.lspft)) ? groupRow('📈', '손익', plChips) : '';
+
+            // 행 ③ 거래
+            let tradeChips = '';
+            if (tdy && (tdy.sellAmt || tdy.buyAmt)) {
+                tradeChips += chip('매도', `${formatNumber(tdy.sellAmt)}원`)
+                           + chip('매수', `${formatNumber(tdy.buyAmt)}원`)
+                           + chip('수수료+세금', `${formatNumber(tdy.cmsn + tdy.tax)}원`);
+            }
+            if (ct && ct.total > 0) {
+                tradeChips += chip('약정', `${formatNumber(ct.total)}원`);
+            }
+            if (si && (si.sellSum || si.buySum)) {
+                tradeChips += chip('익일 매도정산', `${formatNumber(si.sellSum)}원`)
+                           + chip('익일 매수정산', `${formatNumber(si.buySum)}원`);
+            }
+            if (tdy && tdy.dividaAmt > 0) {
+                tradeChips += chip('💰 배당금', `<span style="color:#16a34a;font-weight:700;">${formatNumber(tdy.dividaAmt)}원</span>`);
+            }
+            const tradeRow = tradeChips ? groupRow('💳', '거래', tradeChips) : '';
+
+            // 행 ④ 예수금
+            let depChips2 = '';
+            if (dep) {
+                depChips2 = chip('예수금', `${formatNumber(dep.entr)}원`)
+                    + chip('출금가능', `${formatNumber(dep.pymnAlow)}원`)
+                    + chip('주문가능', `${formatNumber(dep.ordAlow)}원`)
+                    + chip('D+1', `${formatNumber(dep.d1Entr)}원`)
+                    + chip('D+2', `${formatNumber(dep.d2Entr)}원`);
+            }
+            const depRow = depChips2 ? groupRow('🏦', '예수금', depChips2) : '';
+
+            html += `<div style="margin-bottom:6px;">${assetRow}${plRow}${tradeRow}${depRow}</div>`;
         }
 
         if (portfolioNames.length === 0) {
@@ -1335,6 +1418,7 @@
     let holdingsAccountInfo = null;  // {totalAsset, totalEval, cash, totalPurchase, totalPL}
     let freshPriceByCode = {};   // 미보유 목표종목 실시간 시세
     let priceLimitsByCode = {};  // 종목별 상한가·하한가·예상체결가 (ka10001)
+    let fluRtByCode = {};        // 종목별 등락율 (ka10001 flu_rt)
     let orderPollTimer = null;
     let openOrdersPollTimer = null;
     let hasOpenOrders = false;  // 미체결 주문 존재 여부 (renderOpenOrdersSection에서 갱신)
@@ -1424,10 +1508,25 @@
             (data.acnt_evlt_remn_indv_tot || []).forEach(r => {
                 const code = (r.stk_cd || '').replace(/^A/, '');
                 if (!code) return;
+                const curP  = parseInt(r.cur_prc || r.cur_pric || '0', 10) || 0;
+                const predP = parseInt(r.pred_close_pric || '0', 10) || 0;
                 holdingsByCode[code] = {
                     name: r.stk_nm || '',
                     qty: parseInt(r.rmnd_qty || '0', 10) || 0,
-                    price: parseInt(r.cur_prc || r.cur_pric || '0', 10) || 0,
+                    trdeAbleQty: parseInt(r.trde_able_qty || '0', 10) || 0,  // 매매가능수량 (결제 완료분)
+                    price: curP,
+                    purPrice: parseInt(r.pur_pric || '0', 10) || 0,
+                    purAmt:   parseInt(r.pur_amt  || '0', 10) || 0,
+                    prftRt: parseFloat(r.prft_rt || '0') || 0,
+                    evltvPrft: parseInt(r.evltv_prft || '0', 10) || 0,
+                    possRt: parseFloat(r.poss_rt || '0') || 0,
+                    fluRt: predP > 0 ? ((curP - predP) / predP * 100) : 0,
+                    sumCmsn:  parseInt(r.sum_cmsn || '0', 10) || 0,
+                    tax:      parseInt(r.tax      || '0', 10) || 0,
+                    tdyBuyq:  parseInt(r.tdy_buyq  || '0', 10) || 0,
+                    tdySellq: parseInt(r.tdy_sellq || '0', 10) || 0,
+                    predBuyq: parseInt(r.pred_buyq  || '0', 10) || 0,
+                    predSellq:parseInt(r.pred_sellq || '0', 10) || 0,
                 };
             });
             const totalAsset = parseInt(data.prsm_dpst_aset_amt || '0', 10) || 0;
@@ -1443,6 +1542,101 @@
                 }
             } catch (e) { /* kt00005 실패 시 kt00018 추정값 사용 */ }
 
+            // kt00001 예수금 상세 (예수금/출금가능/주문가능/D+1~D+2)
+            let depositInfo = null;
+            try {
+                const respDep = await fetch(`${ORDER_SERVER_URL}/api/deposit`);
+                const dataDep = await respDep.json();
+                if (!dataDep.error) {
+                    depositInfo = {
+                        entr:       parseInt(dataDep.entr || '0', 10) || 0,
+                        pymnAlow:   parseInt(dataDep.pymn_alow_amt || '0', 10) || 0,
+                        ordAlow:    parseInt(dataDep.ord_alow_amt || '0', 10) || 0,
+                        d1Entr:     parseInt(dataDep.d1_entra || '0', 10) || 0,
+                        d1PymnAlow: parseInt(dataDep.d1_pymn_alow_amt || '0', 10) || 0,
+                        d2Entr:     parseInt(dataDep.d2_entra || '0', 10) || 0,
+                    };
+                    if (depositInfo.ordAlow > 0) ordAlowa = depositInfo.ordAlow;
+                }
+            } catch (e) { /* kt00001 실패 무시 */ }
+
+            // kt00009 당일 약정금액
+            let contractInfo = null;
+            try {
+                const respCt = await fetch(`${ORDER_SERVER_URL}/api/daily_contract`);
+                const dataCt = await respCt.json();
+                if (!dataCt.error && dataCt.total > 0) contractInfo = dataCt;
+            } catch (e) { /* kt00009 실패 무시 */ }
+
+            // kt00017 당일현황 추가 필드 (매도/매수금액, 수수료/세금, 배당금)
+            let todayStatusInfo = null;
+            try {
+                const respTdy = await fetch(`${ORDER_SERVER_URL}/api/today_deposit`);
+                const dataTdy = await respTdy.json();
+                if (!dataTdy.error) {
+                    todayStatusInfo = {
+                        sellAmt:  parseInt(dataTdy.sell_amt  || '0', 10) || 0,
+                        buyAmt:   parseInt(dataTdy.buy_amt   || '0', 10) || 0,
+                        cmsn:     parseInt(dataTdy.cmsn      || '0', 10) || 0,
+                        tax:      parseInt(dataTdy.tax       || '0', 10) || 0,
+                        dividaAmt:parseInt(dataTdy.dvida_amt || '0', 10) || 0,
+                    };
+                }
+            } catch (e) { /* kt00017 실패 무시 */ }
+
+            // kt00008 익일 결제 예정 내역
+            let settlementInfo = null;
+            try {
+                const respSetl = await fetch(`${ORDER_SERVER_URL}/api/next_day_settlement`);
+                const dataSetl = await respSetl.json();
+                if (!dataSetl.error) {
+                    const rows = dataSetl.acnt_nxdy_setl_frcs_prps_array || [];
+                    const totCmsn = rows.reduce((s, r) =>
+                        s + (parseInt(r.cmsn||'0',10)||0)
+                          + (parseInt(r.trde_tax||'0',10)||0)
+                          + (parseInt(r.incm_tax||'0',10)||0)
+                          + (parseInt(r.rstx||'0',10)||0)
+                          + (parseInt(r.resi_tax||'0',10)||0), 0);
+                    settlementInfo = {
+                        sellSum: parseInt(dataSetl.sell_amt_sum||'0',10)||0,
+                        buySum:  parseInt(dataSetl.buy_amt_sum||'0',10)||0,
+                        totCmsn,
+                        rows: rows.map(r => ({
+                            name:    r.stk_nm || '',
+                            tp:      (r.sell_tp||'').startsWith('1') ? '매도' : '매수',
+                            exctAmt: parseInt(r.exct_amt||'0',10)||0,
+                        })),
+                    };
+                }
+            } catch (e) { /* kt00008 실패 무시 */ }
+
+            // kt00004 계좌평가현황 (당일/당월/누적 손익 + 종목별 금일 매수/매도 수량)
+            let acntEvalInfo = null;
+            let acntEvalByCode = {};
+            try {
+                const respAcnt = await fetch(`${ORDER_SERVER_URL}/api/account_eval`);
+                const dataAcnt = await respAcnt.json();
+                if (!dataAcnt.error) {
+                    acntEvalInfo = {
+                        tdyLspft:    parseInt(dataAcnt.tdy_lspft || '0', 10) || 0,
+                        tdyLspftRt:  parseFloat(dataAcnt.tdy_lspft_rt || '0') || 0,
+                        lspft2:      parseInt(dataAcnt.lspft2 || '0', 10) || 0,
+                        lspftRatio:  parseFloat(dataAcnt.lspft_ratio || '0') || 0,
+                        lspft:       parseInt(dataAcnt.lspft || '0', 10) || 0,
+                        lspftRt:     parseFloat(dataAcnt.lspft_rt || '0') || 0,
+                    };
+                    for (const s of (dataAcnt.stk_acnt_evlt_prst || [])) {
+                        const cd = (s.stk_cd || '').replace(/^[AJQ]/, '');
+                        acntEvalByCode[cd] = {
+                            tdyBuyq:  parseInt(s.tdy_buyq || '0', 10) || 0,
+                            tdySellq: parseInt(s.tdy_sellq || '0', 10) || 0,
+                            predBuyq: parseInt(s.pred_buyq || '0', 10) || 0,
+                            predSellq:parseInt(s.pred_sellq || '0', 10) || 0,
+                        };
+                    }
+                }
+            } catch (e) { /* kt00004 실패 무시 */ }
+
             holdingsAccountInfo = {
                 totalAsset,               // prsm_dpst_aset_amt: 브로커 기준 추정예탁자산
                 totalEval,
@@ -1450,6 +1644,13 @@
                 ordAlowa,                 // 실제 주문가능현금(미체결 매수 차감 후) - 주문 한도 확인용
                 totalPurchase: parseInt(data.tot_pur_amt || '0', 10) || 0,
                 totalPL: parseInt(data.tot_evlt_pl || '0', 10) || 0,
+                totalPrftRt: parseFloat(data.tot_prft_rt || '0') || 0,
+                depositInfo,              // kt00001 예수금 상세
+                contractInfo,             // kt00009 당일 약정금액
+                todayStatusInfo,          // kt00017 당일 매도/매수/수수료/세금/배당
+                settlementInfo,           // kt00008 익일 결제 예정
+                acntEvalInfo,             // kt00004 당일/당월/누적 손익
+                acntEvalByCode,           // kt00004 종목별 금일 매수/매도 수량
             };
             // silent=true(주문 실행 중 내부 호출)일 때는 투자금 기준을 고정 - 주문 중 재계산으로 목표수량이 변하는 것을 방지
             if (!silent) {
@@ -1493,7 +1694,10 @@
             seenCodes.add(code);
             const held = holdingsByCode[code];
             const curQty = held ? held.qty : 0;
-            const diff = t.shares - curQty;
+            // 매도 시 실제 가능 수량은 trdeAbleQty (D+2 미결제분 제외)
+            const sellableQty = held ? (held.trdeAbleQty > 0 ? held.trdeAbleQty : held.qty) : 0;
+            const rawDiff = t.shares - curQty;
+            const diff = rawDiff < 0 ? Math.max(rawDiff, -sellableQty) : rawDiff;
             const targetValue = t.shares * t.price;
             const curValue = curQty * t.price;
             // 매수/매도 수량(diff)과 부호를 통일: 음수 = 매도 필요, 양수 = 매수 필요
@@ -1510,9 +1714,11 @@
             if (seenCodes.has(code)) return;
             const held = holdingsByCode[code];
             if (held.qty <= 0) return;
+            const sellableQty = held.trdeAbleQty > 0 ? held.trdeAbleQty : held.qty;
+            if (sellableQty <= 0) return;
             rows.push({
                 name: held.name, code, price: held.price,
-                targetQty: 0, curQty: held.qty, diff: -held.qty, weightDiffPct: -100, side: 'sell',
+                targetQty: 0, curQty: held.qty, diff: -sellableQty, weightDiffPct: -100, side: 'sell',
             });
         });
 
@@ -1546,6 +1752,7 @@
                     lower: val.lower_limit,
                     exp: val.exp_price,
                 };
+                if (val.flu_rt != null) fluRtByCode[code] = val.flu_rt;
             } else {
                 prices[code] = val;  // 구형 응답 폴백
             }
@@ -1907,7 +2114,13 @@
         let availableCash = (holdingsAccountInfo ? (holdingsAccountInfo.ordAlowa || holdingsAccountInfo.cash) : 0) + addInvestForOrder;
         for (const r of buyRows) {
             const targetQty = Math.abs(r.diff);
-            const affordableQty = Math.floor(availableCash / r.price);
+            // kt00010으로 수수료 포함 정확한 주문가능수량 조회, 실패 시 직접 계산으로 fallback
+            let affordableQty = Math.floor(availableCash / r.price);
+            try {
+                const qtyResp = await fetch(`${ORDER_SERVER_URL}/api/order_possible_qty?stk_cd=${r.code}&price=${r.price}&trde_tp=2`);
+                const qtyData = await qtyResp.json();
+                if (!qtyData.error && qtyData.max_qty > 0) affordableQty = qtyData.max_qty;
+            } catch (e) { /* fallback 사용 */ }
             const actualQty = Math.min(targetQty, affordableQty);
             if (actualQty <= 0) {
                 results.push({ name: r.name, ok: false, msg: `자금 부족 건너뜀 (필요 ${formatNumber(r.price)}원/주 / 가용 ${formatNumber(Math.round(availableCash))}원)` });
@@ -2166,11 +2379,47 @@
             return;
         }
 
-        const baseline = history.baselines[history.baselines.length - 1];
-        const lastSnapshot = baseline.snapshots.length > 0 ? baseline.snapshots[baseline.snapshots.length - 1] : null;
+        // 기준점 드롭다운 채우기
+        const selector = document.getElementById('baseline-selector');
+        const prevVal = selector.value;
+        selector.innerHTML = history.baselines.map((b, i) =>
+            `<option value="${i}">${b.date} (${formatNumber(b.totalInvestment || 0)}원, ${b.stocks.length}종목)</option>`
+        ).join('');
+        // 기본 선택: 이전 선택값 유지 or tracking_start_date 일치 or 마지막
+        const trackingDate = (history.tracking_start_date || '').replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+        let defaultIdx = history.baselines.length - 1;
+        if (!prevVal) {
+            const tdIdx = history.baselines.findIndex(b => b.date === trackingDate);
+            if (tdIdx >= 0) defaultIdx = tdIdx;
+        }
+        selector.value = prevVal || String(defaultIdx);
+        const selIdx = parseInt(selector.value, 10);
+        const baseline = history.baselines[selIdx] || history.baselines[history.baselines.length - 1];
+        const lastSnapshot = baseline.snapshots && baseline.snapshots.length > 0 ? baseline.snapshots[baseline.snapshots.length - 1] : null;
         const baselineTotal = baseline.stocks.reduce((sum, s) => sum + (s.price * s.qty), 0);
 
-        let html = `<tbody><tr><td style="padding:14px; text-align:left;">`;
+        // 총평가금액 / 누계 수익률 요약 카드
+        let summaryHtml = '';
+        try {
+            const sumResp = await fetch(`${ORDER_SERVER_URL}/api/performance/summary`);
+            const sum = await sumResp.json();
+            if (!sum.error) {
+                const profit = sum.profit;
+                const pct = sum.profit_pct;
+                const profitColor = profit >= 0 ? '#dc2626' : '#2563eb';
+                const baseDtLabel = sum.base_dt ? sum.base_dt.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3') : '-';
+                summaryHtml = `<div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:14px 18px; margin-bottom:16px; display:flex; gap:32px; flex-wrap:wrap;">
+                    <div><div style="font-size:11px; color:#64748b; margin-bottom:2px;">기준일 자산 (${baseDtLabel})</div><div style="font-size:15px; font-weight:600;">${formatNumber(sum.base_asset || 0)}원</div></div>
+                    <div><div style="font-size:11px; color:#64748b; margin-bottom:2px;">총평가금액</div><div style="font-size:18px; font-weight:700;">${formatNumber(sum.total_asset)}원</div></div>
+                    <div><div style="font-size:11px; color:#64748b; margin-bottom:2px;">총순입금 (${baseDtLabel} 이후)</div><div style="font-size:18px; font-weight:700;">${formatNumber(sum.net_in)}원</div></div>
+                    <div><div style="font-size:11px; color:#64748b; margin-bottom:2px;">수익금액 / 수익률</div><div style="font-size:18px; font-weight:700; color:${profitColor};">${profit >= 0 ? '+' : ''}${formatNumber(profit)}원 (${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%)</div></div>
+                    ${sum.invt_bsamt ? `<div><div style="font-size:11px; color:#64748b; margin-bottom:2px;">투자원금평잔</div><div style="font-size:14px; font-weight:600;">${formatNumber(sum.invt_bsamt)}원</div></div>` : ''}
+                    ${sum.tern_rt != null ? `<div><div style="font-size:11px; color:#64748b; margin-bottom:2px;">회전율</div><div style="font-size:14px; font-weight:600;">${sum.tern_rt.toFixed(2)}%</div></div>` : ''}
+                </div>`;
+            }
+        } catch (e) {}
+
+        let html = `<tbody><tr><td style="padding:14px; text-align:left;">${summaryHtml}`;
 
         // 기준점 정보 + ③ 수익률
         html += `<div style="margin-bottom:14px;"><b>① 기준점</b> (${baseline.date}) - 투자금 ${formatNumber(baseline.totalInvestment || baselineTotal)}원, ${baseline.stocks.length}종목</div>`;

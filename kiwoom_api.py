@@ -13,9 +13,11 @@
 
 import json
 import sys
+import threading
 from datetime import datetime
 
 import requests
+import websocket
 
 try:
     from config_local import (
@@ -57,6 +59,130 @@ def issue_access_token(app_key, app_secret, is_mock=True):
     if not token:
         raise RuntimeError(f"토큰 발급 실패: {data}")
     return token
+
+
+def get_transaction_history(strt_dt: str, end_dt: str, tp: str = "0", stk_cd: str = "") -> list:
+    """위탁종합거래내역요청 (kt00015).
+
+    tp: "0"=전체, "1"=입출금, "3"=매매, "4"=매수, "5"=매도, "6"=입금, "7"=출금
+    주요 반환 필드 (trst_ovrl_trde_prps_array):
+      trde_dt, rmrk_nm, stk_nm, trde_amt, exct_amt,
+      entra_remn, io_tp_nm, cmsn, trde_agri_tax, incm_resi_tax, tax_sum_cmsn
+    연속조회(cont-yn=Y)로 전체 데이터를 가져옴.
+    """
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/acnt"
+    body = {
+        "strt_dt": strt_dt,
+        "end_dt": end_dt,
+        "tp": tp,
+        "stk_cd": stk_cd,
+        "crnc_cd": "",
+        "gds_tp": "1",       # 국내주식
+        "frgn_stex_code": "",
+        "dmst_stex_tp": "%",
+        "qry_sort_tp": "1",  # 최근거래순
+    }
+    results = []
+    cont_yn = "N"
+    next_key = ""
+    while True:
+        headers = {
+            "Content-Type": "application/json;charset=UTF-8",
+            "api-id": "kt00015",
+            "cont-yn": cont_yn,
+            "next-key": next_key,
+            "authorization": f"Bearer {token}",
+        }
+        resp = requests.post(url, headers=headers, json=body, timeout=15)
+        resp.raise_for_status()
+        data = resp.json()
+        rows = data.get("trst_ovrl_trde_prps_array") or []
+        results.extend(rows)
+        cont_yn = resp.headers.get("cont-yn", "N")
+        next_key = resp.headers.get("next-key", "")
+        if cont_yn != "Y":
+            break
+    return results
+
+
+def get_net_deposit(strt_dt: str, end_dt: str) -> dict:
+    """kt00015로 기간 내 순입금(입금-출금) 및 세금/수수료 합계 계산."""
+    rows = get_transaction_history(strt_dt, end_dt, tp="1")  # 입출금
+    in_amt  = sum(int(r.get("trde_amt") or 0) for r in rows if r.get("io_tp_nm", "").startswith("입"))
+    out_amt = sum(int(r.get("trde_amt") or 0) for r in rows if r.get("io_tp_nm", "").startswith("출"))
+    # 매매 수수료/세금
+    trade_rows = get_transaction_history(strt_dt, end_dt, tp="3")
+    tax_cmsn = sum(int(r.get("tax_sum_cmsn") or 0) for r in trade_rows)
+    return {
+        "in_amt":   in_amt,
+        "out_amt":  out_amt,
+        "net":      in_amt - out_amt,
+        "tax_cmsn": tax_cmsn,
+    }
+
+
+def get_daily_asset_history(start_dt: str, end_dt: str) -> list:
+    """kt00002 일별추정예탁자산현황. start_dt~end_dt 기간의 일별 자산 리스트 반환."""
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/acnt"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": "kt00002",
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {token}",
+    }
+    resp = requests.post(url, headers=headers,
+                         json={"start_dt": start_dt, "end_dt": end_dt}, timeout=15)
+    resp.raise_for_status()
+    return resp.json().get("daly_prsm_dpst_aset_amt_prst") or []
+
+
+def get_stock_list_flags():
+    """ka10099로 KOSPI+KOSDAQ 전 종목의 플래그를 한 번에 조회.
+
+    반환: {종목코드: {'is_admin': bool, 'is_admin_warning': bool, 'is_halt': bool, 'is_inv_warn': bool}}
+    """
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/mrkcond"
+    result = {}
+
+    for mrkt_tp in ("0", "10"):  # 0: KOSPI, 10: KOSDAQ
+        cont_yn = "N"
+        next_key = ""
+        while True:
+            headers = {
+                "Content-Type": "application/json;charset=UTF-8",
+                "api-id": "ka10099",
+                "cont-yn": cont_yn,
+                "next-key": next_key,
+                "authorization": f"Bearer {token}",
+            }
+            resp = requests.post(url, headers=headers, json={"mrkt_tp": mrkt_tp}, timeout=15)
+            resp.raise_for_status()
+            data = resp.json()
+            for s in data.get("list") or []:
+                code = (s.get("code") or "").strip()
+                if not code:
+                    continue
+                audit  = (s.get("auditInfo") or "").strip()
+                state  = (s.get("state") or "").strip()
+                warn   = str(s.get("orderWarning") or "0").strip()
+                result[code] = {
+                    "is_admin":         "관리" in audit and "우려" not in audit,
+                    "is_admin_warning": "우려" in audit,
+                    "is_halt":          "정지" in state or state == "2",
+                    "is_inv_warn":      warn in ("3", "4", "5"),
+                }
+            cont_yn  = resp.headers.get("cont-yn", "N")
+            next_key = resp.headers.get("next-key", "")
+            if cont_yn != "Y":
+                break
+
+    return result
 
 
 def fetch_account_balance(access_token, account_no, is_mock=True):
@@ -141,6 +267,62 @@ def get_daily_balance(qry_dt=""):
     return resp.json()
 
 
+def get_account_eval(qry_tp: str = "1"):
+    """계좌평가현황요청 (kt00004).
+
+    qry_tp: "0"=전체, "1"=상장폐지종목제외
+    주요 반환 필드:
+      tdy_lspft / tdy_lspft_rt  - 당일 투자손익 / 손익율
+      lspft2    / lspft_ratio   - 당월 투자손익 / 손익율
+      lspft     / lspft_rt      - 누적 투자손익 / 손익율
+      tdy_lspft_amt / invt_bsamt / lspft_amt - 당일/당월/누적 투자원금
+      stk_acnt_evlt_prst[].tdy_buyq/tdy_sellq - 금일 매수/매도 수량
+    """
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/acnt"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": "kt00004",
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {token}",
+    }
+    resp = requests.post(url, headers=headers, json={"qry_tp": qry_tp, "dmst_stex_tp": "KRX"}, timeout=15)
+    resp.raise_for_status()
+    return resp.json()
+
+
+def get_deposit_detail(qry_tp: str = "2"):
+    """예수금상세현황요청 (kt00001).
+
+    qry_tp: "2"=일반조회, "3"=추정조회
+    주요 반환 필드:
+      entr          - 예수금
+      pymn_alow_amt - 출금가능금액
+      ord_alow_amt  - 주문가능금액
+      d1_entra      - D+1 추정예수금
+      d1_pymn_alow_amt - D+1 출금가능금액
+      d2_entra      - D+2 추정예수금
+      d2_pymn_alow_amt - D+2 출금가능금액
+    """
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/acnt"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": "kt00001",
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {token}",
+    }
+    resp = requests.post(url, headers=headers, json={"qry_tp": qry_tp}, timeout=15)
+    resp.raise_for_status()
+    return resp.json()
+
+
 def get_settlement_balance():
     """체결잔고요청 (kt00005) - 주문가능현금(ord_alowa)과 종목별 결제잔고(setl_remn) 제공.
 
@@ -160,6 +342,102 @@ def get_settlement_balance():
     }
     body = {"dmst_stex_tp": "KRX"}
     resp = requests.post(url, headers=headers, json=body, timeout=15)
+    resp.raise_for_status()
+    return resp.json()
+
+
+def get_order_possible_qty(stk_cd: str, price: int, trde_tp: str = "2"):
+    """주문인출가능금액요청 (kt00010) - 특정 종목/가격 기준 주문가능수량 조회.
+
+    trde_tp: "1"=매도, "2"=매수
+    주요 반환:
+      profa_100ord_alowq - 100% 증거금 기준 주문가능수량 (수수료 포함)
+      ord_alowa          - 주문가능현금
+    """
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/acnt"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": "kt00010",
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {token}",
+    }
+    body = {
+        "io_amt": "",
+        "stk_cd": f"A{stk_cd}" if not stk_cd.startswith("A") else stk_cd,
+        "trde_tp": trde_tp,
+        "trde_qty": "",
+        "uv": str(price),
+        "exp_buy_unp": "",
+    }
+    resp = requests.post(url, headers=headers, json=body, timeout=15)
+    resp.raise_for_status()
+    data = resp.json()
+    return {
+        "max_qty":   int(data.get("profa_100ord_alowq") or 0),
+        "ord_alowa": int(data.get("ord_alowa") or 0),
+        "profa_20":  int(data.get("profa_20ord_alowq") or 0),
+        "profa_30":  int(data.get("profa_30ord_alowq") or 0),
+    }
+
+
+def get_daily_contract_summary():
+    """계좌별주문체결현황요청 (kt00009) - 당일 매도/매수/전체 약정금액 합계 조회."""
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/acnt"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": "kt00009",
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {token}",
+    }
+    body = {
+        "ord_dt": "",
+        "stk_bond_tp": "1",   # 주식
+        "mrkt_tp": "0",        # 전체
+        "sell_tp": "0",        # 전체
+        "qry_tp": "1",         # 체결
+        "stk_cd": "",
+        "fr_ord_no": "",
+        "dmst_stex_tp": "%",
+    }
+    resp = requests.post(url, headers=headers, json=body, timeout=15)
+    resp.raise_for_status()
+    data = resp.json()
+    return {
+        "sell_amt": int(data.get("sell_grntl_engg_amt") or 0),
+        "buy_amt":  int(data.get("buy_engg_amt") or 0),
+        "total":    int(data.get("engg_amt") or 0),
+    }
+
+
+def get_next_day_settlement():
+    """계좌별익일결제예정내역요청 (kt00008).
+
+    주요 반환 필드:
+      sell_amt_sum / buy_amt_sum  - 매도/매수 정산 합계
+      acnt_nxdy_setl_frcs_prps_array[]:
+        stk_nm, sell_tp, qty, unp, exct_amt - 종목별 정산금액
+        cmsn, trde_tax, incm_tax, rstx, resi_tax - 거래 비용
+    """
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/acnt"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": "kt00008",
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {token}",
+    }
+    resp = requests.post(url, headers=headers, json={"strt_dcd_seq": ""}, timeout=15)
     resp.raise_for_status()
     return resp.json()
 
@@ -376,6 +654,27 @@ def check_stock_warning(stk_cds):
     return warnings
 
 
+def get_daily_trade_amount(stk_cd, n_days=20):
+    """ka10086 일별주가로 최근 n_days일 평균 거래대금(원) 반환."""
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/stkpc"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": "ka10086",
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {token}",
+    }
+    resp = requests.post(url, headers=headers, json={"stk_cd": stk_cd}, timeout=15)
+    resp.raise_for_status()
+    data = resp.json()
+    rows = (data.get("daly_stkpc") or [])[:n_days]
+    if not rows:
+        return 0
+    total = sum(int(r.get("amt_mn") or 0) * 1_000_000 for r in rows)
+    return total // len(rows)
+
+
 def fetch_stock_quote(access_token, stk_cd, is_mock=True):
     """종목기본정보요청 (ka10001) - 현재가 등 기본 시세 조회 (성과추적용 가격 스냅샷에 사용)."""
     url = f"{get_base_url(is_mock)}/api/dostk/stkinfo"
@@ -446,11 +745,13 @@ def get_stock_quotes(stk_cds):
             upl = data.get("upl_pric")
             lst = data.get("lst_pric")
             exp = data.get("exp_cntr_pric")
+            flu = data.get("flu_rt")
             prices[code] = {
                 "price": p,
                 "upper_limit": abs(int(upl)) if upl else None,
                 "lower_limit": abs(int(lst)) if lst else None,
                 "exp_price": abs(int(exp)) if exp else None,
+                "flu_rt": float(flu) if flu else None,
             } if p else None
         except Exception:
             prices[code] = None
@@ -574,6 +875,122 @@ def cancel_order(stk_cd, orig_ord_no, cncl_qty, is_mock=KIWOOM_IS_MOCK):
     resp = requests.post(url, headers=headers, json=body, timeout=15)
     resp.raise_for_status()
     return resp.json()
+
+
+# ── 실시간 주문체결 WebSocket ──────────────────────────────────────────────────
+
+PROD_WS_URL = "wss://api.kiwoom.com/api/dostk/websocket"
+MOCK_WS_URL = "wss://mockapi.kiwoom.com/api/dostk/websocket"
+
+
+# 실시간 잔고 캐시 — 04 이벤트로 업데이트, {종목코드: {필드코드: 값}}
+realtime_balance: dict = {}
+
+
+def _parse_values(raw):
+    """values 필드(List<Map> or dict)를 {str키: 값} dict로 변환."""
+    if isinstance(raw, list):
+        vals = {}
+        for item in raw:
+            vals.update(item)
+        return vals
+    return {str(k): v for k, v in (raw or {}).items()}
+
+
+def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=None):
+    """주문체결(00) + 잔고(04) + 종목정보(0g) 실시간 WebSocket을 백그라운드 스레드로 시작.
+
+    on_fill(values)      : 체결 이벤트 수신 시 호출.
+    on_balance(values)   : 잔고 업데이트 수신 시 호출 (optional).
+    on_stock_info(values): 종목정보(VI/관리종목 등) 이벤트 수신 시 호출 (optional).
+    """
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    ws_url = MOCK_WS_URL if KIWOOM_IS_MOCK else PROD_WS_URL
+
+    # 보유 종목 코드 목록 (0g 등록용) — 외부에서 갱신 가능
+    _ws_ref = [None]
+
+    def _register_stock_info(ws, codes):
+        """보유 종목 코드를 0g로 등록."""
+        if not codes:
+            return
+        ws.send(json.dumps({
+            "trnm": "REG",
+            "grp_no": "2",
+            "refresh": "0",
+            "data": [{"item": code, "type": "0g"} for code in codes],
+        }))
+
+    def on_open(ws):
+        _ws_ref[0] = ws
+        ws.send(json.dumps({
+            "trnm": "REG",
+            "grp_no": "1",
+            "refresh": "1",
+            "data": [
+                {"item": "", "type": "00"},
+                {"item": "", "type": "04"},
+            ],
+        }))
+        # 현재 보유 종목 즉시 등록
+        try:
+            h = get_holdings()
+            codes = [(r.get("stk_cd") or "").lstrip("A")
+                     for r in h.get("acnt_evlt_remn_indv_tot", []) if r.get("stk_cd")]
+            if codes:
+                _register_stock_info(ws, codes)
+        except Exception:
+            pass
+
+    # 보유 종목 변경 시 외부에서 호출
+    def update_watched_codes(codes):
+        ws = _ws_ref[0]
+        if ws and codes:
+            _register_stock_info(ws, codes)
+
+    def on_message(ws, message):
+        try:
+            msg = json.loads(message)
+        except Exception:
+            return
+        if msg.get("trnm") != "REAL":
+            return
+        for entry in msg.get("data", []):
+            evt_type = entry.get("type")
+            vals = _parse_values(entry.get("values"))
+            if evt_type == "00" and vals.get("913") == "체결":
+                on_fill(vals)
+            elif evt_type == "04":
+                code = (vals.get("9001") or "").lstrip("A")
+                if code:
+                    realtime_balance[code] = vals
+                if on_balance:
+                    on_balance(vals)
+            elif evt_type == "0g":
+                if on_stock_info:
+                    on_stock_info(entry.get("item", ""), vals)
+
+    def on_ws_error(ws, error):
+        if on_error:
+            on_error(error)
+
+    def run():
+        while True:
+            try:
+                ws = websocket.WebSocketApp(
+                    ws_url,
+                    header={"authorization": f"Bearer {token}"},
+                    on_open=on_open,
+                    on_message=on_message,
+                    on_error=on_ws_error,
+                )
+                ws.run_forever(ping_interval=30, ping_timeout=10)
+            except Exception:
+                pass
+            threading.Event().wait(10)
+
+    threading.Thread(target=run, daemon=True).start()
+    return update_watched_codes
 
 
 if __name__ == "__main__":

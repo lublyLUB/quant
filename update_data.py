@@ -30,6 +30,7 @@ MONTHLY_PRICE_CACHE_FILE = os.path.join(BASE_DIR, "cache_monthly_price.json")
 MONTHLY_INDEX_CACHE_FILE = os.path.join(BASE_DIR, "cache_monthly_index.json")
 INDUTY_CODE_CACHE_FILE = os.path.join(BASE_DIR, "cache_induty_code.json")
 ADMIN_ISSUE_CACHE_FILE = os.path.join(BASE_DIR, "cache_admin_issue.json")
+TRADE_AMT_CACHE_FILE  = os.path.join(BASE_DIR, "cache_trade_amt.json")
 
 
 def load_json_cache(path):
@@ -194,12 +195,12 @@ def is_financial_or_holding(corp_code, name, induty_cache):
 
 
 def get_admin_status(corp_code, cache):
-    """관리종목 현재 상태를 판정. 최근 2년 거래소공시(I)에서 '관리종목지정'/'관리종목지정해제'/
-    '관리종목지정우려' 중 가장 최근 건으로 (지정여부, 지정우려여부)를 판단한다. 하루 단위 캐싱."""
+    """관리종목·관리우려·거래정지·투자경고 현재 상태를 판정.
+    최근 2년 거래소공시(I)에서 가장 최근 지정/해제 공시로 판단. 하루 단위 캐싱."""
     today_str = datetime.now().strftime("%Y%m%d")
     cached = cache.get(corp_code)
     if cached and cached.get("date") == today_str:
-        return cached.get("issue"), cached.get("warning")
+        return cached.get("issue"), cached.get("warning"), cached.get("halt"), cached.get("inv_warn")
 
     end_de = datetime.now()
     bgn_de = end_de - timedelta(days=730)
@@ -218,30 +219,51 @@ def get_admin_status(corp_code, cache):
         )
         data = r.json()
     except Exception:
-        return None, None
+        return None, None, None, None
 
     if data.get("status") == "013":
-        issue, warning = False, False
+        issue, warning, halt, inv_warn = False, False, False, False
     elif data.get("status") != "000":
-        return None, None
+        return None, None, None, None
     else:
-        events = []  # (날짜, 종류) 종류: 'issue'(지정) / 'release'(해제) / 'warning'(지정우려)
-        for item in data.get("list", []) or []:
-            nm = item.get("report_nm") or ""
-            # 실제 공시명은 "관리종목지정"처럼 붙어 있거나 "관리종목 지정"처럼 띄어 있는 등 표기가
-            # 제각각이라(예: "기타시장안내(관리종목 지정사유 추가 ...)"), 띄어쓰기를 무시하고 매칭한다
-            nm_compact = nm.replace(" ", "")
-            if "관리종목" not in nm_compact or "지정" not in nm_compact:
-                continue
-            kind = "warning" if "우려" in nm_compact else ("release" if "해제" in nm_compact else "issue")
-            events.append((item.get("rcept_dt", ""), kind))
-        events.sort(key=lambda e: e[0])
-        latest_kind = events[-1][1] if events else None
-        issue = latest_kind == "issue"
-        warning = latest_kind == "warning"
+        # 각 항목별 (날짜, 지정여부) 이벤트 리스트
+        admin_events = []    # 관리종목
+        halt_events = []     # 거래정지
+        inv_warn_events = [] # 투자경고/위험/단기과열
 
-    cache[corp_code] = {"date": today_str, "issue": issue, "warning": warning}
-    return issue, warning
+        for item in data.get("list", []) or []:
+            nm = (item.get("report_nm") or "").replace(" ", "")
+            dt = item.get("rcept_dt", "")
+
+            if "관리종목" in nm and "지정" in nm:
+                kind = "warning" if "우려" in nm else ("release" if "해제" in nm else "issue")
+                admin_events.append((dt, kind))
+
+            if "매매거래정지" in nm or ("거래정지" in nm and "해제" not in nm and "우려" not in nm):
+                halt_events.append((dt, "issue"))
+            elif "매매거래재개" in nm or ("거래정지해제" in nm):
+                halt_events.append((dt, "release"))
+
+            if any(kw in nm for kw in ("투자경고", "투자위험", "단기과열지정")):
+                inv_warn_events.append((dt, "issue"))
+            elif any(kw in nm for kw in ("투자경고해제", "투자위험해제", "단기과열해제")):
+                inv_warn_events.append((dt, "release"))
+
+        def is_active(events):
+            if not events:
+                return False
+            events.sort(key=lambda e: e[0])
+            return events[-1][1] == "issue"
+
+        admin_events.sort(key=lambda e: e[0])
+        latest_admin = admin_events[-1][1] if admin_events else None
+        issue = latest_admin == "issue"
+        warning = latest_admin == "warning"
+        halt = is_active(halt_events)
+        inv_warn = is_active(inv_warn_events)
+
+    cache[corp_code] = {"date": today_str, "issue": issue, "warning": warning, "halt": halt, "inv_warn": inv_warn}
+    return issue, warning, halt, inv_warn
 
 
 def _fetch_period_accounts(corp_code, year, reprt_code, fs_div, keys):
@@ -648,6 +670,7 @@ def fetch_krx_market_data():
                 "price": price,
                 "code": code,
                 "market_cap": market_cap,
+                "trade_value": float(item.get("trPrc", 0) or 0),
             })
         except Exception:
             continue
@@ -670,8 +693,18 @@ def fetch_krx_market_data():
         capital_increase_cache = load_json_cache(CAPITAL_INCREASE_CACHE_FILE)
         induty_code_cache = load_json_cache(INDUTY_CODE_CACHE_FILE)
         admin_issue_cache = load_json_cache(ADMIN_ISSUE_CACHE_FILE)
+        trade_amt_cache = load_json_cache(TRADE_AMT_CACHE_FILE)
         cache_hits = 0
         flagged_count = 0
+
+        # ka10099로 전 종목 플래그 한 번에 조회 (DART 종목별 호출 대체)
+        print("[ka10099] 전 종목 관리종목·거래정지·투자경고 플래그 조회 중...")
+        try:
+            stock_flags_map = kiwoom_api.get_stock_list_flags()
+            print(f"[ka10099] {len(stock_flags_map)}개 종목 플래그 조회 완료.")
+        except Exception as e:
+            print(f"⚠️ [ka10099] 플래그 조회 실패, DART 폴백 사용: {e}")
+            stock_flags_map = {}
 
         print(f"[DART] {len(raw_stocks)}개 종목의 재무제표 조회를 시작합니다 (캐싱된 종목은 스킵)...")
         for i, s in enumerate(raw_stocks):
@@ -682,8 +715,27 @@ def fetch_krx_market_data():
             # 금융회사/지주회사/관리종목/관리종목지정우려 여부만 표시해두고 제외는 하지 않음
             # (12.NCAV에서만 실제 제외 필터링, 추천 메뉴에서는 배지로 표기)
             is_fin_holding = is_financial_or_holding(corp_code, s["name"], induty_code_cache)
-            is_admin, is_admin_warning = get_admin_status(corp_code, admin_issue_cache)
-            if is_fin_holding or is_admin or is_admin_warning:
+            # ka10099 결과 우선 사용, 없으면 DART 폴백
+            if s["code"] in stock_flags_map:
+                f = stock_flags_map[s["code"]]
+                is_admin         = f["is_admin"]
+                is_admin_warning = f["is_admin_warning"]
+                is_halt          = f["is_halt"]
+                is_inv_warn      = f["is_inv_warn"]
+            else:
+                is_admin, is_admin_warning, is_halt, is_inv_warn = get_admin_status(corp_code, admin_issue_cache)
+
+            # 20일 평균 거래대금 (ka10086) — 일별 캐싱
+            cached_ta = trade_amt_cache.get(s["code"])
+            if cached_ta and cached_ta.get("date") == today_str:
+                avg_trade_amt = cached_ta.get("amt", 0)
+            else:
+                try:
+                    avg_trade_amt = kiwoom_api.get_daily_trade_amount(s["code"], n_days=20)
+                except Exception:
+                    avg_trade_amt = s.get("trade_value", 0)  # 실패 시 공공데이터 단일일 값 폴백
+                trade_amt_cache[s["code"]] = {"date": today_str, "amt": avg_trade_amt}
+            if is_fin_holding or is_admin or is_admin_warning or is_halt or is_inv_warn:
                 flagged_count += 1
 
             candidates = _build_period_candidates()
@@ -820,6 +872,9 @@ def fetch_krx_market_data():
                 "is_fin_holding": is_fin_holding,
                 "is_admin_issue": is_admin,
                 "is_admin_warning": is_admin_warning,
+                "is_halt": is_halt,
+                "is_inv_warn": is_inv_warn,
+                "trade_value": avg_trade_amt,
                 "dividend_yield": dividend_yield,
             })
 
@@ -830,6 +885,7 @@ def fetch_krx_market_data():
         save_json_cache(CAPITAL_INCREASE_CACHE_FILE, capital_increase_cache)
         save_json_cache(INDUTY_CODE_CACHE_FILE, induty_code_cache)
         save_json_cache(ADMIN_ISSUE_CACHE_FILE, admin_issue_cache)
+        save_json_cache(TRADE_AMT_CACHE_FILE, trade_amt_cache)
         print(f"[DART] 재무제표 보강 완료: {len(valid_stocks)}개 종목 확보 (캐시 적중 {cache_hits}건, 금융/지주/관리종목 표시 {flagged_count}건)")
 
         # 전체 종목(시가총액 기준) 중 상/하위 몇 %에 속하는지 - 자세히 모드에서 시가총액 아래 표기용
@@ -1425,6 +1481,12 @@ def fetch_krx_market_data():
             tags.append("관리")
         if s["is_admin_warning"]:
             tags.append("관리우려")
+        if s.get("is_halt"):
+            tags.append("거래정지")
+        if s.get("is_inv_warn"):
+            tags.append("투자경고")
+        if (s.get("trade_value") or 0) < 500_000_000:
+            tags.append("5억↓")
         if tags:
             stock_flags[s["name"]] = tags
 
