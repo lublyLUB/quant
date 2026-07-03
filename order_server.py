@@ -433,16 +433,26 @@ def _build_daily_summary(label: str) -> str:
         from datetime import timedelta
         today_str = datetime.now().strftime("%Y%m%d")
 
-        # 총평가금액 (ka01690)
-        today = kiwoom_api.get_daily_balance()
-        total_asset = int(today.get("day_stk_asst") or 0)
+        # 총평가금액 (kt00018)
+        holdings_data = kiwoom_api.get_holdings()
+        total_asset = int(holdings_data.get("prsm_dpst_aset_amt") or 0)
 
-        # 당일 손익: 전일 자산과 비교
-        yesterday_str = (datetime.now() - timedelta(days=1)).strftime("%Y%m%d")
-        ydata = kiwoom_api.get_daily_balance(yesterday_str)
-        yesterday_asset = int(ydata.get("day_stk_asst") or 0)
-        day_pl = total_asset - yesterday_asset if yesterday_asset else 0
-        day_rt = (day_pl / yesterday_asset * 100) if yesterday_asset else 0
+        # 당일 손익: (현재가 - 전일종가) × 보유수량 합산 (입금 왜곡 없는 순수 주가 변동)
+        day_pl = 0
+        for s in holdings_data.get("acnt_evlt_remn_indv_tot", []):
+            cur = int(s.get("cur_prc") or 0)
+            pred = int(s.get("pred_close_pric") or 0)
+            qty = int(s.get("rmnd_qty") or 0)
+            day_pl += (cur - pred) * qty
+        # 당일 매도 실현손익 추가 (ka10085)
+        try:
+            pl_data = kiwoom_api.get_daily_stock_pl()
+            for s in pl_data.get("acnt_prft_rt", []):
+                day_pl += int(s.get("tdy_sel_pl") or 0)
+        except Exception:
+            pass
+        total_eval = int(holdings_data.get("tot_evlt_amt") or 0)
+        day_rt = (day_pl / (total_eval - day_pl) * 100) if (total_eval - day_pl) > 0 else 0
 
         # 누계 수익률 (kt00016, 기준일~오늘)
         cum_str = ""
@@ -463,8 +473,9 @@ def _build_daily_summary(label: str) -> str:
             except Exception:
                 pass
 
-        # 종목별 수익률 최고/최저
+        # 종목별 수익률 최고/최저 (ka01690)
         stock_lines = ""
+        today = kiwoom_api.get_daily_balance()
         holdings = [s for s in today.get("day_bal_rt", []) if s.get("prft_rt")]
         if holdings:
             best  = max(holdings, key=lambda s: float(s["prft_rt"]))

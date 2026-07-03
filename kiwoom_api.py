@@ -164,6 +164,28 @@ def get_settlement_balance():
     return resp.json()
 
 
+def get_daily_stock_pl():
+    """계좌수익률요청 (ka10085) - 당일 매도손익(tdy_sel_pl) 조회.
+
+    보유 종목별 당일매도손익·수수료·세금 제공.
+    kt00018의 (cur_prc - pred_close_pric) × rmnd_qty와 합산하면 순수 당일 주가 변동 손익.
+    """
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/acnt"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": "ka10085",
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {token}",
+    }
+    resp = requests.post(url, headers=headers, json={"stex_tp": "0"}, timeout=15)
+    resp.raise_for_status()
+    return resp.json()
+
+
 def get_account_summary():
     """계좌평가현황요청 (kt00004) - 누적/당일/당월 투자원금·손익·손익율 조회.
 
