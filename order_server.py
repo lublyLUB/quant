@@ -449,15 +449,13 @@ def _build_daily_summary(label: str) -> str:
         history = _load_performance()
         if history.get("baselines"):
             baseline = history["baselines"][-1]
-            base_dt = baseline.get("date", "").replace("-", "")[:8]  # YYYYMMDD
+            base_dt = history.get("tracking_start_date") or baseline.get("date", "").replace("-", "")[:8]  # YYYYMMDD
             if base_dt:
                 try:
                     perf = kiwoom_api.get_period_eval(fr_dt=base_dt, to_dt=today_str)
                     evltv_prft = int(perf.get("evltv_prft") or 0)
                     prft_rt = float(perf.get("prft_rt") or 0)
-                    net_deposit = int(perf.get("termin_tot_trns") or 0) - int(perf.get("termin_tot_pymn") or 0)
-                    deposit_str = f" / 순입금 {net_deposit:+,.0f}원" if net_deposit != 0 else ""
-                    baseline_pl_str = f"\n📌 기준점 대비: <b>{evltv_prft:+,.0f}원</b> ({prft_rt:+.2f}%){deposit_str}"
+                    baseline_pl_str = f"\n📌 기준점({base_dt[:4]}/{base_dt[4:6]}/{base_dt[6:]}) 대비: <b>{evltv_prft:+,.0f}원</b> ({prft_rt:+.2f}%)"
                 except Exception:
                     base_invest = baseline.get("totalInvestment") or 0
                     if base_invest:
