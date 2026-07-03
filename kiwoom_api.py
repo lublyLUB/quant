@@ -1110,9 +1110,11 @@ def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=
     def run():
         while True:
             try:
+                fresh_token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+                _wslog.info("토큰 발급 완료, WebSocket 연결 시도...")
                 ws = websocket.WebSocketApp(
                     ws_url,
-                    header={"authorization": f"Bearer {token}"},
+                    header={"authorization": f"Bearer {fresh_token}"},
                     on_open=on_open,
                     on_message=on_message,
                     on_error=on_ws_error,
