@@ -455,7 +455,11 @@ def _build_daily_summary(label: str) -> str:
                 perf = kiwoom_api.get_period_eval(fr_dt=base_dt, to_dt=today_str)
                 evltv_prft = int(perf.get("evltv_prft") or 0)
                 prft_rt = float(perf.get("prft_rt") or 0)
-                cum_str = f"\n누계 수익률: <b>{evltv_prft:+,.0f}원</b> ({prft_rt:+.2f}%)"
+                net_in = int(perf.get("termin_tot_trns") or 0)
+                cum_str = (
+                    f"\n누계 순입금: <b>{net_in:,}원</b>\n"
+                    f"누계 수익률: <b>{evltv_prft:+,.0f}원</b> ({prft_rt:+.2f}%)"
+                )
             except Exception:
                 pass
 
