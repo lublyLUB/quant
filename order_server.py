@@ -111,6 +111,9 @@ def _save_performance(data):
 # 가격(KRX 시세) 갱신 작업 상태. DART는 캐시를 그대로 쓰므로 보통 수 분 내 끝남.
 update_state = {"running": False, "log": "", "done": False, "success": None}
 
+# VI 발동 종목 실시간 캐시 — 1h WebSocket으로 갱신
+_vi_active: set = set()  # 현재 VI 발동 중인 종목코드 집합
+
 
 def _run_update_data():
     update_state.update(running=True, log="", done=False, success=None)
@@ -312,6 +315,37 @@ def quotes():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/vi_stocks", methods=["GET"])
+def vi_stocks():
+    """ka10054 - 현재 VI 발동 중인 종목 목록 + 실시간 캐시."""
+    try:
+        data = kiwoom_api.get_vi_stocks()
+        # 실시간 캐시도 병합
+        data["realtime_codes"] = list(_vi_active)
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e), "realtime_codes": list(_vi_active)}), 500
+
+
+@app.route("/api/daily_realized_pl", methods=["GET"])
+def daily_realized_pl():
+    """ka10074 - 일자별 실현손익 (당일 또는 date 파라미터 지정일)."""
+    qry_dt = request.args.get("date", "")
+    try:
+        return jsonify(kiwoom_api.get_daily_realized_pl(qry_dt))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/today_journal", methods=["GET"])
+def today_journal():
+    """ka10170 - 당일매매일지 (오늘 전체 매수/매도 체결 내역)."""
+    try:
+        return jsonify(kiwoom_api.get_today_trade_journal())
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/api/order", methods=["POST"])
 def order():
     data = request.get_json(force=True) or {}
@@ -321,6 +355,9 @@ def order():
     price = data.get("price")
     if not stk_cd or not qty or side not in ("buy", "sell"):
         return jsonify({"error": "stk_cd, qty, side(buy/sell)는 필수입니다."}), 400
+    # VI 발동 종목 매수 차단
+    if side == "buy" and stk_cd in _vi_active:
+        return jsonify({"error": f"VI 발동 중인 종목({stk_cd})은 매수할 수 없습니다. VI 해제 후 재시도하세요."}), 400
     try:
         result = kiwoom_api.place_order(stk_cd, qty, side, price)
         return jsonify(result)
@@ -709,6 +746,26 @@ def _build_daily_summary(label: str) -> str:
                 f"\n누적 손익: <b>{cum_pl:+,}원</b> ({cum_rt:+.2f}%)"
             )
 
+        # 실현손익 (ka10074) - 15:30 장마감 시에만 포함
+        rlzt_str = ""
+        if label == "장 마감":
+            try:
+                rlzt = kiwoom_api.get_daily_realized_pl()
+                rlzt_rows = rlzt.get("daly_rlzt_pl_prps_array") or []
+                rlzt_sum = int(rlzt.get("sum_sel_pl") or 0)
+                rlzt_cmsn = int(rlzt.get("sum_cmsn") or 0)
+                if rlzt_rows or rlzt_sum:
+                    rlzt_lines = "\n".join(
+                        f"  {r.get('stk_nm','')}: {int(r.get('sel_pl') or 0):+,}원 ({float(r.get('sel_pl_rt') or 0):+.2f}%)"
+                        for r in rlzt_rows[:5]
+                    )
+                    rlzt_str = (
+                        f"\n💹 실현손익 합계: <b>{rlzt_sum:+,}원</b>  수수료: {rlzt_cmsn:,}원"
+                        + (f"\n{rlzt_lines}" if rlzt_lines else "")
+                    )
+            except Exception:
+                pass
+
         return (
             f"📈 <b>[{label}] 잔고 요약</b> ({datetime.now().strftime('%m/%d %H:%M')})\n"
             f"총평가금액: <b>{total_asset:,}원</b>\n"
@@ -717,6 +774,7 @@ def _build_daily_summary(label: str) -> str:
             f"{cum_str}"
             f"{contract_str}"
             f"{setl_str}"
+            f"{rlzt_str}"
             f"{dep_str}"
             f"{stock_lines}"
         )
@@ -814,12 +872,67 @@ def _handle_telegram_command(text: str) -> str | None:
             )
         except Exception as e:
             return f"⚠️ 거래내역 조회 실패: {e}"
+    if t in ("실현손익", "매도손익"):
+        try:
+            data = kiwoom_api.get_daily_realized_pl()
+            rows = data.get("daly_rlzt_pl_prps_array") or []
+            total_pl = int(data.get("sum_sel_pl") or 0)
+            total_cmsn = int(data.get("sum_cmsn") or 0)
+            if not rows and total_pl == 0:
+                return "📊 오늘 매도 실현손익이 없습니다."
+            lines = [f"💹 <b>당일 실현손익</b> ({datetime.now().strftime('%m/%d')})\n합계: <b>{total_pl:+,}원</b>  수수료: {total_cmsn:,}원"]
+            for r in rows[:10]:
+                nm  = r.get("stk_nm", "")
+                pl  = int(r.get("sel_pl") or 0)
+                prt = float(r.get("sel_pl_rt") or 0)
+                lines.append(f"  {nm}: {pl:+,}원 ({prt:+.2f}%)")
+            return "\n".join(lines)
+        except Exception as e:
+            return f"⚠️ 실현손익 조회 실패: {e}"
+    if t in ("매매일지", "일지", "오늘거래"):
+        try:
+            data = kiwoom_api.get_today_trade_journal()
+            rows = data.get("tdy_trde_jrnl_array") or []
+            if not rows:
+                return "📋 오늘 매매 내역이 없습니다."
+            lines = [f"📋 <b>당일매매일지</b> ({datetime.now().strftime('%m/%d')})  {len(rows)}건"]
+            for r in rows[:15]:
+                tm  = r.get("cntr_tm", "")
+                nm  = r.get("stk_nm", "")
+                tp  = r.get("sell_tp_nm", "")
+                qty = r.get("cntr_qty", "")
+                prc = int(r.get("cntr_pric") or 0)
+                pl  = int(r.get("rlzt_pl") or 0)
+                pl_str = f" | 손익: {pl:+,}" if pl else ""
+                t_fmt = f"{tm[:2]}:{tm[2:4]}" if len(tm) >= 4 else tm
+                lines.append(f"  {t_fmt} {tp} {nm} {qty}주@{prc:,}{pl_str}")
+            return "\n".join(lines)
+        except Exception as e:
+            return f"⚠️ 매매일지 조회 실패: {e}"
+    if t in ("VI", "vi발동"):
+        try:
+            data = kiwoom_api.get_vi_stocks()
+            items = data.get("items", [])
+            rt = list(_vi_active)
+            if not items and not rt:
+                return "✅ 현재 VI 발동 종목 없음"
+            lines = [f"⚡ <b>VI 발동 종목</b> ({datetime.now().strftime('%H:%M')})"]
+            for it in items:
+                lines.append(f"  {it['stk_nm']}({it['stk_cd']}) {it['vi_gubun']} @{it['vi_pric']}")
+            if rt:
+                lines.append(f"실시간 발동 코드: {', '.join(rt)}")
+            return "\n".join(lines)
+        except Exception as e:
+            return f"⚠️ VI 조회 실패: {e}"
     if t in ("도움말", "help", "?"):
         return (
             "📌 <b>사용 가능한 명령어</b>\n"
             "잔고 / 수익률 / 성과 → 성과 요약\n"
             "보유 / 보유종목 → 보유 종목 현황\n"
             "거래내역 / 입출금 → 최근 30일 입출금 및 수수료\n"
+            "실현손익 / 매도손익 → 당일 실현손익\n"
+            "매매일지 / 일지 → 당일 전체 체결 내역\n"
+            "VI / vi발동 → VI 발동 종목 조회\n"
             "도움말 → 이 안내"
         )
     return None
@@ -990,9 +1103,38 @@ if __name__ == "__main__":
             f"내용: {info}"
         )
 
+    def _on_vi(code, vals):
+        """1h: VI 발동/해제 실시간 이벤트 — 보유 종목만 텔레그램 알림."""
+        vi_type = str(vals.get("215") or "")
+        stk_nm  = vals.get("302") or code
+        if vi_type == "1":
+            _vi_active.add(code)
+            _send_telegram(
+                f"⚡ <b>VI 발동</b>\n"
+                f"종목: {stk_nm} ({code})\n"
+                f"⛔ 해당 종목 매수가 일시 차단됩니다."
+            )
+        elif vi_type == "2":
+            _vi_active.discard(code)
+            _send_telegram(f"✅ <b>VI 해제</b>\n종목: {stk_nm} ({code})")
+
+    # 장운영구분 코드: 2=정규장 개시, 3=정규장 마감, 4=시간외단일가, 9=전체종료
+    _MARKET_LABELS = {"2": "🔔 정규장 개장", "3": "🔔 정규장 마감", "4": "🔔 시간외단일가 시작", "9": "🔔 전체 시장 종료"}
+
+    def _on_market_open(vals):
+        """0s: 장운영 이벤트 — 개장/마감 텔레그램 알림."""
+        op_tp = str(vals.get("215") or "")
+        tm    = vals.get("20", "")
+        label = _MARKET_LABELS.get(op_tp)
+        if label:
+            t_fmt = f"{tm[:2]}:{tm[2:4]}:{tm[4:]}" if len(tm) >= 6 else tm
+            _send_telegram(f"{label} ({t_fmt})")
+
     _update_watched = kiwoom_api.start_order_realtime(
         on_fill=_on_fill,
         on_stock_info=_on_stock_info,
+        on_vi=_on_vi,
+        on_market_open=_on_market_open,
     )
     print(f"[시스템] 주문 서버 시작 (모의투자: {kiwoom_api.KIWOOM_IS_MOCK}) - http://localhost:5050")
     app.run(host="127.0.0.1", port=5050, debug=False)

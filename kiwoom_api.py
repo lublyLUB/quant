@@ -460,6 +460,88 @@ def get_today_deposit():
     return resp.json()
 
 
+def get_daily_realized_pl(qry_dt: str = "") -> dict:
+    """일자별실현손익요청 (ka10074) - 특정일의 계좌 전체 실현손익 조회.
+
+    qry_dt: YYYYMMDD. 빈값이면 당일.
+    주요 반환 필드 (daly_rlzt_pl_prps_array[]):
+      stk_nm, stk_cd, sel_qty, pur_uv, sel_uv, sel_pl, sel_pl_rt, cmsn, tax
+    sum_sel_pl: 실현손익 합계, sum_cmsn: 수수료 합계
+    """
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    from datetime import datetime as _dt
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/acnt"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": "ka10074",
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {token}",
+    }
+    resp = requests.post(url, headers=headers, json={"qry_dt": qry_dt or _dt.now().strftime("%Y%m%d")}, timeout=15)
+    resp.raise_for_status()
+    return resp.json()
+
+
+def get_today_trade_journal() -> dict:
+    """당일매매일지요청 (ka10170) - 오늘 매수/매도 전체 체결 내역 조회.
+
+    주요 반환 필드 (tdy_trde_jrnl_array[]):
+      cntr_tm(체결시간), stk_nm(종목명), sell_tp_nm(매수/매도),
+      cntr_qty(체결수량), cntr_pric(체결가격), cntr_amt(체결금액),
+      rlzt_pl(실현손익), pur_amt(매입금액)
+    """
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/acnt"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": "ka10170",
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {token}",
+    }
+    resp = requests.post(url, headers=headers, json={}, timeout=15)
+    resp.raise_for_status()
+    return resp.json()
+
+
+def get_vi_stocks() -> dict:
+    """변동성완화장치발동종목요청 (ka10054) - 현재 VI 발동 중인 종목 목록 조회.
+
+    반환: {"codes": [종목코드,...], "items": [{stk_cd, stk_nm, vi_gubun, vi_pric}, ...]}
+    매수 주문 전 호출해서 VI 발동 종목을 사전 차단한다.
+    """
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET을 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/mrkcond"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": "ka10054",
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {token}",
+    }
+    resp = requests.post(url, headers=headers, json={}, timeout=15)
+    resp.raise_for_status()
+    data = resp.json()
+    items = []
+    for r in (data.get("vi_prcs_stk_prps_array") or data.get("list") or []):
+        code = (r.get("stk_cd") or r.get("code") or "").lstrip("A").strip()
+        if code:
+            items.append({
+                "stk_cd":   code,
+                "stk_nm":   r.get("stk_nm") or r.get("name") or "",
+                "vi_gubun": r.get("vi_gubun") or r.get("vi_type") or "",
+                "vi_pric":  r.get("vi_pric") or r.get("vi_price") or "",
+            })
+    return {"codes": [it["stk_cd"] for it in items], "items": items}
+
+
 def get_daily_stock_pl():
     """계좌수익률요청 (ka10085) - 당일 매도손익(tdy_sel_pl) 조회.
 
@@ -897,21 +979,24 @@ def _parse_values(raw):
     return {str(k): v for k, v in (raw or {}).items()}
 
 
-def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=None):
-    """주문체결(00) + 잔고(04) + 종목정보(0g) 실시간 WebSocket을 백그라운드 스레드로 시작.
+def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=None,
+                         on_vi=None, on_market_open=None):
+    """주문체결(00) + 잔고(04) + 종목정보(0g) + VI(1h) + 장시작(0s) 실시간 WebSocket 시작.
 
-    on_fill(values)      : 체결 이벤트 수신 시 호출.
-    on_balance(values)   : 잔고 업데이트 수신 시 호출 (optional).
-    on_stock_info(values): 종목정보(VI/관리종목 등) 이벤트 수신 시 호출 (optional).
+    on_fill(values)        : 체결 이벤트.
+    on_balance(values)     : 잔고 업데이트 (optional).
+    on_stock_info(code, v) : 종목정보 (optional).
+    on_vi(code, vals)      : VI 발동/해제 실시간 (optional). vals["215"]="1"발동,"2"해제.
+    on_market_open(vals)   : 장운영 이벤트(장전/개장/마감 등) (optional).
     """
     token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
     ws_url = MOCK_WS_URL if KIWOOM_IS_MOCK else PROD_WS_URL
 
-    # 보유 종목 코드 목록 (0g 등록용) — 외부에서 갱신 가능
+    # 보유 종목 코드 목록 (0g/1h 등록용) — 외부에서 갱신 가능
     _ws_ref = [None]
 
     def _register_stock_info(ws, codes):
-        """보유 종목 코드를 0g로 등록."""
+        """보유 종목 코드를 0g(종목정보) + 1h(VI발동/해제)로 등록."""
         if not codes:
             return
         ws.send(json.dumps({
@@ -920,9 +1005,16 @@ def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=
             "refresh": "0",
             "data": [{"item": code, "type": "0g"} for code in codes],
         }))
+        ws.send(json.dumps({
+            "trnm": "REG",
+            "grp_no": "3",
+            "refresh": "0",
+            "data": [{"item": code, "type": "1h"} for code in codes],
+        }))
 
     def on_open(ws):
         _ws_ref[0] = ws
+        # 주문체결(00) + 잔고(04) + 장운영(0s)
         ws.send(json.dumps({
             "trnm": "REG",
             "grp_no": "1",
@@ -930,6 +1022,7 @@ def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=
             "data": [
                 {"item": "", "type": "00"},
                 {"item": "", "type": "04"},
+                {"item": "", "type": "0s"},
             ],
         }))
         # 현재 보유 종목 즉시 등록
@@ -969,6 +1062,13 @@ def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=
             elif evt_type == "0g":
                 if on_stock_info:
                     on_stock_info(entry.get("item", ""), vals)
+            elif evt_type == "1h":
+                code = (entry.get("item") or vals.get("9001") or "").lstrip("A")
+                if on_vi and code:
+                    on_vi(code, vals)
+            elif evt_type == "0s":
+                if on_market_open:
+                    on_market_open(vals)
 
     def on_ws_error(ws, error):
         if on_error:
