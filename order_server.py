@@ -466,6 +466,13 @@ def _build_daily_summary(label: str) -> str:
                 evltv_prft = int(perf.get("evltv_prft") or 0)
                 prft_rt = float(perf.get("prft_rt") or 0)
                 net_in = int(perf.get("termin_tot_trns") or 0)
+                # 당일 입금은 kt00016에 아직 미반영 → kt00017로 보완
+                try:
+                    today_dep = kiwoom_api.get_today_deposit()
+                    net_in += int(today_dep.get("ina_amt") or 0)
+                    net_in -= int(today_dep.get("outa") or 0)
+                except Exception:
+                    pass
                 cum_str = (
                     f"\n누계 순입금: <b>{net_in:,}원</b>\n"
                     f"누계 수익률: <b>{evltv_prft:+,.0f}원</b> ({prft_rt:+.2f}%)"
