@@ -428,12 +428,12 @@ def performance_history():
 
 
 def _build_daily_summary(label: str) -> str:
-    """ka01690(당일잔고) + kt00016(기간수익률) + 성과추적 기준점으로 텔레그램 요약 메시지 생성."""
+    """kt00016(기간수익률) + ka01690(종목별 수익률)으로 텔레그램 요약 메시지 생성."""
     try:
         from datetime import timedelta
         today_str = datetime.now().strftime("%Y%m%d")
 
-        # 당일 잔고 (총평가금액, 종목별 수익률)
+        # 총평가금액 (ka01690)
         today = kiwoom_api.get_daily_balance()
         total_asset = int(today.get("day_stk_asst") or 0)
 
@@ -444,30 +444,26 @@ def _build_daily_summary(label: str) -> str:
         day_pl = total_asset - yesterday_asset if yesterday_asset else 0
         day_rt = (day_pl / yesterday_asset * 100) if yesterday_asset else 0
 
-        # 기준점 대비 손익 — kt00016으로 입출금 반영한 정확한 수익률 조회
-        baseline_pl_str = ""
+        # 누계 수익률 (kt00016, 기준일~오늘)
+        cum_str = ""
         history = _load_performance()
-        if history.get("baselines"):
-            baseline = history["baselines"][-1]
-            base_dt = history.get("tracking_start_date") or baseline.get("date", "").replace("-", "")[:8]  # YYYYMMDD
-            if base_dt:
-                try:
-                    perf = kiwoom_api.get_period_eval(fr_dt=base_dt, to_dt=today_str)
-                    evltv_prft = int(perf.get("evltv_prft") or 0)
-                    prft_rt = float(perf.get("prft_rt") or 0)
-                    baseline_pl_str = f"\n📌 기준점({base_dt[:4]}/{base_dt[4:6]}/{base_dt[6:]}) 대비: <b>{evltv_prft:+,.0f}원</b> ({prft_rt:+.2f}%)"
-                except Exception:
-                    base_invest = baseline.get("totalInvestment") or 0
-                    if base_invest:
-                        base_pl = total_asset - base_invest
-                        base_rt = base_pl / base_invest * 100
-                        baseline_pl_str = f"\n📌 기준점 대비: <b>{base_pl:+,.0f}원</b> ({base_rt:+.2f}%) ⚠️입출금 미반영"
+        base_dt = history.get("tracking_start_date", "")
+        if not base_dt and history.get("baselines"):
+            base_dt = history["baselines"][-1].get("date", "").replace("-", "")[:8]
+        if base_dt:
+            try:
+                perf = kiwoom_api.get_period_eval(fr_dt=base_dt, to_dt=today_str)
+                evltv_prft = int(perf.get("evltv_prft") or 0)
+                prft_rt = float(perf.get("prft_rt") or 0)
+                cum_str = f"\n누계 수익률: <b>{evltv_prft:+,.0f}원</b> ({prft_rt:+.2f}%)"
+            except Exception:
+                pass
 
         # 종목별 수익률 최고/최저
         stock_lines = ""
         holdings = [s for s in today.get("day_bal_rt", []) if s.get("prft_rt")]
         if holdings:
-            best = max(holdings, key=lambda s: float(s["prft_rt"]))
+            best  = max(holdings, key=lambda s: float(s["prft_rt"]))
             worst = min(holdings, key=lambda s: float(s["prft_rt"]))
             stock_lines = (
                 f"\n📈 최고: {best['stk_nm']} ({float(best['prft_rt']):+.2f}%)"
@@ -478,7 +474,7 @@ def _build_daily_summary(label: str) -> str:
             f"📈 <b>[{label}] 잔고 요약</b> ({datetime.now().strftime('%m/%d %H:%M')})\n"
             f"총평가금액: <b>{total_asset:,}원</b>\n"
             f"당일 손익: <b>{day_pl:+,.0f}원</b> ({day_rt:+.2f}%)"
-            f"{baseline_pl_str}"
+            f"{cum_str}"
             f"{stock_lines}"
         )
     except Exception as e:

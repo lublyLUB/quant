@@ -164,6 +164,29 @@ def get_settlement_balance():
     return resp.json()
 
 
+def get_account_summary():
+    """계좌평가현황요청 (kt00004) - 누적/당일/당월 투자원금·손익·손익율 조회.
+
+    lspft_amt: 누적투자원금, lspft: 누적투자손익, lspft_rt: 누적손익율
+    tdy_lspft: 당일투자손익, tdy_lspft_rt: 당일손익율
+    prsm_dpst_aset_amt: 추정예탁자산(총평가금액)
+    """
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/acnt"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": "kt00004",
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {token}",
+    }
+    resp = requests.post(url, headers=headers, json={"qry_tp": "1", "dmst_stex_tp": "KRX"}, timeout=15)
+    resp.raise_for_status()
+    return resp.json()
+
+
 def get_period_eval(fr_dt, to_dt):
     """계좌기간별수익률현황요청 (kt00016) - 기간 내 총입금·총출금·평가손익·수익률 조회.
 
