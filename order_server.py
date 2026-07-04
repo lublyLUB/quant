@@ -25,7 +25,9 @@ app = Flask(__name__)
 CORS(app)  # 로컬 전용 서버이므로 file:// 출처(브라우저)도 허용
 
 # 성과추적 데이터 (기준점/스냅샷) - 이 PC 안에만 저장, 깃허브에는 올리지 않음
-PERFORMANCE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "performance_history.json")
+PERFORMANCE_FILE  = os.path.join(os.path.dirname(os.path.abspath(__file__)), "performance_history.json")
+PORTFOLIO_FILE    = os.path.join(os.path.dirname(os.path.abspath(__file__)), "portfolio_settings.json")
+PENDING_ALERTS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pending_alerts.json")
 BENCHMARK_CODES = {"kospi": "069500", "kosdaq": "229200"}  # KODEX 200 / KODEX 코스닥150 (지수 추종 ETF로 근사)
 
 
@@ -104,6 +106,44 @@ def _load_performance():
     return {"baselines": []}
 
 
+def _load_portfolio_settings() -> dict:
+    if os.path.exists(PORTFOLIO_FILE):
+        with open(PORTFOLIO_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {"stocks": [], "total_investment": 0}
+
+
+def _save_portfolio_settings(data: dict):
+    with open(PORTFOLIO_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+
+def _load_pending_alerts() -> dict:
+    if os.path.exists(PENDING_ALERTS_FILE):
+        with open(PENDING_ALERTS_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        # last_sent 문자열 → datetime 복원
+        for v in data.values():
+            if isinstance(v.get("last_sent"), str):
+                try:
+                    v["last_sent"] = datetime.fromisoformat(v["last_sent"])
+                except Exception:
+                    v["last_sent"] = datetime.now()
+        return data
+    return {}
+
+
+def _save_pending_alerts():
+    serializable = {}
+    for k, v in _pending_sell_alerts.items():
+        entry = dict(v)
+        if isinstance(entry.get("last_sent"), datetime):
+            entry["last_sent"] = entry["last_sent"].isoformat()
+        serializable[str(k)] = entry
+    with open(PENDING_ALERTS_FILE, "w", encoding="utf-8") as f:
+        json.dump(serializable, f, ensure_ascii=False, indent=2)
+
+
 def _save_performance(data):
     with open(PERFORMANCE_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
@@ -115,9 +155,13 @@ update_state = {"running": False, "log": "", "done": False, "success": None}
 _vi_active: set = set()  # 현재 VI 발동 중인 종목코드 집합
 
 # 긴급 매도 알림 대기 목록: {message_id: {stk_cd, qty, name, reason, last_sent}}
+# 서버 재시작 후에도 pending_alerts.json에서 복원
 _pending_sell_alerts: dict = {}
 # 당일 "아니" 응답한 종목 (당일 재알림 억제)
 _dismissed_sell_alerts: set = set()
+
+# 추가 투자 대기 목록: {message_id: {stocks:[{code,name,qty,price}], mode, scheduled_at, last_sent}}
+_pending_invest_orders: dict = {}
 
 
 def _send_telegram_with_id(text: str) -> int | None:
@@ -163,6 +207,105 @@ def _send_sell_alert(stk_cd: str, qty: int, name: str, reason: str) -> int | Non
         f"(5분 내 응답 없으면 재발송)"
     )
     return msg_id
+
+
+def _calc_invest_plan(available_cash: int) -> list:
+    """포트폴리오 설정 비중에 따라 종목별 매수 수량·금액 계산.
+
+    반환: [{code, name, weight, alloc_amt, price, qty}]
+    """
+    settings = _load_portfolio_settings()
+    stocks   = settings.get("stocks") or []
+    if not stocks:
+        return []
+    total_weight = sum(float(s.get("weight") or 0) for s in stocks)
+    if total_weight <= 0:
+        return []
+    codes  = [s["code"] for s in stocks]
+    quotes = kiwoom_api.get_stock_quotes(codes)
+    plan   = []
+    for s in stocks:
+        code   = s["code"]
+        name   = s.get("name", code)
+        weight = float(s.get("weight") or 0) / total_weight
+        alloc  = int(available_cash * weight)
+        q      = quotes.get(code)
+        price  = (q["price"] if isinstance(q, dict) else q) if q else 0
+        qty    = int(alloc / price) if price > 0 else 0
+        if qty > 0:
+            plan.append({"code": code, "name": name, "weight": round(weight * 100, 1),
+                         "alloc_amt": alloc, "price": price, "qty": qty})
+    return plan
+
+
+def _send_invest_alert(plan: list, available_cash: int) -> int | None:
+    """추가 투자 알림 발송 후 message_id 반환."""
+    lines = [f"💰 <b>추가 투자 알림</b>\n투자가능금액: <b>{available_cash:,}원</b>\n"]
+    for s in plan:
+        lines.append(f"  {s['name']}({s['weight']}%) "
+                     f"→ {s['qty']:,}주 × {s['price']:,}원 = {s['qty']*s['price']:,}원")
+    lines.append(
+        "\n👉 이 메시지에 회신해주세요:\n"
+        "  <b>즉시</b> → 최유리지정가로 바로 주문\n"
+        "  <b>동시호가</b> → 15:20 장 마감 동시호가로 주문\n"
+        "  <b>취소</b> → 이번 투자 건너뜀\n"
+        "(15:00까지 응답 없으면 자동으로 동시호가 진행)"
+    )
+    return _send_telegram_with_id("\n".join(lines))
+
+
+def _execute_invest_plan(plan: list, mode: str):
+    """추가 투자 계획 실행. mode: 'immediate'(최유리지정가) | 'auction'(동시호가)."""
+    results = []
+    for s in plan:
+        try:
+            price = kiwoom_api.get_closing_auction_price(s["code"]) if mode == "auction" else None
+            kiwoom_api.place_order(s["code"], s["qty"], "buy", price)
+            results.append(f"✅ {s['name']} {s['qty']:,}주")
+        except Exception as e:
+            results.append(f"❌ {s['name']} 실패: {e}")
+    label = "동시호가" if mode == "auction" else "즉시"
+    _send_telegram(
+        f"📋 <b>추가 투자 주문 완료</b> ({label})\n" + "\n".join(results)
+    )
+
+
+def _check_new_deposit():
+    """kt00017 ina_amt를 이전 값과 비교해 새 입금이 있으면 추가 투자 알림 발송."""
+    history = _load_performance()
+    prev_ina = int(history.get("last_ina_amt") or 0)
+    try:
+        dep     = kiwoom_api.get_today_deposit()
+        cur_ina = int(dep.get("ina_amt") or 0)
+    except Exception:
+        return
+    if cur_ina <= prev_ina:
+        return
+    # 새 입금 감지
+    history["last_ina_amt"] = cur_ina
+    _save_performance(history)
+
+    # 전체 주문가능금액으로 투자 계획 수립
+    try:
+        dep_detail    = kiwoom_api.get_deposit_detail()
+        available_cash = int(dep_detail.get("ord_alow_amt") or 0)
+    except Exception:
+        available_cash = cur_ina
+
+    plan = _calc_invest_plan(available_cash)
+    if not plan:
+        _send_telegram("💰 입금 감지됐으나 포트폴리오 설정이 없습니다.\n추가 투자 메뉴에서 종목을 설정해주세요.")
+        return
+
+    msg_id = _send_invest_alert(plan, available_cash)
+    if msg_id:
+        _pending_invest_orders[msg_id] = {
+            "plan":         plan,
+            "available_cash": available_cash,
+            "mode":         None,          # 응답 전
+            "last_sent":    datetime.now(),
+            "confirmed":    False,
+        }
 
 
 def _check_holding_conditions(check_volume: bool = False):
@@ -426,6 +569,28 @@ def quotes():
         return jsonify({"prices": kiwoom_api.get_stock_quotes(codes)})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/portfolio/settings", methods=["GET"])
+def get_portfolio_settings():
+    """브라우저 추가투자 메뉴의 종목·비중 설정을 조회."""
+    return jsonify(_load_portfolio_settings())
+
+
+@app.route("/api/portfolio/settings", methods=["POST"])
+def save_portfolio_settings():
+    """브라우저에서 추가투자 메뉴 설정(종목·비중·총투자금)을 서버에 저장."""
+    data = request.get_json(force=True) or {}
+    stocks = data.get("stocks") or []
+    if not stocks:
+        return jsonify({"error": "stocks가 비어있습니다."}), 400
+    settings = {
+        "stocks": stocks,                              # [{code, name, weight}]
+        "total_investment": data.get("total_investment", 0),
+        "updated_at": datetime.now().isoformat(),
+    }
+    _save_portfolio_settings(settings)
+    return jsonify({"ok": True, "saved": len(stocks)})
 
 
 @app.route("/api/vi_stocks", methods=["GET"])
@@ -1100,8 +1265,31 @@ def _telegram_polling():
                     continue
                 text = msg.get("text", "").strip()
 
-                # ── 긴급 매도 알림에 대한 회신 처리 ──────────────────────────
                 reply_to_id = (msg.get("reply_to_message") or {}).get("message_id")
+
+                # ── 추가 투자 알림 회신 처리 ─────────────────────────────────
+                if reply_to_id and reply_to_id in _pending_invest_orders:
+                    info = _pending_invest_orders[reply_to_id]
+                    if "즉시" in text:
+                        info["mode"] = "immediate"
+                        info["confirmed"] = True
+                        del _pending_invest_orders[reply_to_id]
+                        _send_telegram("✅ 즉시 주문을 진행합니다.")
+                        threading.Thread(target=_execute_invest_plan,
+                                         args=(info["plan"], "immediate"), daemon=True).start()
+                    elif any(w in text for w in ("동시호가", "장마감", "15:20")):
+                        info["mode"] = "auction"
+                        info["confirmed"] = True
+                        del _pending_invest_orders[reply_to_id]
+                        _send_telegram("✅ 15:20 동시호가로 주문을 예약했습니다.")
+                        # 스케줄러가 15:20에 실행 — confirmed 목록에 보존
+                        _pending_invest_orders[f"auction_{reply_to_id}"] = {**info, "mode": "auction"}
+                    elif any(w in text for w in ("취소", "아니", "no")):
+                        del _pending_invest_orders[reply_to_id]
+                        _send_telegram("✅ 이번 추가 투자를 취소했습니다.")
+                    continue
+
+                # ── 긴급 매도 알림에 대한 회신 처리 ──────────────────────────
                 if reply_to_id and reply_to_id in _pending_sell_alerts:
                     info = _pending_sell_alerts[reply_to_id]
                     if "매도" in text:
@@ -1224,14 +1412,43 @@ def _daily_alert_scheduler():
                     sent_today.add(slot)
 
             # ── 장중(09:00~15:30) 매 10분 조건 점검 ─────────────────────
-            t_obj = now.time()
+            t_obj        = now.time()
             market_open  = datetime.strptime("09:00", "%H:%M").time()
             market_close = datetime.strptime("15:30", "%H:%M").time()
+            t_1500       = datetime.strptime("15:00", "%H:%M").time()
+            t_1520       = datetime.strptime("15:20", "%H:%M").time()
+
             if market_open <= t_obj <= market_close:
                 elapsed = (now - last_condition_check).total_seconds()
-                if elapsed >= 600:  # 10분
+                if elapsed >= 600:  # 10분마다
                     _check_holding_conditions(check_volume=False)
+                    _check_new_deposit()          # 입금 감지
                     last_condition_check = now
+
+            # ── 15:00 — 무응답 추가 투자 알림 자동 동시호가 확정 ─────────
+            slot_1500 = f"{key}_1500_invest"
+            if t_obj >= t_1500 and slot_1500 not in sent_today:
+                for mid, info in list(_pending_invest_orders.items()):
+                    if not str(mid).startswith("auction_") and not info.get("confirmed"):
+                        _send_telegram(
+                            "⏰ 15:00 응답 없음 — 추가 투자를 <b>15:20 동시호가</b>로 자동 예약했습니다."
+                        )
+                        info["mode"]      = "auction"
+                        info["confirmed"] = True
+                        _pending_invest_orders[f"auction_{mid}"] = {**info}
+                        del _pending_invest_orders[mid]
+                sent_today.add(slot_1500)
+
+            # ── 15:20 — 동시호가 예약 주문 실행 ─────────────────────────
+            slot_1520 = f"{key}_1520_invest"
+            if t_obj >= t_1520 and slot_1520 not in sent_today:
+                auction_keys = [k for k in list(_pending_invest_orders) if str(k).startswith("auction_")]
+                for k in auction_keys:
+                    info = _pending_invest_orders.pop(k)
+                    threading.Thread(target=_execute_invest_plan,
+                                     args=(info["plan"], "auction"), daemon=True).start()
+                if auction_keys:
+                    sent_today.add(slot_1520)
 
         # ── 자정: 당일 상태 초기화 ────────────────────────────────────────
         if now.hour == 0 and now.minute == 0:
@@ -1245,6 +1462,8 @@ def _daily_alert_scheduler():
 if __name__ == "__main__":
     if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
         sys.stdout.reconfigure(encoding="utf-8")
+    # 서버 재시작 후 대기 중인 긴급 매도 알림 복원
+    _pending_sell_alerts.update(_load_pending_alerts())
     threading.Thread(target=_daily_alert_scheduler, daemon=True).start()
     threading.Thread(target=_telegram_polling, daemon=True).start()
 

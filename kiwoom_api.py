@@ -868,33 +868,68 @@ def ensure_market_hours(now=None):
 def resolve_trde_tp(price, now=None):
     """현재 시각(장중/시간외)에 맞는 거래구분(trde_tp) 코드를 정한다.
 
-    정규장(09:00~15:30)은 최유리지정가(상대 최우선호가에 즉시 체결 시도, 시장가보다 슬리피지가
-    제한적이면서 고정 지정가보다 체결 확률이 높음)를 기본으로 쓴다.
-    15:30~16:00 장마감후시간외(종가 거래), 16:00~18:00 시간외단일가(종가 ±10%)는 최유리지정가를
-    지원하지 않아 고정 가격으로 주문한다. 그 외 시간은 예약주문을 지원하지 않으므로 주문을 막는다.
+    09:00~15:20 정규장   : 최유리지정가(06) / 시장가(03)
+    15:20~15:30 동시호가 : 지정가(00) — 반드시 price 필요 (예상체결가 기준)
+    15:30~16:00 시간외   : 장마감후시간외 종가(81)
+    16:00~18:00 시간외단일가: 지정가(62)
     """
     t = ensure_market_hours(now)
-    if t < datetime.strptime("15:30", "%H:%M").time():
-        return "06" if price else "03"  # 06: 최유리지정가, 03: 시장가 - 정규장
-    if t < datetime.strptime("16:00", "%H:%M").time():
+    t_1520 = datetime.strptime("15:20", "%H:%M").time()
+    t_1530 = datetime.strptime("15:30", "%H:%M").time()
+    t_1600 = datetime.strptime("16:00", "%H:%M").time()
+
+    if t < t_1520:
+        return "06" if price else "03"   # 최유리지정가 / 시장가
+    if t < t_1530:
         if not price:
-            raise RuntimeError("장마감후시간외(15:30~16:00)는 시장가 주문을 지원하지 않습니다. 종가로 주문해주세요.")
-        return "81"  # 장마감후시간외 - 종가 거래
+            raise RuntimeError("동시호가(15:20~15:30)는 반드시 가격을 지정해야 합니다.")
+        return "00"                       # 동시호가 지정가
+    if t < t_1600:
+        if not price:
+            raise RuntimeError("장마감후시간외(15:30~16:00)는 시장가 주문을 지원하지 않습니다.")
+        return "81"                       # 장마감후시간외
     if not price:
-        raise RuntimeError("시간외단일가(16:00~18:00)는 시장가 주문을 지원하지 않습니다. 가격을 지정해주세요.")
-    return "62"  # 시간외단일가 - 종가 ±10% 범위
+        raise RuntimeError("시간외단일가(16:00~18:00)는 가격을 지정해야 합니다.")
+    return "62"                           # 시간외단일가
+
+
+def get_closing_auction_price(stk_cd: str) -> int:
+    """동시호가 주문용 가격 계산 (ka10001 예상체결가 × 1.005, 상한가 이하로 제한).
+
+    15:20 시점 예상체결가에 0.5% 버퍼를 더해 동시호가 내 체결 확률을 높인다.
+    예상체결가가 없으면 현재가를 사용한다.
+    """
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    data  = fetch_stock_quote(token, stk_cd, KIWOOM_IS_MOCK)
+    exp   = data.get("exp_cntr_pric")
+    cur   = data.get("cur_prc")
+    upl   = data.get("upl_pric")
+    base  = abs(int(exp)) if exp else abs(int(cur)) if cur else 0
+    upper = abs(int(upl)) if upl else base
+    price = int(base * 1.005)
+    return min(price, upper)
 
 
 def place_order(stk_cd, qty, side, price=None, is_mock=KIWOOM_IS_MOCK):
     """주식 매수/매도 주문 (kt10000/kt10001).
 
-    side: "buy" 또는 "sell". 현재 시각에 따라 정규장/시간외 거래구분을 자동으로 선택한다.
+    side: "buy" 또는 "sell". 현재 시각에 따라 정규장/동시호가/시간외 거래구분을 자동으로 선택한다.
+    동시호가(15:20~15:30) 매수 시 price=None이면 예상체결가×1.005를 자동 계산한다.
     """
     if side not in ("buy", "sell"):
         raise ValueError("side는 'buy' 또는 'sell'이어야 합니다.")
     if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
         raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
-    trde_tp = resolve_trde_tp(price)
+
+    now  = datetime.now()
+    t    = now.time()
+    t_1520 = datetime.strptime("15:20", "%H:%M").time()
+    t_1530 = datetime.strptime("15:30", "%H:%M").time()
+    # 동시호가 매수 시 price 미지정이면 자동 계산
+    if side == "buy" and t_1520 <= t < t_1530 and not price:
+        price = get_closing_auction_price(stk_cd)
+
+    trde_tp = resolve_trde_tp(price, now)
     token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, is_mock)
     url = f"{get_base_url(is_mock)}/api/dostk/ordr"
     api_id = "kt10000" if side == "buy" else "kt10001"
