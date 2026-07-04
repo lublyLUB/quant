@@ -1001,7 +1001,6 @@ def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=
     on_vi(code, vals)      : VI 발동/해제 실시간 (optional). vals["215"]="1"발동,"2"해제.
     on_market_open(vals)   : 장운영 이벤트(장전/개장/마감 등) (optional).
     """
-    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
     ws_url = MOCK_WS_URL if KIWOOM_IS_MOCK else PROD_WS_URL
 
     # 보유 종목 코드 목록 (0g/1h 등록용) — 외부에서 갱신 가능
