@@ -114,6 +114,119 @@ update_state = {"running": False, "log": "", "done": False, "success": None}
 # VI 발동 종목 실시간 캐시 — 1h WebSocket으로 갱신
 _vi_active: set = set()  # 현재 VI 발동 중인 종목코드 집합
 
+# 긴급 매도 알림 대기 목록: {message_id: {stk_cd, qty, name, reason, last_sent}}
+_pending_sell_alerts: dict = {}
+# 당일 "아니" 응답한 종목 (당일 재알림 억제)
+_dismissed_sell_alerts: set = set()
+
+
+def _send_telegram_with_id(text: str) -> int | None:
+    """텔레그램 메시지 전송 후 message_id 반환 (회신 매칭용)."""
+    try:
+        from config_local import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+        resp = requests.post(url, json={
+            "chat_id": TELEGRAM_CHAT_ID,
+            "text": text,
+            "parse_mode": "HTML",
+        }, timeout=10)
+        return resp.json().get("result", {}).get("message_id")
+    except Exception:
+        return None
+
+
+def _load_low_volume_names() -> set:
+    """data.js stock_flags에서 '5억↓' 태그 종목명 집합 반환."""
+    import re
+    if not os.path.exists(DATA_JS_PATH):
+        return set()
+    with open(DATA_JS_PATH, encoding="utf-8") as f:
+        content = f.read()
+    m = re.search(r'(?:stockFlags|stock_flags)\s*[=:]\s*(\{[^;]*?\})\s*[,;]', content, re.DOTALL)
+    if not m:
+        return set()
+    names = set()
+    for entry in re.finditer(r'"([^"]+)":\s*\[([^\]]*)\]', m.group(1)):
+        if '5억↓' in entry.group(2):
+            names.add(entry.group(1))
+    return names
+
+
+def _send_sell_alert(stk_cd: str, qty: int, name: str, reason: str) -> int | None:
+    """긴급 매도 알림 전송 후 message_id 반환."""
+    msg_id = _send_telegram_with_id(
+        f"🚨 <b>긴급 매도 알림</b>\n"
+        f"종목: <b>{name}</b> ({stk_cd})\n"
+        f"보유수량: <b>{qty:,}주</b>\n"
+        f"사유: <b>{reason}</b>\n\n"
+        f"👉 이 메시지에 <b>매도</b> 또는 <b>아니</b>로 회신하세요.\n"
+        f"(5분 내 응답 없으면 재발송)"
+    )
+    return msg_id
+
+
+def _check_holding_conditions(check_volume: bool = False):
+    """보유 종목의 4가지 긴급 매도 조건 점검.
+
+    check_volume=True 이면 5억 미만 거래대금도 체크 (08:00 1회 실행).
+    관리종목·투자경고·거래정지는 매 10분 점검.
+    """
+    try:
+        h = kiwoom_api.get_holdings()
+        stocks = h.get("acnt_evlt_remn_indv_tot", [])
+        if not stocks:
+            return
+        low_vol_names = _load_low_volume_names() if check_volume else set()
+        codes = [(s.get("stk_cd") or "").lstrip("A") for s in stocks if s.get("stk_cd")]
+        name_map = {(s.get("stk_cd") or "").lstrip("A"): s.get("stk_nm", "") for s in stocks}
+        qty_map  = {(s.get("stk_cd") or "").lstrip("A"): int(s.get("rmnd_qty") or 0) for s in stocks}
+
+        warnings = kiwoom_api.check_stock_warning(codes)
+
+        for code in codes:
+            if code in _dismissed_sell_alerts:
+                continue
+            w     = warnings.get(code, {})
+            name  = name_map.get(code, code)
+            qty   = qty_map.get(code, 0)
+            state = w.get("state", "")
+            owarn = str(w.get("orderWarning", "0"))
+            reasons = []
+
+            if "정지" in state or state == "2":
+                reasons.append("거래정지")
+            if "관리" in state and "우려" not in state:
+                reasons.append("관리종목")
+            if "우려" in state:
+                reasons.append("관리우려")
+            if owarn in ("3", "4", "5"):
+                reasons.append({"3": "단기과열", "4": "투자위험", "5": "투자경고"}.get(owarn, "투자경고"))
+            if check_volume and name in low_vol_names:
+                reasons.append("거래대금 5억 미만")
+
+            if not reasons:
+                continue
+
+            reason_str = " · ".join(reasons)
+            # 이미 대기 중인 알림 있으면 5분 경과 시 재발송
+            existing = next((v for v in _pending_sell_alerts.values() if v["stk_cd"] == code), None)
+            if existing:
+                if (datetime.now() - existing["last_sent"]).total_seconds() >= 300:
+                    existing["last_sent"] = datetime.now()
+                    _send_sell_alert(code, qty, name, reason_str)
+            else:
+                msg_id = _send_sell_alert(code, qty, name, reason_str)
+                if msg_id:
+                    _pending_sell_alerts[msg_id] = {
+                        "stk_cd":    code,
+                        "qty":       qty,
+                        "name":      name,
+                        "reason":    reason_str,
+                        "last_sent": datetime.now(),
+                    }
+    except Exception:
+        pass
+
 
 def _run_update_data():
     update_state.update(running=True, log="", done=False, success=None)
@@ -973,10 +1086,31 @@ def _telegram_polling():
             for upd in updates:
                 offset = upd["update_id"] + 1
                 msg = upd.get("message", {})
-                # 등록된 chat_id에서 온 메시지만 처리
                 if str(msg.get("chat", {}).get("id", "")) != str(TELEGRAM_CHAT_ID):
                     continue
-                text = msg.get("text", "")
+                text = msg.get("text", "").strip()
+
+                # ── 긴급 매도 알림에 대한 회신 처리 ──────────────────────────
+                reply_to_id = (msg.get("reply_to_message") or {}).get("message_id")
+                if reply_to_id and reply_to_id in _pending_sell_alerts:
+                    info = _pending_sell_alerts[reply_to_id]
+                    if "매도" in text:
+                        try:
+                            kiwoom_api.place_order(info["stk_cd"], info["qty"], "sell")
+                            _send_telegram(
+                                f"✅ <b>매도 주문 완료</b>\n"
+                                f"{info['name']} ({info['stk_cd']}) {info['qty']:,}주"
+                            )
+                        except Exception as e:
+                            _send_telegram(f"❌ 매도 주문 실패: {e}")
+                        del _pending_sell_alerts[reply_to_id]
+                    elif any(w in text for w in ("아니", "취소", "no", "NO")):
+                        _dismissed_sell_alerts.add(info["stk_cd"])
+                        del _pending_sell_alerts[reply_to_id]
+                        _send_telegram(f"✅ {info['name']} 매도 취소\n(오늘 하루 재알림 없음)")
+                    continue  # 회신 처리 완료 — 일반 명령어 파싱 스킵
+                # ─────────────────────────────────────────────────────────────
+
                 reply = _handle_telegram_command(text)
                 if reply:
                     requests.post(f"{base_url}/sendMessage", json={
@@ -1032,23 +1166,29 @@ def _build_period_asset_summary(label: str, start_dt: str, end_dt: str) -> str:
 
 
 def _daily_alert_scheduler():
-    """평일 08:00/09:00/12:00/15:30 일별 요약, 월요일 주간 요약, 매월 1일 월간 요약 전송."""
+    """평일 08:00/09:00/12:00/15:30 일별 요약, 월요일 주간 요약, 매월 1일 월간 요약 전송.
+    장중 매 10분마다 보유 종목 긴급 매도 조건 점검 (관리/경고/정지).
+    대기 중인 긴급 매도 알림은 5분 경과 시 자동 재발송.
+    """
     from datetime import timedelta
     ALERT_TIMES = [("08:00", "개장 준비"), ("09:00", "장 개장"), ("12:00", "장 중간"), ("15:30", "장 마감")]
     sent_today = set()
+    last_condition_check = datetime.min  # 마지막 조건 점검 시각
+
     while True:
         now = datetime.now()
         key = now.strftime("%Y%m%d")
+        hm  = now.strftime("%H:%M")
 
         if now.weekday() < 5:  # 평일
+            # ── 정해진 시각 요약 알림 ─────────────────────────────────────
             for t, label in ALERT_TIMES:
                 slot = f"{key}_{t}"
-                if slot not in sent_today and now.strftime("%H:%M") == t:
-                    msg = _build_daily_summary(label)
-                    _send_telegram(msg)
+                if slot not in sent_today and hm == t:
+                    _send_telegram(_build_daily_summary(label))
                     if t == "08:00":
                         _send_telegram(_check_portfolio_ranks())
-                        # 배당금 수령 여부 확인 (kt00017 dvida_amt)
+                        # 배당금 수령 여부 (kt00017)
                         try:
                             dep = kiwoom_api.get_today_deposit()
                             dvida = int(dep.get("dvida_amt") or 0)
@@ -1056,12 +1196,12 @@ def _daily_alert_scheduler():
                                 _send_telegram(f"💰 <b>배당금 수령</b>\n금액: <b>{dvida:,}원</b>")
                         except Exception:
                             pass
-                        # 월요일 08:00 → 주간 요약 (직전 월~금)
+                        # 08:00 — 거래대금 5억 포함 전체 조건 점검
+                        _check_holding_conditions(check_volume=True)
                         if now.weekday() == 0:
                             prev_mon = (now - timedelta(days=7)).strftime("%Y%m%d")
                             prev_fri = (now - timedelta(days=3)).strftime("%Y%m%d")
                             _send_telegram(_build_period_asset_summary("주간", prev_mon, prev_fri))
-                        # 매월 1일 08:00 → 월간 요약 (전월 1일~말일)
                         if now.day == 1:
                             first_this = now.replace(day=1)
                             last_prev  = first_this - timedelta(days=1)
@@ -1073,8 +1213,22 @@ def _daily_alert_scheduler():
                             ))
                     sent_today.add(slot)
 
+            # ── 장중(09:00~15:30) 매 10분 조건 점검 ─────────────────────
+            t_obj = now.time()
+            market_open  = datetime.strptime("09:00", "%H:%M").time()
+            market_close = datetime.strptime("15:30", "%H:%M").time()
+            if market_open <= t_obj <= market_close:
+                elapsed = (now - last_condition_check).total_seconds()
+                if elapsed >= 600:  # 10분
+                    _check_holding_conditions(check_volume=False)
+                    last_condition_check = now
+
+        # ── 자정: 당일 상태 초기화 ────────────────────────────────────────
         if now.hour == 0 and now.minute == 0:
             sent_today.clear()
+            _dismissed_sell_alerts.clear()
+            last_condition_check = datetime.min
+
         threading.Event().wait(30)
 
 
