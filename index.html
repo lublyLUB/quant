@@ -1242,6 +1242,26 @@
         }
         const statusEl = document.getElementById('addorder-status');
         statusEl.textContent = '추가 투자 주문을 주문 실행 메뉴로 전달합니다...';
+
+        // 서버에 포트폴리오 설정 저장 (입금 감지 시 자동 투자에 활용)
+        try {
+            const addInvestInput = document.getElementById('additional-investment-input');
+            const addInvest = addInvestInput ? (parseFloat((addInvestInput.value || '').replace(/,/g, '')) || 0) : 0;
+            const totalAvailable = (holdingsAccountInfo ? (holdingsAccountInfo.ordAlowa || holdingsAccountInfo.cash) : 0) + addInvest;
+            await fetch('http://localhost:5050/api/portfolio/settings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    stocks: rows.map(s => ({
+                        code:   s.code,
+                        name:   s.name,
+                        weight: rows.length > 0 ? Math.round(100 / rows.length) : 0,
+                    })),
+                    total_investment: totalAvailable,
+                }),
+            });
+        } catch (e) { /* 서버 미실행 시 무시 */ }
+
         // 추가 투자 주문을 pendingOrders 형태로 세팅 후 주문 실행 메뉴로 이동
         pendingAddOrders = rows.map(s => ({
             name: s.name,
