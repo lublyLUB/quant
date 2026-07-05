@@ -17,6 +17,11 @@ except ImportError:
     API_KEY = os.environ.get("DATA_GO_KR_API_KEY", "")
     DART_API_KEY = os.environ.get("DART_API_KEY", "")
 
+try:
+    import kiwoom_api
+except Exception:
+    kiwoom_api = None
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CORP_CODE_CACHE = os.path.join(BASE_DIR, "dart_corp_map.json")
 
@@ -701,6 +706,8 @@ def fetch_krx_market_data():
         # ka10099로 전 종목 플래그 한 번에 조회 (DART 종목별 호출 대체)
         print("[ka10099] 전 종목 관리종목·거래정지·투자경고 플래그 조회 중...")
         try:
+            if kiwoom_api is None:
+                raise RuntimeError("kiwoom_api 모듈 로드 실패")
             stock_flags_map = kiwoom_api.get_stock_list_flags()
             print(f"[ka10099] {len(stock_flags_map)}개 종목 플래그 조회 완료.")
         except Exception as e:
