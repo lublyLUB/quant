@@ -1143,6 +1143,14 @@ def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=
 
     def run():
         while True:
+            now = datetime.now()
+            is_weekend = now.weekday() >= 5
+            in_market = now.replace(hour=8, minute=0, second=0, microsecond=0) <= now <= now.replace(hour=16, minute=10, second=0, microsecond=0)
+            if is_weekend or not in_market:
+                wait = 600
+                _wslog.info("장외/주말 — WebSocket 연결 생략, %d초 후 재확인", wait)
+                threading.Event().wait(wait)
+                continue
             try:
                 fresh_token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
                 _wslog.info("토큰 발급 완료, WebSocket 연결 시도...")

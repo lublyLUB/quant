@@ -503,6 +503,7 @@ def fetch_dart_financials(corp_code, cache=None):
     return None
 
 def fetch_krx_market_data():
+    today_str = datetime.now().strftime("%Y%m%d")
     print("[시스템] 공공데이터포털(금융위) API 연동을 시작합니다...")
     
     url = "http://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo"
