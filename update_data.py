@@ -714,6 +714,10 @@ def fetch_krx_market_data():
             print(f"⚠️ [ka10099] 플래그 조회 실패, DART 폴백 사용: {e}")
             stock_flags_map = {}
 
+        # ka10099가 0개 반환 시(주말·장외 등) 거래정지/투자경고는 DART 폴백 없이 건너뜀
+        # — DART 거래정지 파싱은 오판정이 많아 ka10099 없이는 관리종목만 판정
+        ka10099_available = len(stock_flags_map) > 0
+
         print(f"[DART] {len(raw_stocks)}개 종목의 재무제표 조회를 시작합니다 (캐싱된 종목은 스킵)...")
         for i, s in enumerate(raw_stocks):
             corp_code = corp_map.get(s["code"])
@@ -723,15 +727,20 @@ def fetch_krx_market_data():
             # 금융회사/지주회사/관리종목/관리종목지정우려 여부만 표시해두고 제외는 하지 않음
             # (12.NCAV에서만 실제 제외 필터링, 추천 메뉴에서는 배지로 표기)
             is_fin_holding = is_financial_or_holding(corp_code, s["name"], induty_code_cache)
-            # ka10099 결과 우선 사용, 없으면 DART 폴백
             if s["code"] in stock_flags_map:
+                # ka10099 결과 우선 사용
                 f = stock_flags_map[s["code"]]
                 is_admin         = f["is_admin"]
                 is_admin_warning = f["is_admin_warning"]
                 is_halt          = f["is_halt"]
                 is_inv_warn      = f["is_inv_warn"]
+            elif ka10099_available:
+                # ka10099 조회됐으나 해당 종목 미포함 → 정상 종목으로 간주
+                is_admin, is_admin_warning, is_halt, is_inv_warn = False, False, False, False
             else:
-                is_admin, is_admin_warning, is_halt, is_inv_warn = get_admin_status(corp_code, admin_issue_cache)
+                # ka10099 미사용(주말 등) → DART로 관리종목만 판정, 거래정지/투자경고는 False
+                is_admin, is_admin_warning, _, _ = get_admin_status(corp_code, admin_issue_cache)
+                is_halt, is_inv_warn = False, False
 
             # 20일 평균 거래대금 (ka10086) — 일별 캐싱
             cached_ta = trade_amt_cache.get(s["code"])
