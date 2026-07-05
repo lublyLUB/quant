@@ -742,16 +742,26 @@ def fetch_krx_market_data():
                 is_admin, is_admin_warning, _, _ = get_admin_status(corp_code, admin_issue_cache)
                 is_halt, is_inv_warn = False, False
 
-            # 20일 평균 거래대금 (ka10086) — 일별 캐싱
+            # 20일 평균 거래대금 (ka10086) — 캐시 유효기간 7일
+            # 새벽 3시 업데이트 시 kiwoom API 사용 불가 → 최근 7일 이내 캐시 재사용
             cached_ta = trade_amt_cache.get(s["code"])
-            if cached_ta and cached_ta.get("date") == today_str:
+            cache_date = cached_ta.get("date", "") if cached_ta else ""
+            try:
+                cache_age = (datetime.strptime(today_str, "%Y%m%d") - datetime.strptime(cache_date, "%Y%m%d")).days if cache_date else 999
+            except Exception:
+                cache_age = 999
+            if cached_ta and cache_age == 0:
+                avg_trade_amt = cached_ta.get("amt", 0)
+            elif cached_ta and cache_age <= 7 and not ka10099_available:
+                # 7일 이내 캐시 있고 API 사용 불가(장외) → 기존 캐시 재사용
                 avg_trade_amt = cached_ta.get("amt", 0)
             else:
                 try:
                     avg_trade_amt = kiwoom_api.get_daily_trade_amount(s["code"], n_days=20)
+                    if avg_trade_amt > 0:
+                        trade_amt_cache[s["code"]] = {"date": today_str, "amt": avg_trade_amt}
                 except Exception:
-                    avg_trade_amt = s.get("trade_value", 0)  # 실패 시 공공데이터 단일일 값 폴백
-                trade_amt_cache[s["code"]] = {"date": today_str, "amt": avg_trade_amt}
+                    avg_trade_amt = cached_ta.get("amt", 0) if cached_ta else s.get("trade_value", 0)
             if is_fin_holding or is_admin or is_admin_warning or is_halt or is_inv_warn:
                 flagged_count += 1
 
