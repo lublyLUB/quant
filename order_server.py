@@ -1418,12 +1418,12 @@ def _daily_alert_scheduler():
             t_1500       = datetime.strptime("15:00", "%H:%M").time()
             t_1520       = datetime.strptime("15:20", "%H:%M").time()
 
-            if market_open <= t_obj <= market_close:
-                elapsed = (now - last_condition_check).total_seconds()
-                if elapsed >= 600:  # 10분마다
+            elapsed = (now - last_condition_check).total_seconds()
+            if elapsed >= 600:  # 10분마다
+                _check_new_deposit()              # 입금 감지 (장외 포함)
+                if market_open <= t_obj <= market_close:
                     _check_holding_conditions(check_volume=False)
-                    _check_new_deposit()          # 입금 감지
-                    last_condition_check = now
+                last_condition_check = now
 
             # ── 15:00 — 무응답 추가 투자 알림 자동 동시호가 확정 ─────────
             slot_1500 = f"{key}_1500_invest"

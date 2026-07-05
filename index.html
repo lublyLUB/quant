@@ -639,6 +639,14 @@
                 side: 'buy', weightDiffPct: 0,
             }));
 
+            // 최신 eligible 종목을 서버에 저장 — 텔레그램 입금 감지 시 사용
+            const eligibleForServer = rows.map(s => ({ code: s.code, name: s.name, weight: 1 }));
+            fetch('http://localhost:5050/api/portfolio/settings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ stocks: eligibleForServer, total_investment: availableCash }),
+            }).catch(() => {});
+
         } else {
             // ── 리밸런싱 계산 ──────────────────────────────────────
             const stocks = computePortfolioData();
