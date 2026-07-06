@@ -648,12 +648,12 @@
             }).catch(() => {});
 
         } else {
-            // ── 리밸런싱 계산 ──────────────────────────────────────
-            const stocks = computePortfolioData();
-            if (stocks.length === 0 || portfolioNames.length === 0) {
-                el.innerHTML = portfolioNames.length === 0
-                    ? `<span style="color:#94a3b8;">포트폴리오 메뉴에서 종목을 먼저 확정해 주세요.
-                        <button onclick="switchMenu('portfolio')" style="margin-left:8px; border:none; background:#1e3a8a; color:#fff; font-size:11px; padding:4px 10px; border-radius:6px; cursor:pointer;">⚙️ 포트폴리오로</button></span>`
+            // ── 리밸런싱 계산 — 북마크(즐겨찾기) 기준으로 목표 산출 ──────────────────────────────────────
+            const rebalTarget = bookmarks.length > 0 ? bookmarks : portfolioNames;
+            const stocks = computePortfolioData(rebalTarget);
+            if (stocks.length === 0 || rebalTarget.length === 0) {
+                el.innerHTML = rebalTarget.length === 0
+                    ? `<span style="color:#94a3b8;">즐겨찾기(추천 메뉴에서 ★)에 종목을 먼저 추가해 주세요.</span>`
                     : '<span style="color:#94a3b8;">계산 중...</span>';
                 currentInvestOrders = [];
                 renderInvestOrderTable();
@@ -691,7 +691,7 @@
                 }).join('')}
                 </tbody></table>`;
 
-            const rawOrders = computeOrderData();
+            const rawOrders = computeOrderData(rebalTarget);
             checkWeightDeviations(rawOrders);
             currentInvestOrders = rawOrders.sort((a, b) => (a.diff < 0 ? 0 : 1) - (b.diff < 0 ? 0 : 1));
         }
@@ -1315,14 +1315,15 @@
         refreshCurrentTable();
     }
 
-    function computePortfolioData() {
-        if (portfolioNames.length === 0) return [];
+    function computePortfolioData(names) {
+        if (!names) names = portfolioNames;
+        if (names.length === 0) return [];
 
         // 추천 메뉴 순위를 그대로 가져온다 (즐겨찾기 등록 순서와 무관하게 정렬하기 위함)
         const recommendList = computeRecommendData();
         const rankByName = new Map(recommendList.map(r => [r.name, r.rank]));
 
-        let stocks = portfolioNames.map(name => {
+        let stocks = names.map(name => {
             const code = findStockCode(name);
             // 가격 우선순위: 미보유 실시간(freshPriceByCode) → 보유 중 실시간(holdingsByCode) → data.js 주가
             const freshPrice = code ? freshPriceByCode[code] : null;
@@ -2052,8 +2053,8 @@
     }
 
     // 목표 비중(포트폴리오 메뉴에서 계산한 균등비중 목표수량) vs 현재 보유수량을 비교해 매수/매도 수량을 산출
-    function computeOrderData() {
-        const targets = computePortfolioData();  // [{name, price, shares, rank}, ...]
+    function computeOrderData(names) {
+        const targets = computePortfolioData(names);  // [{name, price, shares, rank}, ...]
         const rows = [];
         const seenCodes = new Set();
 
