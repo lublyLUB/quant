@@ -1509,8 +1509,8 @@ def fetch_krx_market_data():
             tags.append("거래정지")
         if s.get("is_inv_warn"):
             tags.append("투자경고")
-        if (s.get("trade_value") or 0) < 500_000_000:
-            tags.append("5억↓")
+        if (s.get("trade_value") or 0) < 20_000_000:
+            tags.append("2천만↓")
         if tags:
             stock_flags[s["name"]] = tags
 
