@@ -856,8 +856,9 @@
             label: src.label,
             map: new Map(src.getData().map(s => [s.name, s])),
         }));
-        // 보르다 카운트용 벌점: 해당 전략 리스트에 아예 없는(매칭 안 된) 종목은 "그 리스트 꼴찌보다 한 단계 아래"로 취급
-        entries.forEach(e => { e.penalty = e.map.size + 1; });
+        // 보르다 카운트용 벌점: 리스트 크기가 다르면 penalty 불균형 발생 → 전략 중 최대 리스트 크기+1로 통일
+        const uniformPenalty = Math.max(...entries.map(e => e.map.size)) + 1;
+        entries.forEach(e => { e.penalty = uniformPenalty; });
 
         const allNames = new Set();
         entries.forEach(e => e.map.forEach((_, name) => allNames.add(name)));
