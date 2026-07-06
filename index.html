@@ -851,11 +851,14 @@
         const checkedSources = availableSources.filter(src => recommendCheckedKeys.has(src.key));
         const activeSources = checkedSources.length > 0 ? checkedSources : availableSources;
 
-        const entries = activeSources.map(src => ({
-            key: src.key,
-            label: src.label,
-            map: new Map(src.getData().map(s => [s.name, s])),
-        }));
+        // ncav(12번)·fama(16번)은 토글 무관, 나머지 8개 전략은 displayCountMode 이내 순위만 인정
+        const displayN = parseInt(displayCountMode, 10);
+        const NO_DISPLAY_LIMIT = new Set(['ncav', 'strategy16']);
+        const entries = activeSources.map(src => {
+            const rawData = src.getData();
+            const filtered = NO_DISPLAY_LIMIT.has(src.key) ? rawData : rawData.filter(s => s.rank <= displayN);
+            return { key: src.key, label: src.label, map: new Map(filtered.map(s => [s.name, s])) };
+        });
         // 보르다 카운트용 벌점: 리스트 크기가 다르면 penalty 불균형 발생 → 전략 중 최대 리스트 크기+1로 통일
         const uniformPenalty = Math.max(...entries.map(e => e.map.size)) + 1;
         entries.forEach(e => { e.penalty = uniformPenalty; });
