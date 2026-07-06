@@ -153,6 +153,7 @@ update_state = {"running": False, "log": "", "done": False, "success": None}
 
 # VI 발동 종목 실시간 캐시 — 1h WebSocket으로 갱신
 _vi_active: set = set()  # 현재 VI 발동 중인 종목코드 집합
+_update_watched = None  # start_order_realtime()이 반환하는 실시간 종목 등록 함수 (0g/1h/0B)
 
 # 긴급 매도 알림 대기 목록: {message_id: {stk_cd, qty, name, reason, last_sent}}
 # 서버 재시작 후에도 pending_alerts.json에서 복원
@@ -394,7 +395,12 @@ def _run_update_data():
 @app.route("/api/holdings", methods=["GET"])
 def holdings():
     try:
-        return jsonify(kiwoom_api.get_holdings())
+        data = kiwoom_api.get_holdings()
+        codes = [(r.get("stk_cd") or "").lstrip("A")
+                 for r in data.get("acnt_evlt_remn_indv_tot", []) if r.get("stk_cd")]
+        if codes and _update_watched:
+            _update_watched(codes)
+        return jsonify(data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -830,6 +836,24 @@ def notify():
 def realtime_balance():
     """04 실시간 잔고 캐시 반환 — {종목코드: {필드코드: 값}}"""
     return jsonify(kiwoom_api.realtime_balance)
+
+
+@app.route("/api/realtime_quotes", methods=["GET"])
+def realtime_quotes():
+    """0B 실시간 체결가 캐시 반환 — {종목코드: {price, rate, time}} — REST 호출 없이 즉시 조회"""
+    return jsonify(kiwoom_api.realtime_quotes)
+
+
+@app.route("/api/realtime_status", methods=["GET"])
+def realtime_status():
+    """00/04/0B 웹소켓 이벤트 발생 시마다 증가하는 카운터 — REST 호출 없이 변경 여부만 감지"""
+    return jsonify({"seq": kiwoom_api.realtime_seq["n"]})
+
+
+@app.route("/api/realtime_fills", methods=["GET"])
+def realtime_fills():
+    """최근 체결(00) 이벤트 목록 반환 — 미체결 현황을 즉시 갱신할지 판단하는 용도"""
+    return jsonify(kiwoom_api.recent_fills)
 
 
 @app.route("/api/performance/history", methods=["GET"])
@@ -1384,6 +1408,21 @@ def _daily_alert_scheduler():
                 slot = f"{key}_{t}"
                 if slot not in sent_today and hm == t:
                     _send_telegram(_build_daily_summary(label))
+                    if t == "15:30":
+                        # 장 마감 시 미체결 주문 현황 포함 알림
+                        try:
+                            open_orders = kiwoom_api.get_open_orders()
+                            rows = open_orders.get("acnt_ord_cntr_prps_dtl") or []
+                            unfilled = [r for r in rows if int(r.get("ord_remnq") or 0) > 0]
+                            if unfilled:
+                                lines = "\n".join(
+                                    f"  {r.get('stk_nm','')} {r.get('io_tp_nm','').replace('현금','').strip()}"
+                                    f" {int(r.get('ord_remnq') or 0)}주 @ {int(r.get('ord_uv') or 0):,}원"
+                                    for r in unfilled
+                                )
+                                _send_telegram(f"⚠️ <b>미체결 잔량 ({len(unfilled)}건)</b>\n{lines}\n\n동시호가 미체결 주문은 자동 취소됩니다.")
+                        except Exception:
+                            pass
                     if t == "08:00":
                         _send_telegram(_check_portfolio_ranks())
                         # 배당금 수령 여부 (kt00017)
@@ -1518,6 +1557,17 @@ if __name__ == "__main__":
             _vi_active.discard(code)
             _send_telegram(f"✅ <b>VI 해제</b>\n종목: {stk_nm} ({code})")
 
+    def _on_price_limit(code, kind, vals):
+        """0B 전일대비기호(25) 상한가/하한가 진입·이탈 — 0B는 보유 종목에만 REG하므로 별도 필터 불필요."""
+        bal = kiwoom_api.realtime_balance.get(code, {})
+        stk_nm = bal.get("302") or code
+        if kind == "상한가":
+            _send_telegram(f"🔺 <b>상한가 진입</b>\n종목: {stk_nm} ({code})\n💰 매도 타이밍을 검토해보세요.")
+        elif kind == "하한가":
+            _send_telegram(f"🔻 <b>하한가 진입</b>\n종목: {stk_nm} ({code})")
+        else:
+            _send_telegram(f"↩️ <b>상/하한가 이탈</b>\n종목: {stk_nm} ({code})")
+
     # 장운영구분 코드: 2=정규장 개시, 3=정규장 마감, 4=시간외단일가, 9=전체종료
     _MARKET_LABELS = {"2": "🔔 정규장 개장", "3": "🔔 정규장 마감", "4": "🔔 시간외단일가 시작", "9": "🔔 전체 시장 종료"}
 
@@ -1535,6 +1585,7 @@ if __name__ == "__main__":
         on_stock_info=_on_stock_info,
         on_vi=_on_vi,
         on_market_open=_on_market_open,
+        on_price_limit=_on_price_limit,
     )
     print(f"[시스템] 주문 서버 시작 (모의투자: {kiwoom_api.KIWOOM_IS_MOCK}) - http://localhost:5050")
     app.run(host="127.0.0.1", port=5050, debug=False)

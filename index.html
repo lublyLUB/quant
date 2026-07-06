@@ -104,7 +104,7 @@
 
         /* ⭐ 북마크(즐겨찾기): 종목명 클릭으로 토글 */
         .name-clickable, .name-bookmarked { cursor: pointer; border: 1px solid transparent; border-radius: 4px; padding: 0 3px; line-height: 1.5; display: inline-block; vertical-align: middle; box-sizing: border-box; }
-        .name-bookmarked { color: #fff; background-color: #1e40af; font-weight: 800; border-color: #1e40af; }
+        .name-bookmarked { color: #1d4ed8; background: none; border-color: transparent; border-left: 3px solid #1d4ed8; font-weight: 600; padding-left: 4px; }
         .badge-cheap { color: #b91c1c; font-weight: bold; }
 
     </style>
@@ -200,18 +200,6 @@
 
         <!-- 섹션 2: 계산 테이블 -->
         <div style="border:1px solid #e2e8f0; border-radius:10px; padding:10px 14px; margin-bottom:8px;">
-            <div style="display:flex; justify-content:center; margin-bottom:10px;">
-                <div style="display:inline-flex; background:#f1f5f9; border-radius:999px; padding:3px; gap:2px;">
-                    <button id="btn-calc-addorder" onclick="switchCalcMode('addorder')"
-                        style="border:none; border-radius:999px; padding:5px 12px; font-size:11px; font-weight:600; cursor:pointer; transition:all 0.2s;">
-                        ➕ 추가 투자
-                    </button>
-                    <button id="btn-calc-rebalance" onclick="switchCalcMode('rebalance')"
-                        style="border:none; border-radius:999px; padding:5px 12px; font-size:11px; font-weight:600; cursor:pointer; transition:all 0.2s;">
-                        🔁 리밸런싱
-                    </button>
-                </div>
-            </div>
             <div id="invest-calc-result" class="summary-text"></div>
         </div>
 
@@ -504,10 +492,10 @@
     function switchCalcMode(mode) {
         calcMode = mode;
         const isAdd = mode === 'addorder';
-        document.getElementById('btn-calc-addorder').style.background = isAdd ? '#1e3a8a' : 'transparent';
-        document.getElementById('btn-calc-addorder').style.color = isAdd ? '#fff' : '#64748b';
-        document.getElementById('btn-calc-rebalance').style.background = isAdd ? 'transparent' : '#1e3a8a';
-        document.getElementById('btn-calc-rebalance').style.color = isAdd ? '#64748b' : '#fff';
+        const btnAdd = document.getElementById('btn-calc-addorder');
+        const btnReb = document.getElementById('btn-calc-rebalance');
+        if (btnAdd) { btnAdd.style.background = isAdd ? '#1e3a8a' : 'transparent'; btnAdd.style.color = isAdd ? '#fff' : '#64748b'; }
+        if (btnReb) { btnReb.style.background = isAdd ? 'transparent' : '#1e3a8a'; btnReb.style.color = isAdd ? '#64748b' : '#fff'; }
         renderInvestCalc();
     }
 
@@ -516,8 +504,23 @@
         if (!el) return;
         const chip = (label, value, color) =>
             `<span class="summary-chip"><span class="summary-chip-label">${label}</span><span class="summary-chip-value"${color ? ` style="color:${color};"` : ''}>${value}</span></span>`;
+        const buildToggle = () => `<div style="display:inline-flex; background:#f1f5f9; border-radius:999px; padding:3px; gap:2px; margin-left:auto;">
+                <button id="btn-calc-addorder" onclick="switchCalcMode('addorder')"
+                    style="border:none; border-radius:999px; padding:5px 12px; font-size:11px; font-weight:600; cursor:pointer; transition:all 0.2s;">
+                    ➕ 추가 투자
+                </button>
+                <button id="btn-calc-rebalance" onclick="switchCalcMode('rebalance')"
+                    style="border:none; border-radius:999px; padding:5px 12px; font-size:11px; font-weight:600; cursor:pointer; transition:all 0.2s;">
+                    🔁 리밸런싱
+                </button>
+            </div>`;
         if (!holdingsLoaded) {
-            el.innerHTML = '<span style="color:#94a3b8;">⏳ 보유 내역 조회 중...</span>';
+            el.innerHTML = `<div style="display:flex; align-items:center;"><span style="color:#94a3b8; flex:1;">⏳ 보유 내역 조회 중...</span>${buildToggle()}</div>`;
+            const isAdd0 = calcMode === 'addorder';
+            const b1 = document.getElementById('btn-calc-addorder');
+            const b2 = document.getElementById('btn-calc-rebalance');
+            if (b1) { b1.style.background = isAdd0 ? '#1e3a8a' : 'transparent'; b1.style.color = isAdd0 ? '#fff' : '#64748b'; }
+            if (b2) { b2.style.background = isAdd0 ? 'transparent' : '#1e3a8a'; b2.style.color = isAdd0 ? '#64748b' : '#fff'; }
             return;
         }
         if (!holdingsAccountInfo) { el.innerHTML = ''; return; }
@@ -526,12 +529,15 @@
         const dep = holdingsAccountInfo.depositInfo;
         const ae = holdingsAccountInfo.acntEvalInfo;
         const tdy = holdingsAccountInfo.todayStatusInfo;
-        let html = `<span class="summary-chips" style="margin-top:0; margin-bottom:4px;">
-            ${chip('총자산', `${formatNumber(holdingsAccountInfo.totalAsset)}원`)}
-            ${chip('수익률', `<span style="color:${prftRtColor};font-weight:700;">${prftRtVal >= 0 ? '+' : ''}${prftRtVal.toFixed(2)}%</span>`)}
-            ${dep ? chip('주문가능', `${formatNumber(dep.ordAlow)}원`) : ''}
-            ${chip('현금', `${formatNumber(holdingsAccountInfo.cash)}원`)}
-        </span>`;
+        let html = `<div style="display:flex; align-items:center; margin-top:0; margin-bottom:4px;">
+            <span class="summary-chips" style="margin:0; flex:1;">
+                ${chip('총자산', `${formatNumber(holdingsAccountInfo.totalAsset)}원`)}
+                ${chip('수익률', `<span style="color:${prftRtColor};font-weight:700;">${prftRtVal >= 0 ? '+' : ''}${prftRtVal.toFixed(2)}%</span>`)}
+                ${dep ? chip('주문가능', `${formatNumber(dep.ordAlow)}원`) : ''}
+                ${chip('현금', `${formatNumber(holdingsAccountInfo.cash)}원`)}
+            </span>
+            ${buildToggle()}
+        </div>`;
         if (ae && (ae.tdyLspft || ae.lspft)) {
             const tdyC = ae.tdyLspft >= 0 ? '#dc2626' : '#2563eb';
             const cumC = ae.lspft >= 0 ? '#dc2626' : '#2563eb';
@@ -542,6 +548,12 @@
             </span>`;
         }
         el.innerHTML = html;
+        // 토글이 동적 렌더링되므로 현재 모드 스타일 재적용
+        const isAdd = calcMode === 'addorder';
+        const btnAdd = document.getElementById('btn-calc-addorder');
+        const btnReb = document.getElementById('btn-calc-rebalance');
+        if (btnAdd) { btnAdd.style.background = isAdd ? '#1e3a8a' : 'transparent'; btnAdd.style.color = isAdd ? '#fff' : '#64748b'; }
+        if (btnReb) { btnReb.style.background = isAdd ? 'transparent' : '#1e3a8a'; btnReb.style.color = isAdd ? '#64748b' : '#fff'; }
     }
 
     function renderInvestCalc() {
@@ -623,7 +635,7 @@
                 ${rows.map(s => {
                     const weight = totalHeldValue > 0 ? (s.heldValue / totalHeldValue * 100).toFixed(1) : '0.0';
                     return `<tr style="${s.buyQty > 0 ? '' : 'opacity:0.5;'}">
-                        <td style="text-align:left;">${s.name}</td>
+                        <td style="text-align:left;">${getNameHtml(s.name)}</td>
                         <td>${formatNumber(s.price)}원</td><td>${s.heldQty}주</td>
                         <td>${formatNumber(s.heldValue)}원</td><td>${weight}%</td>
                         <td>${formatNumber(Math.round(s.shortage))}원</td>
@@ -681,7 +693,7 @@
                     else if (isNew && diff === 0) diffText = '📌 신규 매수 예정';
                     const rowBg = isNew ? 'background:#fff7ed;' : '';
                     return `<tr style="${rowBg}">
-                        <td style="text-align:left;">${s.name}${isNew ? ' <span style="font-size:9px;color:#ea580c;font-weight:700;">NEW</span>' : ''}</td>
+                        <td style="text-align:left;">${getNameHtml(s.name)}${isNew ? ' <span style="font-size:9px;color:#ea580c;font-weight:700;">NEW</span>' : ''}</td>
                         <td>${s.rank === Infinity ? '-' : s.rank}</td>
                         <td>${s.priceUnknown ? '-' : formatNumber(s.price) + '원'}</td>
                         <td>${s.priceUnknown ? '-' : s.shares + '주'}</td><td>${curQty}주</td>
@@ -714,14 +726,15 @@
         }
 
         let html = `<thead><tr>
-            <th style="width:15%;">종목명</th><th style="width:10%;">현재가</th>
+            <th style="width:13%;">종목명</th><th style="width:9%;">현재가</th>
+            <th style="width:8%;">체결강도</th>
             <th style="width:10%;">보유수량</th><th style="width:10%;">목표수량</th>
             <th style="width:12%;">목표비중차이</th><th style="width:14%;">매수/매도</th>
             <th style="width:14%;">주문</th>
         </tr></thead><tbody>`;
 
         if (rows.length === 0) {
-            html += `<tr><td colspan="7" style="padding:20px; color:#94a3b8;">계산 결과 주문할 종목이 없습니다.</td></tr>`;
+            html += `<tr><td colspan="8" style="padding:20px; color:#94a3b8;">계산 결과 주문할 종목이 없습니다.</td></tr>`;
         } else {
             rows.forEach(r => {
                 let diffLabel;
@@ -740,6 +753,7 @@
                 html += `<tr style="${rowBg}">
                     <td>${getNameHtml(r.name)}${r.isNew ? ' <span style="font-size:9px;color:#ea580c;font-weight:700;">NEW</span>' : ''}</td>
                     <td>${r.priceUnknown ? '-' : formatNumber(r.price) + '원'}</td>
+                    <td>${strengthLabel(r.code)}</td>
                     <td>${formatNumber(r.curQty)}주</td><td>${r.priceUnknown ? '-' : formatNumber(r.targetQty) + '주'}</td>
                     <td>${weightLabel}</td><td>${diffLabel}</td><td>${orderBtn}</td>
                 </tr>`;
@@ -988,6 +1002,7 @@
             renderInvestCalc();
         } else if (currentMenu === 'performance') {
             document.getElementById("strategy-title").innerText = "📊 성과추적";
+            document.getElementById("quant-table").innerHTML = '';
             renderPerformanceTable();
         } else if (currentMenu === 'fscore') {
             document.getElementById("strategy-title").innerText = "🏆 6. 신 F-스코어+저PBR";
@@ -1086,7 +1101,7 @@
                 <td style="width:14px; padding:0; text-align:center;">${GRADE_DOT[grade]}</td>
                 <td>${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
                 <td style="white-space:normal;">${sectorBadge}</td>
-                <td style="font-size:10px; line-height:1.8; white-space:normal; color:${gradeColor}; font-weight:600;">${warnItems.join('<br>')}</td>
+                <td style="font-size:10px; line-height:1.4; white-space:normal; color:${gradeColor}; font-weight:600;">${warnItems.join('<br>')}</td>
                 <td class="rank-avg">${(() => { const c = s.count || 0; const bg = c >= 5 ? '#7c3aed' : c >= 4 ? '#2563eb' : c >= 3 ? '#0891b2' : c >= 2 ? '#64748b' : '#e2e8f0'; const fg = c >= 2 ? '#fff' : '#64748b'; return `<span style="display:inline-block;min-width:10px;padding:2px 7px;border-radius:999px;background:${bg};color:${fg};font-size:11px;font-weight:700;">${c}</span>`; })()}</td>
                 ${activeSources.map(src => `<td>${s.ranks[src.key] !== undefined ? s.ranks[src.key] : ''}</td>`).join('')}
             </tr>`;
@@ -1418,7 +1433,7 @@
                 const diffText = diff > 0 ? `+${diff}주 매수` : diff < 0 ? `${diff}주 매도` : '유지';
                 const rankText = s.rank === Infinity ? '-' : s.rank;
                 return `<tr>
-                    <td style="text-align:left;">${s.name}</td>
+                    <td style="text-align:left;">${getNameHtml(s.name)}</td>
                     <td>${rankText}</td>
                     <td>${formatNumber(s.price)}원</td>
                     <td>${s.shares}주</td>
@@ -1553,7 +1568,7 @@
                     return rows.map(s => {
                         const weight = totalHeldValue > 0 ? (s.heldValue / totalHeldValue * 100).toFixed(1) : '0.0';
                         return `<tr style="${s.buyQty > 0 ? '' : 'opacity:0.5;'}">
-                    <td style="text-align:left;">${s.name}</td>
+                    <td style="text-align:left;">${getNameHtml(s.name)}</td>
                     <td>${s.heldQty}주</td>
                     <td>${formatNumber(s.price)}원</td>
                     <td>${formatNumber(s.heldValue)}원</td>
@@ -1717,15 +1732,6 @@
             html += '⭐ 선택한 종목을 가져와 주세요.';
         } else {
             const stocks = computePortfolioData();
-            const spent = stocks.reduce((sum, s) => sum + s.shares * s.price, 0);
-            const cash = Math.round(portfolioLeftoverCash || 0);
-            const investLabel = portfolioInvestment > 0
-                ? `${formatNumber(portfolioInvestment)}원`
-                : '미설정 (보유내역 조회 필요)';
-            html += groupRow('🎯', '목표 계획',
-                chip('종목수', `${portfolioNames.length}개`)
-                + chip('목표 투자금', investLabel, portfolioInvestment > 0 ? `현재자산 ${formatNumber(portfolioBaseAmount)} + 추가 ${formatNumber(additionalInvestment)}` : '')
-                + (portfolioInvestment > 0 ? chip('매수예정금액', `${formatNumber(spent)}원`) + chip('매수후 예상잔액', `${formatNumber(cash)}원`) : ''));
         }
         ['portfolio-summary'].forEach(id => {
             const el = document.getElementById(id);
@@ -1791,6 +1797,10 @@
     let fluRtByCode = {};        // 종목별 등락율 (ka10001 flu_rt)
     let orderPollTimer = null;
     let openOrdersPollTimer = null;
+    let realtimeStatusTimer = null;
+    let lastRealtimeSeq = null;  // 웹소켓 이벤트 카운터 — 값이 바뀌면 REST 재조회 트리거
+    let lastAutoHoldingsRefresh = 0;  // handleFetchHoldings 자동 트리거 최소 간격(throttle)용
+    let realtimeQuotesByCode = {};  // 0B 체결강도 등 REST엔 없는 실시간 전용 지표 캐시
     let hasOpenOrders = false;  // 미체결 주문 존재 여부 (renderOpenOrdersSection에서 갱신)
     let lastFilledCount = null;
     let notifiedDeviationCodes = new Set();
@@ -1813,16 +1823,77 @@
 
     function startOrderPolling() {
         stopOrderPolling();
+        // 안전망 — 웹소켓이 끊겨도 최악의 경우 60초 안에는 갱신되도록 유지
         orderPollTimer = setInterval(() => {
             if (currentMenu !== 'invest' || !holdingsLoaded) return;
             handleFetchHoldings(true);
             checkOrderFillStatus();
         }, ORDER_POLL_INTERVAL_MS);
-        // 미체결 현황은 10초마다 별도로 갱신 (체결 즉시 반영을 위해)
         openOrdersPollTimer = setInterval(() => {
             if (currentMenu !== 'order') return;
             renderOpenOrdersSection();
-        }, 10000);
+        }, 60000);
+        // 웹소켓 이벤트 카운터를 가볍게(3초) 폴링 — 키움 REST 호출 없이 로컬 서버 메모리만 읽으므로 저비용.
+        // 값이 바뀐 순간에만 실제 REST 재조회를 트리거해 지연을 최소화한다.
+        realtimeStatusTimer = setInterval(async () => {
+            try {
+                const resp = await fetch(`${ORDER_SERVER_URL}/api/realtime_status`);
+                const data = await resp.json();
+                if (lastRealtimeSeq !== null && data.seq !== lastRealtimeSeq) {
+                    const now = Date.now();
+                    // handleFetchHoldings 한 번에 kt00018/kt00005/kt00001/kt00009/kt00017/kt00008/kt00004
+                    // 7개 REST가 딸려 나가므로, 체결이 연달아 터져도 최소 8초 간격으로만 재조회한다.
+                    if (currentMenu === 'invest' && holdingsLoaded && now - lastAutoHoldingsRefresh > 8000) {
+                        lastAutoHoldingsRefresh = now;
+                        handleFetchHoldings(true);
+                        checkOrderFillStatus();
+                    }
+                    if (currentMenu === 'order') {
+                        renderOpenOrdersSection();
+                    }
+                }
+                lastRealtimeSeq = data.seq;
+            } catch (e) {
+                // 로컬 서버 미실행 등 - 조용히 무시
+            }
+            // 보유 종목 실시간 체결가(0B) 반영 — REST /api/quotes 호출 없이 로컬 캐시만 읽음
+            if (holdingsLoaded && (currentMenu === 'invest' || currentMenu === 'rebalance')) {
+                applyRealtimeQuotes();
+            }
+        }, 3000);
+    }
+
+    // 0B 체결강도(228) — REST 현재가 조회엔 없는 값. 100% 기준 매수/매도 체결 세기 비교.
+    function strengthLabel(code) {
+        const q = code ? realtimeQuotesByCode[code] : null;
+        if (!q || q.strength == null || q.strength === '') return '<span style="color:#cbd5e1;">-</span>';
+        const val = parseFloat(q.strength);
+        if (isNaN(val)) return '<span style="color:#cbd5e1;">-</span>';
+        const color = val >= 120 ? '#dc2626' : val <= 80 ? '#2563eb' : '#64748b';
+        return `<span style="color:${color};">${val.toFixed(1)}%</span>`;
+    }
+
+    // 0B(실시간체결가) 캐시를 holdingsByCode에 병합 — 키움 REST 호출 없이 화면 시세만 갱신
+    async function applyRealtimeQuotes() {
+        try {
+            const resp = await fetch(`${ORDER_SERVER_URL}/api/realtime_quotes`);
+            const quotes = await resp.json();
+            realtimeQuotesByCode = quotes;  // 체결강도(228) 등 REST에 없는 값은 렌더링 시 직접 조회
+            let changed = false;
+            Object.entries(quotes).forEach(([code, q]) => {
+                const held = holdingsByCode[code];
+                if (!held || !q.price) return;
+                const price = Math.abs(parseInt(q.price, 10) || 0);
+                if (price && price !== held.price) {
+                    held.price = price;
+                    if (q.rate != null) held.fluRt = parseFloat(q.rate) || held.fluRt;
+                    changed = true;
+                }
+            });
+            if (changed) renderInvestCalc();
+        } catch (e) {
+            // 로컬 서버 미실행 등 - 조용히 무시
+        }
     }
 
     function stopOrderPolling() {
@@ -1834,6 +1905,12 @@
             clearInterval(openOrdersPollTimer);
             openOrdersPollTimer = null;
         }
+        if (realtimeStatusTimer) {
+            clearInterval(realtimeStatusTimer);
+            realtimeStatusTimer = null;
+        }
+        lastRealtimeSeq = null;
+        lastAutoHoldingsRefresh = 0;
     }
 
     async function checkOrderFillStatus() {
@@ -2182,6 +2259,16 @@
         const section = document.getElementById('open-orders-section');
         const table = document.getElementById('open-orders-table');
         if (!section || !table) return;
+
+        // 15:30 이후: 동시호가 미체결은 자동 취소됨 — 섹션만 숨김
+        const now = new Date();
+        const hhmm = now.getHours() * 100 + now.getMinutes();
+        if (hhmm >= 1530) {
+            section.style.display = 'none';
+            hasOpenOrders = false;
+            return;
+        }
+
         let openOrders;
         try {
             openOrders = await fetchOpenOrders();
@@ -2203,7 +2290,7 @@
         openOrders.forEach(o => {
             const sideLabel = o.side === 'buy' ? '<span style="color:#dc2626;">매수</span>' : (o.side === 'sell' ? '<span style="color:#2563eb;">매도</span>' : '-');
             html += `<tr>
-                <td style="text-align:left;">${o.name}</td>
+                <td style="text-align:left;">${getNameHtml(o.name)}</td>
                 <td>${sideLabel}</td>
                 <td>${formatNumber(o.ordQty)}주</td>
                 <td>${formatNumber(o.cntrQty)}주</td>
@@ -2475,44 +2562,26 @@
             await new Promise(resolve => setTimeout(resolve, 1100));
         }
 
-        // ② 매도 전송 후 보유내역 재조회 → 최신 매수가능금액 확인 (매도 체결 여부와 무관하게 진행)
+        // ② 매도 전송 직후 — 매수 수량은 이미 위에서 계산되어 있고 자금 체크도 하지 않으므로
+        // 여기서 보유내역 REST 재조회(kt00018 등 7개 호출)를 기다릴 필요가 없다.
+        // 화면 표시용으로만 백그라운드에서 가볍게 갱신하고, 매수 전송은 즉시 이어간다.
         if (buyRows.length > 0) {
-            statusEl.textContent = '매도 완료 후 매수가능금액 확인 중...';
-            await handleFetchHoldings(true);
+            applyRealtimeQuotes();
         }
 
-        // ③ 주문가능현금(ord_alowa, 증거금율 반영) 범위 안에서 추천 순위 높은 종목부터 매수
-        const addInvestForOrder = (pendingAddOrders && pendingAddOrders.length > 0)
-            ? (parseFloat((document.getElementById('additional-investment-input')?.value || '').replace(/,/g, '')) || 0)
-            : 0;
-        let availableCash = (holdingsAccountInfo ? (holdingsAccountInfo.ordAlowa || holdingsAccountInfo.cash) : 0) + addInvestForOrder;
+        // ③ 매수 주문 전송 — 자금 체크 없이 무조건 전송, 부족 시 키움 서버가 거부
         for (const r of buyRows) {
-            const targetQty = Math.abs(r.diff);
-            // kt00010으로 수수료 포함 정확한 주문가능수량 조회, 실패 시 직접 계산으로 fallback
-            let affordableQty = Math.floor(availableCash / r.price);
-            try {
-                const qtyResp = await fetch(`${ORDER_SERVER_URL}/api/order_possible_qty?stk_cd=${r.code}&price=${r.price}&trde_tp=2`);
-                const qtyData = await qtyResp.json();
-                if (!qtyData.error && qtyData.max_qty > 0) affordableQty = qtyData.max_qty;
-            } catch (e) { /* fallback 사용 */ }
-            const actualQty = Math.min(targetQty, affordableQty);
-            if (actualQty <= 0) {
-                results.push({ name: r.name, ok: false, msg: `자금 부족 건너뜀 (필요 ${formatNumber(r.price)}원/주 / 가용 ${formatNumber(Math.round(availableCash))}원)` });
-                continue;
-            }
-            const cost = actualQty * r.price;
-            const partialNote = actualQty < targetQty ? ` (목표 ${targetQty}주 중 ${actualQty}주만)` : '';
-            statusEl.textContent = `매수 전송 중... (${results.length + 1}/${finalRows.length}) ${r.name}${partialNote}`;
+            const qty = Math.abs(r.diff);
+            statusEl.textContent = `매수 전송 중... (${results.length + 1}/${finalRows.length}) ${r.name}`;
             try {
                 const resp = await fetch(`${ORDER_SERVER_URL}/api/order`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ stk_cd: r.code, qty: actualQty, side: 'buy', price: r.price }),
+                    body: JSON.stringify({ stk_cd: r.code, qty, side: 'buy', price: r.price }),
                 });
                 const data = await resp.json();
                 const ok = !(data.error || (data.return_code !== undefined && data.return_code !== 0));
-                results.push({ name: r.name, ok, msg: ok ? `성공${partialNote}` : (data.error || data.return_msg) });
-                if (ok) availableCash -= cost;
+                results.push({ name: r.name, ok, msg: ok ? '성공' : (data.error || data.return_msg) });
             } catch (e) {
                 results.push({ name: r.name, ok: false, msg: e.message });
             }

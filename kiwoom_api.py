@@ -1046,12 +1046,18 @@ def cancel_order(stk_cd, orig_ord_no, cncl_qty, is_mock=KIWOOM_IS_MOCK):
 
 # ── 실시간 주문체결 WebSocket ──────────────────────────────────────────────────
 
-PROD_WS_URL = "wss://api.kiwoom.com/api/dostk/websocket"
-MOCK_WS_URL = "wss://mockapi.kiwoom.com/api/dostk/websocket"
+PROD_WS_URL = "wss://api.kiwoom.com:10000/api/dostk/websocket"
+MOCK_WS_URL = "wss://mockapi.kiwoom.com:10000/api/dostk/websocket"
 
 
 # 실시간 잔고 캐시 — 04 이벤트로 업데이트, {종목코드: {필드코드: 값}}
 realtime_balance: dict = {}
+# 실시간 체결가 캐시 — 0B 이벤트로 업데이트, {종목코드: {"price": int, "rate": float, "time": "HHMMSS"}}
+realtime_quotes: dict = {}
+# 최근 체결(00) 이벤트 기록 — 프론트가 "새 체결 있음"을 감지하는 용도
+recent_fills: list = []
+# REST 재조회 없이 "뭔가 바뀌었다"만 감지하기 위한 단조 증가 카운터
+realtime_seq: dict = {"n": 0}
 
 
 def _parse_values(raw):
@@ -1065,7 +1071,7 @@ def _parse_values(raw):
 
 
 def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=None,
-                         on_vi=None, on_market_open=None):
+                         on_vi=None, on_market_open=None, on_price_limit=None):
     """주문체결(00) + 잔고(04) + 종목정보(0g) + VI(1h) + 장시작(0s) 실시간 WebSocket 시작.
 
     on_fill(values)        : 체결 이벤트.
@@ -1073,43 +1079,46 @@ def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=
     on_stock_info(code, v) : 종목정보 (optional).
     on_vi(code, vals)      : VI 발동/해제 실시간 (optional). vals["215"]="1"발동,"2"해제.
     on_market_open(vals)   : 장운영 이벤트(장전/개장/마감 등) (optional).
+    on_price_limit(code, kind, vals) : 상한가/하한가 진입·이탈 (optional). kind="상한가"/"하한가"/None(이탈).
     """
     ws_url = MOCK_WS_URL if KIWOOM_IS_MOCK else PROD_WS_URL
 
     # 보유 종목 코드 목록 (0g/1h 등록용) — 외부에서 갱신 가능
     _ws_ref = [None]
+    ws_token = [None]  # LOGIN 메시지에 사용할 최신 토큰
+    _limit_state = {}  # {코드: "상한가"|"하한가"} — 진입/이탈을 한 번만 알리기 위한 상태 추적
 
     def _register_stock_info(ws, codes):
-        """보유 종목 코드를 0g(종목정보) + 1h(VI발동/해제)로 등록."""
+        """보유 종목 코드를 0g(종목정보) + 1h(VI발동/해제) + 0B(실시간체결가)로 등록."""
         if not codes:
             return
-        _wslog.info("REG 0g+1h 종목 %d개: %s", len(codes), codes)
+        _wslog.info("REG 0g+1h+0B 종목 %d개: %s", len(codes), codes)
         ws.send(json.dumps({
             "trnm": "REG",
             "grp_no": "2",
-            "refresh": "0",
-            "data": [{"item": code, "type": "0g"} for code in codes],
+            "refresh": "1",
+            "data": [{"item": codes, "type": ["0g"]}],
         }))
         ws.send(json.dumps({
             "trnm": "REG",
             "grp_no": "3",
-            "refresh": "0",
-            "data": [{"item": code, "type": "1h"} for code in codes],
+            "refresh": "1",
+            "data": [{"item": codes, "type": ["1h"]}],
+        }))
+        ws.send(json.dumps({
+            "trnm": "REG",
+            "grp_no": "4",
+            "refresh": "1",
+            "data": [{"item": codes, "type": ["0B"]}],
         }))
 
-    def on_open(ws):
-        _ws_ref[0] = ws
-        _wslog.info("WebSocket 연결됨 (%s)", ws_url)
+    def _after_login(ws):
         # 주문체결(00) + 잔고(04) + 장운영(0s)
         ws.send(json.dumps({
             "trnm": "REG",
             "grp_no": "1",
             "refresh": "1",
-            "data": [
-                {"item": "", "type": "00"},
-                {"item": "", "type": "04"},
-                {"item": "", "type": "0s"},
-            ],
+            "data": [{"item": [""], "type": ["00", "04", "0s"]}],
         }))
         _wslog.info("REG 완료: 00(체결) 04(잔고) 0s(장운영)")
         # 현재 보유 종목 즉시 등록
@@ -1124,6 +1133,11 @@ def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=
         except Exception as e:
             _wslog.warning("보유종목 조회 실패 (0g/1h 미등록): %s", e)
 
+    def on_open(ws):
+        _ws_ref[0] = ws
+        _wslog.info("WebSocket 연결됨 (%s) — LOGIN 전송", ws_url)
+        ws.send(json.dumps({"trnm": "LOGIN", "token": ws_token[0]}))
+
     # 보유 종목 변경 시 외부에서 호출
     def update_watched_codes(codes):
         ws = _ws_ref[0]
@@ -1136,8 +1150,16 @@ def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=
         except Exception:
             return
         trnm = msg.get("trnm")
-        # REG 응답(ACK) 로그
         if trnm == "PING":
+            ws.send(message)  # Heartbeat — 받은 그대로 echo 필수
+            return
+        if trnm == "LOGIN":
+            if msg.get("return_code") == 0:
+                _wslog.info("LOGIN 성공 — REG 전송")
+                _after_login(ws)
+            else:
+                _wslog.error("LOGIN 실패: %s", msg.get("return_msg"))
+                ws.close()
             return
         if trnm != "REAL":
             _wslog.info("수신 trnm=%s: %s", trnm, json.dumps(msg, ensure_ascii=False)[:200])
@@ -1147,14 +1169,43 @@ def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=
             vals = _parse_values(entry.get("values"))
             _wslog.info("REAL type=%s item=%s vals_keys=%s",
                         evt_type, entry.get("item", ""), list(vals.keys())[:10])
-            if evt_type == "00" and vals.get("913") == "체결":
-                on_fill(vals)
+            if evt_type == "00":
+                if vals.get("913") == "체결":
+                    recent_fills.append(vals)
+                    if len(recent_fills) > 50:
+                        del recent_fills[0]
+                    realtime_seq["n"] += 1
+                    on_fill(vals)
             elif evt_type == "04":
                 code = (vals.get("9001") or "").lstrip("A")
                 if code:
                     realtime_balance[code] = vals
+                    realtime_seq["n"] += 1
                 if on_balance:
                     on_balance(vals)
+            elif evt_type == "0B":
+                # 가격은 틱마다 들어오므로 realtime_seq는 올리지 않는다 —
+                # REST 재조회는 00(체결)/04(잔고) 등 "상태 변화"에서만 트리거되게 하고,
+                # 가격 표시는 프론트가 /api/realtime_quotes를 별도의 저비용 폴링으로 직접 반영한다.
+                code = (entry.get("item") or vals.get("9001") or "").lstrip("A")
+                if code:
+                    realtime_quotes[code] = {
+                        "price": vals.get("10"),
+                        "rate": vals.get("12"),
+                        "time": vals.get("20"),
+                        "strength": vals.get("228"),  # 체결강도(%) — REST 현재가 조회엔 없는 값
+                    }
+                    # 전일대비기호(25): 1=상한가, 5=하한가 — 진입/이탈 시 한 번만 콜백
+                    sign = str(vals.get("25") or "")
+                    kind = "상한가" if sign == "1" else ("하한가" if sign == "5" else None)
+                    prev = _limit_state.get(code)
+                    if kind != prev:
+                        if kind:
+                            _limit_state[code] = kind
+                        else:
+                            _limit_state.pop(code, None)
+                        if on_price_limit:
+                            on_price_limit(code, kind, vals)
             elif evt_type == "0g":
                 _wslog.info("0g 종목정보 code=%s vals=%s",
                             entry.get("item", ""), json.dumps(vals, ensure_ascii=False)[:300])
@@ -1191,16 +1242,19 @@ def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=
                 continue
             try:
                 fresh_token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+                ws_token[0] = fresh_token
                 _wslog.info("토큰 발급 완료, WebSocket 연결 시도...")
                 ws = websocket.WebSocketApp(
                     ws_url,
-                    header={"authorization": f"Bearer {fresh_token}"},
                     on_open=on_open,
                     on_message=on_message,
                     on_error=on_ws_error,
                     on_close=on_ws_close,
                 )
                 ws.run_forever(ping_interval=30, ping_timeout=10)
+            except websocket.WebSocketBadStatusException as e:
+                body = getattr(e, 'resp_body', None) or getattr(e, 'resp_data', None)
+                _wslog.error("WebSocket 핸드셰이크 실패 (status=%s) 응답본문: %s", getattr(e, 'status_code', '?'), body)
             except Exception as e:
                 _wslog.error("WebSocket run_forever 예외: %s", e)
             threading.Event().wait(10)
