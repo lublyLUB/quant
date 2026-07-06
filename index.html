@@ -900,7 +900,10 @@
         });
 
         results.sort((a, b) => a.bordaScore - b.bordaScore);
-        const top = results.slice(0, 50);
+        // 50위 경계 공동순위는 전부 포함 (rank ≤ N 방식과 일관성 유지)
+        const base = results.slice(0, 50);
+        const cutScore = base.length > 0 ? base[base.length - 1].bordaScore : null;
+        const top = cutScore != null ? results.filter(r => r.bordaScore <= cutScore) : base;
         // competition ranking: bordaScore 동일 시 같은 순위, 다음 순위는 건너뜀
         top.forEach((r, idx) => {
             r.rank = (idx > 0 && r.bordaScore === top[idx - 1].bordaScore) ? top[idx - 1].rank : idx + 1;
