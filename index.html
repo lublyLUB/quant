@@ -901,7 +901,11 @@
 
         results.sort((a, b) => a.bordaScore - b.bordaScore);
         const top = results.slice(0, 50);
-        top.forEach((r, idx) => r.rank = idx + 1);
+        // competition ranking: bordaScore 동일 시 같은 순위, 다음 순위는 건너뜀
+        top.forEach((r, idx) => {
+            r.rank = (idx > 0 && r.bordaScore === top[idx - 1].bordaScore) ? top[idx - 1].rank : idx + 1;
+        });
+        top.forEach(r => { r.tied = top.some(other => other !== r && other.rank === r.rank); });
         return top;
     }
 
@@ -1066,7 +1070,7 @@
             const warnCell = warnItems.join(' ');
 
             html += `<tr>
-                <td class="rank-main">${s.rank}</td>
+                <td class="rank-main">${s.tied ? '=' : ''}${s.rank}</td>
                 <td>${orientationBadge}</td>
                 <td style="width:14px; padding:0; text-align:center;">${GRADE_DOT[grade]}</td>
                 <td>${getNameHtml(s.name)}<span class="price-text">${formatNumber(s.price)}원</span></td>
