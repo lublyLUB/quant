@@ -648,12 +648,12 @@
             }).catch(() => {});
 
         } else {
-            // ── 리밸런싱 계산 — 북마크(즐겨찾기) 기준으로 목표 산출 ──────────────────────────────────────
-            const rebalTarget = bookmarks.length > 0 ? bookmarks : portfolioNames;
-            const stocks = computePortfolioData(rebalTarget);
-            if (stocks.length === 0 || rebalTarget.length === 0) {
-                el.innerHTML = rebalTarget.length === 0
-                    ? `<span style="color:#94a3b8;">즐겨찾기(추천 메뉴에서 ★)에 종목을 먼저 추가해 주세요.</span>`
+            // ── 리밸런싱 계산 ──────────────────────────────────────
+            const stocks = computePortfolioData();
+            if (stocks.length === 0 || portfolioNames.length === 0) {
+                el.innerHTML = portfolioNames.length === 0
+                    ? `<span style="color:#94a3b8;">포트폴리오 메뉴에서 종목을 먼저 확정해 주세요.
+                        <button onclick="switchMenu('portfolio')" style="margin-left:8px; border:none; background:#1e3a8a; color:#fff; font-size:11px; padding:4px 10px; border-radius:6px; cursor:pointer;">⚙️ 포트폴리오로</button></span>`
                     : '<span style="color:#94a3b8;">계산 중...</span>';
                 currentInvestOrders = [];
                 renderInvestOrderTable();
@@ -691,7 +691,7 @@
                 }).join('')}
                 </tbody></table>`;
 
-            const rawOrders = computeOrderData(rebalTarget);
+            const rawOrders = computeOrderData();
             checkWeightDeviations(rawOrders);
             currentInvestOrders = rawOrders.sort((a, b) => (a.diff < 0 ? 0 : 1) - (b.diff < 0 ? 0 : 1));
         }
