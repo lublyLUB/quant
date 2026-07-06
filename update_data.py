@@ -718,6 +718,20 @@ def fetch_krx_market_data():
         # — DART 거래정지 파싱은 오판정이 많아 ka10099 없이는 관리종목만 판정
         ka10099_available = len(stock_flags_map) > 0
 
+        # ka10032 bulk 거래대금 조회 (per-stock ka10086 루프 대체)
+        print("[ka10032] 전 종목 거래대금 일괄 조회 중...")
+        try:
+            if kiwoom_api is None:
+                raise RuntimeError("kiwoom_api 모듈 로드 실패")
+            bulk_trade_map = kiwoom_api.get_bulk_trade_amounts()
+            print(f"[ka10032] {len(bulk_trade_map)}개 종목 거래대금 조회 완료.")
+            # 캐시 갱신: 오늘 날짜로 일괄 업데이트
+            for code, amt in bulk_trade_map.items():
+                trade_amt_cache[code] = {"date": today_str, "amt": amt}
+        except Exception as e:
+            print(f"⚠️ [ka10032] 거래대금 조회 실패, 기존 캐시 사용: {e}")
+            bulk_trade_map = {}
+
         print(f"[DART] {len(raw_stocks)}개 종목의 재무제표 조회를 시작합니다 (캐싱된 종목은 스킵)...")
         for i, s in enumerate(raw_stocks):
             corp_code = corp_map.get(s["code"])
@@ -742,26 +756,9 @@ def fetch_krx_market_data():
                 is_admin, is_admin_warning, _, _ = get_admin_status(corp_code, admin_issue_cache)
                 is_halt, is_inv_warn = False, False
 
-            # 20일 평균 거래대금 (ka10086) — 캐시 유효기간 7일
-            # 새벽 3시 업데이트 시 kiwoom API 사용 불가 → 최근 7일 이내 캐시 재사용
+            # 거래대금: ka10032 bulk 조회 결과 우선, 없으면 캐시, 없으면 기존값
             cached_ta = trade_amt_cache.get(s["code"])
-            cache_date = cached_ta.get("date", "") if cached_ta else ""
-            try:
-                cache_age = (datetime.strptime(today_str, "%Y%m%d") - datetime.strptime(cache_date, "%Y%m%d")).days if cache_date else 999
-            except Exception:
-                cache_age = 999
-            if cached_ta and cache_age == 0:
-                avg_trade_amt = cached_ta.get("amt", 0)
-            elif cached_ta and cache_age <= 7 and not ka10099_available:
-                # 7일 이내 캐시 있고 API 사용 불가(장외) → 기존 캐시 재사용
-                avg_trade_amt = cached_ta.get("amt", 0)
-            else:
-                try:
-                    avg_trade_amt = kiwoom_api.get_daily_trade_amount(s["code"], n_days=20)
-                    if avg_trade_amt > 0:
-                        trade_amt_cache[s["code"]] = {"date": today_str, "amt": avg_trade_amt}
-                except Exception:
-                    avg_trade_amt = cached_ta.get("amt", 0) if cached_ta else s.get("trade_value", 0)
+            avg_trade_amt = cached_ta.get("amt", 0) if cached_ta else s.get("trade_value", 0)
             if is_fin_holding or is_admin or is_admin_warning or is_halt or is_inv_warn:
                 flagged_count += 1
 

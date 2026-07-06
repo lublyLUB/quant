@@ -159,7 +159,7 @@ def get_stock_list_flags():
     반환: {종목코드: {'is_admin': bool, 'is_admin_warning': bool, 'is_halt': bool, 'is_inv_warn': bool}}
     """
     token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
-    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/mrkcond"
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/stkinfo"
     result = {}
 
     for mrkt_tp in ("0", "10"):  # 0: KOSPI, 10: KOSDAQ
@@ -751,7 +751,7 @@ def check_stock_warning(stk_cds):
 def get_daily_trade_amount(stk_cd, n_days=20):
     """ka10086 일별주가로 최근 n_days일 평균 거래대금(원) 반환."""
     token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
-    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/stkpc"
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/mrkcond"
     headers = {
         "Content-Type": "application/json;charset=UTF-8",
         "api-id": "ka10086",
@@ -759,7 +759,8 @@ def get_daily_trade_amount(stk_cd, n_days=20):
         "next-key": "",
         "authorization": f"Bearer {token}",
     }
-    resp = requests.post(url, headers=headers, json={"stk_cd": stk_cd}, timeout=15)
+    qry_dt = datetime.now().strftime("%Y%m%d")
+    resp = requests.post(url, headers=headers, json={"stk_cd": stk_cd, "qry_dt": qry_dt, "indc_tp": "1"}, timeout=15)
     resp.raise_for_status()
     data = resp.json()
     rows = (data.get("daly_stkpc") or [])[:n_days]
@@ -767,6 +768,43 @@ def get_daily_trade_amount(stk_cd, n_days=20):
         return 0
     total = sum(int(r.get("amt_mn") or 0) * 1_000_000 for r in rows)
     return total // len(rows)
+
+
+def get_bulk_trade_amounts():
+    """ka10032 거래대금 반기순위조회로 KOSPI+KOSDAQ 전 종목의 일별 거래대금(원) 반환.
+
+    Returns: dict {stk_cd: trde_prica_in_won}  (당일 거래대금, 백만원→원 변환)
+    """
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/rkinfo"
+    result = {}
+    for mrkt_tp in ("001", "101"):  # 코스피, 코스닥
+        cont_yn, next_key = "N", ""
+        while True:
+            headers = {
+                "Content-Type": "application/json;charset=UTF-8",
+                "api-id": "ka10032",
+                "cont-yn": cont_yn,
+                "next-key": next_key,
+                "authorization": f"Bearer {token}",
+            }
+            resp = requests.post(
+                url, headers=headers,
+                json={"mrkt_tp": mrkt_tp, "mang_stk_incls": "1", "stex_tp": "1"},
+                timeout=15,
+            )
+            resp.raise_for_status()
+            data = resp.json()
+            rows = data.get("trde_prica_upper") or []
+            for r in rows:
+                amt = int(r.get("trde_prica") or 0) * 1_000_000
+                if amt > 0:
+                    result[r["stk_cd"]] = amt
+            cont_yn = resp.headers.get("cont-yn", "N")
+            next_key = resp.headers.get("next-key", "")
+            if cont_yn != "Y":
+                break
+    return result
 
 
 def fetch_stock_quote(access_token, stk_cd, is_mock=True):
