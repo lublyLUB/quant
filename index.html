@@ -671,19 +671,22 @@
                     <th>목표수량</th><th>현재수량</th><th>매도/매수</th><th>목표금액</th>
                 </tr></thead><tbody>
                 ${stocks.map(s => {
-                    const code = findStockCode(s.name);
-                    const held = code ? holdingsByCode[code] : null;
+                    const held = s.code ? holdingsByCode[s.code] : null;
                     const curQty = held ? held.qty : 0;
+                    const isNew = curQty === 0 && !held;
                     const diff = s.shares - curQty;
                     const diffColor = diff > 0 ? '#dc2626' : diff < 0 ? '#2563eb' : '#64748b';
-                    const diffText = diff > 0 ? `+${diff}주 매수` : diff < 0 ? `${diff}주 매도` : '유지';
-                    return `<tr>
-                        <td style="text-align:left;">${s.name}</td>
+                    let diffText = diff > 0 ? `+${diff}주 매수` : diff < 0 ? `${diff}주 매도` : '유지';
+                    if (s.priceUnknown) diffText = '⚠️ 시세 조회 필요';
+                    else if (isNew && diff === 0) diffText = '📌 신규 매수 예정';
+                    const rowBg = isNew ? 'background:#fff7ed;' : '';
+                    return `<tr style="${rowBg}">
+                        <td style="text-align:left;">${s.name}${isNew ? ' <span style="font-size:9px;color:#ea580c;font-weight:700;">NEW</span>' : ''}</td>
                         <td>${s.rank === Infinity ? '-' : s.rank}</td>
-                        <td>${formatNumber(s.price)}원</td>
-                        <td>${s.shares}주</td><td>${curQty}주</td>
-                        <td style="font-weight:600;color:${diffColor};">${diffText}</td>
-                        <td>${formatNumber(s.shares * s.price)}원</td>
+                        <td>${s.priceUnknown ? '-' : formatNumber(s.price) + '원'}</td>
+                        <td>${s.priceUnknown ? '-' : s.shares + '주'}</td><td>${curQty}주</td>
+                        <td style="font-weight:600;color:${s.priceUnknown ? '#94a3b8' : diffColor};">${diffText}</td>
+                        <td>${s.priceUnknown ? '-' : formatNumber(s.shares * s.price) + '원'}</td>
                     </tr>`;
                 }).join('')}
                 </tbody></table>`;
@@ -721,18 +724,23 @@
             html += `<tr><td colspan="7" style="padding:20px; color:#94a3b8;">계산 결과 주문할 종목이 없습니다.</td></tr>`;
         } else {
             rows.forEach(r => {
-                const diffLabel = r.diff > 0
-                    ? `<span style="color:#dc2626;">매수 ${r.diff}주</span>`
-                    : r.diff < 0 ? `<span style="color:#2563eb;">매도 ${Math.abs(r.diff)}주</span>` : '-';
-                const weightLabel = Math.abs(r.weightDiffPct) >= WEIGHT_DEVIATION_ALERT_PCT
+                let diffLabel;
+                if (r.priceUnknown) diffLabel = `<span style="color:#94a3b8;">⚠️ 시세 미확인</span>`;
+                else if (r.diff > 0) diffLabel = `<span style="color:#dc2626;">매수 ${r.diff}주</span>`;
+                else if (r.diff < 0) diffLabel = `<span style="color:#2563eb;">매도 ${Math.abs(r.diff)}주</span>`;
+                else if (r.isNew) diffLabel = `<span style="color:#ea580c;">📌 신규 매수</span>`;
+                else diffLabel = '-';
+                const weightLabel = r.priceUnknown ? '-' : (Math.abs(r.weightDiffPct) >= WEIGHT_DEVIATION_ALERT_PCT
                     ? `<span style="color:#dc2626;font-weight:bold;">${r.weightDiffPct>0?'+':''}${r.weightDiffPct.toFixed(1)}%</span>`
-                    : `${r.weightDiffPct>0?'+':''}${r.weightDiffPct.toFixed(1)}%`;
-                const orderBtn = r.diff !== 0
+                    : `${r.weightDiffPct>0?'+':''}${r.weightDiffPct.toFixed(1)}%`);
+                const orderBtn = (r.diff !== 0 && !r.priceUnknown)
                     ? `<button class="mode-btn action-btn ${r.side==='buy'?'action-btn-red':'action-btn-skyblue'}" style="padding:4px 8px;font-size:10px;" onclick="handleSendOrder('${r.code}')">${r.side==='buy'?'매수':'매도'} 전송</button>`
                     : `<span style="display:inline-block;padding:4px 8px;font-size:10px;">-</span>`;
-                html += `<tr>
-                    <td>${getNameHtml(r.name)}</td><td>${formatNumber(r.price)}원</td>
-                    <td>${formatNumber(r.curQty)}주</td><td>${formatNumber(r.targetQty)}주</td>
+                const rowBg = r.isNew ? 'background:#fff7ed;' : '';
+                html += `<tr style="${rowBg}">
+                    <td>${getNameHtml(r.name)}${r.isNew ? ' <span style="font-size:9px;color:#ea580c;font-weight:700;">NEW</span>' : ''}</td>
+                    <td>${r.priceUnknown ? '-' : formatNumber(r.price) + '원'}</td>
+                    <td>${formatNumber(r.curQty)}주</td><td>${r.priceUnknown ? '-' : formatNumber(r.targetQty) + '주'}</td>
                     <td>${weightLabel}</td><td>${diffLabel}</td><td>${orderBtn}</td>
                 </tr>`;
             });
@@ -1319,41 +1327,46 @@
             // 가격 우선순위: 미보유 실시간(freshPriceByCode) → 보유 중 실시간(holdingsByCode) → data.js 주가
             const freshPrice = code ? freshPriceByCode[code] : null;
             const heldPrice = code && holdingsByCode[code] ? holdingsByCode[code].price : null;
+            const price = freshPrice != null ? freshPrice : (heldPrice != null ? heldPrice : findStockPrice(name));
             return {
-                name,
+                name, code,
                 rank: rankByName.has(name) ? rankByName.get(name) : Infinity,
-                price: freshPrice != null ? freshPrice : (heldPrice != null ? heldPrice : findStockPrice(name)),
+                price,
+                priceUnknown: price == null,
             };
-        }).filter(s => s.price != null);
+        // price 없어도 제외하지 않음 — 신규 매수 종목이 전략 top50에서 이탈해도 테이블에 표시
+        });
 
         stocks.sort((a, b) => a.rank - b.rank);
 
-        const count = stocks.length;
+        // priceUnknown 종목은 shares 계산 제외 (나머지로 균등 배분)
+        const knownStocks = stocks.filter(s => !s.priceUnknown);
+        const count = knownStocks.length;
         // portfolioInvestment가 미설정(0)인 경우, holdingsAccountInfo에서 총자산을 직접 사용
         const effectiveInvestment = portfolioInvestment > 0 ? portfolioInvestment
             : (holdingsAccountInfo ? holdingsAccountInfo.totalAsset + (additionalInvestment || 0) : 0);
+        stocks.filter(s => s.priceUnknown).forEach(s => { s.shares = 0; });
         if (count === 0 || effectiveInvestment <= 0) {
-            stocks.forEach(s => { s.shares = 0; });
+            knownStocks.forEach(s => { s.shares = 0; });
             return stocks;
         }
 
         const targetPerStock = effectiveInvestment / count;
-        stocks.forEach(s => { s.shares = Math.floor(targetPerStock / s.price); });
+        knownStocks.forEach(s => { s.shares = Math.floor(targetPerStock / s.price); });
 
-        const spent = stocks.reduce((sum, s) => sum + s.shares * s.price, 0);
+        const spent = knownStocks.reduce((sum, s) => sum + s.shares * s.price, 0);
         let leftover = effectiveInvestment - spent;
 
-        if (portfolioLeftoverOption === 'top1' && !hasOpenOrders && stocks.length > 0 && leftover > 0) {
+        if (portfolioLeftoverOption === 'top1' && !hasOpenOrders && knownStocks.length > 0 && leftover > 0) {
             // 미체결 주문이 없을 때만 활성화 — 미체결 상태에선 자금/수량 계산이 꼬일 수 있어 현금 보유로 대체.
             // 잔여금을 추천 순위 순으로 1주씩 차례로 배분 (과다보유 종목 제외, 최대 1주 차이 이내).
             let distributed = true;
             while (leftover > 0 && distributed) {
                 distributed = false;
-                for (const s of stocks) {
+                for (const s of knownStocks) {
                     if (leftover <= 0) break;
                     if (s.price > leftover) continue;
-                    const code = findStockCode(s.name);
-                    const curQty = code && holdingsByCode[code] ? holdingsByCode[code].qty : 0;
+                    const curQty = s.code && holdingsByCode[s.code] ? holdingsByCode[s.code].qty : 0;
                     if (curQty >= s.shares) continue;
                     s.shares += 1;
                     leftover -= s.price;
@@ -2045,9 +2058,14 @@
         const seenCodes = new Set();
 
         targets.forEach(t => {
-            const code = findStockCode(t.name);
-            if (!code) return;
-            seenCodes.add(code);
+            const code = t.code || findStockCode(t.name);
+            if (!code && !t.priceUnknown) return; // code 없고 가격도 없으면 skip
+            if (code) seenCodes.add(code);
+            if (t.priceUnknown) {
+                // 시세 미확인 신규 종목 — 주문 테이블에 표시만, 실제 주문 불가
+                rows.push({ name: t.name, code: code || '', price: 0, targetQty: 0, curQty: 0, diff: 0, weightDiffPct: 0, side: '', isNew: true, priceUnknown: true });
+                return;
+            }
             const held = holdingsByCode[code];
             const curQty = held ? held.qty : 0;
             // 매도 시 실제 가능 수량은 trdeAbleQty (D+2 미결제분 제외)
@@ -2060,7 +2078,7 @@
             const weightDiffPct = targetValue > 0 ? ((targetValue - curValue) / targetValue) * 100 : (curValue > 0 ? -100 : 0);
             rows.push({
                 name: t.name, code, price: t.price,
-                targetQty: t.shares, curQty, diff, weightDiffPct,
+                targetQty: t.shares, curQty, diff, weightDiffPct, isNew: curQty === 0 && !held,
                 side: diff > 0 ? 'buy' : (diff < 0 ? 'sell' : ''),
             });
         });
