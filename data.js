@@ -3,7 +3,7 @@ const KOSPI_QUANT_PACKAGE = {
         "krx_basis_date": "20260706",
         "dart_basis": "2026년 1분기보고서",
         "status": "NORMAL",
-        "checked_at": "16:02:45"
+        "checked_at": "03:28:38"
     },
     "super_value": [
         {
@@ -21090,6 +21090,9 @@ const KOSPI_QUANT_PACKAGE = {
         "세니젠": [
             "2천만↓"
         ],
+        "씨이랩": [
+            "거래정지"
+        ],
         "코리아에셋투자증권": [
             "금융/지주"
         ],
@@ -21209,6 +21212,9 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "유에스티": [
             "2천만↓"
+        ],
+        "데이타솔루션": [
+            "거래정지"
         ],
         "시스웍": [
             "2천만↓"
@@ -21340,9 +21346,6 @@ const KOSPI_QUANT_PACKAGE = {
             "2천만↓"
         ],
         "시큐레터": [
-            "2천만↓"
-        ],
-        "산돌": [
             "2천만↓"
         ],
         "HB인베스트먼트": [
@@ -29953,7 +29956,7 @@ const KOSPI_QUANT_PACKAGE = {
         "CS": {
             "pbr": 0.93,
             "gpa": 6.3,
-            "f_score": 1,
+            "f_score": 0,
             "asset_growth_yoy": -1.3
         },
         "웰크론": {
@@ -32887,7 +32890,7 @@ const KOSPI_QUANT_PACKAGE = {
         "윈하이텍": {
             "pbr": 0.28,
             "gpa": -0.4,
-            "f_score": 1,
+            "f_score": 0,
             "asset_growth_yoy": -5.3
         },
         "오늘이엔엠": {
@@ -34933,7 +34936,7 @@ const KOSPI_QUANT_PACKAGE = {
         "라닉스": {
             "pbr": 1.07,
             "gpa": 2.1,
-            "f_score": 0,
+            "f_score": 1,
             "asset_growth_yoy": -0.1
         },
         "TS트릴리온": {
