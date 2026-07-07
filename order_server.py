@@ -9,6 +9,7 @@
 
 import json
 import os
+import re
 import subprocess
 import sys
 import threading
@@ -104,6 +105,60 @@ def _load_performance():
         with open(PERFORMANCE_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
     return {"baselines": []}
+
+
+WEIGHT_DEVIATION_ALERT_PCT = 10  # 목표 대비 실제 비중 차이가 이 %p를 넘으면 알림
+_weight_deviation_alerted: set = set()  # 이미 알림 보낸 종목 — 다시 좁혀지기 전엔 재알림 안 함
+
+
+def _check_weight_deviation():
+    """포트폴리오 목표비중(portfolio_settings.json) 대비 실제 보유비중이 크게 벌어지면 텔레그램 알림.
+
+    브라우저를 꺼두면 못 보는 웹 알림(notify())과 별개로, 서버에서도 동일한 편차를 감지해
+    텔레그램으로 보낸다. 다시 임계값 안으로 좁혀지면 알림 상태를 리셋해 재이탈 시 다시 알린다.
+    """
+    settings = _load_portfolio_settings()
+    stocks = settings.get("stocks") or []
+    if not stocks:
+        return
+    total_weight = sum(float(s.get("weight") or 0) for s in stocks)
+    if total_weight <= 0:
+        return
+    try:
+        holdings = kiwoom_api.get_holdings()
+    except Exception:
+        return
+    value_by_code = {}
+    for r in holdings.get("acnt_evlt_remn_indv_tot", []):
+        code = (r.get("stk_cd") or "").lstrip("A")
+        if not code:
+            continue
+        qty   = int(r.get("rmnd_qty") or 0)
+        price = int(r.get("cur_prc") or r.get("cur_pric") or 0)
+        value_by_code[code] = qty * price
+    total_value = sum(value_by_code.values())
+    if total_value <= 0:
+        return
+
+    for s in stocks:
+        code = s.get("code")
+        if not code:
+            continue
+        target_pct = float(s.get("weight") or 0) / total_weight * 100
+        cur_pct    = value_by_code.get(code, 0) / total_value * 100
+        diff       = cur_pct - target_pct
+        exceeded   = abs(diff) >= WEIGHT_DEVIATION_ALERT_PCT
+        if exceeded and code not in _weight_deviation_alerted:
+            _weight_deviation_alerted.add(code)
+            name = s.get("name", code)
+            _send_telegram(
+                f"⚖️ <b>목표비중 이탈</b>\n"
+                f"종목: {name} ({code})\n"
+                f"목표비중 {target_pct:.1f}% / 현재비중 {cur_pct:.1f}%"
+                f" ({'+' if diff > 0 else ''}{diff:.1f}%p)"
+            )
+        elif not exceeded and code in _weight_deviation_alerted:
+            _weight_deviation_alerted.discard(code)
 
 
 def _load_portfolio_settings() -> dict:
@@ -272,7 +327,12 @@ def _execute_invest_plan(plan: list, mode: str):
 
 
 def _check_new_deposit():
-    """kt00017 ina_amt를 이전 값과 비교해 새 입금이 있으면 추가 투자 알림 발송."""
+    """kt00017 ina_amt를 이전 값과 비교해 새 입금이 있으면 추가 투자 알림 발송.
+
+    last_ina_amt는 알림 발송(또는 "포트폴리오 없음" 안내)까지 성공적으로 끝난 뒤에만
+    기록한다. 중간에 예외가 나서 여기서 기록해버리면 사용자는 알림을 영영 못 받는데
+    다음 체크부터는 "이미 처리된 입금"으로 취급돼 재시도조차 안 되기 때문이다.
+    """
     history = _load_performance()
     prev_ina = int(history.get("last_ina_amt") or 0)
     try:
@@ -282,31 +342,34 @@ def _check_new_deposit():
         return
     if cur_ina <= prev_ina:
         return
-    # 새 입금 감지
+
+    try:
+        # 전체 주문가능금액으로 투자 계획 수립
+        try:
+            dep_detail    = kiwoom_api.get_deposit_detail()
+            available_cash = int(dep_detail.get("ord_alow_amt") or 0)
+        except Exception:
+            available_cash = cur_ina
+
+        plan = _calc_invest_plan(available_cash)
+        if not plan:
+            _send_telegram("💰 입금 감지됐으나 포트폴리오 설정이 없습니다.\n추가 투자 메뉴에서 종목을 설정해주세요.")
+        else:
+            msg_id = _send_invest_alert(plan, available_cash)
+            if msg_id:
+                _pending_invest_orders[msg_id] = {
+                    "plan":         plan,
+                    "available_cash": available_cash,
+                    "mode":         None,          # 응답 전
+                    "last_sent":    datetime.now(),
+                    "confirmed":    False,
+                }
+    except Exception:
+        return  # 알림 발송 실패 — last_ina_amt를 기록하지 않아 다음 체크에서 재시도됨
+
+    # 여기까지 왔다면 알림(또는 안내) 발송이 끝난 것이므로 이제 기록한다
     history["last_ina_amt"] = cur_ina
     _save_performance(history)
-
-    # 전체 주문가능금액으로 투자 계획 수립
-    try:
-        dep_detail    = kiwoom_api.get_deposit_detail()
-        available_cash = int(dep_detail.get("ord_alow_amt") or 0)
-    except Exception:
-        available_cash = cur_ina
-
-    plan = _calc_invest_plan(available_cash)
-    if not plan:
-        _send_telegram("💰 입금 감지됐으나 포트폴리오 설정이 없습니다.\n추가 투자 메뉴에서 종목을 설정해주세요.")
-        return
-
-    msg_id = _send_invest_alert(plan, available_cash)
-    if msg_id:
-        _pending_invest_orders[msg_id] = {
-            "plan":         plan,
-            "available_cash": available_cash,
-            "mode":         None,          # 응답 전
-            "last_sent":    datetime.now(),
-            "confirmed":    False,
-        }
 
 
 def _check_holding_conditions(check_volume: bool = False):
@@ -630,15 +693,37 @@ def today_journal():
         return jsonify({"error": str(e)}), 500
 
 
+def _positive_int(value):
+    """양의 정수만 통과. 음수/0/NaN/문자열 쓰레기값 등은 None을 반환해 호출측에서 거부하게 한다."""
+    try:
+        n = int(value)
+    except (TypeError, ValueError):
+        return None
+    return n if n > 0 else None
+
+
+def _positive_number(value):
+    """양수만 통과 (가격용). None/0/음수/변환불가는 None."""
+    try:
+        n = float(value)
+    except (TypeError, ValueError):
+        return None
+    return n if n > 0 else None
+
+
 @app.route("/api/order", methods=["POST"])
 def order():
     data = request.get_json(force=True) or {}
     stk_cd = data.get("stk_cd")
-    qty = data.get("qty")
     side = data.get("side")
-    price = data.get("price")
-    if not stk_cd or not qty or side not in ("buy", "sell"):
-        return jsonify({"error": "stk_cd, qty, side(buy/sell)는 필수입니다."}), 400
+    qty = _positive_int(data.get("qty"))
+    # 가격은 시장가/최유리지정가 주문 시 생략 가능 — 값이 주어졌을 때만 양수인지 검증
+    raw_price = data.get("price")
+    price = _positive_number(raw_price) if raw_price not in (None, "") else None
+    if not stk_cd or qty is None or side not in ("buy", "sell"):
+        return jsonify({"error": "stk_cd, qty(양의 정수), side(buy/sell)는 필수입니다."}), 400
+    if raw_price not in (None, "") and price is None:
+        return jsonify({"error": "price는 양수여야 합니다."}), 400
     # VI 발동 종목 매수 차단
     if side == "buy" and stk_cd in _vi_active:
         return jsonify({"error": f"VI 발동 중인 종목({stk_cd})은 매수할 수 없습니다. VI 해제 후 재시도하세요."}), 400
@@ -654,10 +739,10 @@ def modify_order():
     data = request.get_json(force=True) or {}
     stk_cd = data.get("stk_cd")
     orig_ord_no = data.get("orig_ord_no")
-    mdfy_qty = data.get("mdfy_qty")
-    mdfy_uv = data.get("mdfy_uv")
-    if not stk_cd or not orig_ord_no or not mdfy_qty or not mdfy_uv:
-        return jsonify({"error": "stk_cd, orig_ord_no, mdfy_qty, mdfy_uv는 필수입니다."}), 400
+    mdfy_qty = _positive_int(data.get("mdfy_qty"))
+    mdfy_uv = _positive_number(data.get("mdfy_uv"))
+    if not stk_cd or not orig_ord_no or mdfy_qty is None or mdfy_uv is None:
+        return jsonify({"error": "stk_cd, orig_ord_no, mdfy_qty(양의 정수), mdfy_uv(양수)는 필수입니다."}), 400
     try:
         result = kiwoom_api.modify_order(stk_cd, orig_ord_no, mdfy_qty, mdfy_uv)
         return jsonify(result)
@@ -670,9 +755,9 @@ def cancel_order():
     data = request.get_json(force=True) or {}
     stk_cd = data.get("stk_cd")
     orig_ord_no = data.get("orig_ord_no")
-    cncl_qty = data.get("cncl_qty")
-    if not stk_cd or not orig_ord_no or not cncl_qty:
-        return jsonify({"error": "stk_cd, orig_ord_no, cncl_qty는 필수입니다."}), 400
+    cncl_qty = _positive_int(data.get("cncl_qty"))
+    if not stk_cd or not orig_ord_no or cncl_qty is None:
+        return jsonify({"error": "stk_cd, orig_ord_no, cncl_qty(양의 정수)는 필수입니다."}), 400
     try:
         result = kiwoom_api.cancel_order(stk_cd, orig_ord_no, cncl_qty)
         return jsonify(result)
@@ -778,6 +863,13 @@ def performance_snapshot():
                 for s in baseline["stocks"]
             )
 
+        # total_value(ka01690 tot_evlt_amt+dbst_bal)는 수수료/미수정리 미반영 단순합이라
+        # 다른 성과추적 화면(추정예탁자산 기준)과 어긋난다 — 같은 기준으로 통일한다.
+        try:
+            total_value = int(kiwoom_api.get_holdings().get("prsm_dpst_aset_amt") or 0) or total_value
+        except Exception:
+            pass
+
         stock_values = []
         for s in baseline["stocks"]:
             price = price_map.get(s["code"])
@@ -807,10 +899,12 @@ def performance_snapshot():
         stock_lines = "\n".join(
             f"  • {s['name']}: {s['price']:,}원" for s in stock_values if s.get("price")
         )
+        kospi_str  = f"{bench_prices['kospi']:,}원" if bench_prices.get("kospi") else "-"
+        kosdaq_str = f"{bench_prices['kosdaq']:,}원" if bench_prices.get("kosdaq") else "-"
         _send_telegram(
             f"📊 <b>성과 스냅샷</b> ({snapshot['datetime']})\n"
             f"총평가금액: <b>{total_value:,}원</b>  ({ret_pct:+.2f}%)\n"
-            f"KOSPI ETF: {bench_prices.get('kospi', '-'):,}원 / KOSDAQ ETF: {bench_prices.get('kosdaq', '-'):,}원\n\n"
+            f"KOSPI ETF: {kospi_str} / KOSDAQ ETF: {kosdaq_str}\n\n"
             f"{stock_lines}"
         )
         return jsonify(snapshot)
@@ -875,26 +969,36 @@ def performance_summary():
         net_in = 0
         evltv_prft = 0
         prft_rt = 0.0
+        tax_cmsn = 0
         if base_dt:
             perf = kiwoom_api.get_period_eval(fr_dt=base_dt, to_dt=today_str)
-            total_asset  = int(perf.get("tot_amt_to") or 0)
-            base_asset   = int(perf.get("tot_amt_fr") or 0)   # 기준일 순자산
+            # kt00016의 tot_amt_to는 예수금+유가증권평가금액 단순합이라 수수료/미수정리 등이
+            # 반영 안 된 총계다. 실제 순자산인 추정예탁자산(kt00018)을 총평가금액으로 쓴다.
+            try:
+                total_asset = int(kiwoom_api.get_holdings().get("prsm_dpst_aset_amt") or 0)
+            except Exception:
+                total_asset = int(perf.get("tot_amt_to") or 0)
+            base_asset   = int(perf.get("tot_amt_fr") or 0)   # 기준일 순자산 (수익금액 계산용, 화면엔 미표시)
             invt_bsamt   = int(perf.get("invt_bsamt") or 0)   # 투자원금평잔
             tern_rt      = float(perf.get("tern_rt") or 0)    # 회전율
-            evltv_prft   = int(perf.get("evltv_prft") or 0)
-            prft_rt      = float(perf.get("prft_rt") or 0)
+            # kt00016의 evltv_prft/prft_rt는 tot_amt_to(단순합) 기준으로 계산돼 있어,
+            # total_asset을 추정예탁자산으로 바꾼 뒤에는 서로 안 맞는다. 같은 기준으로 재계산한다.
+            # kt00016의 termin_tot_trns/termin_tot_pymn은 to_dt가 오늘이면 당일 입출금까지
+            # 이미 실시간 반영되어 있다 (직접 확인함) — 여기에 kt00017 당일 입금을 또 더하면
+            # 이중 계산되어 실제보다 크게(당일 입금분만큼) 잘못 표시된다.
             net_in = int(perf.get("termin_tot_trns") or 0) - int(perf.get("termin_tot_pymn") or 0)
+            evltv_prft = total_asset - base_asset - net_in
+            invested   = base_asset + net_in
+            prft_rt    = (evltv_prft / invested * 100) if invested > 0 else 0.0
             try:
-                today_dep = kiwoom_api.get_today_deposit()
-                net_in += int(today_dep.get("ina_amt") or 0)
-                net_in -= int(today_dep.get("outa") or 0)
+                tax_cmsn = kiwoom_api.get_net_deposit(base_dt, today_str).get("tax_cmsn", 0)
             except Exception:
-                pass
+                tax_cmsn = 0
 
         return jsonify({
             "total_asset": total_asset,
-            "base_asset":  base_asset,
             "invt_bsamt":  invt_bsamt,
+            "tax_cmsn":    tax_cmsn,
             "tern_rt":     tern_rt,
             "net_in": net_in,
             "profit": evltv_prft,
@@ -947,13 +1051,11 @@ def _build_daily_summary(label: str) -> str:
                 perf = kiwoom_api.get_period_eval(fr_dt=base_dt, to_dt=today_str)
                 evltv_prft = int(perf.get("evltv_prft") or 0)
                 prft_rt = float(perf.get("prft_rt") or 0)
+                # kt00016은 to_dt가 오늘이면 당일 입출금까지 이미 반영되어 있으므로 더 더하지 않는다.
                 net_in = int(perf.get("termin_tot_trns") or 0) - int(perf.get("termin_tot_pymn") or 0)
-                # 당일 입금은 kt00016에 아직 미반영 → kt00017로 보완
                 tdy_sell = tdy_buy = tdy_cmsn = tdy_tax = tdy_dvida = 0
                 try:
                     today_dep = kiwoom_api.get_today_deposit()
-                    net_in += int(today_dep.get("ina_amt") or 0)
-                    net_in -= int(today_dep.get("outa") or 0)
                     tdy_sell  = int(today_dep.get("sell_amt") or 0)
                     tdy_buy   = int(today_dep.get("buy_amt") or 0)
                     tdy_cmsn  = int(today_dep.get("cmsn") or 0)
@@ -1095,20 +1197,26 @@ def _build_performance_summary() -> str:
         if not base_dt:
             return "⚠️ tracking_start_date 미설정"
         perf = kiwoom_api.get_period_eval(fr_dt=base_dt, to_dt=today_str)
-        total_asset = int(perf.get("tot_amt_to") or 0)
+        # kt00016의 tot_amt_to는 수수료/미수정리 미반영 단순합이라, 실제 순자산인
+        # 추정예탁자산(kt00018)을 총평가금액으로 쓴다.
+        try:
+            total_asset = int(kiwoom_api.get_holdings().get("prsm_dpst_aset_amt") or 0)
+        except Exception:
+            total_asset = int(perf.get("tot_amt_to") or 0)
         base_asset  = int(perf.get("tot_amt_fr") or 0)
         invt_bsamt  = int(perf.get("invt_bsamt") or 0)
         tern_rt     = float(perf.get("tern_rt") or 0)
-        evltv_prft  = int(perf.get("evltv_prft") or 0)
-        prft_rt     = float(perf.get("prft_rt") or 0)
+        # kt00016은 to_dt가 오늘이면 당일 입출금까지 이미 반영되어 있으므로 더 더하지 않는다.
         net_in = int(perf.get("termin_tot_trns") or 0) - int(perf.get("termin_tot_pymn") or 0)
+        # evltv_prft/prft_rt는 kt00016 자체 tot_amt_to(단순합) 기준이라 total_asset을
+        # 추정예탁자산으로 바꾼 뒤에는 안 맞는다 — 같은 기준으로 재계산한다.
+        evltv_prft = total_asset - base_asset - net_in
+        invested   = base_asset + net_in
+        prft_rt    = (evltv_prft / invested * 100) if invested > 0 else 0.0
         try:
-            today_dep = kiwoom_api.get_today_deposit()
-            net_in += int(today_dep.get("ina_amt") or 0)
-            net_in -= int(today_dep.get("outa") or 0)
+            tax_cmsn = kiwoom_api.get_net_deposit(base_dt, today_str).get("tax_cmsn", 0)
         except Exception:
-            pass
-        base_label = base_dt[:4] + "-" + base_dt[4:6] + "-" + base_dt[6:]
+            tax_cmsn = 0
         dep_str = ""
         try:
             dep = kiwoom_api.get_deposit_detail()
@@ -1119,10 +1227,10 @@ def _build_performance_summary() -> str:
             pass
         return (
             f"💰 <b>성과 요약</b> ({datetime.now().strftime('%m/%d %H:%M')})\n"
-            f"기준일 자산: <b>{base_asset:,}원</b> ({base_label})\n"
             f"현재 총평가: <b>{total_asset:,}원</b>\n"
             f"총순입금: <b>{net_in:,}원</b>\n"
             f"수익금액: <b>{evltv_prft:+,}원</b> ({prft_rt:+.2f}%)\n"
+            f"누적 수수료/세금: <b>{tax_cmsn:,}원</b>\n"
             f"투자원금평잔: <b>{invt_bsamt:,}원</b>  회전율: <b>{tern_rt:.2f}%</b>"
             f"{dep_str}"
         )
@@ -1462,6 +1570,7 @@ def _daily_alert_scheduler():
                 _check_new_deposit()              # 입금 감지 (장외 포함)
                 if market_open <= t_obj <= market_close:
                     _check_holding_conditions(check_volume=False)
+                    _check_weight_deviation()      # 목표비중 이탈 감지
                 last_condition_check = now
 
             # ── 15:00 — 무응답 추가 투자 알림 자동 동시호가 확정 ─────────
@@ -1532,14 +1641,36 @@ if __name__ == "__main__":
             f"{pl_line}"
         )
 
+    # 0g 종목정보(370) 축약 코드 → 설명 (알려진 것만 매핑, 모르는 코드는 원문 그대로 표기)
+    _STOCK_INFO_LABELS = {
+        "관리": "관리종목",
+        "정리": "정리매매",
+        "불성실": "불성실공시법인",
+        "환기": "시장경보(투자주의환기종목)",
+        "투자유의": "투자유의종목",
+        "투자경고": "투자경고종목",
+        "투자위험": "투자위험종목",
+        "단기과열": "단기과열종목",
+        "거정": "거래정지",
+        "정지": "거래정지",
+    }
+
+    def _describe_stock_info(raw: str) -> str:
+        m = re.match(r"^증(\d+)$", raw)
+        if m:
+            return f"증거금 {m.group(1)}%"
+        return _STOCK_INFO_LABELS.get(raw, raw)
+
     def _on_stock_info(code, vals):
         info = vals.get("370", "")
         if not info:
             return
+        stk_nm = kiwoom_api.stock_name_cache.get(code) or code
+        desc = _describe_stock_info(info)
         _send_telegram(
             f"⚠️ <b>종목 조치 알림</b>\n"
-            f"종목코드: {code}\n"
-            f"내용: {info}"
+            f"종목: {stk_nm} ({code})\n"
+            f"내용: {desc}"
         )
 
     def _on_vi(code, vals):
@@ -1559,8 +1690,7 @@ if __name__ == "__main__":
 
     def _on_price_limit(code, kind, vals):
         """0B 전일대비기호(25) 상한가/하한가 진입·이탈 — 0B는 보유 종목에만 REG하므로 별도 필터 불필요."""
-        bal = kiwoom_api.realtime_balance.get(code, {})
-        stk_nm = bal.get("302") or code
+        stk_nm = kiwoom_api.stock_name_cache.get(code) or code
         if kind == "상한가":
             _send_telegram(f"🔺 <b>상한가 진입</b>\n종목: {stk_nm} ({code})\n💰 매도 타이밍을 검토해보세요.")
         elif kind == "하한가":
@@ -1568,24 +1698,41 @@ if __name__ == "__main__":
         else:
             _send_telegram(f"↩️ <b>상/하한가 이탈</b>\n종목: {stk_nm} ({code})")
 
-    # 장운영구분 코드: 2=정규장 개시, 3=정규장 마감, 4=시간외단일가, 9=전체종료
-    _MARKET_LABELS = {"2": "🔔 정규장 개장", "3": "🔔 정규장 마감", "4": "🔔 시간외단일가 시작", "9": "🔔 전체 시장 종료"}
+    # 장운영구분(215) 실제 값 — 키움 0s 문서 기준 (기존 코드에 2/3이 뒤바뀌어 있었음)
+    _MARKET_LABELS = {
+        "0": "🔔 장 시작 전 (8:40~)",
+        "3": "🔔 정규장 개장 (09:00)",
+        "2": "🔔 장마감 알림 (15:20~)",
+        "4": "🔔 정규장 마감 (15:30)",
+        "8": "🔔 정규장 마감 확정",
+        "9": "🔔 전체 시장 종료",
+        "a": "🔔 시간외 종가매매 시작",
+        "b": "🔔 시간외 종가매매 종료",
+        "c": "🔔 시간외 단일가 시작",
+        "d": "🔔 시간외 단일가 종료",
+    }
+    _last_market_op_tp = [None]  # 같은 상태가 반복 전송돼도 한 번만 알리기 위한 추적
 
     def _on_market_open(vals):
-        """0s: 장운영 이벤트 — 개장/마감 텔레그램 알림."""
+        """0s: 장운영 이벤트 — 상태가 실제로 바뀔 때만 텔레그램 알림."""
         op_tp = str(vals.get("215") or "")
-        tm    = vals.get("20", "")
+        if op_tp == _last_market_op_tp[0]:
+            return  # 15:20~15:30처럼 같은 상태가 반복 수신되는 구간 — 중복 알림 방지
+        _last_market_op_tp[0] = op_tp
         label = _MARKET_LABELS.get(op_tp)
-        if label:
-            t_fmt = f"{tm[:2]}:{tm[2:4]}:{tm[4:]}" if len(tm) >= 6 else tm
-            _send_telegram(f"{label} ({t_fmt})")
+        if not label:
+            return
+        tm = vals.get("20", "")
+        # 일부 이벤트는 체결시간 필드가 "999999" 같은 더미값으로 오므로 그런 경우는 시각을 생략한다
+        t_fmt = f" ({tm[:2]}:{tm[2:4]}:{tm[4:]})" if len(tm) >= 6 and tm != "999999" else ""
+        _send_telegram(f"{label}{t_fmt}")
 
     _update_watched = kiwoom_api.start_order_realtime(
         on_fill=_on_fill,
         on_stock_info=_on_stock_info,
         on_vi=_on_vi,
         on_market_open=_on_market_open,
-        on_price_limit=_on_price_limit,
+        # on_price_limit=_on_price_limit,  # 상한가/하한가 진입·이탈 알림 — 꺼둠
     )
     print(f"[시스템] 주문 서버 시작 (모의투자: {kiwoom_api.KIWOOM_IS_MOCK}) - http://localhost:5050")
     app.run(host="127.0.0.1", port=5050, debug=False)

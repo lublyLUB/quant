@@ -222,7 +222,13 @@ def get_holdings():
     if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
         raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
     token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
-    return fetch_account_balance(token, KIWOOM_ACCOUNT_NO, KIWOOM_IS_MOCK)
+    data = fetch_account_balance(token, KIWOOM_ACCOUNT_NO, KIWOOM_IS_MOCK)
+    # 0B 등 실시간 이벤트엔 종목명이 없으므로, 조회 때마다 코드→이름 캐시를 채워둔다.
+    for r in data.get("acnt_evlt_remn_indv_tot", []):
+        code = (r.get("stk_cd") or "").lstrip("A")
+        if code and r.get("stk_nm"):
+            stock_name_cache[code] = r["stk_nm"]
+    return data
 
 
 def get_realized_pl(stk_cd, strt_dt=""):
@@ -363,8 +369,12 @@ def get_order_possible_qty(stk_cd: str, price: int, trde_tp: str = "2"):
 
     trde_tp: "1"=매도, "2"=매수
     주요 반환:
-      profa_100ord_alowq - 100% 증거금 기준 주문가능수량 (수수료 포함)
-      ord_alowa          - 주문가능현금
+      profa_100ord_alow_amt - 100% 증거금 기준 주문가능금액 (수수료 포함)
+      ord_alowa              - 주문가능현금
+
+    주의: profa_100ord_alowq(수량) 필드는 항상 0을 반환하는 것으로 확인되어
+    (여러 종목/가격으로 테스트) 신뢰할 수 없다. 금액(alow_amt)을 가격으로
+    나눠 직접 수량을 계산한다.
     """
     if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
         raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
@@ -388,11 +398,13 @@ def get_order_possible_qty(stk_cd: str, price: int, trde_tp: str = "2"):
     resp = requests.post(url, headers=headers, json=body, timeout=15)
     resp.raise_for_status()
     data = resp.json()
+    alow_amt = int(data.get("profa_100ord_alow_amt") or 0)
+    max_qty = (alow_amt // price) if price else 0
     return {
-        "max_qty":   int(data.get("profa_100ord_alowq") or 0),
+        "max_qty":   max_qty,
         "ord_alowa": int(data.get("ord_alowa") or 0),
-        "profa_20":  int(data.get("profa_20ord_alowq") or 0),
-        "profa_30":  int(data.get("profa_30ord_alowq") or 0),
+        "profa_20":  int(data.get("profa_20ord_alow_amt") or 0) // price if price else 0,
+        "profa_30":  int(data.get("profa_30ord_alow_amt") or 0) // price if price else 0,
     }
 
 
@@ -931,8 +943,27 @@ def resolve_trde_tp(price, now=None):
     return "62"                           # 시간외단일가
 
 
+def round_to_tick(price: int) -> int:
+    """KRX 호가단위(tick size)에 맞게 가격을 내림 처리. 단위에 안 맞는 가격은 주문 자체가 거부된다."""
+    if price < 2000:
+        tick = 1
+    elif price < 5000:
+        tick = 5
+    elif price < 20000:
+        tick = 10
+    elif price < 50000:
+        tick = 50
+    elif price < 200000:
+        tick = 100
+    elif price < 500000:
+        tick = 500
+    else:
+        tick = 1000
+    return (price // tick) * tick
+
+
 def get_closing_auction_price(stk_cd: str) -> int:
-    """동시호가 주문용 가격 계산 (ka10001 예상체결가 × 1.005, 상한가 이하로 제한).
+    """동시호가 주문용 가격 계산 (ka10001 예상체결가 × 1.005, 상한가 이하로 제한, 호가단위 보정).
 
     15:20 시점 예상체결가에 0.5% 버퍼를 더해 동시호가 내 체결 확률을 높인다.
     예상체결가가 없으면 현재가를 사용한다.
@@ -942,10 +973,14 @@ def get_closing_auction_price(stk_cd: str) -> int:
     exp   = data.get("exp_cntr_pric")
     cur   = data.get("cur_prc")
     upl   = data.get("upl_pric")
-    base  = abs(int(exp)) if exp else abs(int(cur)) if cur else 0
-    upper = abs(int(upl)) if upl else base
-    price = int(base * 1.005)
-    return min(price, upper)
+    # 예상체결가가 없으면 키움은 빈 문자열이 아니라 "-0"을 내려주는데, 이는 파이썬에서
+    # truthy라 exp 분기가 그대로 타면서 abs(int("-0"))=0이 되어버린다.
+    # 문자열 유무가 아니라 "실제로 0이 아닌 값인지"로 판단해야 현재가로 제대로 폴백된다.
+    exp_val = abs(int(exp)) if exp else 0
+    base    = exp_val if exp_val else (abs(int(cur)) if cur else 0)
+    upper   = abs(int(upl)) if upl else base
+    price   = int(base * 1.005)
+    return round_to_tick(min(price, upper))
 
 
 def place_order(stk_cd, qty, side, price=None, is_mock=KIWOOM_IS_MOCK):
@@ -1052,6 +1087,8 @@ MOCK_WS_URL = "wss://mockapi.kiwoom.com:10000/api/dostk/websocket"
 
 # 실시간 잔고 캐시 — 04 이벤트로 업데이트, {종목코드: {필드코드: 값}}
 realtime_balance: dict = {}
+# 종목코드 -> 종목명 캐시 — get_holdings() 조회 때마다 채워짐 (0B 등 실시간 이벤트엔 종목명이 없어서 보완용)
+stock_name_cache: dict = {}
 # 실시간 체결가 캐시 — 0B 이벤트로 업데이트, {종목코드: {"price": int, "rate": float, "time": "HHMMSS"}}
 realtime_quotes: dict = {}
 # 최근 체결(00) 이벤트 기록 — 프론트가 "새 체결 있음"을 감지하는 용도
@@ -1087,30 +1124,38 @@ def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=
     _ws_ref = [None]
     ws_token = [None]  # LOGIN 메시지에 사용할 최신 토큰
     _limit_state = {}  # {코드: "상한가"|"하한가"} — 진입/이탈을 한 번만 알리기 위한 상태 추적
+    _registered_codes = set()  # 이미 0g/1h/0B REG된 코드 — 중복 REG로 인한 이벤트 중복 수신 방지
 
     def _register_stock_info(ws, codes):
-        """보유 종목 코드를 0g(종목정보) + 1h(VI발동/해제) + 0B(실시간체결가)로 등록."""
-        if not codes:
+        """보유 종목 코드를 0g(종목정보) + 1h(VI발동/해제) + 0B(실시간체결가)로 등록.
+
+        같은 종목을 refresh=1로 반복 REG하면 키움 서버가 구독을 중복 생성해
+        실시간 이벤트(체결 알림 등)가 여러 번 찍히는 문제가 있어, 아직 등록하지
+        않은 코드만 골라서 REG한다.
+        """
+        new_codes = [c for c in codes if c not in _registered_codes]
+        if not new_codes:
             return
-        _wslog.info("REG 0g+1h+0B 종목 %d개: %s", len(codes), codes)
+        _wslog.info("REG 0g+1h+0B 신규 종목 %d개: %s", len(new_codes), new_codes)
         ws.send(json.dumps({
             "trnm": "REG",
             "grp_no": "2",
             "refresh": "1",
-            "data": [{"item": codes, "type": ["0g"]}],
+            "data": [{"item": new_codes, "type": ["0g"]}],
         }))
         ws.send(json.dumps({
             "trnm": "REG",
             "grp_no": "3",
             "refresh": "1",
-            "data": [{"item": codes, "type": ["1h"]}],
+            "data": [{"item": new_codes, "type": ["1h"]}],
         }))
         ws.send(json.dumps({
             "trnm": "REG",
             "grp_no": "4",
             "refresh": "1",
-            "data": [{"item": codes, "type": ["0B"]}],
+            "data": [{"item": new_codes, "type": ["0B"]}],
         }))
+        _registered_codes.update(new_codes)
 
     def _after_login(ws):
         # 주문체결(00) + 잔고(04) + 장운영(0s)
@@ -1135,6 +1180,7 @@ def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=
 
     def on_open(ws):
         _ws_ref[0] = ws
+        _registered_codes.clear()  # 새 연결은 서버 쪽 REG 상태도 초기화되므로 다시 전부 등록해야 함
         _wslog.info("WebSocket 연결됨 (%s) — LOGIN 전송", ws_url)
         ws.send(json.dumps({"trnm": "LOGIN", "token": ws_token[0]}))
 

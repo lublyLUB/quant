@@ -538,15 +538,7 @@
             </span>
             ${buildToggle()}
         </div>`;
-        if (ae && (ae.tdyLspft || ae.lspft)) {
-            const tdyC = ae.tdyLspft >= 0 ? '#dc2626' : '#2563eb';
-            const cumC = ae.lspft >= 0 ? '#dc2626' : '#2563eb';
-            html += `<span class="summary-chips" style="margin-top:0; margin-bottom:4px;">
-                ${chip('당일 손익', `<span style="color:${tdyC};font-weight:700;">${ae.tdyLspft >= 0 ? '+' : ''}${formatNumber(ae.tdyLspft)}원 (${ae.tdyLspftRt >= 0 ? '+' : ''}${ae.tdyLspftRt.toFixed(2)}%)</span>`)}
-                ${chip('누적 손익', `<span style="color:${cumC};font-weight:700;">${ae.lspft >= 0 ? '+' : ''}${formatNumber(ae.lspft)}원</span>`)}
-                ${tdy && tdy.dividaAmt > 0 ? chip('배당금', `<span style="color:#16a34a;font-weight:700;">${formatNumber(tdy.dividaAmt)}원</span>`) : ''}
-            </span>`;
-        }
+        // 당일손익/누적손익/배당금 줄은 투자실행 화면 칩 정리 차원에서 제거 — 성과추적 메뉴에서 확인
         el.innerHTML = html;
         // 토글이 동적 렌더링되므로 현재 모드 스타일 재적용
         const isAdd = calcMode === 'addorder';
@@ -618,37 +610,15 @@
             }
             rows.forEach(s => { s.buyAmt = s.buyQty * s.price; });
             const totalBuyAmt = rows.reduce((sum, s) => sum + s.buyAmt, 0);
-            const totalHeldValue = rows.reduce((sum, s) => sum + s.heldValue, 0);
             const eligibleCount = rows.filter(s => s.buyQty > 0).length;
 
-            el.innerHTML = `
-                <span class="summary-chips" style="margin-top:0; margin-bottom:6px;">
-                    ${chip('대상 종목', `${rows.length}개`)}
-                    ${chip('매수 가능', `${eligibleCount}개`)}
-                    ${chip('총 매수 예정', `${formatNumber(totalBuyAmt)}원`)}
-                    ${chip('가용 현금', `${formatNumber(availableCash)}원`)}
-                </span>
-                <table style="width:100%; font-size:11px;"><thead><tr>
-                    <th style="text-align:left;">종목</th><th>현재가</th><th>보유수량</th>
-                    <th>평가금액</th><th>비중</th><th>부족금액</th><th>매수수량</th><th>매수금액</th>
-                </tr></thead><tbody>
-                ${rows.map(s => {
-                    const weight = totalHeldValue > 0 ? (s.heldValue / totalHeldValue * 100).toFixed(1) : '0.0';
-                    return `<tr style="${s.buyQty > 0 ? '' : 'opacity:0.5;'}">
-                        <td style="text-align:left;">${getNameHtml(s.name)}</td>
-                        <td>${formatNumber(s.price)}원</td><td>${s.heldQty}주</td>
-                        <td>${formatNumber(s.heldValue)}원</td><td>${weight}%</td>
-                        <td>${formatNumber(Math.round(s.shortage))}원</td>
-                        <td style="font-weight:600;color:${s.buyQty>0?'#dc2626':'#94a3b8'};">${s.buyQty>0?`+${s.buyQty}주`:'-'}</td>
-                        <td>${s.buyAmt>0?formatNumber(s.buyAmt)+'원':'-'}</td>
-                    </tr>`;
-                }).join('')}
-                </tbody></table>`;
+            // 종목별 상세와 요약 칩 모두 섹션3(주문 계획 한 줄 + 주문 테이블)로 통합 — 여기는 비워둠
+            el.innerHTML = '';
 
             currentInvestOrders = rows.filter(s => s.buyQty > 0).map(s => ({
-                name: s.name, code: s.code, price: s.price,
+                name: s.name, code: s.code, price: s.price, rank: s.rank,
                 diff: s.buyQty, curQty: s.heldQty, targetQty: s.heldQty + s.buyQty,
-                side: 'buy', weightDiffPct: 0,
+                side: 'buy', weightDiffPct: 0, isNew: s.heldQty === 0,
             }));
 
             // 최신 eligible 종목을 서버에 저장 — 텔레그램 입금 감지 시 사용
@@ -671,37 +641,8 @@
                 renderInvestOrderTable();
                 return;
             }
-            const totalTarget = stocks.reduce((s, t) => s + t.shares * t.price, 0);
-            el.innerHTML = `
-                <span class="summary-chips" style="margin-top:0; margin-bottom:6px;">
-                    ${chip('대상 종목', `${stocks.length}개`)}
-                    ${chip('목표 투자금', portfolioInvestment > 0 ? `${formatNumber(portfolioInvestment)}원` : `${formatNumber(holdingsAccountInfo?.totalAsset || 0)}원`)}
-                    ${chip('매수예정금액', `${formatNumber(totalTarget)}원`)}
-                </span>
-                <table style="width:100%; font-size:11px;"><thead><tr>
-                    <th style="text-align:left;">종목</th><th>추천순위</th><th>현재가</th>
-                    <th>목표수량</th><th>현재수량</th><th>매도/매수</th><th>목표금액</th>
-                </tr></thead><tbody>
-                ${stocks.map(s => {
-                    const held = s.code ? holdingsByCode[s.code] : null;
-                    const curQty = held ? held.qty : 0;
-                    const isNew = curQty === 0 && !held;
-                    const diff = s.shares - curQty;
-                    const diffColor = diff > 0 ? '#dc2626' : diff < 0 ? '#2563eb' : '#64748b';
-                    let diffText = diff > 0 ? `+${diff}주 매수` : diff < 0 ? `${diff}주 매도` : '유지';
-                    if (s.priceUnknown) diffText = '⚠️ 시세 조회 필요';
-                    else if (isNew && diff === 0) diffText = '📌 신규 매수 예정';
-                    const rowBg = isNew ? 'background:#fff7ed;' : '';
-                    return `<tr style="${rowBg}">
-                        <td style="text-align:left;">${getNameHtml(s.name)}${isNew ? ' <span style="font-size:9px;color:#ea580c;font-weight:700;">NEW</span>' : ''}</td>
-                        <td>${s.rank === Infinity ? '-' : s.rank}</td>
-                        <td>${s.priceUnknown ? '-' : formatNumber(s.price) + '원'}</td>
-                        <td>${s.priceUnknown ? '-' : s.shares + '주'}</td><td>${curQty}주</td>
-                        <td style="font-weight:600;color:${s.priceUnknown ? '#94a3b8' : diffColor};">${diffText}</td>
-                        <td>${s.priceUnknown ? '-' : formatNumber(s.shares * s.price) + '원'}</td>
-                    </tr>`;
-                }).join('')}
-                </tbody></table>`;
+            // 종목별 상세와 요약 칩 모두 섹션3(주문 계획 한 줄 + 주문 테이블)로 통합 — 여기는 비워둠
+            el.innerHTML = '';
 
             const rawOrders = computeOrderData();
             checkWeightDeviations(rawOrders);
@@ -726,15 +667,16 @@
         }
 
         let html = `<thead><tr>
-            <th style="width:13%;">종목명</th><th style="width:9%;">현재가</th>
-            <th style="width:8%;">체결강도</th>
-            <th style="width:10%;">보유수량</th><th style="width:10%;">목표수량</th>
-            <th style="width:12%;">목표비중차이</th><th style="width:14%;">매수/매도</th>
-            <th style="width:14%;">주문</th>
+            <th style="width:11%;">종목명</th><th style="width:6%;">순위</th><th style="width:8%;">현재가</th>
+            <th style="width:7%;">체결강도</th>
+            <th style="width:8%;">보유수량</th><th style="width:8%;">목표수량</th>
+            <th style="width:9%;">평가금액</th><th style="width:9%;">목표금액</th>
+            <th style="width:10%;">목표비중차이</th><th style="width:12%;">매수/매도</th>
+            <th style="width:12%;">주문</th>
         </tr></thead><tbody>`;
 
         if (rows.length === 0) {
-            html += `<tr><td colspan="8" style="padding:20px; color:#94a3b8;">계산 결과 주문할 종목이 없습니다.</td></tr>`;
+            html += `<tr><td colspan="11" style="padding:20px; color:#94a3b8;">계산 결과 주문할 종목이 없습니다.</td></tr>`;
         } else {
             rows.forEach(r => {
                 let diffLabel;
@@ -750,11 +692,16 @@
                     ? `<button class="mode-btn action-btn ${r.side==='buy'?'action-btn-red':'action-btn-skyblue'}" style="padding:4px 8px;font-size:10px;" onclick="handleSendOrder('${r.code}')">${r.side==='buy'?'매수':'매도'} 전송</button>`
                     : `<span style="display:inline-block;padding:4px 8px;font-size:10px;">-</span>`;
                 const rowBg = r.isNew ? 'background:#fff7ed;' : '';
+                const rankLabel = (r.rank == null || r.rank === Infinity) ? '-' : r.rank;
+                const curValue = formatNumber(r.curQty * r.price) + '원';
+                const targetValue = r.priceUnknown ? '-' : formatNumber(r.targetQty * r.price) + '원';
                 html += `<tr style="${rowBg}">
-                    <td>${getNameHtml(r.name)}${r.isNew ? ' <span style="font-size:9px;color:#ea580c;font-weight:700;">NEW</span>' : ''}</td>
+                    <td>${getNameHtml(r.name)}</td>
+                    <td>${rankLabel}</td>
                     <td>${r.priceUnknown ? '-' : formatNumber(r.price) + '원'}</td>
                     <td>${strengthLabel(r.code)}</td>
                     <td>${formatNumber(r.curQty)}주</td><td>${r.priceUnknown ? '-' : formatNumber(r.targetQty) + '주'}</td>
+                    <td>${curValue}</td><td>${targetValue}</td>
                     <td>${weightLabel}</td><td>${diffLabel}</td><td>${orderBtn}</td>
                 </tr>`;
             });
@@ -1960,7 +1907,10 @@
                 holdingsByCode[code] = {
                     name: r.stk_nm || '',
                     qty: parseInt(r.rmnd_qty || '0', 10) || 0,
-                    trdeAbleQty: parseInt(r.trde_able_qty || '0', 10) || 0,  // 매매가능수량 (결제 완료분)
+                    // 매매가능수량 (결제 완료분). 필드가 아예 없는 것(null)과 실제로 0인 것을 구분해야
+                    // "매매가능수량 0(결제 전이라 매도 불가)"을 "필드 누락"으로 오인해 전량 매도로
+                    // 폴백하는 사고를 막을 수 있다.
+                    trdeAbleQty: (r.trde_able_qty != null) ? (parseInt(r.trde_able_qty, 10) || 0) : null,
                     price: curP,
                     purPrice: parseInt(r.pur_pric || '0', 10) || 0,
                     purAmt:   parseInt(r.pur_amt  || '0', 10) || 0,
@@ -2146,8 +2096,9 @@
             }
             const held = holdingsByCode[code];
             const curQty = held ? held.qty : 0;
-            // 매도 시 실제 가능 수량은 trdeAbleQty (D+2 미결제분 제외)
-            const sellableQty = held ? (held.trdeAbleQty > 0 ? held.trdeAbleQty : held.qty) : 0;
+            // 매도 시 실제 가능 수량은 trdeAbleQty (D+2 미결제분 제외).
+            // 필드가 없을 때만 보유수량으로 폴백 — 진짜 0(결제 전)이면 0 그대로 써서 매도 차단.
+            const sellableQty = held ? (held.trdeAbleQty != null ? held.trdeAbleQty : held.qty) : 0;
             const rawDiff = t.shares - curQty;
             const diff = rawDiff < 0 ? Math.max(rawDiff, -sellableQty) : rawDiff;
             const targetValue = t.shares * t.price;
@@ -2155,7 +2106,7 @@
             // 매수/매도 수량(diff)과 부호를 통일: 음수 = 매도 필요, 양수 = 매수 필요
             const weightDiffPct = targetValue > 0 ? ((targetValue - curValue) / targetValue) * 100 : (curValue > 0 ? -100 : 0);
             rows.push({
-                name: t.name, code, price: t.price,
+                name: t.name, code, price: t.price, rank: t.rank,
                 targetQty: t.shares, curQty, diff, weightDiffPct, isNew: curQty === 0 && !held,
                 side: diff > 0 ? 'buy' : (diff < 0 ? 'sell' : ''),
             });
@@ -2166,7 +2117,7 @@
             if (seenCodes.has(code)) return;
             const held = holdingsByCode[code];
             if (held.qty <= 0) return;
-            const sellableQty = held.trdeAbleQty > 0 ? held.trdeAbleQty : held.qty;
+            const sellableQty = held.trdeAbleQty != null ? held.trdeAbleQty : held.qty;
             if (sellableQty <= 0) return;
             rows.push({
                 name: held.name, code, price: held.price,
@@ -2343,15 +2294,47 @@
                 const o = sameSide[i];
                 try {
                     if (i === 0) {
-                        // 첫 번째 → 정정
+                        // 첫 번째 → 정정. 매수는 목표 그대로 정정하면 자금 부족으로 매번 실패할 수
+                        // 있으므로, 정정 전에 매수가능수량을 확인해 처음부터 맞는 수량으로 정정한다.
+                        let mdfyQty = Math.abs(r.diff);
+                        let mdfyPrice = r.price;
+                        if (r.diff > 0) {
+                            const { price: freshPrice, maxQty } = await fetchFreshAffordableQty(r.code);
+                            if (freshPrice) mdfyPrice = freshPrice;
+                            if (maxQty <= 0) {
+                                notifyOrderAction(r.name, `정정 보류 - 매수 가능 수량 없음 (현재가 ${formatNumber(mdfyPrice)}원 기준)`);
+                                await new Promise(resolve => setTimeout(resolve, 1100));
+                                continue;
+                            }
+                            mdfyQty = Math.min(maxQty, mdfyQty);
+                        }
                         const resp = await fetch(`${ORDER_SERVER_URL}/api/modify_order`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ stk_cd: r.code, orig_ord_no: o.ordNo, mdfy_qty: Math.abs(r.diff), mdfy_uv: r.price }),
+                            body: JSON.stringify({ stk_cd: r.code, orig_ord_no: o.ordNo, mdfy_qty: mdfyQty, mdfy_uv: mdfyPrice }),
                         });
                         const data = await resp.json();
                         const ok = !(data.error || (data.return_code !== undefined && data.return_code !== 0));
-                        if (!ok) { needsNewOrder = true; notifyOrderAction(r.name, `정정 실패 - ${data.error || data.return_msg}`); }
+                        if (!ok) {
+                            const errMsg = data.error || data.return_msg || '';
+                            // 확인 직후에도 또 가격이 움직여 거부된 경우에 대한 마지막 안전망
+                            if (r.diff > 0 && /부족/.test(errMsg)) {
+                                try {
+                                    await fetch(`${ORDER_SERVER_URL}/api/cancel_order`, {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ stk_cd: r.code, orig_ord_no: o.ordNo, cncl_qty: o.remainQty }),
+                                    });
+                                } catch (e) { /* 취소 실패해도 아래에서 새 주문 시도는 그대로 진행 */ }
+                                const retried = await retryBuyWithAffordableQty(
+                                    { name: r.name, code: r.code, price: mdfyPrice, diff: mdfyQty }, errMsg
+                                );
+                                if (!retried.ok) notifyOrderAction(r.name, retried.msg);
+                            } else {
+                                needsNewOrder = true;
+                                notifyOrderAction(r.name, `정정 실패 - ${errMsg}`);
+                            }
+                        }
                     } else {
                         // 나머지 → 중복 취소
                         const resp = await fetch(`${ORDER_SERVER_URL}/api/cancel_order`, {
@@ -2436,29 +2419,42 @@
         row = remaining[0];
         const finalSide = row.diff > 0 ? 'buy' : 'sell';
         let finalQty = Math.abs(row.diff);
+        let finalPrice = row.price;
         let partialNote = '';
-        if (finalSide === 'buy' && holdingsAccountInfo) {
-            const ordAlowa = holdingsAccountInfo.ordAlowa || 0;  // kt00005 주문가능현금 (증거금율 반영된 실제 한도)
-            const affordableQty = Math.floor(ordAlowa / row.price);
-            if (affordableQty <= 0) {
-                statusEl.textContent = `자금 부족 - 주문가능현금 ${formatNumber(ordAlowa)}원 / 주당 ${formatNumber(row.price)}원`;
+        if (finalSide === 'buy') {
+            // 보내고 실패하면 그때 줄이는 방식은 "매번 첫 시도는 무조건 실패"가 되어 답답하므로,
+            // 보내기 전에 딱 한 번 최신 가격·매수가능수량을 확인해 처음부터 맞는 수량으로 보낸다.
+            const { price: freshPrice, maxQty } = await fetchFreshAffordableQty(code);
+            if (freshPrice) finalPrice = freshPrice;
+            if (maxQty <= 0) {
+                statusEl.textContent = `자금 부족 - ${row.name} 매수 가능 수량이 없습니다. (현재가 ${formatNumber(finalPrice)}원 기준)`;
                 return;
             }
-            if (affordableQty < finalQty) {
-                finalQty = affordableQty;
-                partialNote = `\n(주문가능현금 부족으로 목표 ${Math.abs(row.diff)}주 중 ${finalQty}주만 매수)`;
+            if (maxQty < finalQty) {
+                finalQty = maxQty;
+                partialNote = `\n(매수가능수량 기준으로 목표 ${Math.abs(row.diff)}주 중 ${finalQty}주로 조정됨)`;
             }
         }
-        if (!confirm(`${finalSide === 'buy' ? '매수' : '매도'} 주문을 실제로 전송합니다. (현재가로 재계산됨)\n종목코드: ${code} / 수량: ${finalQty}주 / 가격: ${row.price}원${partialNote}\n계속하시겠습니까?`)) return;
+        if (!confirm(`${finalSide === 'buy' ? '매수' : '매도'} 주문을 실제로 전송합니다. (현재가로 재계산됨)\n종목코드: ${code} / 수량: ${finalQty}주 / 가격: ${finalPrice}원${partialNote}\n계속하시겠습니까?`)) return;
         try {
             const resp = await fetch(`${ORDER_SERVER_URL}/api/order`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ stk_cd: code, qty: finalQty, side: finalSide, price: row.price }),
+                body: JSON.stringify({ stk_cd: code, qty: finalQty, side: finalSide, price: finalPrice }),
             });
             const data = await resp.json();
             if (data.error || (data.return_code !== undefined && data.return_code !== 0)) {
-                alert(`주문 실패: ${data.error || data.return_msg}`);
+                const errMsg = data.error || data.return_msg || '';
+                if (finalSide === 'buy') {
+                    // 그새 또 가격이 움직여 방금 확인한 수량도 거부된 경우에 대한 마지막 안전망
+                    const retried = await retryBuyWithAffordableQty(
+                        { name: row.name, code, price: finalPrice, diff: finalQty }, errMsg
+                    );
+                    alert(retried.ok ? `주문이 전송되었습니다. (${retried.msg})` : `주문 실패: ${retried.msg}`);
+                    if (retried.ok) await handleFetchHoldings();
+                } else {
+                    alert(`주문 실패: ${errMsg}`);
+                }
             } else {
                 alert('주문이 전송되었습니다.');
                 await handleFetchHoldings();
@@ -2466,6 +2462,85 @@
         } catch (e) {
             alert(`주문 전송 중 오류: ${e.message}`);
         }
+    }
+
+    // 종목의 현재가와, 그 가격 기준 매수가능수량을 함께 새로 조회한다.
+    // 가격이 계속 움직이는 중이면 오래된 가격으로 수량을 계산해도 의미가 없으므로 항상 같이 갱신한다.
+    async function fetchFreshAffordableQty(code) {
+        let price = null;
+        try {
+            const prices = await fetchFreshQuotes([code]);  // 부수 효과로 priceLimitsByCode[code]도 갱신됨
+            price = prices[code] || null;
+        } catch (e) { /* 시세 재조회 실패 시 가격은 이전 값 유지 */ }
+        if (!price) return { price: null, maxQty: 0 };
+        // 정규장 매수는 최유리지정가(가격 미지정)로 나가는데, 키움은 이때 증거금을 "현재가"가 아니라
+        // "상한가" 기준으로 미리 확보한다. 현재가로 매수가능수량을 물어보면 실제보다 더 많이 살 수
+        // 있다고 착각하게 되어 항상 거부되므로, 상한가를 기준으로 조회해야 실제 가능 수량이 나온다.
+        const upper = (priceLimitsByCode[code] && priceLimitsByCode[code].upper) || price;
+        try {
+            const resp = await fetch(`${ORDER_SERVER_URL}/api/order_possible_qty?stk_cd=${code}&price=${upper}&trde_tp=2`);
+            const data = await resp.json();
+            return { price, maxQty: data.max_qty || 0 };
+        } catch (e) {
+            return { price, maxQty: 0 };
+        }
+    }
+
+    // 매수 주문이 증거금/자금 부족으로 거부됐을 때, 실제 매수 가능 수량(kt00010)을 조회해서
+    // 그 수량으로 재주문할지 사용자에게 물어본다. 부족 사유가 아니면 그대로 실패 처리.
+    async function retryBuyWithAffordableQty(r, errMsg) {
+        if (!/부족/.test(errMsg)) {
+            return { name: r.name, ok: false, msg: errMsg };
+        }
+        let { price: curPrice, maxQty } = await fetchFreshAffordableQty(r.code);
+        if (!curPrice) curPrice = r.price;  // 시세 재조회 실패 시 기존 가격으로라도 시도
+
+        if (maxQty <= 0) {
+            return { name: r.name, ok: false, msg: `${errMsg} (매수 가능 수량 없음)` };
+        }
+        const origQty = Math.abs(r.diff);
+        const retryQty = Math.min(maxQty, origQty);  // kt00010 조회값이 목표수량보다 커도 원래 목표 이상은 주문하지 않음
+        const confirmMsg = retryQty < origQty
+            ? `${r.name}: ${errMsg}\n\n목표 ${origQty}주 중 매수 가능한 ${retryQty}주로 대신 주문하시겠습니까? (현재가 ${formatNumber(curPrice)}원 기준)`
+            : `${r.name}: ${errMsg}\n\n재조회 결과 ${retryQty}주 매수가 가능한 것으로 확인됩니다. 다시 주문하시겠습니까? (현재가 ${formatNumber(curPrice)}원 기준)`;
+        if (!confirm(confirmMsg)) {
+            return { name: r.name, ok: false, msg: `${errMsg} (사용자가 재주문 취소)` };
+        }
+
+        // 확인창을 띄우고 사용자가 응답하는 동안에도 시세가 움직일 수 있으므로,
+        // 전송 직전에 가격·수량을 한 번 더 갱신한다. 급등락 중이면 최대 3회까지 반복한다.
+        let attemptQty = retryQty;
+        let attemptPrice = curPrice;
+        for (let attempt = 1; attempt <= 3; attempt++) {
+            try {
+                const resp = await fetch(`${ORDER_SERVER_URL}/api/order`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ stk_cd: r.code, qty: attemptQty, side: 'buy', price: attemptPrice }),
+                });
+                const data = await resp.json();
+                const ok = !(data.error || (data.return_code !== undefined && data.return_code !== 0));
+                if (ok) {
+                    const successMsg = attemptQty < origQty ? `성공 (${attemptQty}주로 축소 매수)` : '성공 (재주문)';
+                    return { name: r.name, ok: true, msg: successMsg };
+                }
+                const retryErrMsg = data.error || data.return_msg || '';
+                if (!/부족/.test(retryErrMsg) || attempt === 3) {
+                    return { name: r.name, ok: false, msg: retryErrMsg };
+                }
+                // 계속 부족하면 가격·매수가능수량을 다시 갱신해서 재시도
+                const fresh = await fetchFreshAffordableQty(r.code);
+                const freshMaxQty = fresh.maxQty;
+                if (fresh.price) attemptPrice = fresh.price;
+                if (freshMaxQty <= 0 || freshMaxQty >= attemptQty) {
+                    return { name: r.name, ok: false, msg: `${retryErrMsg} (매수 가능 수량 갱신 실패)` };
+                }
+                attemptQty = freshMaxQty;
+            } catch (e) {
+                return { name: r.name, ok: false, msg: e.message };
+            }
+        }
+        return { name: r.name, ok: false, msg: '반복된 자금 부족으로 재시도를 중단했습니다.' };
     }
 
     async function handleSendAllOrders() {
@@ -2569,19 +2644,36 @@
             applyRealtimeQuotes();
         }
 
-        // ③ 매수 주문 전송 — 자금 체크 없이 무조건 전송, 부족 시 키움 서버가 거부
+        // ③ 매수 주문 전송 — 보내기 전에 매수가능수량을 한 번 확인해 처음부터 맞는 수량으로 보낸다
+        // (실패 후에 줄이는 방식은 매번 첫 시도가 무조건 실패하는 것처럼 보여 혼란을 줌).
         for (const r of buyRows) {
-            const qty = Math.abs(r.diff);
+            const origQty = Math.abs(r.diff);
             statusEl.textContent = `매수 전송 중... (${results.length + 1}/${finalRows.length}) ${r.name}`;
             try {
+                const { price: freshPrice, maxQty } = await fetchFreshAffordableQty(r.code);
+                const price = freshPrice || r.price;
+                if (maxQty <= 0) {
+                    results.push({ name: r.name, ok: false, msg: `자금 부족 (매수 가능 수량 없음, 현재가 ${formatNumber(price)}원 기준)` });
+                    await new Promise(resolve => setTimeout(resolve, 1100));
+                    continue;
+                }
+                const qty = Math.min(maxQty, origQty);
                 const resp = await fetch(`${ORDER_SERVER_URL}/api/order`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ stk_cd: r.code, qty, side: 'buy', price: r.price }),
+                    body: JSON.stringify({ stk_cd: r.code, qty, side: 'buy', price }),
                 });
                 const data = await resp.json();
                 const ok = !(data.error || (data.return_code !== undefined && data.return_code !== 0));
-                results.push({ name: r.name, ok, msg: ok ? '성공' : (data.error || data.return_msg) });
+                if (ok) {
+                    const msg = qty < origQty ? `성공 (매수가능수량 기준 ${qty}주로 조정)` : '성공';
+                    results.push({ name: r.name, ok: true, msg });
+                } else {
+                    const errMsg = data.error || data.return_msg || '';
+                    // 확인 직후에도 또 가격이 움직여 거부된 경우에 대한 마지막 안전망
+                    const retried = await retryBuyWithAffordableQty({ ...r, price, diff: qty }, errMsg);
+                    results.push(retried);
+                }
             } catch (e) {
                 results.push({ name: r.name, ok: false, msg: e.message });
             }
@@ -2887,12 +2979,12 @@
                 const profitColor = profit >= 0 ? '#dc2626' : '#2563eb';
                 const baseDtLabel = sum.base_dt ? sum.base_dt.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3') : '-';
                 summaryHtml = `<div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:14px 18px; margin-bottom:16px; display:flex; gap:32px; flex-wrap:wrap;">
-                    <div><div style="font-size:11px; color:#64748b; margin-bottom:2px;">기준일 자산 (${baseDtLabel})</div><div style="font-size:15px; font-weight:600;">${formatNumber(sum.base_asset || 0)}원</div></div>
                     <div><div style="font-size:11px; color:#64748b; margin-bottom:2px;">총평가금액</div><div style="font-size:18px; font-weight:700;">${formatNumber(sum.total_asset)}원</div></div>
                     <div><div style="font-size:11px; color:#64748b; margin-bottom:2px;">총순입금 (${baseDtLabel} 이후)</div><div style="font-size:18px; font-weight:700;">${formatNumber(sum.net_in)}원</div></div>
                     <div><div style="font-size:11px; color:#64748b; margin-bottom:2px;">수익금액 / 수익률</div><div style="font-size:18px; font-weight:700; color:${profitColor};">${profit >= 0 ? '+' : ''}${formatNumber(profit)}원 (${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%)</div></div>
                     ${sum.invt_bsamt ? `<div><div style="font-size:11px; color:#64748b; margin-bottom:2px;">투자원금평잔</div><div style="font-size:14px; font-weight:600;">${formatNumber(sum.invt_bsamt)}원</div></div>` : ''}
                     ${sum.tern_rt != null ? `<div><div style="font-size:11px; color:#64748b; margin-bottom:2px;">회전율</div><div style="font-size:14px; font-weight:600;">${sum.tern_rt.toFixed(2)}%</div></div>` : ''}
+                    ${sum.tax_cmsn ? `<div><div style="font-size:11px; color:#64748b; margin-bottom:2px;">누적 수수료/세금 (${baseDtLabel} 이후)</div><div style="font-size:14px; font-weight:600;">${formatNumber(sum.tax_cmsn)}원</div></div>` : ''}
                 </div>`;
             }
         } catch (e) {}
