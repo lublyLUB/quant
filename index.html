@@ -763,8 +763,12 @@
                 handleFetchHoldings(false);
             }
             startOrderPolling();
+        } else if (menuType === 'portfolio') {
+            // 포트폴리오 메뉴도 투자실행과 동일하게 실시간 현재가 반영이 되도록 폴링 유지
+            if (!holdingsLoaded) handleFetchHoldings(true);
+            startOrderPolling();
+            document.getElementById("open-orders-section").style.display = 'none';
         } else {
-            if (menuType === 'portfolio' && !holdingsLoaded) handleFetchHoldings(true);
             stopOrderPolling();
             document.getElementById("open-orders-section").style.display = 'none';
         }
@@ -1030,12 +1034,17 @@
             const metrics = stockMetrics[s.name] || {};
             const gradeColor = GRADE_COLORS[grade] || '#64748b';
             const tip = (text, desc) => `<span title="${desc}">${text}</span>`;
+            // 확정·비가역(거래소가 이미 결론 낸 상태) — 굵은 빨간 글씨로 강하게 구분
+            const tipStrong = (text, desc) => `<span title="${desc}" style="color:#dc2626; font-weight:800;">${text}</span>`;
             const warnItems = [];
-            if (flags.includes('거래정지')) warnItems.push(tip('거래정지', '거래가 정지된 종목 — 매매 불가'));
-            if (flags.includes('관리')) warnItems.push(tip('관리', '관리종목 지정 — 상장폐지 위험'));
-            if (flags.includes('투자경고')) warnItems.push(tip('투자경고', '투자경고 또는 단기과열 — 이상 급등 주의'));
-            if (flags.includes('관리우려')) warnItems.push(tip('관리우려', '관리종목 지정 우려 — 실질심사 가능성'));
+            if (flags.includes('정리매매(상장폐지)')) warnItems.push(tipStrong('⛔정리매매', '정리매매 중 — 거래소가 상장폐지를 확정하고 마지막 매매 기회를 주는 기간 (확정·비가역)'));
+            if (flags.includes('거래정지')) warnItems.push(tipStrong('거래정지', '거래가 정지된 종목 — 매매 불가 (확정·비가역)'));
+            if (flags.includes('관리')) warnItems.push(tipStrong('관리', '관리종목 지정 — 상장폐지 위험 (확정·비가역)'));
+            if (flags.includes('자본잠식50%↑')) warnItems.push(tipStrong('자본잠식50%↑', '자본잠식률 50% 이상 — 자본금 대비 자본총계가 절반 미만, 관리종목 지정 요건 (확정·비가역)'));
+            if (flags.includes('투자경고')) warnItems.push(tip('투자경고', '투자경고 또는 단기과열 — 이상 급등 주의 (잠정·가역)'));
+            if (flags.includes('관리우려')) warnItems.push(tip('관리우려', '관리종목 지정 우려 — 실질심사 가능성 (잠정·가역)'));
             if (flags.includes('2천만↓')) warnItems.push(tip('2천만↓', '일평균 거래대금 2천만원 미만 — 유동성 부족'));
+            if (flags.includes('증거금100%')) warnItems.push(tip('증거금100%', '증거금 100% 종목 — 미수/신용 매수 불가, 현금 100%로만 매수 가능'));
             if (metrics.f_score != null && metrics.f_score <= 2) warnItems.push(tip(`F-S:${metrics.f_score}`, `신F-스코어 ${metrics.f_score}점 — 정상 3점 기준, 낮을수록 재무 악화`));
             if (metrics.gpa != null && metrics.gpa <= 0) warnItems.push(tip(`GP/A:${metrics.gpa.toFixed(2)}`, 'GP/A 0 이하 — 매출총이익/자산 마이너스, 본업 수익성 저하'));
             if (metrics.pbr != null && metrics.pbr <= 0.25) warnItems.push(tip(`PBR:${metrics.pbr.toFixed(2)}`, 'PBR 0.25 이하 — 극저평가 또는 자본 훼손 가능성'));
@@ -1150,6 +1159,7 @@
             <th style="width:14px; padding:0;"></th>
             <th style="padding:6px 8px;">종목명</th>
             <th style="padding:6px 4px;">추천순위</th>
+            <th style="padding:6px 4px;">평단가</th>
             <th style="padding:6px 4px;">현재가</th>
             <th style="padding:6px 4px;">보유수량</th>
             <th style="padding:6px 4px;">수익률</th>
@@ -1195,6 +1205,7 @@
                 <td style="width:14px; padding:0; text-align:center;">${dot}</td>
                 <td style="padding:5px 8px; font-weight:500;">${getNameHtml(name)}</td>
                 <td style="padding:5px 4px; text-align:center; color:#64748b;">${rank}</td>
+                <td style="padding:5px 4px; text-align:right; color:#64748b;">${(h && h.purPrice) ? formatNumber(h.purPrice) + '원' : '-'}</td>
                 <td style="padding:5px 4px; text-align:right;">${price ? formatNumber(price) + '원' : '-'}</td>
                 <td style="padding:5px 4px; text-align:right;">${withHoldings ? formatNumber(qty) + '주' : '-'}</td>
                 <td style="padding:5px 4px; text-align:right; color:${prftColor}; font-weight:700;">${prftRt != null ? (prftRt >= 0 ? '+' : '') + prftRt.toFixed(2) + '%' : '-'}</td>
@@ -1214,11 +1225,22 @@
         document.getElementById("quant-table").innerHTML = html;
     }
 
+    // 확정·비가역 신호(관리종목/거래정지/정리매매/자본잠식50%↑) — 포트폴리오 확정 전 경고용
+    const HARD_RISK_FLAGS = ['관리', '거래정지', '정리매매(상장폐지)', '자본잠식50%↑'];
+
     function handleConfirmRebalance() {
         const statusEl = document.getElementById('rebalance-status');
         if (portfolioNames.length === 0) {
             statusEl.textContent = '종목이 없습니다. 즐겨찾기로 업데이트 후 확정해 주세요.';
             return;
+        }
+        const riskyNames = portfolioNames.filter(name =>
+            (stockFlags[name] || []).some(f => HARD_RISK_FLAGS.includes(f))
+        );
+        if (riskyNames.length > 0) {
+            if (!confirm(`⚠️ 아래 종목은 관리종목/거래정지/정리매매/자본잠식 등 확정된 위험 신호가 있습니다:\n${riskyNames.join(', ')}\n\n그래도 포트폴리오에 확정하시겠습니까?`)) {
+                return;
+            }
         }
         localStorage.setItem('quant_portfolio_names', JSON.stringify(portfolioNames));
         // 확정 시점의 등급 스냅샷 저장 (이후 악화 감지용)
@@ -1804,7 +1826,7 @@
                 // 로컬 서버 미실행 등 - 조용히 무시
             }
             // 보유 종목 실시간 체결가(0B) 반영 — REST /api/quotes 호출 없이 로컬 캐시만 읽음
-            if (holdingsLoaded && (currentMenu === 'invest' || currentMenu === 'rebalance')) {
+            if (holdingsLoaded && (currentMenu === 'invest' || currentMenu === 'portfolio')) {
                 applyRealtimeQuotes();
             }
         }, 3000);
@@ -1837,7 +1859,10 @@
                     changed = true;
                 }
             });
-            if (changed) renderInvestCalc();
+            if (changed) {
+                if (currentMenu === 'invest') renderInvestCalc();
+                else if (currentMenu === 'portfolio') renderRebalanceTable();
+            }
         } catch (e) {
             // 로컬 서버 미실행 등 - 조용히 무시
         }
@@ -2434,6 +2459,17 @@
                 finalQty = maxQty;
                 partialNote = `\n(매수가능수량 기준으로 목표 ${Math.abs(row.diff)}주 중 ${finalQty}주로 조정됨)`;
             }
+            // 단기과열/투자경고(잠정·가역) 확인 — 관리종목/거래정지/정리매매/투자위험(확정·비가역)은
+            // 서버 /api/order가 어느 경로든 동일하게 차단하므로 여기서 중복 체크하지 않는다.
+            try {
+                const warnResp = await fetch(`${ORDER_SERVER_URL}/api/stock_warnings?codes=${code}`);
+                const warnings = await warnResp.json();
+                if (['3', '5'].includes((warnings[code] || {}).orderWarning)) {
+                    if (!confirm(`⚠️ ${row.name}은(는) 투자경고/단기과열 상태입니다.\n계속 진행하시겠습니까?`)) return;
+                }
+            } catch (e) {
+                // 체크 실패 시 그냥 진행 — 확정·비가역 항목은 서버가 어차피 막아준다
+            }
         }
         if (!confirm(`${finalSide === 'buy' ? '매수' : '매도'} 주문을 실제로 전송합니다. (현재가로 재계산됨)\n종목코드: ${code} / 수량: ${finalQty}주 / 가격: ${finalPrice}원${partialNote}\n계속하시겠습니까?`)) return;
         try {
@@ -2596,26 +2632,20 @@
         let buyRows    = finalRows.filter(r => r.diff > 0);
         const results = [];
 
-        // 매수 대상 종목 투자유의 사전 체크 (ka10100)
+        // 매수 대상 종목 중 단기과열/투자경고(잠정·가역) 사전 확인 — 관리종목/거래정지/정리매매/투자위험
+        // (확정·비가역)은 서버 /api/order가 어느 경로든 동일하게 차단하므로 여기서 중복 체크하지 않는다.
         if (buyRows.length > 0) {
             statusEl.textContent = '매수 종목 투자유의 여부 확인 중...';
             try {
                 const warnResp = await fetch(`${ORDER_SERVER_URL}/api/stock_warnings?codes=${buyRows.map(r => r.code).join(',')}`);
                 const warnings = await warnResp.json();
-                const blocked = buyRows.filter(r => ['2', '4'].includes((warnings[r.code] || {}).orderWarning));
                 const cautioned = buyRows.filter(r => ['3', '5'].includes((warnings[r.code] || {}).orderWarning));
-                if (blocked.length > 0) {
-                    const names = blocked.map(r => r.name).join(', ');
-                    if (!confirm(`⛔ 아래 종목은 정리매매/투자위험으로 매수 주문을 차단합니다:\n${names}\n\n나머지 종목만 진행하시겠습니까?`)) return;
-                    blocked.forEach(r => results.push({ name: r.name, ok: false, msg: '투자유의종목 차단' }));
-                    buyRows = buyRows.filter(r => !blocked.find(b => b.code === r.code));
-                }
                 if (cautioned.length > 0) {
                     const names = cautioned.map(r => `${r.name}(단기과열/투자경고)`).join(', ');
                     if (!confirm(`⚠️ 아래 종목은 투자경고/단기과열 상태입니다:\n${names}\n\n계속 진행하시겠습니까?`)) return;
                 }
             } catch (e) {
-                // 체크 실패 시 그냥 진행 (네트워크 오류 등)
+                // 체크 실패 시 그냥 진행 (네트워크 오류 등) — 확정·비가역 항목은 서버가 어차피 막아준다
             }
         }
 
@@ -2906,7 +2936,8 @@
             const data = await resp.json();
             if (data.error) throw new Error(data.error);
             statusEl.textContent = `✅ 기준점 기록 완료 (${data.date}, ${sourceLabel} 기준)`;
-            renderPerformanceTable();
+            // 저장 중 다른 메뉴로 이동했을 수 있으므로, 성과추적 화면에 있을 때만 다시 그린다
+            if (currentMenu === 'performance') renderPerformanceTable();
         } catch (e) {
             statusEl.textContent = `❌ 로컬 주문 서버 연결 실패 - ${e.message}`;
         }
@@ -2920,7 +2951,8 @@
             const data = await resp.json();
             if (data.error) throw new Error(data.error);
             statusEl.textContent = `✅ 스냅샷 저장 완료 (${data.datetime})`;
-            renderPerformanceTable();
+            // 저장 중 다른 메뉴로 이동했을 수 있으므로, 성과추적 화면에 있을 때만 다시 그린다
+            if (currentMenu === 'performance') renderPerformanceTable();
         } catch (e) {
             statusEl.textContent = `❌ 스냅샷 저장 실패 - ${e.message}`;
         }

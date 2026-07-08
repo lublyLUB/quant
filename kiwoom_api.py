@@ -188,6 +188,10 @@ def get_stock_list_flags():
                     "is_admin_warning": "우려" in audit,
                     "is_halt":          "정지" in state or state == "2",
                     "is_inv_warn":      warn in ("3", "4", "5"),
+                    "is_margin100":     "증거금100%" in state,
+                    # orderWarning "2" = 정리매매. 경고가 아니라 거래소가 상장폐지를 이미
+                    # 확정하고 마지막 매매 기회를 주는 기간이라 별도로 구분해서 표시한다.
+                    "is_delisting":     warn == "2",
                 }
             cont_yn  = resp.headers.get("cont-yn", "N")
             next_key = resp.headers.get("next-key", "")
@@ -758,6 +762,29 @@ def check_stock_warning(stk_cds):
         except Exception:
             warnings[code] = {"orderWarning": "0", "state": "", "name": ""}
     return warnings
+
+
+def get_hard_block_reason(stk_cd):
+    """매수를 원천 차단해야 하는 "확정·비가역" 조치(관리종목/거래정지/정리매매/투자위험)인지 판정.
+
+    거래소가 이미 결론을 내린 상태라 되돌아갈 여지가 없는 신호만 여기서 막는다.
+    단기과열/투자경고/관리종목우려처럼 잠정적이고 가역적인 신호는 여기서 다루지 않고
+    (개별 판단 여지가 있으므로) 클라이언트의 확인창 흐름에 맡긴다.
+
+    반환: 차단 사유 문자열, 없으면 None.
+    """
+    w = check_stock_warning([stk_cd]).get(stk_cd, {})
+    state = w.get("state", "")
+    warn = str(w.get("orderWarning", "0"))
+    if "정지" in state:
+        return "거래정지"
+    if "관리" in state and "우려" not in state:
+        return "관리종목"
+    if warn == "2":
+        return "정리매매(상장폐지확정)"
+    if warn == "4":
+        return "투자위험"
+    return None
 
 
 def get_daily_trade_amount(stk_cd, n_days=20):

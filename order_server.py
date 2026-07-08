@@ -252,15 +252,24 @@ def _load_low_volume_names() -> set:
     return names
 
 
-def _send_sell_alert(stk_cd: str, qty: int, name: str, reason: str) -> int | None:
-    """긴급 매도 알림 전송 후 message_id 반환."""
+def _send_sell_alert(stk_cd: str, qty: int, name: str, reason: str, is_urgent: bool = True) -> int | None:
+    """매도 관련 알림 전송 후 message_id 반환.
+
+    is_urgent=True  : 확정·비가역 조치(관리종목/거래정지/정리매매/투자위험) — 되돌릴 여지가 없어 즉시 대응 권고
+    is_urgent=False : 잠정·가역 신호(관리우려/단기과열/투자경고/거래대금부족) — 상황을 보며 판단, 강제 아님
+    """
+    if is_urgent:
+        header = "🚨 <b>긴급 매도 알림</b>"
+        cta = "👉 이 메시지에 <b>매도</b> 또는 <b>아니</b>로 회신하세요.\n(5분 내 응답 없으면 재발송)"
+    else:
+        header = "👀 <b>보유 종목 주의</b>"
+        cta = "👉 상황을 보고 필요하다고 판단되면 <b>매도</b>로 회신하세요. (즉시 조치 필요는 아닙니다)"
     msg_id = _send_telegram_with_id(
-        f"🚨 <b>긴급 매도 알림</b>\n"
+        f"{header}\n"
         f"종목: <b>{name}</b> ({stk_cd})\n"
         f"보유수량: <b>{qty:,}주</b>\n"
         f"사유: <b>{reason}</b>\n\n"
-        f"👉 이 메시지에 <b>매도</b> 또는 <b>아니</b>로 회신하세요.\n"
-        f"(5분 내 응답 없으면 재발송)"
+        f"{cta}"
     )
     return msg_id
 
@@ -373,10 +382,12 @@ def _check_new_deposit():
 
 
 def _check_holding_conditions(check_volume: bool = False):
-    """보유 종목의 4가지 긴급 매도 조건 점검.
+    """보유 종목 조건 점검 — 확정·비가역(즉시 대응) / 잠정·가역(상황 판단) 두 등급으로 구분.
 
-    check_volume=True 이면 5억 미만 거래대금도 체크 (08:00 1회 실행).
-    관리종목·투자경고·거래정지는 매 10분 점검.
+    확정·비가역 — 거래소가 이미 결론 내려 되돌릴 여지가 없음: 거래정지, 관리종목, 정리매매(상장폐지확정), 투자위험
+    잠정·가역   — 일시적이고 며칠~몇 주 내 풀리는 경우가 많음: 관리종목 지정우려, 단기과열, 투자경고, 거래대금부족
+
+    check_volume=True 이면 5억 미만 거래대금도 체크 (08:00 1회 실행). 나머지는 매 10분 점검.
     """
     try:
         h = kiwoom_api.get_holdings()
@@ -398,31 +409,40 @@ def _check_holding_conditions(check_volume: bool = False):
             qty   = qty_map.get(code, 0)
             state = w.get("state", "")
             owarn = str(w.get("orderWarning", "0"))
-            reasons = []
 
-            if "정지" in state or state == "2":
-                reasons.append("거래정지")
+            urgent_reasons = []  # 확정·비가역 — 즉시 대응 권고
+            watch_reasons  = []  # 잠정·가역 — 상황을 보며 판단, 강제 아님
+
+            if "정지" in state:
+                urgent_reasons.append("거래정지")
             if "관리" in state and "우려" not in state:
-                reasons.append("관리종목")
+                urgent_reasons.append("관리종목")
+            if owarn == "2":
+                urgent_reasons.append("정리매매(상장폐지확정)")
+            if owarn == "4":
+                urgent_reasons.append("투자위험")
             if "우려" in state:
-                reasons.append("관리우려")
-            if owarn in ("3", "4", "5"):
-                reasons.append({"3": "단기과열", "4": "투자위험", "5": "투자경고"}.get(owarn, "투자경고"))
+                watch_reasons.append("관리종목 지정우려")
+            if owarn == "3":
+                watch_reasons.append("단기과열")
+            if owarn == "5":
+                watch_reasons.append("투자경고")
             if check_volume and name in low_vol_names:
-                reasons.append("거래대금 5억 미만")
+                watch_reasons.append("거래대금 5억 미만")
 
-            if not reasons:
+            if not urgent_reasons and not watch_reasons:
                 continue
 
-            reason_str = " · ".join(reasons)
+            is_urgent = bool(urgent_reasons)
+            reason_str = " · ".join(urgent_reasons + watch_reasons)
             # 이미 대기 중인 알림 있으면 5분 경과 시 재발송
             existing = next((v for v in _pending_sell_alerts.values() if v["stk_cd"] == code), None)
             if existing:
                 if (datetime.now() - existing["last_sent"]).total_seconds() >= 300:
                     existing["last_sent"] = datetime.now()
-                    _send_sell_alert(code, qty, name, reason_str)
+                    _send_sell_alert(code, qty, name, reason_str, is_urgent)
             else:
-                msg_id = _send_sell_alert(code, qty, name, reason_str)
+                msg_id = _send_sell_alert(code, qty, name, reason_str, is_urgent)
                 if msg_id:
                     _pending_sell_alerts[msg_id] = {
                         "stk_cd":    code,
@@ -724,9 +744,17 @@ def order():
         return jsonify({"error": "stk_cd, qty(양의 정수), side(buy/sell)는 필수입니다."}), 400
     if raw_price not in (None, "") and price is None:
         return jsonify({"error": "price는 양수여야 합니다."}), 400
-    # VI 발동 종목 매수 차단
-    if side == "buy" and stk_cd in _vi_active:
-        return jsonify({"error": f"VI 발동 중인 종목({stk_cd})은 매수할 수 없습니다. VI 해제 후 재시도하세요."}), 400
+    if side == "buy":
+        # VI 발동(잠정·가역) — 해제되면 자동으로 다시 매수 가능
+        if stk_cd in _vi_active:
+            return jsonify({"error": f"VI 발동 중인 종목({stk_cd})은 매수할 수 없습니다. VI 해제 후 재시도하세요."}), 400
+        # 확정·비가역 조치(관리종목/거래정지/정리매매/투자위험) — 개별/일괄 주문 어느 경로든 동일하게 차단
+        try:
+            block_reason = kiwoom_api.get_hard_block_reason(stk_cd)
+        except Exception:
+            block_reason = None  # 조회 실패 시엔 차단하지 않고 키움 서버 판단에 맡김
+        if block_reason:
+            return jsonify({"error": f"{block_reason} 종목({stk_cd})은 매수할 수 없습니다."}), 400
     try:
         result = kiwoom_api.place_order(stk_cd, qty, side, price)
         return jsonify(result)

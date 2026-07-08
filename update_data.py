@@ -59,6 +59,7 @@ DART_ACCOUNTS = {
     "current_liabilities": ("BS", "ifrs-full_CurrentLiabilities"),
     "liabilities": ("BS", "ifrs-full_Liabilities"),
     "equity": ("BS", "ifrs-full_Equity"),
+    "issued_capital": ("BS", "ifrs-full_IssuedCapital"),  # 자본금 - 자본잠식률 계산용
     "revenue": ("IS", "ifrs-full_Revenue"),
     "cost_of_sales": ("IS", "ifrs-full_CostOfSales"),
     "net_income": ("IS", "ifrs-full_ProfitLoss"),
@@ -748,13 +749,19 @@ def fetch_krx_market_data():
                 is_admin_warning = f["is_admin_warning"]
                 is_halt          = f["is_halt"]
                 is_inv_warn      = f["is_inv_warn"]
+                is_margin100     = f.get("is_margin100", False)
+                is_delisting     = f.get("is_delisting", False)
             elif ka10099_available:
                 # ka10099 조회됐으나 해당 종목 미포함 → 정상 종목으로 간주
                 is_admin, is_admin_warning, is_halt, is_inv_warn = False, False, False, False
+                is_margin100 = False
+                is_delisting = False
             else:
                 # ka10099 미사용(주말 등) → DART로 관리종목만 판정, 거래정지/투자경고는 False
                 is_admin, is_admin_warning, _, _ = get_admin_status(corp_code, admin_issue_cache)
                 is_halt, is_inv_warn = False, False
+                is_margin100 = False
+                is_delisting = False
 
             # 거래대금: ka10032 bulk 조회 결과 우선, 없으면 캐시, 없으면 기존값
             cached_ta = trade_amt_cache.get(s["code"])
@@ -774,6 +781,13 @@ def fetch_krx_market_data():
             assets = fin.get("assets", 0)
             liabilities = fin.get("liabilities", 0)
             equity = fin.get("equity", assets - liabilities)
+            issued_capital = fin.get("issued_capital")
+            # 자본잠식률 = (자본금 - 자본총계) / 자본금 * 100. 자본금이 없거나 0이면 판단 불가.
+            capital_impair_rt = (
+                round((issued_capital - equity) / issued_capital * 100, 1)
+                if issued_capital else None
+            )
+            is_capital_impair_50 = capital_impair_rt is not None and capital_impair_rt >= 50
             current_assets = fin.get("current_assets", 0)
             current_liabilities = fin.get("current_liabilities", 0)
             borrowings = fin.get("borrowings", liabilities)
@@ -898,6 +912,10 @@ def fetch_krx_market_data():
                 "is_admin_warning": is_admin_warning,
                 "is_halt": is_halt,
                 "is_inv_warn": is_inv_warn,
+                "is_margin100": is_margin100,
+                "is_delisting": is_delisting,
+                "is_capital_impair_50": is_capital_impair_50,
+                "capital_impair_rt": capital_impair_rt,
                 "trade_value": avg_trade_amt,
                 "dividend_yield": dividend_yield,
             })
@@ -1509,6 +1527,12 @@ def fetch_krx_market_data():
             tags.append("거래정지")
         if s.get("is_inv_warn"):
             tags.append("투자경고")
+        if s.get("is_delisting"):
+            tags.append("정리매매(상장폐지)")
+        if s.get("is_margin100"):
+            tags.append("증거금100%")
+        if s.get("is_capital_impair_50"):
+            tags.append("자본잠식50%↑")
         if (s.get("trade_value") or 0) < 20_000_000:
             tags.append("2천만↓")
         if tags:
