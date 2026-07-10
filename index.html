@@ -535,6 +535,7 @@
                 ${chip('수익률', `<span style="color:${prftRtColor};font-weight:700;">${prftRtVal >= 0 ? '+' : ''}${prftRtVal.toFixed(2)}%</span>`)}
                 ${dep ? chip('주문가능', `${formatNumber(dep.ordAlow)}원`) : ''}
                 ${chip('현금', `${formatNumber(holdingsAccountInfo.cash)}원`)}
+                ${(dep && dep.profaCh > 0) ? chip('위탁증거금', `${formatNumber(dep.profaCh)}원`, '#94a3b8') : ''}
             </span>
             ${buildToggle()}
         </div>`;
@@ -667,16 +668,16 @@
         }
 
         let html = `<thead><tr>
-            <th style="width:11%;">종목명</th><th style="width:6%;">순위</th><th style="width:8%;">현재가</th>
-            <th style="width:7%;">체결강도</th>
+            <th style="width:10%;">종목명</th><th style="width:5%;">순위</th><th style="width:8%;">현재가</th>
+            <th style="width:7%;">체결강도</th><th style="width:7%;">상한가</th>
             <th style="width:8%;">보유수량</th><th style="width:8%;">목표수량</th>
             <th style="width:9%;">평가금액</th><th style="width:9%;">목표금액</th>
-            <th style="width:10%;">목표비중차이</th><th style="width:12%;">매수/매도</th>
-            <th style="width:12%;">주문</th>
+            <th style="width:9%;">목표비중차이</th><th style="width:11%;">매수/매도</th>
+            <th style="width:11%;">주문</th>
         </tr></thead><tbody>`;
 
         if (rows.length === 0) {
-            html += `<tr><td colspan="11" style="padding:20px; color:#94a3b8;">계산 결과 주문할 종목이 없습니다.</td></tr>`;
+            html += `<tr><td colspan="12" style="padding:20px; color:#94a3b8;">계산 결과 주문할 종목이 없습니다.</td></tr>`;
         } else {
             rows.forEach(r => {
                 let diffLabel;
@@ -700,6 +701,7 @@
                     <td>${rankLabel}</td>
                     <td>${r.priceUnknown ? '-' : formatNumber(r.price) + '원'}</td>
                     <td>${strengthLabel(r.code)}</td>
+                    <td>${upperLimitDistanceLabel(r.code)}</td>
                     <td>${formatNumber(r.curQty)}주</td><td>${r.priceUnknown ? '-' : formatNumber(r.targetQty) + '주'}</td>
                     <td>${curValue}</td><td>${targetValue}</td>
                     <td>${weightLabel}</td><td>${diffLabel}</td><td>${orderBtn}</td>
@@ -771,6 +773,11 @@
         } else {
             stopOrderPolling();
             document.getElementById("open-orders-section").style.display = 'none';
+        }
+        if (menuType === 'recommend') {
+            startRecommendPricePolling();
+        } else {
+            stopRecommendPricePolling();
         }
         document.getElementById("strategy-tabs").style.display = (nonStrategyMenus.includes(menuType) && menuType !== 'recommend') ? 'none' : 'grid';
         const buyDesc = BUY_STRATEGY_DESC[menuType];
@@ -1044,7 +1051,8 @@
             if (flags.includes('투자경고')) warnItems.push(tip('투자경고', '투자경고 또는 단기과열 — 이상 급등 주의 (잠정·가역)'));
             if (flags.includes('관리우려')) warnItems.push(tip('관리우려', '관리종목 지정 우려 — 실질심사 가능성 (잠정·가역)'));
             if (flags.includes('2천만↓')) warnItems.push(tip('2천만↓', '일평균 거래대금 2천만원 미만 — 유동성 부족'));
-            if (flags.includes('증거금100%')) warnItems.push(tip('증거금100%', '증거금 100% 종목 — 미수/신용 매수 불가, 현금 100%로만 매수 가능'));
+            // 증거금100%는 소형주 위주 전략에서는 사실상 전 종목에 해당해 변별력이 없어 배지에서 제외
+            // (is_margin100 데이터/플래그 자체는 유지 — 매수 실행 단계에서는 여전히 의미가 있음)
             if (metrics.f_score != null && metrics.f_score <= 2) warnItems.push(tip(`F-S:${metrics.f_score}`, `신F-스코어 ${metrics.f_score}점 — 정상 3점 기준, 낮을수록 재무 악화`));
             if (metrics.gpa != null && metrics.gpa <= 0) warnItems.push(tip(`GP/A:${metrics.gpa.toFixed(2)}`, 'GP/A 0 이하 — 매출총이익/자산 마이너스, 본업 수익성 저하'));
             if (metrics.pbr != null && metrics.pbr <= 0.25) warnItems.push(tip(`PBR:${metrics.pbr.toFixed(2)}`, 'PBR 0.25 이하 — 극저평가 또는 자본 훼손 가능성'));
@@ -1154,17 +1162,18 @@
         const totalHoldingValue = Object.values(holdingsByCode).reduce((s, h) => s + (h.qty > 0 ? h.qty * h.price : 0), 0);
 
         let html = `<tbody><tr><td style="padding:8px 0; text-align:left;">
-        <table style="width:100%; font-size:11px; border-collapse:collapse;">
+        <table style="width:100%; font-size:11px; border-collapse:collapse; table-layout:fixed;">
         <thead><tr style="border-bottom:1px solid #e2e8f0; background:#f8fafc;">
-            <th style="width:14px; padding:0;"></th>
-            <th style="padding:6px 8px;">종목명</th>
-            <th style="padding:6px 4px;">추천순위</th>
-            <th style="padding:6px 4px;">평단가</th>
-            <th style="padding:6px 4px;">현재가</th>
-            <th style="padding:6px 4px;">보유수량</th>
-            <th style="padding:6px 4px;">수익률</th>
-            <th style="padding:6px 4px;">비중</th>
-            <th style="padding:6px 4px;">상태</th>
+            <th style="width:3%; padding:0;"></th>
+            <th style="padding:6px 8px; width:17%;">종목명</th>
+            <th style="padding:6px 4px; width:6%;">추천순위</th>
+            <th style="padding:6px 4px; width:11%;">평단가</th>
+            <th style="padding:6px 4px; width:11%;">현재가</th>
+            <th style="padding:6px 4px; width:10%;">상한가</th>
+            <th style="padding:6px 4px; width:9%;">보유수량</th>
+            <th style="padding:6px 4px; width:9%;">수익률</th>
+            <th style="padding:6px 4px; width:7%;">비중</th>
+            <th style="padding:6px 4px; width:17%;">상태</th>
         </tr></thead><tbody>`;
 
         rows.forEach(({ name, inCurrent }) => {
@@ -1203,10 +1212,11 @@
 
             html += `<tr style="border-bottom:1px solid #f1f5f9; ${rowStyle}">
                 <td style="width:14px; padding:0; text-align:center;">${dot}</td>
-                <td style="padding:5px 8px; font-weight:500;">${getNameHtml(name)}</td>
+                <td style="padding:5px 8px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${getNameHtml(name)}</td>
                 <td style="padding:5px 4px; text-align:center; color:#64748b;">${rank}</td>
                 <td style="padding:5px 4px; text-align:right; color:#64748b;">${(h && h.purPrice) ? formatNumber(h.purPrice) + '원' : '-'}</td>
                 <td style="padding:5px 4px; text-align:right;">${price ? formatNumber(price) + '원' : '-'}</td>
+                <td style="padding:5px 4px; text-align:right;">${code ? upperLimitDistanceLabel(code) : '-'}</td>
                 <td style="padding:5px 4px; text-align:right;">${withHoldings ? formatNumber(qty) + '주' : '-'}</td>
                 <td style="padding:5px 4px; text-align:right; color:${prftColor}; font-weight:700;">${prftRt != null ? (prftRt >= 0 ? '+' : '') + prftRt.toFixed(2) + '%' : '-'}</td>
                 <td style="padding:5px 4px; text-align:right;">${weight}</td>
@@ -1756,6 +1766,29 @@
     }
 
     const ORDER_SERVER_URL = 'http://127.0.0.1:5050';
+
+    // 로컬 주문 서버 인증 토큰 - 브라우저에만 저장(localStorage), git에는 절대 포함되지 않음.
+    // 최초 1회만 입력하면 이후엔 자동으로 매 요청에 실림.
+    function getApiAuthToken() {
+        let t = localStorage.getItem('quant_api_token');
+        if (!t) {
+            t = prompt('주문 서버 인증 토큰을 입력하세요 (최초 1회만):');
+            if (t) localStorage.setItem('quant_api_token', t.trim());
+        }
+        return t ? t.trim() : '';
+    }
+
+    (function installAuthTokenFetchWrapper() {
+        const _origFetch = window.fetch;
+        window.fetch = function (input, init) {
+            const url = typeof input === 'string' ? input : (input && input.url) || '';
+            if (url.includes('127.0.0.1:5050') || url.includes('localhost:5050')) {
+                init = init || {};
+                init.headers = Object.assign({}, init.headers, { 'X-API-Token': getApiAuthToken() });
+            }
+            return _origFetch(input, init);
+        };
+    })();
     const ORDER_POLL_INTERVAL_MS = 30000;
     const WEIGHT_DEVIATION_ALERT_PCT = 10;  // 목표 대비 비중 차이가 이 %를 넘으면 알림
     let holdingsByCode = {};   // stk_cd -> {name, qty, price}
@@ -1798,10 +1831,11 @@
             handleFetchHoldings(true);
             checkOrderFillStatus();
         }, ORDER_POLL_INTERVAL_MS);
+        // 안전망 — realtimeStatusTimer의 seq 변화 감지로 대부분 즉시 갱신되므로, 이건 웹소켓 유실 대비용
         openOrdersPollTimer = setInterval(() => {
             if (currentMenu !== 'order') return;
             renderOpenOrdersSection();
-        }, 60000);
+        }, 120000);
         // 웹소켓 이벤트 카운터를 가볍게(3초) 폴링 — 키움 REST 호출 없이 로컬 서버 메모리만 읽으므로 저비용.
         // 값이 바뀐 순간에만 실제 REST 재조회를 트리거해 지연을 최소화한다.
         realtimeStatusTimer = setInterval(async () => {
@@ -1832,6 +1866,17 @@
         }, 3000);
     }
 
+    // 상한가까지 남은 거리(%p) — 한국 증시는 전일종가 대비 ±30%가 상하한가로 고정되어 있어,
+    // 등락률(flu_rt)만 있으면 추가 API 호출 없이 근사 계산 가능.
+    function upperLimitDistanceLabel(code) {
+        const flu = (holdingsByCode[code] && holdingsByCode[code].fluRt != null) ? holdingsByCode[code].fluRt
+            : (fluRtByCode[code] != null ? fluRtByCode[code] : null);
+        if (flu == null) return '<span style="color:#cbd5e1;">-</span>';
+        const dist = 30 - flu;
+        const color = dist <= 3 ? '#dc2626' : (dist <= 10 ? '#d97706' : '#64748b');
+        return `<span style="color:${color};">${dist.toFixed(1)}%p</span>`;
+    }
+
     // 0B 체결강도(228) — REST 현재가 조회엔 없는 값. 100% 기준 매수/매도 체결 세기 비교.
     function strengthLabel(code) {
         const q = code ? realtimeQuotesByCode[code] : null;
@@ -1840,6 +1885,19 @@
         if (isNaN(val)) return '<span style="color:#cbd5e1;">-</span>';
         const color = val >= 120 ? '#dc2626' : val <= 80 ? '#2563eb' : '#64748b';
         return `<span style="color:${color};">${val.toFixed(1)}%</span>`;
+    }
+
+    // 실시간 체결가로 보유종목 시세가 바뀌면 평가금액/평가손익/수익률/총자산을 다시 계산해 요약 칩에 반영.
+    // REST 재조회(kt00018 등) 없이, 이미 갖고 있는 현금(cash)·매입금액(totalPurchase)에 최신 시세만 곱해 근사한다.
+    function recomputeAccountInfoFromLivePrices() {
+        if (!holdingsAccountInfo) return;
+        const totalEval = Object.values(holdingsByCode)
+            .reduce((sum, h) => sum + (h.qty > 0 ? h.qty * h.price : 0), 0);
+        holdingsAccountInfo.totalEval = totalEval;
+        holdingsAccountInfo.totalAsset = holdingsAccountInfo.cash + totalEval;
+        holdingsAccountInfo.totalPL = totalEval - holdingsAccountInfo.totalPurchase;
+        holdingsAccountInfo.totalPrftRt = holdingsAccountInfo.totalPurchase > 0
+            ? (holdingsAccountInfo.totalPL / holdingsAccountInfo.totalPurchase * 100) : 0;
     }
 
     // 0B(실시간체결가) 캐시를 holdingsByCode에 병합 — 키움 REST 호출 없이 화면 시세만 갱신
@@ -1860,11 +1918,44 @@
                 }
             });
             if (changed) {
-                if (currentMenu === 'invest') renderInvestCalc();
-                else if (currentMenu === 'portfolio') renderRebalanceTable();
+                recomputeAccountInfoFromLivePrices();
+                if (currentMenu === 'invest') { renderInvestCalc(); renderInvestSummary(); }
+                else if (currentMenu === 'portfolio') { renderRebalanceTable(); renderPortfolioSummary(); }
             }
         } catch (e) {
             // 로컬 서버 미실행 등 - 조용히 무시
+        }
+    }
+
+    let recommendPricePollTimer = null;
+
+    // 추천 메뉴는 수천 종목을 다뤄서 전체 실시간 구독은 무리지만, 화면에 실제로 보이는
+    // 종목(대개 top50 안팎)만큼은 REST 배치 조회로 장중 현재가를 따라가게 한다.
+    function startRecommendPricePolling() {
+        stopRecommendPricePolling();
+        recommendPricePollTimer = setInterval(async () => {
+            if (currentMenu !== 'recommend' || recommendDataCache.length === 0) return;
+            const codes = recommendDataCache.map(s => s.code || findStockCode(s.name)).filter(Boolean);
+            if (codes.length === 0) return;
+            try {
+                const prices = await fetchFreshQuotes(codes);
+                let changed = false;
+                recommendDataCache.forEach(s => {
+                    const code = s.code || findStockCode(s.name);
+                    const p = code ? prices[code] : null;
+                    if (p && p !== s.price) { s.price = p; changed = true; }
+                });
+                if (changed && currentMenu === 'recommend') renderRecommendTable(filterBySearch(recommendDataCache));
+            } catch (e) {
+                // 로컬 서버 미실행 등 - 조용히 무시
+            }
+        }, 15000);
+    }
+
+    function stopRecommendPricePolling() {
+        if (recommendPricePollTimer) {
+            clearInterval(recommendPricePollTimer);
+            recommendPricePollTimer = null;
         }
     }
 
@@ -1977,6 +2068,7 @@
                         d1Entr:     parseInt(dataDep.d1_entra || '0', 10) || 0,
                         d1PymnAlow: parseInt(dataDep.d1_pymn_alow_amt || '0', 10) || 0,
                         d2Entr:     parseInt(dataDep.d2_entra || '0', 10) || 0,
+                        profaCh:    parseInt(dataDep.profa_ch || '0', 10) || 0,  // 보유종목 위탁증거금(현금)
                     };
                     if (depositInfo.ordAlow > 0) ordAlowa = depositInfo.ordAlow;
                 }

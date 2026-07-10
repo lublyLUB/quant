@@ -25,6 +25,21 @@ import kiwoom_api
 app = Flask(__name__)
 CORS(app)  # 로컬 전용 서버이므로 file:// 출처(브라우저)도 허용
 
+try:
+    from config_local import API_AUTH_TOKEN
+except ImportError:
+    API_AUTH_TOKEN = None
+
+
+@app.before_request
+def _require_api_token():
+    if request.method == "OPTIONS":
+        return  # CORS preflight는 인증 없이 통과
+    if not API_AUTH_TOKEN:
+        return  # 토큰 미설정 시 기존처럼 무인증 통과 (하위 호환)
+    if request.headers.get("X-API-Token") != API_AUTH_TOKEN:
+        return jsonify({"error": "인증 토큰이 없거나 올바르지 않습니다."}), 401
+
 # 성과추적 데이터 (기준점/스냅샷) - 이 PC 안에만 저장, 깃허브에는 올리지 않음
 PERFORMANCE_FILE  = os.path.join(os.path.dirname(os.path.abspath(__file__)), "performance_history.json")
 PORTFOLIO_FILE    = os.path.join(os.path.dirname(os.path.abspath(__file__)), "portfolio_settings.json")
@@ -66,6 +81,66 @@ def _load_strategy_ranks() -> dict:
     return result
 
 
+# index.html computeRecommendData()의 "기본 설정"(전체 종목·소형주 토글 off·표시 20개) 기준 복제.
+# 브라우저 localStorage에만 있는 사용자별 토글(소형주 모드, 체크한 전략, 계절제외 등)은 서버가
+# 알 수 없어서 정확히 똑같이 재현하진 못하지만, 기존의 "매칭된 전략끼리만 평균"보다는
+# 실제 화면의 종합순위(보르다 카운트)에 훨씬 가깝다.
+_RECOMMEND_DATA_KEYS = {
+    "fscore": "fscore_value", "momentum": "momentum_value", "ncav": "ncav_value",
+    "super": "super_value", "strategy15": "quality_value", "strategy16": "fama_value",
+    "strategy18": "super_quality_value", "strategy19": "value_momentum_value",
+    "strategy20": "quality_momentum_value", "strategy21": "ultra_value",
+}
+_RECOMMEND_NO_DISPLAY_LIMIT = {"ncav", "strategy16"}
+_RECOMMEND_DISPLAY_N = 20
+
+
+def _compute_recommend_top50() -> set:
+    """추천 메뉴 종합순위(보르다 카운트, 기본 설정 기준) top50에 드는 종목명 집합을 반환."""
+    if not os.path.exists(DATA_JS_PATH):
+        return set()
+    with open(DATA_JS_PATH, encoding="utf-8") as f:
+        content = f.read()
+    item_pattern = re.compile(r'"rank"\s*:\s*(\d+)[^}]*"name"\s*:\s*"([^"]+)"', re.DOTALL)
+
+    entries = []  # [{"map": {name: rank}, "penalty": int}]
+    for strat_key, data_key in _RECOMMEND_DATA_KEYS.items():
+        m = re.search(r'"' + data_key + r'":\s*\[([^\]]*)\]', content, re.DOTALL)
+        if not m:
+            continue
+        rank_map = {}
+        for item in item_pattern.finditer(m.group(1)):
+            rank, name = int(item.group(1)), item.group(2)
+            if strat_key not in _RECOMMEND_NO_DISPLAY_LIMIT and rank > _RECOMMEND_DISPLAY_N:
+                continue
+            rank_map[name] = rank
+        if rank_map:
+            entries.append({"map": rank_map})
+
+    if not entries:
+        return set()
+    uniform_penalty = max(len(e["map"]) for e in entries) + 1
+
+    all_names = set()
+    for e in entries:
+        all_names.update(e["map"].keys())
+
+    results = []
+    for name in all_names:
+        matched = [e for e in entries if name in e["map"]]
+        if len(matched) < 2:
+            continue
+        borda_score = sum(e["map"].get(name, uniform_penalty) for e in entries) / len(entries)
+        results.append((name, borda_score))
+
+    results.sort(key=lambda x: x[1])
+    if not results:
+        return set()
+    base = results[:50]
+    cut_score = base[-1][1]
+    return {name for name, score in results if score <= cut_score}
+
+
 def _check_portfolio_ranks() -> str:
     """포트폴리오 종목의 전략별 순위를 체크해 텔레그램 메시지 생성."""
     history = _load_performance()
@@ -76,22 +151,17 @@ def _check_portfolio_ranks() -> str:
     if not portfolio:
         return "📋 포트폴리오 종목이 없습니다."
 
+    # 추천 메뉴 종합순위(보르다 카운트) 기준 top50 — "매칭된 전략끼리만 평균내면 실제로는
+    # 탈락했는데도 좋아 보이는" 문제가 있어 단순 평균 대신 이걸로 판정한다.
+    top50 = _compute_recommend_top50()
     ranks = _load_strategy_ranks()
-    strategy_count = len(set(k for v in ranks.values() for k in v))
 
-    lines_warn, lines_ok = [], []
+    lines_warn = []
     for name in portfolio:
         stock_ranks = ranks.get(name, {})
-        if not stock_ranks:
-            lines_warn.append(f"⚠️ {name}: 전략 데이터 없음")
-            continue
-        # 보르다 평균 순위
-        avg_rank = sum(stock_ranks.values()) / len(stock_ranks)
         matched = len(stock_ranks)
-        if avg_rank > ALERT_TOP_N or matched <= 1:
-            lines_warn.append(f"🔴 {name}: 평균순위 {avg_rank:.0f}위 ({matched}/{strategy_count}전략)")
-        else:
-            lines_ok.append(f"✅ {name}: 평균순위 {avg_rank:.0f}위 ({matched}전략)")
+        if name not in top50:
+            lines_warn.append(f"🔴 {name}: 종합순위 TOP50 밖 ({matched}개 전략에서만 순위권)")
 
     now_str = datetime.now().strftime("%m/%d %H:%M")
     header = f"📊 <b>포트폴리오 순위 점검</b> ({now_str})  {len(portfolio)}종목\n"
@@ -1689,10 +1759,17 @@ if __name__ == "__main__":
             return f"증거금 {m.group(1)}%"
         return _STOCK_INFO_LABELS.get(raw, raw)
 
+    _last_stock_info: dict = {}  # {코드: 마지막으로 알린 370 값} — 동적VI 등 다른 필드 변화로
+                                  # 0g가 재발동돼도 370 자체가 그대로면 중복 알림을 보내지 않는다
+
     def _on_stock_info(code, vals):
         info = vals.get("370", "")
         if not info:
+            _last_stock_info.pop(code, None)
             return
+        if _last_stock_info.get(code) == info:
+            return  # 같은 내용이 이미 알림 발송됨 — VI 깜빡임 등으로 0g만 재발동된 경우
+        _last_stock_info[code] = info
         stk_nm = kiwoom_api.stock_name_cache.get(code) or code
         desc = _describe_stock_info(info)
         _send_telegram(

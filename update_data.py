@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import re
 import zipfile
 import io
 import requests
@@ -36,6 +37,15 @@ MONTHLY_INDEX_CACHE_FILE = os.path.join(BASE_DIR, "cache_monthly_index.json")
 INDUTY_CODE_CACHE_FILE = os.path.join(BASE_DIR, "cache_induty_code.json")
 ADMIN_ISSUE_CACHE_FILE = os.path.join(BASE_DIR, "cache_admin_issue.json")
 TRADE_AMT_CACHE_FILE  = os.path.join(BASE_DIR, "cache_trade_amt.json")
+
+# 우선주는 종목명이 관례적으로 "우"/"우B" 등으로 끝남(예: 삼성전자우, 현대차2우B).
+# 우선주는 시가총액이 보통주와 별도이지만 DART 재무제표(순이익/자기자본 등)는 보통주와
+# 공유하므로, 그대로 PER/PBR 등을 계산하면 실제보다 훨씬 저평가된 것처럼 왜곡된다.
+_PREFERRED_STOCK_RE = re.compile(r".*우[A-Z]?$")
+
+
+def is_preferred_stock(name: str) -> bool:
+    return bool(_PREFERRED_STOCK_RE.match(name or ""))
 
 
 def load_json_cache(path):
@@ -78,30 +88,42 @@ YOY_ACCOUNTS = ("net_income", "operating_income")
 CUMULATIVE_ONLY_ACCOUNTS = ("operating_cf", "capex")
 
 
+CORP_CODE_CACHE_MAX_AGE_DAYS = 7  # 신규 상장사가 DART 목록에 반영되도록 주기적으로 재조회
+
+
 def get_corp_code_map():
-    """종목코드(stock_code) -> DART corp_code 매핑. 로컬 캐시 사용."""
+    """종목코드(stock_code) -> DART corp_code 매핑. 로컬 캐시 사용(신규 상장 반영을 위해 주기적 갱신)."""
     if os.path.exists(CORP_CODE_CACHE):
-        with open(CORP_CODE_CACHE, "r", encoding="utf-8") as f:
-            return json.load(f)
+        age_days = (datetime.now().timestamp() - os.path.getmtime(CORP_CODE_CACHE)) / 86400
+        if age_days < CORP_CODE_CACHE_MAX_AGE_DAYS:
+            with open(CORP_CODE_CACHE, "r", encoding="utf-8") as f:
+                return json.load(f)
 
-    r = requests.get(
-        "https://opendart.fss.or.kr/api/corpCode.xml",
-        params={"crtfc_key": DART_API_KEY},
-        timeout=30,
-    )
-    z = zipfile.ZipFile(io.BytesIO(r.content))
-    root = ET.fromstring(z.read("CORPCODE.xml"))
+    try:
+        r = requests.get(
+            "https://opendart.fss.or.kr/api/corpCode.xml",
+            params={"crtfc_key": DART_API_KEY},
+            timeout=30,
+        )
+        z = zipfile.ZipFile(io.BytesIO(r.content))
+        root = ET.fromstring(z.read("CORPCODE.xml"))
 
-    mapping = {}
-    for item in root.findall("list"):
-        stock_code = (item.find("stock_code").text or "").strip()
-        if stock_code:
-            mapping[stock_code] = item.find("corp_code").text.strip()
+        mapping = {}
+        for item in root.findall("list"):
+            stock_code = (item.find("stock_code").text or "").strip()
+            if stock_code:
+                mapping[stock_code] = item.find("corp_code").text.strip()
 
-    with open(CORP_CODE_CACHE, "w", encoding="utf-8") as f:
-        json.dump(mapping, f)
+        with open(CORP_CODE_CACHE, "w", encoding="utf-8") as f:
+            json.dump(mapping, f)
 
-    return mapping
+        return mapping
+    except Exception as e:
+        if os.path.exists(CORP_CODE_CACHE):
+            print(f"⚠️ [경고] DART corp_code 목록 재조회 실패, 기존(만료된) 캐시 사용: {e}")
+            with open(CORP_CODE_CACHE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        raise
 
 
 # (reprt_code, 연초부터 보고서 기간 말까지의 누적 개월 수, 공시 마감 月, 공시 마감 日, 공시마감 연도오프셋)
@@ -670,10 +692,11 @@ def fetch_krx_market_data():
             price = int(item.get("clpr", 0)) if item.get("clpr") else 0
             market_cap = float(item.get("mrktTotAmt", 0) or 0)
             code = item.get("srtnCd", "")
-            if price <= 0 or market_cap <= 0 or not code:
+            name = item.get("itmsNm", "")
+            if price <= 0 or market_cap <= 0 or not code or is_preferred_stock(name):
                 continue
             raw_stocks.append({
-                "name": item.get("itmsNm", ""),
+                "name": name,
                 "price": price,
                 "code": code,
                 "market_cap": market_cap,
