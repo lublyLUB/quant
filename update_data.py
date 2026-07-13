@@ -39,9 +39,10 @@ ADMIN_ISSUE_CACHE_FILE = os.path.join(BASE_DIR, "cache_admin_issue.json")
 TRADE_AMT_CACHE_FILE  = os.path.join(BASE_DIR, "cache_trade_amt.json")
 
 # 우선주는 종목명이 관례적으로 "우"/"우B" 등으로 끝남(예: 삼성전자우, 현대차2우B).
+# 전환우선주는 "대한제당3우B(전환)"처럼 뒤에 괄호 설명이 붙기도 해서 그 형태도 함께 잡는다.
 # 우선주는 시가총액이 보통주와 별도이지만 DART 재무제표(순이익/자기자본 등)는 보통주와
 # 공유하므로, 그대로 PER/PBR 등을 계산하면 실제보다 훨씬 저평가된 것처럼 왜곡된다.
-_PREFERRED_STOCK_RE = re.compile(r".*우[A-Z]?$")
+_PREFERRED_STOCK_RE = re.compile(r".*우[A-Z]?(\([^)]*\))?$")
 
 
 def is_preferred_stock(name: str) -> bool:
@@ -138,18 +139,31 @@ REPORT_PERIODS = [
 
 
 def _build_period_candidates():
-    """오늘 날짜 기준으로 이미 공시 마감이 지난 보고서들을 최신순으로 나열."""
+    """오늘 날짜 기준으로 이미 공시 마감이 지난 보고서들을 최신순으로 나열.
+
+    마감 전이라도 가장 가까운 다음 보고서를 맨 앞 후보로 하나 더 끼워 넣는다 — 이미
+    조기 제출한 기업은 fetch_dart_financials가 이 후보에서 바로 데이터를 찾아 반영하고,
+    아직 제출 전인 기업은 DART가 status!="000"을 반환하므로 자동으로 다음 후보(마감이
+    지난 직전 확정 보고서)로 폴백된다.
+    """
     today = datetime.now()
     candidates = []
+    upcoming = None  # (due_date, bsns_year, reprt_code, months) — 마감 전인 것 중 가장 임박한 것
     for bsns_year in (today.year, today.year - 1, today.year - 2):
         for reprt_code, months, due_month, due_day, due_year_offset in REPORT_PERIODS:
             due_date = datetime(bsns_year + due_year_offset, due_month, due_day)
             if due_date <= today:
                 period_end = datetime(bsns_year, ((months - 1) // 3 + 1) * 3 if months < 12 else 12, 1)
                 candidates.append((period_end, bsns_year, reprt_code, months))
+            elif upcoming is None or due_date < upcoming[0]:
+                upcoming = (due_date, bsns_year, reprt_code, months)
 
     candidates.sort(key=lambda c: c[0], reverse=True)
-    return [(year, code, months) for (_end, year, code, months) in candidates]
+    result = [(year, code, months) for (_end, year, code, months) in candidates]
+    if upcoming is not None:
+        _, up_year, up_code, up_months = upcoming
+        result.insert(0, (up_year, up_code, up_months))
+    return result
 
 
 def has_recent_capital_increase(corp_code, cache):
@@ -336,7 +350,7 @@ def _fetch_period_accounts(corp_code, year, reprt_code, fs_div, keys):
     return result or None
 
 
-BASELINE_KEYS = ("operating_income", "net_income", "operating_cf", "capex")
+BASELINE_KEYS = ("operating_income", "net_income", "operating_cf", "capex", "revenue", "cost_of_sales")
 
 
 def fetch_baseline_period(corp_code, year, reprt_code, fs_div):
@@ -429,10 +443,26 @@ def fetch_dart_financials(corp_code, cache=None):
     같은 분기로 이미 캐싱된 결과가 있으면 API 호출 없이 그대로 재사용한다."""
     candidates = _build_period_candidates()
     if cache is not None and candidates:
-        best_year, best_reprt_code, _ = candidates[0]
         cached = cache.get(corp_code)
-        if cached and cached.get("_period") == f"{best_year}-{best_reprt_code}":
-            return cached
+        if cached and cached.get("_period") == f"{candidates[0][0]}-{candidates[0][1]}":
+            return cached  # 조기제출분까지 이미 최신 보고서로 캐싱됨
+        # 맨 앞 후보는 "마감 전 다음 보고서"라 대다수 기업은 아직 미제출 상태다. 이걸 기준으로
+        # 캐시를 무효화하면 매일 전종목이 캐시 미스로 재조회되므로, 확정 보고서(두 번째 후보)로
+        # 캐싱된 종목은 조기제출 여부만 7일에 한 번 재확인하고 그 사이엔 캐시를 그대로 쓴다.
+        if cached and len(candidates) > 1 and cached.get("_period") == f"{candidates[1][0]}-{candidates[1][1]}":
+            if "_upcoming_checked" not in cached:
+                # 이 검증 로직이 생기기 전에 저장된 레거시 캐시 항목 - "확인한 적 없음"으로 보고
+                # 즉시 재조회하면 전종목이 한꺼번에 API를 두드려 요청 폭주(429)가 발생한다.
+                # 오늘 확인한 것으로 우선 기록만 해두고, 다음 주기부터 정상적으로 7일 체크한다.
+                cached["_upcoming_checked"] = datetime.now().strftime("%Y%m%d")
+                return cached
+            last_checked = str(cached.get("_upcoming_checked") or "")
+            try:
+                age_days = (datetime.now() - datetime.strptime(last_checked, "%Y%m%d")).days
+            except ValueError:
+                age_days = 999
+            if age_days < 7:
+                return cached
 
     for year, reprt_code, months in candidates:
         for fs_div in ("CFS", "OFS"):
@@ -480,14 +510,22 @@ def fetch_dart_financials(corp_code, cache=None):
             borrowings = extract_borrowings(data.get("list", []))
             values["borrowings"] = borrowings if borrowings is not None else values["liabilities"]
 
-            # DART 손익계산서(IS) 항목의 thstrm_amount는 사업보고서가 아니면 이미 "당기 1개 분기" 단독값이다
-            # (반기보고서도 6개월 누적이 아니라 2분기 단독값을 thstrm_amount로 줌 - 누적은 thstrm_add_amount).
-            # 사업보고서(11011)는 thstrm_amount 자체가 연간 총액이므로 그대로 사용.
-            for key in ("revenue", "cost_of_sales", "net_income", "operating_income"):
-                if key in values:
-                    values[f"quarter_{key}"] = values[key]
-
             baseline = None if reprt_code == "11013" else fetch_baseline_period(corp_code, year, reprt_code, fs_div)
+
+            # DART 손익계산서(IS) 항목의 thstrm_amount는 분기/반기/3분기 보고서에서는 이미
+            # "당기 1개 분기" 단독값이다 (반기보고서도 6개월 누적이 아니라 2분기 단독값).
+            # 사업보고서(11011)만 thstrm_amount가 연간 총액이므로, 같은 해 3분기 누적(baseline)을
+            # 빼서 4분기 단독값으로 맞춘다 — 그대로 쓰면 PER/PSR/GPA가 다른 종목 대비 4배
+            # 스케일로 어긋난 채 순위 경쟁을 하게 된다. baseline 조회 실패 시에는 quarter_ 값을
+            # 채우지 않아 해당 지표 계산에서 제외한다(왜곡된 값보다 결측이 안전).
+            for key in ("revenue", "cost_of_sales", "net_income", "operating_income"):
+                if key not in values:
+                    continue
+                if reprt_code == "11011":
+                    if baseline and key in baseline:
+                        values[f"quarter_{key}"] = values[key] - baseline[key]["cum"]
+                else:
+                    values[f"quarter_{key}"] = values[key]
 
             # CF 계정(영업활동현금흐름/CapEx)은 분기 단독값이 따로 없고 연초 누적치만 주어지므로
             # 1분기가 아니면 직전 보고서의 누적치를 빼서 분기 단독값을 derive한다.
@@ -524,6 +562,7 @@ def fetch_dart_financials(corp_code, cache=None):
                 values["annual_dividends_paid"] = fetch_latest_annual_dividend(corp_code, fs_div)
 
             values["_period"] = f"{year}-{reprt_code}"
+            values["_upcoming_checked"] = datetime.now().strftime("%Y%m%d")
             if cache is not None:
                 cache[corp_code] = values
             return values
@@ -793,9 +832,10 @@ def fetch_krx_market_data():
                 flagged_count += 1
 
             candidates = _build_period_candidates()
-            best_period = f"{candidates[0][0]}-{candidates[0][1]}" if candidates else None
+            # 맨 앞 후보(마감 전 다음 보고서)와 확정 보고서(두 번째 후보) 둘 다 캐시 유효로 집계
+            valid_periods = {f"{y}-{c}" for (y, c, _m) in candidates[:2]}
             cached_entry = dart_financials_cache.get(corp_code)
-            if cached_entry and cached_entry.get("_period") == best_period:
+            if cached_entry and cached_entry.get("_period") in valid_periods:
                 cache_hits += 1
             fin = fetch_dart_financials(corp_code, cache=dart_financials_cache)
             if not fin:
@@ -880,9 +920,10 @@ def fetch_krx_market_data():
             current_ratio = round(current_assets / current_liabilities * 100, 1) if current_liabilities > 0 else None
 
             # 19. 배당율 = 최근 사업보고서 연간 배당총액 / 시가총액
+            # 배당금지급은 현금흐름표 유출 항목이라 회사에 따라 음수로 공시되므로 절대값으로 정규화
             annual_dividends_paid = fin.get("annual_dividends_paid")
             dividend_yield = (
-                round(annual_dividends_paid / market_cap * 100, 2)
+                round(abs(annual_dividends_paid) / market_cap * 100, 2)
                 if (annual_dividends_paid is not None and market_cap > 0)
                 else None
             )

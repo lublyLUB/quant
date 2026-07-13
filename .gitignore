@@ -9,4 +9,5 @@ cache_monthly_index.json
 cache_induty_code.json
 cache_admin_issue.json
 performance_history.json
+recommend_settings.json
 .claude/

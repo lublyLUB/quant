@@ -44,6 +44,7 @@ def _require_api_token():
 PERFORMANCE_FILE  = os.path.join(os.path.dirname(os.path.abspath(__file__)), "performance_history.json")
 PORTFOLIO_FILE    = os.path.join(os.path.dirname(os.path.abspath(__file__)), "portfolio_settings.json")
 PENDING_ALERTS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pending_alerts.json")
+RECOMMEND_SETTINGS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "recommend_settings.json")
 BENCHMARK_CODES = {"kospi": "069500", "kosdaq": "229200"}  # KODEX 200 / KODEX 코스닥150 (지수 추종 ETF로 근사)
 
 
@@ -81,10 +82,10 @@ def _load_strategy_ranks() -> dict:
     return result
 
 
-# index.html computeRecommendData()의 "기본 설정"(전체 종목·소형주 토글 off·표시 20개) 기준 복제.
-# 브라우저 localStorage에만 있는 사용자별 토글(소형주 모드, 체크한 전략, 계절제외 등)은 서버가
-# 알 수 없어서 정확히 똑같이 재현하진 못하지만, 기존의 "매칭된 전략끼리만 평균"보다는
-# 실제 화면의 종합순위(보르다 카운트)에 훨씬 가깝다.
+# index.html computeRecommendData()의 보르다 카운트 로직 복제. 소형주 토글/표시개수/계절제외/
+# 체크한 전략은 브라우저 localStorage에만 있던 값인데, /api/recommend_settings로 index.html이
+# saveOptions() 시점마다 동기화해줘서(recommend_settings.json) 서버도 실제 화면과 동일한
+# 기준으로 계산할 수 있다. 설정 파일이 아직 없으면(최초 실행 등) 기본값으로 폴백.
 _RECOMMEND_DATA_KEYS = {
     "fscore": "fscore_value", "momentum": "momentum_value", "ncav": "ncav_value",
     "super": "super_value", "strategy15": "quality_value", "strategy16": "fama_value",
@@ -92,26 +93,68 @@ _RECOMMEND_DATA_KEYS = {
     "strategy20": "quality_momentum_value", "strategy21": "ultra_value",
 }
 _RECOMMEND_NO_DISPLAY_LIMIT = {"ncav", "strategy16"}
-_RECOMMEND_DISPLAY_N = 20
+# 소형주 토글이 있는 전략 3개: (설정 키, {모드: data.js 키})
+_SMALLCAP_VARIANTS = {
+    "super":      ("smallcapMode",         {"none": "super_value",    "20": "super_value_smallcap",    "30": "super_value_smallcap30"}),
+    "momentum":   ("momentumSmallcapMode", {"none": "momentum_value", "20": "momentum_value_smallcap", "30": "momentum_value_smallcap30"}),
+    "strategy21": ("ultraSmallcapMode",    {"none": "ultra_value",    "20": "ultra_value_smallcap",     "30": "ultra_value_smallcap30"}),
+}
+_DEFAULT_RECOMMEND_SETTINGS = {
+    "smallcapMode": "none", "momentumSmallcapMode": "none", "ultraSmallcapMode": "none",
+    "displayCountMode": "20", "isExcludeSeasonMode": False, "recommendCheckedKeys": [],
+}
+
+
+def _load_recommend_settings() -> dict:
+    if os.path.exists(RECOMMEND_SETTINGS_FILE):
+        try:
+            with open(RECOMMEND_SETTINGS_FILE, encoding="utf-8") as f:
+                loaded = json.load(f)
+            return {**_DEFAULT_RECOMMEND_SETTINGS, **loaded}
+        except Exception:
+            pass
+    return dict(_DEFAULT_RECOMMEND_SETTINGS)
 
 
 def _compute_recommend_top50() -> set:
-    """추천 메뉴 종합순위(보르다 카운트, 기본 설정 기준) top50에 드는 종목명 집합을 반환."""
+    """추천 메뉴 종합순위(보르다 카운트, 사용자 실제 설정 기준) top50에 드는 종목명 집합을 반환."""
     if not os.path.exists(DATA_JS_PATH):
         return set()
     with open(DATA_JS_PATH, encoding="utf-8") as f:
         content = f.read()
     item_pattern = re.compile(r'"rank"\s*:\s*(\d+)[^}]*"name"\s*:\s*"([^"]+)"', re.DOTALL)
 
-    entries = []  # [{"map": {name: rank}, "penalty": int}]
-    for strat_key, data_key in _RECOMMEND_DATA_KEYS.items():
+    settings = _load_recommend_settings()
+    display_n = int(settings.get("displayCountMode") or 20)
+    checked_keys = set(settings.get("recommendCheckedKeys") or [])
+    exclude_season = bool(settings.get("isExcludeSeasonMode"))
+
+    active_keys = []
+    for strat_key in _RECOMMEND_DATA_KEYS:
+        if exclude_season:
+            if strat_key == "ncav":
+                continue
+            if strat_key == "super" and settings.get("smallcapMode") != "none":
+                continue
+        active_keys.append(strat_key)
+    # 체크된 전략이 있으면 그것만, 없으면 전체 활성 전략 사용 (JS와 동일)
+    checked_active = [k for k in active_keys if k in checked_keys]
+    use_keys = checked_active if checked_active else active_keys
+
+    entries = []
+    for strat_key in use_keys:
+        if strat_key in _SMALLCAP_VARIANTS:
+            mode_setting_key, variants = _SMALLCAP_VARIANTS[strat_key]
+            data_key = variants.get(settings.get(mode_setting_key), variants["none"])
+        else:
+            data_key = _RECOMMEND_DATA_KEYS[strat_key]
         m = re.search(r'"' + data_key + r'":\s*\[([^\]]*)\]', content, re.DOTALL)
         if not m:
             continue
         rank_map = {}
         for item in item_pattern.finditer(m.group(1)):
             rank, name = int(item.group(1)), item.group(2)
-            if strat_key not in _RECOMMEND_NO_DISPLAY_LIMIT and rank > _RECOMMEND_DISPLAY_N:
+            if strat_key not in _RECOMMEND_NO_DISPLAY_LIMIT and rank > display_n:
                 continue
             rank_map[name] = rank
         if rank_map:
@@ -125,10 +168,11 @@ def _compute_recommend_top50() -> set:
     for e in entries:
         all_names.update(e["map"].keys())
 
+    min_matched = 1 if checked_active else 2
     results = []
     for name in all_names:
         matched = [e for e in entries if name in e["map"]]
-        if len(matched) < 2:
+        if len(matched) < min_matched:
             continue
         borda_score = sum(e["map"].get(name, uniform_penalty) for e in entries) / len(entries)
         results.append((name, borda_score))
@@ -674,8 +718,11 @@ def account_eval():
 
 @app.route("/api/deposit", methods=["GET"])
 def deposit_detail():
-    """kt00001 - 예수금상세현황 (예수금/출금가능/주문가능/D+1~D+2 추정예수금)."""
-    qry_tp = request.args.get("qry_tp", "2")
+    """kt00001 - 예수금상세현황 (예수금/출금가능/주문가능/D+1~D+2 추정예수금).
+
+    D+1/D+2 추정예수금 필드는 qry_tp="3"(추정조회)일 때만 채워지므로 기본값을 3으로 둔다.
+    """
+    qry_tp = request.args.get("qry_tp", "3")
     try:
         return jsonify(kiwoom_api.get_deposit_detail(qry_tp))
     except Exception as e:
@@ -750,6 +797,27 @@ def save_portfolio_settings():
     }
     _save_portfolio_settings(settings)
     return jsonify({"ok": True, "saved": len(stocks)})
+
+
+@app.route("/api/recommend_settings", methods=["POST"])
+def save_recommend_settings():
+    """index.html의 추천 메뉴 옵션(소형주 토글/표시개수/계절제외/체크한 전략)을 저장.
+
+    브라우저 localStorage에만 있던 설정을 서버도 알게 해서, _compute_recommend_top50()이
+    실제 화면과 동일한 기준으로 종합순위 top50을 계산할 수 있게 한다.
+    """
+    data = request.get_json(force=True) or {}
+    settings = {
+        "smallcapMode": data.get("smallcapMode", "none"),
+        "momentumSmallcapMode": data.get("momentumSmallcapMode", "none"),
+        "ultraSmallcapMode": data.get("ultraSmallcapMode", "none"),
+        "displayCountMode": data.get("displayCountMode", "20"),
+        "isExcludeSeasonMode": bool(data.get("isExcludeSeasonMode")),
+        "recommendCheckedKeys": data.get("recommendCheckedKeys") or [],
+    }
+    with open(RECOMMEND_SETTINGS_FILE, "w", encoding="utf-8") as f:
+        json.dump(settings, f, ensure_ascii=False)
+    return jsonify({"ok": True})
 
 
 @app.route("/api/vi_stocks", methods=["GET"])
@@ -972,7 +1040,9 @@ def performance_snapshot():
         for s in baseline["stocks"]:
             price = price_map.get(s["code"])
             value = (price * s["qty"]) if price else None
-            stock_values.append({"code": s["code"], "name": s["name"], "price": price, "value": value})
+            entry_price = s.get("price")
+            ret = ((price - entry_price) / entry_price * 100) if (price and entry_price) else None
+            stock_values.append({"code": s["code"], "name": s["name"], "price": price, "value": value, "return_pct": ret})
 
         # 벤치마크는 기존 방식 유지
         bench_quotes = kiwoom_api.get_stock_quotes(list(BENCHMARK_CODES.values()))
@@ -994,11 +1064,24 @@ def performance_snapshot():
         # 텔레그램 성과 알림
         base_value = baseline.get("totalInvestment") or total_value
         ret_pct = ((total_value - base_value) / base_value * 100) if base_value else 0
-        stock_lines = "\n".join(
-            f"  • {s['name']}: {s['price']:,}원" for s in stock_values if s.get("price")
-        )
-        kospi_str  = f"{bench_prices['kospi']:,}원" if bench_prices.get("kospi") else "-"
-        kosdaq_str = f"{bench_prices['kosdaq']:,}원" if bench_prices.get("kosdaq") else "-"
+        # 종목 수가 많아 전부 나열하면 알림만 길어지고 눈에 안 들어오므로,
+        # 기준점(매수가) 대비 ±5% 이상 움직인 종목만 골라서 보여준다.
+        SIGNIFICANT_MOVE_PCT = 5.0
+        rated = [s for s in stock_values if s.get("return_pct") is not None]
+        significant = [s for s in rated if abs(s["return_pct"]) >= SIGNIFICANT_MOVE_PCT]
+        significant.sort(key=lambda s: s["return_pct"], reverse=True)
+        quiet_count = len(rated) - len(significant)
+        if significant:
+            stock_lines = f"유의미한 변동 (±{SIGNIFICANT_MOVE_PCT:.0f}% 이상)\n" + "\n".join(
+                f"  • {s['name']}: {s['return_pct']:+.1f}%" for s in significant
+            )
+            if quiet_count > 0:
+                stock_lines += f"\n(나머지 {quiet_count}종목은 ±{SIGNIFICANT_MOVE_PCT:.0f}% 이내 보합)"
+        else:
+            stock_lines = f"±{SIGNIFICANT_MOVE_PCT:.0f}% 이상 변동한 종목 없음 (전체 {len(rated)}종목 보합)"
+        bench = snapshot["benchmark"]
+        kospi_str  = f"{bench['kospi']:,}원" if bench.get("kospi") else "-"
+        kosdaq_str = f"{bench['kosdaq']:,}원" if bench.get("kosdaq") else "-"
         _send_telegram(
             f"📊 <b>성과 스냅샷</b> ({snapshot['datetime']})\n"
             f"총평가금액: <b>{total_value:,}원</b>  ({ret_pct:+.2f}%)\n"
@@ -1117,19 +1200,40 @@ def _build_daily_summary(label: str) -> str:
         holdings_data = kiwoom_api.get_holdings()
         total_asset = int(holdings_data.get("prsm_dpst_aset_amt") or 0)
 
-        # 당일/당월/누적 손익 (kt00004)
-        day_pl = day_rt = 0
+        # 당월/누적 손익 (kt00004) - 일부 계좌에서 이 필드들이 항상 0으로 내려오는 경우가 있어
+        # month_pl/cum_pl이 0이면 아래 "당월 손익/누적 손익" 줄 자체를 생략하도록 그대로 둔다.
         month_pl = month_rt = cum_pl = cum_rt = 0
         try:
             acnt = kiwoom_api.get_account_eval()
-            day_pl   = int(acnt.get("tdy_lspft") or 0)
-            day_rt   = float(acnt.get("tdy_lspft_rt") or 0)
             month_pl = int(acnt.get("lspft2") or 0)
             month_rt = float(acnt.get("lspft_ratio") or 0)
             cum_pl   = int(acnt.get("lspft") or 0)
             cum_rt   = float(acnt.get("lspft_rt") or 0)
         except Exception:
-            # fallback: 수동 계산
+            pass
+
+        # 당일 손익 (kt00002 일별추정예탁자산 차이 기반) - kt00004의 tdy_lspft가 일부 계좌에서
+        # 항상 0으로 내려오는 문제가 있어, 전일 대비 추정예탁자산 증감에서 당일 입출금을 뺀
+        # 값으로 직접 계산한다.
+        day_pl = day_rt = 0
+        try:
+            hist = kiwoom_api.get_daily_asset_history(
+                (datetime.now() - timedelta(days=10)).strftime("%Y%m%d"), today_str
+            )
+            rows = sorted(hist.get("daly_prsm_dpst_aset_amt_prst") or [], key=lambda r: r.get("dt", ""))
+            prev_rows = [r for r in rows if r.get("dt") != today_str]
+            if prev_rows:
+                prev_asset = int(prev_rows[-1].get("prsm_dpst_aset_amt") or 0)
+                net_cash_in = 0
+                try:
+                    tdy = kiwoom_api.get_today_deposit()
+                    net_cash_in = int(tdy.get("ina_amt") or 0) - int(tdy.get("outa") or 0)
+                except Exception:
+                    pass
+                day_pl = total_asset - prev_asset - net_cash_in
+                day_rt = (day_pl / prev_asset * 100) if prev_asset > 0 else 0
+        except Exception:
+            # fallback: 종목별 전일 대비 현재가로 직접 계산 (평가금액 변동만 반영, 입출금 미보정)
             for s in holdings_data.get("acnt_evlt_remn_indv_tot", []):
                 cur = int(s.get("cur_prc") or 0)
                 pred = int(s.get("pred_close_pric") or 0)
@@ -1218,16 +1322,16 @@ def _build_daily_summary(label: str) -> str:
                 )
                 for r in rows:
                     nm   = r.get("stk_nm", "")
-                    tp   = "매도" if r.get("sell_tp", "").startswith("1") else "매수"
+                    tp   = "매도" if "매도" in r.get("sell_tp", "") else "매수"
                     exct = int(r.get("exct_amt") or 0)
                     setl_str += f"\n  {nm} {tp} {exct:+,}원"
         except Exception:
             pass
 
-        # 예수금 상세 (kt00001)
+        # 예수금 상세 (kt00001) - D+1/D+2 추정예수금은 qry_tp="3"(추정조회)이어야 채워짐
         dep_str = ""
         try:
-            dep = kiwoom_api.get_deposit_detail()
+            dep = kiwoom_api.get_deposit_detail(qry_tp="3")
             entr       = int(dep.get("entr") or 0)
             pymn_alow  = int(dep.get("pymn_alow_amt") or 0)
             ord_alow   = int(dep.get("ord_alow_amt") or 0)
@@ -1317,7 +1421,7 @@ def _build_performance_summary() -> str:
             tax_cmsn = 0
         dep_str = ""
         try:
-            dep = kiwoom_api.get_deposit_detail()
+            dep = kiwoom_api.get_deposit_detail(qry_tp="3")
             ord_alow  = int(dep.get("ord_alow_amt") or 0)
             d1_entr   = int(dep.get("d1_entra") or 0)
             dep_str = f"\n주문가능: <b>{ord_alow:,}원</b>  D+1 예수금: <b>{d1_entr:,}원</b>"
@@ -1599,7 +1703,10 @@ def _daily_alert_scheduler():
     대기 중인 긴급 매도 알림은 5분 경과 시 자동 재발송.
     """
     from datetime import timedelta
-    ALERT_TIMES = [("08:00", "개장 준비"), ("09:00", "장 개장"), ("12:00", "장 중간"), ("15:30", "장 마감")]
+    ALERT_TIMES = [
+        ("08:00", "개장 준비"), ("09:00", "장 개장"), ("10:00", "장중"), ("11:00", "장중"),
+        ("12:00", "장 중간"), ("13:00", "장중"), ("14:00", "장중"), ("15:30", "장 마감"),
+    ]
     sent_today = set()
     last_condition_check = datetime.min  # 마지막 조건 점검 시각
 
@@ -1728,7 +1835,9 @@ if __name__ == "__main__":
             t_fmt     = f"{t[:2]}:{t[2:4]}:{t[4:]}" if len(t) >= 6 else t
             price_fmt = f"{int(price):,}" if price else price
             total_fmt = f"{int(total):,}" if total else total
-            pl_line   = f"\n당일실현손익: <b>{int(day_pl):+,}원</b>" if day_pl else ""
+            # 당일실현손익(990)은 매도로 실현된 손익 캐시라 매수 체결에는 붙이지 않는다.
+            # (같은 종목을 오늘 먼저 팔았다가 다시 사면, 매수 체결에 아까 매도 손익이 잘못 따라붙는 것 방지)
+            pl_line   = f"\n당일실현손익: <b>{int(day_pl):+,}원</b>" if (day_pl and side == "매도") else ""
         except Exception:
             t_fmt, price_fmt, total_fmt, pl_line = t, price, total, ""
         _send_telegram(
@@ -1828,8 +1937,8 @@ if __name__ == "__main__":
         if not label:
             return
         tm = vals.get("20", "")
-        # 일부 이벤트는 체결시간 필드가 "999999" 같은 더미값으로 오므로 그런 경우는 시각을 생략한다
-        t_fmt = f" ({tm[:2]}:{tm[2:4]}:{tm[4:]})" if len(tm) >= 6 and tm != "999999" else ""
+        # 일부 이벤트는 체결시간 필드가 "999999"/"888888" 같은 더미값으로 오므로 그런 경우는 시각을 생략한다
+        t_fmt = f" ({tm[:2]}:{tm[2:4]}:{tm[4:]})" if len(tm) >= 6 and tm not in ("999999", "888888") else ""
         _send_telegram(f"{label}{t_fmt}")
 
     _update_watched = kiwoom_api.start_order_realtime(

@@ -91,7 +91,7 @@
         .smallcap-toggle-btn.active { background-color: #fff; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
 
         table { width: 100%; border-collapse: collapse; font-size: 11px; table-layout: fixed; }
-        th, td { padding: 9px 1px; border-bottom: 1px solid #e2e8f0; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; line-height: 1.2; }
+        th, td { padding: 4px 1px; border-bottom: 1px solid #e2e8f0; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; line-height: 1.2; }
         .fscore-group-start { padding-right: 0; }
         .fscore-group { padding-left: 0; padding-right: 0; }
         .fscore-group-end { padding-left: 0; }
@@ -345,7 +345,7 @@
 
     // 체크박스/옵션 상태를 localStorage에 저장해서 재접속 시에도 유지
     function saveOptions() {
-        localStorage.setItem('quant_options', JSON.stringify({
+        const opts = {
             smallcapMode,
             momentumSmallcapMode,
             ultraSmallcapMode,
@@ -353,7 +353,19 @@
             isExcludeSeasonMode,
             recommendCheckedKeys: Array.from(recommendCheckedKeys),
             portfolioLeftoverOption,
-        }));
+        };
+        localStorage.setItem('quant_options', JSON.stringify(opts));
+        // 서버(텔레그램 순위 점검)도 화면과 동일한 기준으로 계산하도록 추천 관련 설정만 동기화.
+        // 실패해도(로컬 서버 미실행 등) 화면 동작에는 영향 없이 조용히 무시.
+        fetch(`${ORDER_SERVER_URL}/api/recommend_settings`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                smallcapMode, momentumSmallcapMode, ultraSmallcapMode,
+                displayCountMode, isExcludeSeasonMode,
+                recommendCheckedKeys: Array.from(recommendCheckedKeys),
+            }),
+        }).catch(() => {});
     }
 
     function loadOptions() {
@@ -825,7 +837,9 @@
         refreshCurrentTable();
     }
 
-    function computeRecommendData(ignoreSeasonExclude) {
+    // computeRecommendData의 상위 50위 컷오프 이전 단계 — 매칭된 전체 후보(보르다 점수 포함)를 계산.
+    // 즐겨찾기 종목이 컷오프 밖으로 밀렸을 때 실제 순위를 조회하는 용도로도 재사용한다.
+    function _computeRecommendCandidates(ignoreSeasonExclude) {
         const availableSources = getActiveRecommendSources(ignoreSeasonExclude);
         // 체크된 전략이 있으면 그 전략들만 보르다 집계 풀로 사용, 없으면 전체 전략 사용
         const checkedSources = availableSources.filter(src => recommendCheckedKeys.has(src.key));
@@ -878,8 +892,12 @@
                 results.push({ name, price: sample.price, count: matched.length, ranks, avgRank, bordaScore, categoryScore, orientation });
             }
         });
-
         results.sort((a, b) => a.bordaScore - b.bordaScore);
+        return results;
+    }
+
+    function computeRecommendData(ignoreSeasonExclude) {
+        const results = _computeRecommendCandidates(ignoreSeasonExclude);
         // 50위 경계 공동순위는 전부 포함 (rank ≤ N 방식과 일관성 유지)
         const base = results.slice(0, 50);
         const cutScore = base.length > 0 ? base[base.length - 1].bordaScore : null;
@@ -890,6 +908,25 @@
         });
         top.forEach(r => { r.tied = top.some(other => other !== r && other.rank === r.rank); });
         return top;
+    }
+
+    // 즐겨찾기했지만 현재 화면(상위 컷오프)에는 안 보이는 종목 — 전체 후보군에서 실제 순위를 찾아 반환.
+    // 매칭 전략이 부족해 아예 후보에도 못 든 경우는 rank: null로 표시한다.
+    function getBookmarkFallbackRows(shownNames) {
+        if (bookmarks.length === 0) return [];
+        const missing = bookmarks.filter(name => !shownNames.has(name));
+        if (missing.length === 0) return [];
+        const all = _computeRecommendCandidates();
+        all.forEach((r, idx) => {
+            r.rank = (idx > 0 && r.bordaScore === all[idx - 1].bordaScore) ? all[idx - 1].rank : idx + 1;
+        });
+        const byName = new Map(all.map(r => [r.name, r]));
+        return missing.map(name => {
+            const found = byName.get(name);
+            return found
+                ? { name, rank: found.rank, price: found.price }
+                : { name, rank: null, price: findStockPrice(name) };
+        });
     }
 
     const SMALLCAP_GROUP_PREFIX = { super: 'smallcap-toggle', momentum: 'momentum-smallcap-toggle', ultra: 'ultra-smallcap-toggle' };
@@ -1007,6 +1044,29 @@
     }
 
     // 🚀 최적화 리팩토링: innerHTML 속도를 위해 큰 하나의 문자열 블록으로 조립 후 일괄 쓰기 수행
+    // "참고" 컬럼 배지 목록 — 추천 테이블 본문 행과 즐겨찾기(순위 밖) 행이 공유해서 쓴다.
+    function buildWarnItems(name, flags) {
+        const metrics = stockMetrics[name] || {};
+        const tip = (text, desc) => `<span title="${desc}">${text}</span>`;
+        // 확정·비가역(거래소가 이미 결론 낸 상태) — 굵은 빨간 글씨로 강하게 구분
+        const tipStrong = (text, desc) => `<span title="${desc}" style="color:#dc2626; font-weight:800;">${text}</span>`;
+        const warnItems = [];
+        if (flags.includes('정리매매(상장폐지)')) warnItems.push(tipStrong('⛔정리매매', '정리매매 중 — 거래소가 상장폐지를 확정하고 마지막 매매 기회를 주는 기간 (확정·비가역)'));
+        if (flags.includes('거래정지')) warnItems.push(tipStrong('거래정지', '거래가 정지된 종목 — 매매 불가 (확정·비가역)'));
+        if (flags.includes('관리')) warnItems.push(tipStrong('관리', '관리종목 지정 — 상장폐지 위험 (확정·비가역)'));
+        if (flags.includes('자본잠식50%↑')) warnItems.push(tipStrong('자본잠식50%↑', '자본잠식률 50% 이상 — 자본금 대비 자본총계가 절반 미만, 관리종목 지정 요건 (확정·비가역)'));
+        if (flags.includes('투자경고')) warnItems.push(tip('투자경고', '투자경고 또는 단기과열 — 이상 급등 주의 (잠정·가역)'));
+        if (flags.includes('관리우려')) warnItems.push(tip('관리우려', '관리종목 지정 우려 — 실질심사 가능성 (잠정·가역)'));
+        if (flags.includes('2천만↓')) warnItems.push(tip('2천만↓', '일평균 거래대금 2천만원 미만 — 유동성 부족'));
+        // 증거금100%는 소형주 위주 전략에서는 사실상 전 종목에 해당해 변별력이 없어 배지에서 제외
+        // (is_margin100 데이터/플래그 자체는 유지 — 매수 실행 단계에서는 여전히 의미가 있음)
+        if (metrics.f_score != null && metrics.f_score <= 2) warnItems.push(tip(`F-S:${metrics.f_score}`, `신F-스코어 ${metrics.f_score}점 — 정상 3점 기준, 낮을수록 재무 악화`));
+        if (metrics.gpa != null && metrics.gpa <= 0) warnItems.push(tip(`GP/A:${metrics.gpa.toFixed(2)}`, 'GP/A 0 이하 — 매출총이익/자산 마이너스, 본업 수익성 저하'));
+        if (metrics.pbr != null && metrics.pbr <= 0.25) warnItems.push(tip(`PBR:${metrics.pbr.toFixed(2)}`, 'PBR 0.25 이하 — 극저평가 또는 자본 훼손 가능성'));
+        if (metrics.asset_growth_yoy != null && metrics.asset_growth_yoy <= -20) warnItems.push(tip(`성장:${metrics.asset_growth_yoy.toFixed(0)}%`, `자산성장률 ${metrics.asset_growth_yoy.toFixed(0)}% — 자산 급감, 사업 축소 또는 손실`));
+        return warnItems;
+    }
+
     function renderRecommendTable(data) {
         const activeSources = getActiveRecommendSources();
         const colWidth = Math.floor(43 / activeSources.length);
@@ -1038,26 +1098,8 @@
 
             // 경고 컬럼: 등급 점 + 문제 항목 나열
             const grade = getStockGrade(s.name);
-            const metrics = stockMetrics[s.name] || {};
             const gradeColor = GRADE_COLORS[grade] || '#64748b';
-            const tip = (text, desc) => `<span title="${desc}">${text}</span>`;
-            // 확정·비가역(거래소가 이미 결론 낸 상태) — 굵은 빨간 글씨로 강하게 구분
-            const tipStrong = (text, desc) => `<span title="${desc}" style="color:#dc2626; font-weight:800;">${text}</span>`;
-            const warnItems = [];
-            if (flags.includes('정리매매(상장폐지)')) warnItems.push(tipStrong('⛔정리매매', '정리매매 중 — 거래소가 상장폐지를 확정하고 마지막 매매 기회를 주는 기간 (확정·비가역)'));
-            if (flags.includes('거래정지')) warnItems.push(tipStrong('거래정지', '거래가 정지된 종목 — 매매 불가 (확정·비가역)'));
-            if (flags.includes('관리')) warnItems.push(tipStrong('관리', '관리종목 지정 — 상장폐지 위험 (확정·비가역)'));
-            if (flags.includes('자본잠식50%↑')) warnItems.push(tipStrong('자본잠식50%↑', '자본잠식률 50% 이상 — 자본금 대비 자본총계가 절반 미만, 관리종목 지정 요건 (확정·비가역)'));
-            if (flags.includes('투자경고')) warnItems.push(tip('투자경고', '투자경고 또는 단기과열 — 이상 급등 주의 (잠정·가역)'));
-            if (flags.includes('관리우려')) warnItems.push(tip('관리우려', '관리종목 지정 우려 — 실질심사 가능성 (잠정·가역)'));
-            if (flags.includes('2천만↓')) warnItems.push(tip('2천만↓', '일평균 거래대금 2천만원 미만 — 유동성 부족'));
-            // 증거금100%는 소형주 위주 전략에서는 사실상 전 종목에 해당해 변별력이 없어 배지에서 제외
-            // (is_margin100 데이터/플래그 자체는 유지 — 매수 실행 단계에서는 여전히 의미가 있음)
-            if (metrics.f_score != null && metrics.f_score <= 2) warnItems.push(tip(`F-S:${metrics.f_score}`, `신F-스코어 ${metrics.f_score}점 — 정상 3점 기준, 낮을수록 재무 악화`));
-            if (metrics.gpa != null && metrics.gpa <= 0) warnItems.push(tip(`GP/A:${metrics.gpa.toFixed(2)}`, 'GP/A 0 이하 — 매출총이익/자산 마이너스, 본업 수익성 저하'));
-            if (metrics.pbr != null && metrics.pbr <= 0.25) warnItems.push(tip(`PBR:${metrics.pbr.toFixed(2)}`, 'PBR 0.25 이하 — 극저평가 또는 자본 훼손 가능성'));
-            if (metrics.asset_growth_yoy != null && metrics.asset_growth_yoy <= -20) warnItems.push(tip(`성장:${metrics.asset_growth_yoy.toFixed(0)}%`, `자산성장률 ${metrics.asset_growth_yoy.toFixed(0)}% — 자산 급감, 사업 축소 또는 손실`));
-            const warnCell = warnItems.join(' ');
+            const warnItems = buildWarnItems(s.name, flags);
 
             html += `<tr>
                 <td class="rank-main">${s.tied ? '=' : ''}${s.rank}</td>
@@ -1072,6 +1114,31 @@
         });
         if (data.length === 0) {
             html += `<tr><td colspan="${6 + activeSources.length}" style="padding:20px; color:#94a3b8;">조건을 만족하는 종목이 없습니다.</td></tr>`;
+        }
+        // 즐겨찾기했지만 현재 화면(컷오프)엔 안 보이는 종목 — 검색 중이 아닐 때만 하단에 별도로 붙여준다.
+        if (!searchQuery) {
+            const shownNames = new Set(data.map(s => s.name));
+            const fallbackRows = getBookmarkFallbackRows(shownNames);
+            if (fallbackRows.length > 0) {
+                html += `<tr><td colspan="${6 + activeSources.length}" style="padding:6px 8px; text-align:left; font-size:10px; color:#94a3b8; background:#f8fafc; border-top:2px solid #e2e8f0;">★ 즐겨찾기 (순위 밖)</td></tr>`;
+                fallbackRows.forEach(row => {
+                    const flags = stockFlags[row.name] || [];
+                    const sectorBadge = flags.includes('금융/지주') ? `<span class="tag-chip tag-finance">금융/지주</span>` : '';
+                    const grade = getStockGrade(row.name);
+                    const gradeColor = GRADE_COLORS[grade] || '#64748b';
+                    const warnItems = buildWarnItems(row.name, flags);
+                    const cutoffNote = row.rank != null ? '컷오프 밖' : '매칭 전략 부족';
+                    html += `<tr style="opacity:0.7;">
+                        <td class="rank-main" style="color:#94a3b8;">${row.rank != null ? row.rank : '-'}</td>
+                        <td></td>
+                        <td style="width:14px; padding:0; text-align:center;">${GRADE_DOT[grade]}</td>
+                        <td>${getNameHtml(row.name)}<span class="price-text">${row.price ? formatNumber(row.price) + '원' : ''}</span></td>
+                        <td style="white-space:normal;">${sectorBadge}</td>
+                        <td style="font-size:10px; line-height:1.4; white-space:normal; color:${gradeColor}; font-weight:600;">${warnItems.join('<br>')}</td>
+                        <td colspan="${1 + activeSources.length}" style="font-size:9px; color:#94a3b8;">${cutoffNote}</td>
+                    </tr>`;
+                });
+            }
         }
         html += `</tbody>`;
         document.getElementById("quant-table").innerHTML = html;
@@ -1146,10 +1213,15 @@
         const fscoreMap = new Map((fscoreData || []).map(s => [s.name, s.f_score]));
 
         const currentSet = new Set(portfolioNames);
-        const removedNames = [...savedNames].filter(n => !currentSet.has(n));
+        // "포트폴리오엔 없는데 실제로 보유 중"인 종목 — 스냅샷 변경 이력과 무관하게, 지금 실제
+        // 정리해야 할 대상을 놓치지 않도록 실보유 기준 하나로 판단한다.
+        const heldNotInPortfolio = holdingsLoaded
+            ? [...new Set(Object.values(holdingsByCode).filter(h => h.qty > 0).map(h => h.name))]
+                .filter(name => !currentSet.has(name))
+            : [];
         const rows = [
             ...portfolioNames.map(name => ({ name, inCurrent: true })),
-            ...removedNames.map(name => ({ name, inCurrent: false })),
+            ...heldNotInPortfolio.map(name => ({ name, inCurrent: false })),
         ].sort((a, b) => (rankByName.get(a.name) ?? 9999) - (rankByName.get(b.name) ?? 9999));
 
         if (rows.length === 0) {
@@ -1166,7 +1238,7 @@
         <thead><tr style="border-bottom:1px solid #e2e8f0; background:#f8fafc;">
             <th style="width:3%; padding:0;"></th>
             <th style="padding:6px 8px; width:17%;">종목명</th>
-            <th style="padding:6px 4px; width:6%;">추천순위</th>
+            <th style="padding:6px 4px; width:6%;">순위</th>
             <th style="padding:6px 4px; width:11%;">평단가</th>
             <th style="padding:6px 4px; width:11%;">현재가</th>
             <th style="padding:6px 4px; width:10%;">상한가</th>
@@ -1196,7 +1268,7 @@
 
             let statusText, statusColor, rowStyle = '';
             if (!inCurrent) {
-                statusText = '❌ 제외 예정';
+                statusText = '🗑 정리 대상';
                 statusColor = '#dc2626';
                 rowStyle = 'opacity:0.5;';
             } else if (!inSaved) {
@@ -3808,6 +3880,7 @@
 
     window.onload = function() {
         loadOptions();
+        saveOptions();  // 페이지 로드 시점의 저장된 설정을 서버(추천 순위 점검용)에도 즉시 동기화
         updateBookmarkCount();
         updatePortfolioBadge();
         if ('Notification' in window) {

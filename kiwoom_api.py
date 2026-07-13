@@ -470,6 +470,28 @@ def get_next_day_settlement():
     return resp.json()
 
 
+def get_daily_asset_history(start_dt: str, end_dt: str):
+    """일별추정예탁자산현황요청 (kt00002) - 날짜별 추정예탁자산(prsm_dpst_aset_amt) 조회.
+
+    kt00004의 tdy_lspft/lspft2/lspft(당일/당월/누적 손익)가 일부 계좌에서 항상 0으로
+    내려오는 경우, 이 API의 날짜별 추정예탁자산 차이로 손익을 직접 계산하는 대체 수단.
+    """
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/acnt"
+    headers = {
+        "Content-Type": "application/json;charset=UTF-8",
+        "api-id": "kt00002",
+        "cont-yn": "N",
+        "next-key": "",
+        "authorization": f"Bearer {token}",
+    }
+    resp = requests.post(url, headers=headers, json={"start_dt": start_dt, "end_dt": end_dt}, timeout=15)
+    resp.raise_for_status()
+    return resp.json()
+
+
 def get_today_deposit():
     """계좌별당일현황요청 (kt00017) - 당일 입금액(ina_amt), 출금액(outa) 조회."""
     if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
