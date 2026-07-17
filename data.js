@@ -3,7 +3,7 @@ const KOSPI_QUANT_PACKAGE = {
         "krx_basis_date": "20260715",
         "dart_basis": "2026년 1분기보고서",
         "status": "NORMAL",
-        "checked_at": "03:02:07"
+        "checked_at": "03:03:58"
     },
     "super_value": [
         {
@@ -265,7 +265,7 @@ const KOSPI_QUANT_PACKAGE = {
             "code": "017940",
             "price": 85300,
             "market_cap": 5851,
-            "market_cap_pct_from_top": 16,
+            "market_cap_pct_from_top": 15,
             "pbr": 0.22,
             "pbr_r": 138,
             "per": 7.17,
@@ -587,7 +587,7 @@ const KOSPI_QUANT_PACKAGE = {
             "code": "030210",
             "price": 3465,
             "market_cap": 2110,
-            "market_cap_pct_from_top": 31,
+            "market_cap_pct_from_top": 32,
             "pbr": 0.26,
             "pbr_r": 212,
             "per": 14.04,
@@ -821,12 +821,12 @@ const KOSPI_QUANT_PACKAGE = {
             "pbr": 0.18,
             "pbr_r": 83,
             "per": 24.33,
-            "per_r": 534,
+            "per_r": 533,
             "pfcr": 3.88,
             "pfcr_r": 62,
             "psr": 0.3,
             "psr_r": 72,
-            "avg_r": 187.8,
+            "avg_r": 187.5,
             "quarter_net_income": 12,
             "equity": 1670,
             "quarter_operating_cf": 86,
@@ -871,8 +871,8 @@ const KOSPI_QUANT_PACKAGE = {
             "pfcr": 5.32,
             "pfcr_r": 95,
             "psr": 0.99,
-            "psr_r": 433,
-            "avg_r": 192.0,
+            "psr_r": 432,
+            "avg_r": 191.8,
             "quarter_net_income": 62,
             "equity": 2476,
             "quarter_operating_cf": 112,
@@ -7746,30 +7746,6 @@ const KOSPI_QUANT_PACKAGE = {
         },
         {
             "rank": 2,
-            "name": "MDS테크",
-            "code": "086960",
-            "price": 1939,
-            "cap_increase_flag": 1,
-            "ni_pos_flag": 1,
-            "cf_pos_flag": 1,
-            "gpa": 6.3,
-            "gpa_r": 195,
-            "op_debt_growth_yoy": 572.1,
-            "op_debt_r": 50,
-            "asset_growth_yoy": -9.3,
-            "asset_growth_r": 21,
-            "price_volatility": -1.13,
-            "volatility_r": 19,
-            "avg_r": 71.2,
-            "quarter_revenue": 508,
-            "quarter_cost_of_sales": 369,
-            "assets": 2192,
-            "assets_yoy": 2416,
-            "op_to_debt_now": 0.2576236399585491,
-            "op_to_debt_yoy": 0.038331533402129
-        },
-        {
-            "rank": 3,
             "name": "시디즈",
             "code": "134790",
             "price": 19110,
@@ -7783,14 +7759,38 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -1.6,
             "asset_growth_r": 105,
             "price_volatility": -0.2,
-            "volatility_r": 117,
-            "avg_r": 71.2,
+            "volatility_r": 116,
+            "avg_r": 71.0,
             "quarter_revenue": 544,
             "quarter_cost_of_sales": 379,
             "assets": 1009,
             "assets_yoy": 1025,
             "op_to_debt_now": 0.04265639831256384,
             "op_to_debt_yoy": -0.008597415856815739
+        },
+        {
+            "rank": 3,
+            "name": "MDS테크",
+            "code": "086960",
+            "price": 1939,
+            "cap_increase_flag": 1,
+            "ni_pos_flag": 1,
+            "cf_pos_flag": 1,
+            "gpa": 6.3,
+            "gpa_r": 195,
+            "op_debt_growth_yoy": 572.1,
+            "op_debt_r": 50,
+            "asset_growth_yoy": -9.3,
+            "asset_growth_r": 21,
+            "price_volatility": -1.07,
+            "volatility_r": 20,
+            "avg_r": 71.5,
+            "quarter_revenue": 508,
+            "quarter_cost_of_sales": 369,
+            "assets": 2192,
+            "assets_yoy": 2416,
+            "op_to_debt_now": 0.2576236399585491,
+            "op_to_debt_yoy": 0.038331533402129
         },
         {
             "rank": 4,
@@ -7831,8 +7831,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -3.8,
             "asset_growth_r": 71,
             "price_volatility": -1.08,
-            "volatility_r": 20,
-            "avg_r": 82.5,
+            "volatility_r": 19,
+            "avg_r": 82.2,
             "quarter_revenue": 932,
             "quarter_cost_of_sales": 745,
             "assets": 3038,
@@ -7855,8 +7855,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -1.4,
             "asset_growth_r": 110,
             "price_volatility": -0.02,
-            "volatility_r": 299,
-            "avg_r": 109.8,
+            "volatility_r": 298,
+            "avg_r": 109.5,
             "quarter_revenue": 4103,
             "quarter_cost_of_sales": 1669,
             "assets": 17194,
@@ -7879,8 +7879,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -4.9,
             "asset_growth_r": 61,
             "price_volatility": -0.22,
-            "volatility_r": 103,
-            "avg_r": 127.5,
+            "volatility_r": 102,
+            "avg_r": 127.2,
             "quarter_revenue": 9525,
             "quarter_cost_of_sales": 6309,
             "assets": 42698,
@@ -7975,8 +7975,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 3.6,
             "asset_growth_r": 288,
             "price_volatility": -0.23,
-            "volatility_r": 92,
-            "avg_r": 139.8,
+            "volatility_r": 91,
+            "avg_r": 139.5,
             "quarter_revenue": 1306,
             "quarter_cost_of_sales": 708,
             "assets": 6479,
@@ -8023,8 +8023,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 0.8,
             "asset_growth_r": 187,
             "price_volatility": -0.15,
-            "volatility_r": 156,
-            "avg_r": 142.0,
+            "volatility_r": 158,
+            "avg_r": 142.5,
             "quarter_revenue": 2432,
             "quarter_cost_of_sales": 1128,
             "assets": 12661,
@@ -8047,8 +8047,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -1.5,
             "asset_growth_r": 108,
             "price_volatility": 0.01,
-            "volatility_r": 340,
-            "avg_r": 144.0,
+            "volatility_r": 338,
+            "avg_r": 143.5,
             "quarter_revenue": 344,
             "quarter_cost_of_sales": 200,
             "assets": 1466,
@@ -8071,8 +8071,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -0.7,
             "asset_growth_r": 131,
             "price_volatility": -0.34,
-            "volatility_r": 53,
-            "avg_r": 149.8,
+            "volatility_r": 52,
+            "avg_r": 149.5,
             "quarter_revenue": 9784,
             "quarter_cost_of_sales": 4942,
             "assets": 49679,
@@ -8118,7 +8118,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 188,
             "asset_growth_yoy": -19.8,
             "asset_growth_r": 2,
-            "price_volatility": -8.13,
+            "price_volatility": -7.98,
             "volatility_r": 1,
             "avg_r": 152.0,
             "quarter_revenue": 920,
@@ -8167,8 +8167,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -13.7,
             "asset_growth_r": 8,
             "price_volatility": 0.28,
-            "volatility_r": 545,
-            "avg_r": 156.0,
+            "volatility_r": 546,
+            "avg_r": 156.2,
             "quarter_revenue": 233,
             "quarter_cost_of_sales": 176,
             "assets": 580,
@@ -8191,8 +8191,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -1.6,
             "asset_growth_r": 106,
             "price_volatility": 0.11,
-            "volatility_r": 427,
-            "avg_r": 157.8,
+            "volatility_r": 428,
+            "avg_r": 158.0,
             "quarter_revenue": 2956,
             "quarter_cost_of_sales": 1097,
             "assets": 13258,
@@ -8215,8 +8215,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -3.6,
             "asset_growth_r": 77,
             "price_volatility": -0.01,
-            "volatility_r": 312,
-            "avg_r": 160.2,
+            "volatility_r": 311,
+            "avg_r": 160.0,
             "quarter_revenue": 635,
             "quarter_cost_of_sales": 447,
             "assets": 3135,
@@ -8238,7 +8238,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 252,
             "asset_growth_yoy": 5.8,
             "asset_growth_r": 376,
-            "price_volatility": -3.03,
+            "price_volatility": -2.97,
             "volatility_r": 7,
             "avg_r": 161.5,
             "quarter_revenue": 270,
@@ -8262,9 +8262,9 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 135,
             "asset_growth_yoy": 1.6,
             "asset_growth_r": 216,
-            "price_volatility": -1.57,
-            "volatility_r": 16,
-            "avg_r": 165.0,
+            "price_volatility": -1.54,
+            "volatility_r": 15,
+            "avg_r": 164.8,
             "quarter_revenue": 0,
             "quarter_cost_of_sales": 0,
             "assets": 1,
@@ -8322,30 +8322,6 @@ const KOSPI_QUANT_PACKAGE = {
         },
         {
             "rank": 26,
-            "name": "조이웍스앤코",
-            "code": "309930",
-            "price": 824,
-            "cap_increase_flag": 1,
-            "ni_pos_flag": 1,
-            "cf_pos_flag": 1,
-            "gpa": 18.3,
-            "gpa_r": 10,
-            "op_debt_growth_yoy": 311.9,
-            "op_debt_r": 90,
-            "asset_growth_yoy": 10.7,
-            "asset_growth_r": 556,
-            "price_volatility": -0.33,
-            "volatility_r": 55,
-            "avg_r": 177.8,
-            "quarter_revenue": 212,
-            "quarter_cost_of_sales": 108,
-            "assets": 567,
-            "assets_yoy": 512,
-            "op_to_debt_now": 0.29314909488880303,
-            "op_to_debt_yoy": -0.13831829117901867
-        },
-        {
-            "rank": 27,
             "name": "샘표식품",
             "code": "248170",
             "price": 23300,
@@ -8369,6 +8345,30 @@ const KOSPI_QUANT_PACKAGE = {
             "op_to_debt_yoy": 0.018984428022491364
         },
         {
+            "rank": 27,
+            "name": "조이웍스앤코",
+            "code": "309930",
+            "price": 824,
+            "cap_increase_flag": 1,
+            "ni_pos_flag": 1,
+            "cf_pos_flag": 1,
+            "gpa": 18.3,
+            "gpa_r": 10,
+            "op_debt_growth_yoy": 311.9,
+            "op_debt_r": 90,
+            "asset_growth_yoy": 10.7,
+            "asset_growth_r": 556,
+            "price_volatility": -0.31,
+            "volatility_r": 60,
+            "avg_r": 179.0,
+            "quarter_revenue": 212,
+            "quarter_cost_of_sales": 108,
+            "assets": 567,
+            "assets_yoy": 512,
+            "op_to_debt_now": 0.29314909488880303,
+            "op_to_debt_yoy": -0.13831829117901867
+        },
+        {
             "rank": 28,
             "name": "일동홀딩스",
             "code": "000230",
@@ -8383,8 +8383,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -4.5,
             "asset_growth_r": 63,
             "price_volatility": 0.14,
-            "volatility_r": 448,
-            "avg_r": 181.2,
+            "volatility_r": 449,
+            "avg_r": 181.5,
             "quarter_revenue": 1488,
             "quarter_cost_of_sales": 889,
             "assets": 7931,
@@ -8479,8 +8479,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -1.1,
             "asset_growth_r": 121,
             "price_volatility": -0.16,
-            "volatility_r": 145,
-            "avg_r": 193.0,
+            "volatility_r": 146,
+            "avg_r": 193.2,
             "quarter_revenue": 355,
             "quarter_cost_of_sales": 209,
             "assets": 2072,
@@ -8527,8 +8527,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -4.9,
             "asset_growth_r": 60,
             "price_volatility": 0.12,
-            "volatility_r": 436,
-            "avg_r": 196.5,
+            "volatility_r": 437,
+            "avg_r": 196.8,
             "quarter_revenue": 28548,
             "quarter_cost_of_sales": 21671,
             "assets": 73828,
@@ -8538,30 +8538,6 @@ const KOSPI_QUANT_PACKAGE = {
         },
         {
             "rank": 35,
-            "name": "재영솔루텍",
-            "code": "049630",
-            "price": 6300,
-            "cap_increase_flag": 1,
-            "ni_pos_flag": 1,
-            "cf_pos_flag": 1,
-            "gpa": 5.9,
-            "gpa_r": 233,
-            "op_debt_growth_yoy": 714.6,
-            "op_debt_r": 37,
-            "asset_growth_yoy": 7.8,
-            "asset_growth_r": 467,
-            "price_volatility": -0.36,
-            "volatility_r": 51,
-            "avg_r": 197.0,
-            "quarter_revenue": 580,
-            "quarter_cost_of_sales": 449,
-            "assets": 2213,
-            "assets_yoy": 2052,
-            "op_to_debt_now": 0.08379401422687624,
-            "op_to_debt_yoy": 0.01028619366703553
-        },
-        {
-            "rank": 36,
             "name": "사조대림",
             "code": "003960",
             "price": 29600,
@@ -8575,8 +8551,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -2.9,
             "asset_growth_r": 86,
             "price_volatility": -0.31,
-            "volatility_r": 59,
-            "avg_r": 197.5,
+            "volatility_r": 57,
+            "avg_r": 197.0,
             "quarter_revenue": 8863,
             "quarter_cost_of_sales": 7802,
             "assets": 21632,
@@ -8585,7 +8561,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_to_debt_yoy": 0.023589872346239084
         },
         {
-            "rank": 37,
+            "rank": 36,
             "name": "디오",
             "code": "039840",
             "price": 12600,
@@ -8599,8 +8575,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -4.1,
             "asset_growth_r": 69,
             "price_volatility": 0.19,
-            "volatility_r": 487,
-            "avg_r": 199.8,
+            "volatility_r": 488,
+            "avg_r": 200.0,
             "quarter_revenue": 413,
             "quarter_cost_of_sales": 141,
             "assets": 3279,
@@ -8609,7 +8585,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_to_debt_yoy": 0.019885752366272283
         },
         {
-            "rank": 38,
+            "rank": 37,
             "name": "자이에스앤디",
             "code": "317400",
             "price": 5000,
@@ -8633,7 +8609,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_to_debt_yoy": -0.018354600868078507
         },
         {
-            "rank": 39,
+            "rank": 38,
             "name": "LX하우시스",
             "code": "108670",
             "price": 31550,
@@ -8647,8 +8623,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -0.1,
             "asset_growth_r": 148,
             "price_volatility": 0.24,
-            "volatility_r": 523,
-            "avg_r": 200.8,
+            "volatility_r": 522,
+            "avg_r": 200.5,
             "quarter_revenue": 8147,
             "quarter_cost_of_sales": 6009,
             "assets": 23718,
@@ -8657,7 +8633,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_to_debt_yoy": 0.009488670564966894
         },
         {
-            "rank": 40,
+            "rank": 39,
             "name": "레이언스",
             "code": "228850",
             "price": 6150,
@@ -8671,8 +8647,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 0.2,
             "asset_growth_r": 154,
             "price_volatility": -0.04,
-            "volatility_r": 276,
-            "avg_r": 202.2,
+            "volatility_r": 275,
+            "avg_r": 202.0,
             "quarter_revenue": 367,
             "quarter_cost_of_sales": 229,
             "assets": 2713,
@@ -8681,7 +8657,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_to_debt_yoy": -1.4909542506459947
         },
         {
-            "rank": 41,
+            "rank": 40,
             "name": "JW중외제약",
             "code": "001060",
             "price": 24250,
@@ -8705,7 +8681,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_to_debt_yoy": 0.07860885683524725
         },
         {
-            "rank": 42,
+            "rank": 41,
             "name": "LF",
             "code": "093050",
             "price": 22100,
@@ -8719,8 +8695,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 3.4,
             "asset_growth_r": 284,
             "price_volatility": -0.25,
-            "volatility_r": 85,
-            "avg_r": 203.0,
+            "volatility_r": 84,
+            "avg_r": 202.8,
             "quarter_revenue": 4619,
             "quarter_cost_of_sales": 1839,
             "assets": 31021,
@@ -8729,7 +8705,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_to_debt_yoy": 0.024553162289936963
         },
         {
-            "rank": 43,
+            "rank": 42,
             "name": "경동제약",
             "code": "011040",
             "price": 4955,
@@ -8753,7 +8729,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_to_debt_yoy": 0.04231403202738907
         },
         {
-            "rank": 44,
+            "rank": 43,
             "name": "딜리",
             "code": "131180",
             "price": 3765,
@@ -8766,7 +8742,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 207,
             "asset_growth_yoy": 0.2,
             "asset_growth_r": 156,
-            "price_volatility": -3.23,
+            "price_volatility": -3.17,
             "volatility_r": 5,
             "avg_r": 205.8,
             "quarter_revenue": 83,
@@ -8777,7 +8753,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_to_debt_yoy": 0.032023563962312686
         },
         {
-            "rank": 45,
+            "rank": 44,
             "name": "씨젠",
             "code": "096530",
             "price": 29250,
@@ -8801,7 +8777,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_to_debt_yoy": 0.1922589850748528
         },
         {
-            "rank": 46,
+            "rank": 45,
             "name": "아이에스동서",
             "code": "010780",
             "price": 19060,
@@ -8825,7 +8801,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_to_debt_yoy": 0.02306490640127662
         },
         {
-            "rank": 47,
+            "rank": 46,
             "name": "브이티",
             "code": "018290",
             "price": 12080,
@@ -8849,7 +8825,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_to_debt_yoy": 0.5281156254982255
         },
         {
-            "rank": 48,
+            "rank": 47,
             "name": "조선내화",
             "code": "462520",
             "price": 13910,
@@ -8873,7 +8849,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_to_debt_yoy": 0.02261751174261958
         },
         {
-            "rank": 49,
+            "rank": 48,
             "name": "유수홀딩스",
             "code": "000700",
             "price": 5780,
@@ -8887,14 +8863,38 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 4.6,
             "asset_growth_r": 331,
             "price_volatility": -0.22,
-            "volatility_r": 105,
-            "avg_r": 211.2,
+            "volatility_r": 104,
+            "avg_r": 211.0,
             "quarter_revenue": 1063,
             "quarter_cost_of_sales": 798,
             "assets": 5031,
             "assets_yoy": 4812,
             "op_to_debt_now": 1602.9202067920235,
             "op_to_debt_yoy": 501.72229515658086
+        },
+        {
+            "rank": 49,
+            "name": "재영솔루텍",
+            "code": "049630",
+            "price": 6300,
+            "cap_increase_flag": 1,
+            "ni_pos_flag": 1,
+            "cf_pos_flag": 1,
+            "gpa": 5.9,
+            "gpa_r": 233,
+            "op_debt_growth_yoy": 714.6,
+            "op_debt_r": 37,
+            "asset_growth_yoy": 7.8,
+            "asset_growth_r": 467,
+            "price_volatility": -0.2,
+            "volatility_r": 119,
+            "avg_r": 214.0,
+            "quarter_revenue": 580,
+            "quarter_cost_of_sales": 449,
+            "assets": 2213,
+            "assets_yoy": 2052,
+            "op_to_debt_now": 0.08379401422687624,
+            "op_to_debt_yoy": 0.01028619366703553
         },
         {
             "rank": 50,
@@ -9345,7 +9345,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 256,
             "asset_growth_yoy": 5.8,
             "asset_growth_r": 384,
-            "price_volatility": -3.03,
+            "price_volatility": -2.97,
             "volatility_r": 7,
             "avg_r": 126.5,
             "equity": 805,
@@ -9380,8 +9380,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -1.6,
             "asset_growth_r": 113,
             "price_volatility": -0.2,
-            "volatility_r": 119,
-            "avg_r": 127.5,
+            "volatility_r": 118,
+            "avg_r": 127.4,
             "equity": 656,
             "quarter_operating_cf": 81,
             "quarter_net_income": 27,
@@ -9414,8 +9414,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -0.1,
             "asset_growth_r": 156,
             "price_volatility": 0.24,
-            "volatility_r": 527,
-            "avg_r": 139.9,
+            "volatility_r": 526,
+            "avg_r": 139.8,
             "equity": 8737,
             "quarter_operating_cf": 1590,
             "quarter_net_income": 304,
@@ -9448,8 +9448,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -3.7,
             "asset_growth_r": 84,
             "price_volatility": -0.14,
-            "volatility_r": 168,
-            "avg_r": 142.5,
+            "volatility_r": 170,
+            "avg_r": 142.8,
             "equity": 11452,
             "quarter_operating_cf": 976,
             "quarter_net_income": 290,
@@ -9496,40 +9496,6 @@ const KOSPI_QUANT_PACKAGE = {
         },
         {
             "rank": 6,
-            "name": "휴맥스",
-            "code": "115160",
-            "price": 6100,
-            "market_cap": 263,
-            "market_cap_pct_from_top": 86,
-            "per": 0.74,
-            "per_r": 3,
-            "pcr": 27.28,
-            "pcr_r": 452,
-            "pbr": 0.2,
-            "pbr_r": 53,
-            "psr": 0.29,
-            "psr_r": 31,
-            "gpa": 4.2,
-            "gpa_r": 415,
-            "op_debt_growth_yoy": 153.1,
-            "op_debt_r": 192,
-            "asset_growth_yoy": -19.8,
-            "asset_growth_r": 10,
-            "price_volatility": -8.13,
-            "volatility_r": 1,
-            "avg_r": 144.6,
-            "equity": 1307,
-            "quarter_operating_cf": 9,
-            "quarter_net_income": 353,
-            "quarter_revenue": 920,
-            "quarter_cost_of_sales": 712,
-            "assets": 4903,
-            "assets_yoy": 6114,
-            "op_to_debt_now": 0.02843673600629084,
-            "op_to_debt_yoy": -0.053553654315911386
-        },
-        {
-            "rank": 7,
             "name": "비상교육",
             "code": "100220",
             "price": 4895,
@@ -9550,8 +9516,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 4.5,
             "asset_growth_r": 332,
             "price_volatility": -0.01,
-            "volatility_r": 318,
-            "avg_r": 144.6,
+            "volatility_r": 317,
+            "avg_r": 144.5,
             "equity": 2228,
             "quarter_operating_cf": 403,
             "quarter_net_income": 257,
@@ -9561,6 +9527,40 @@ const KOSPI_QUANT_PACKAGE = {
             "assets_yoy": 4005,
             "op_to_debt_now": 0.27063394125733703,
             "op_to_debt_yoy": 0.13225625456118495
+        },
+        {
+            "rank": 7,
+            "name": "휴맥스",
+            "code": "115160",
+            "price": 6100,
+            "market_cap": 263,
+            "market_cap_pct_from_top": 86,
+            "per": 0.74,
+            "per_r": 3,
+            "pcr": 27.28,
+            "pcr_r": 452,
+            "pbr": 0.2,
+            "pbr_r": 53,
+            "psr": 0.29,
+            "psr_r": 31,
+            "gpa": 4.2,
+            "gpa_r": 415,
+            "op_debt_growth_yoy": 153.1,
+            "op_debt_r": 192,
+            "asset_growth_yoy": -19.8,
+            "asset_growth_r": 10,
+            "price_volatility": -7.98,
+            "volatility_r": 1,
+            "avg_r": 144.6,
+            "equity": 1307,
+            "quarter_operating_cf": 9,
+            "quarter_net_income": 353,
+            "quarter_revenue": 920,
+            "quarter_cost_of_sales": 712,
+            "assets": 4903,
+            "assets_yoy": 6114,
+            "op_to_debt_now": 0.02843673600629084,
+            "op_to_debt_yoy": -0.053553654315911386
         },
         {
             "rank": 8,
@@ -9584,8 +9584,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 1.9,
             "asset_growth_r": 232,
             "price_volatility": 0.01,
-            "volatility_r": 344,
-            "avg_r": 147.8,
+            "volatility_r": 342,
+            "avg_r": 147.5,
             "equity": 10073,
             "quarter_operating_cf": 1463,
             "quarter_net_income": 1210,
@@ -9618,8 +9618,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -1.4,
             "asset_growth_r": 118,
             "price_volatility": -0.02,
-            "volatility_r": 301,
-            "avg_r": 154.8,
+            "volatility_r": 300,
+            "avg_r": 154.6,
             "equity": 14479,
             "quarter_operating_cf": 527,
             "quarter_net_income": 273,
@@ -9652,8 +9652,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -4.2,
             "asset_growth_r": 76,
             "price_volatility": -0.04,
-            "volatility_r": 274,
-            "avg_r": 161.5,
+            "volatility_r": 273,
+            "avg_r": 161.4,
             "equity": 4411,
             "quarter_operating_cf": 272,
             "quarter_net_income": 247,
@@ -9720,8 +9720,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 0.8,
             "asset_growth_r": 196,
             "price_volatility": 0.14,
-            "volatility_r": 452,
-            "avg_r": 165.6,
+            "volatility_r": 453,
+            "avg_r": 165.8,
             "equity": 1497,
             "quarter_operating_cf": 50,
             "quarter_net_income": 66,
@@ -9754,8 +9754,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 8.1,
             "asset_growth_r": 496,
             "price_volatility": -0.04,
-            "volatility_r": 286,
-            "avg_r": 166.0,
+            "volatility_r": 285,
+            "avg_r": 165.9,
             "equity": 8672,
             "quarter_operating_cf": 316,
             "quarter_net_income": 192,
@@ -9788,8 +9788,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 2.8,
             "asset_growth_r": 264,
             "price_volatility": -0.16,
-            "volatility_r": 151,
-            "avg_r": 166.4,
+            "volatility_r": 153,
+            "avg_r": 166.6,
             "equity": 27345,
             "quarter_operating_cf": 291,
             "quarter_net_income": 730,
@@ -9822,8 +9822,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -2.9,
             "asset_growth_r": 94,
             "price_volatility": -0.31,
-            "volatility_r": 61,
-            "avg_r": 167.1,
+            "volatility_r": 59,
+            "avg_r": 166.9,
             "equity": 7960,
             "quarter_operating_cf": 491,
             "quarter_net_income": 156,
@@ -9856,8 +9856,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -9.3,
             "asset_growth_r": 30,
             "price_volatility": 0.01,
-            "volatility_r": 339,
-            "avg_r": 168.1,
+            "volatility_r": 337,
+            "avg_r": 167.9,
             "equity": 4905,
             "quarter_operating_cf": 399,
             "quarter_net_income": 172,
@@ -9890,8 +9890,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -1.3,
             "asset_growth_r": 125,
             "price_volatility": -0.04,
-            "volatility_r": 277,
-            "avg_r": 168.4,
+            "volatility_r": 276,
+            "avg_r": 168.2,
             "equity": 6307,
             "quarter_operating_cf": 393,
             "quarter_net_income": 236,
@@ -9924,8 +9924,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 0.8,
             "asset_growth_r": 195,
             "price_volatility": -0.15,
-            "volatility_r": 158,
-            "avg_r": 169.6,
+            "volatility_r": 160,
+            "avg_r": 169.9,
             "equity": 6058,
             "quarter_operating_cf": 338,
             "quarter_net_income": 398,
@@ -10059,9 +10059,9 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 91,
             "asset_growth_yoy": 10.7,
             "asset_growth_r": 564,
-            "price_volatility": -0.33,
-            "volatility_r": 57,
-            "avg_r": 173.8,
+            "price_volatility": -0.31,
+            "volatility_r": 62,
+            "avg_r": 174.4,
             "equity": 213,
             "quarter_operating_cf": 63,
             "quarter_net_income": 26,
@@ -10094,8 +10094,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 4.7,
             "asset_growth_r": 344,
             "price_volatility": 0.15,
-            "volatility_r": 460,
-            "avg_r": 177.4,
+            "volatility_r": 459,
+            "avg_r": 177.2,
             "equity": 13392,
             "quarter_operating_cf": 774,
             "quarter_net_income": 453,
@@ -10128,8 +10128,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -2.2,
             "asset_growth_r": 105,
             "price_volatility": -0.0,
-            "volatility_r": 327,
-            "avg_r": 178.9,
+            "volatility_r": 326,
+            "avg_r": 178.8,
             "equity": 5124,
             "quarter_operating_cf": 1062,
             "quarter_net_income": 354,
@@ -10162,8 +10162,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -9.4,
             "asset_growth_r": 28,
             "price_volatility": -0.01,
-            "volatility_r": 312,
-            "avg_r": 181.9,
+            "volatility_r": 311,
+            "avg_r": 181.8,
             "equity": 5641,
             "quarter_operating_cf": 657,
             "quarter_net_income": 157,
@@ -10230,8 +10230,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -0.7,
             "asset_growth_r": 139,
             "price_volatility": -0.34,
-            "volatility_r": 55,
-            "avg_r": 184.4,
+            "volatility_r": 54,
+            "avg_r": 184.2,
             "equity": 37527,
             "quarter_operating_cf": 757,
             "quarter_net_income": 546,
@@ -10365,7 +10365,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 140,
             "asset_growth_yoy": -20.1,
             "asset_growth_r": 7,
-            "price_volatility": 3.03,
+            "price_volatility": 3.44,
             "volatility_r": 835,
             "avg_r": 201.1,
             "equity": 1002,
@@ -10400,8 +10400,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -4.2,
             "asset_growth_r": 74,
             "price_volatility": 0.44,
-            "volatility_r": 633,
-            "avg_r": 203.0,
+            "volatility_r": 632,
+            "avg_r": 202.9,
             "equity": 432,
             "quarter_operating_cf": 9,
             "quarter_net_income": 6,
@@ -10434,8 +10434,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 3.4,
             "asset_growth_r": 292,
             "price_volatility": -0.25,
-            "volatility_r": 87,
-            "avg_r": 210.9,
+            "volatility_r": 86,
+            "avg_r": 210.8,
             "equity": 18309,
             "quarter_operating_cf": 939,
             "quarter_net_income": 316,
@@ -10604,8 +10604,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -4.5,
             "asset_growth_r": 71,
             "price_volatility": 0.14,
-            "volatility_r": 451,
-            "avg_r": 214.4,
+            "volatility_r": 452,
+            "avg_r": 214.5,
             "equity": 3478,
             "quarter_operating_cf": 6,
             "quarter_net_income": 57,
@@ -10671,9 +10671,9 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 50,
             "asset_growth_yoy": -9.3,
             "asset_growth_r": 29,
-            "price_volatility": -1.13,
-            "volatility_r": 21,
-            "avg_r": 215.4,
+            "price_volatility": -1.07,
+            "volatility_r": 22,
+            "avg_r": 215.5,
             "equity": 1536,
             "quarter_operating_cf": 61,
             "quarter_net_income": 20,
@@ -10706,8 +10706,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 5.5,
             "asset_growth_r": 375,
             "price_volatility": 0.22,
-            "volatility_r": 514,
-            "avg_r": 217.4,
+            "volatility_r": 513,
+            "avg_r": 217.2,
             "equity": 1763,
             "quarter_operating_cf": 138,
             "quarter_net_income": 109,
@@ -10788,40 +10788,6 @@ const KOSPI_QUANT_PACKAGE = {
         },
         {
             "rank": 44,
-            "name": "이마트",
-            "code": "139480",
-            "price": 79400,
-            "market_cap": 21911,
-            "market_cap_pct_from_top": 8,
-            "per": 27.6,
-            "per_r": 379,
-            "pcr": 8.52,
-            "pcr_r": 185,
-            "pbr": 0.16,
-            "pbr_r": 22,
-            "psr": 0.31,
-            "psr_r": 40,
-            "gpa": 6.3,
-            "gpa_r": 191,
-            "op_debt_growth_yoy": 5.8,
-            "op_debt_r": 496,
-            "asset_growth_yoy": 3.6,
-            "asset_growth_r": 299,
-            "price_volatility": -0.16,
-            "volatility_r": 152,
-            "avg_r": 220.5,
-            "equity": 141352,
-            "quarter_operating_cf": 2571,
-            "quarter_net_income": 793,
-            "quarter_revenue": 71234,
-            "quarter_cost_of_sales": 49222,
-            "assets": 348831,
-            "assets_yoy": 336549,
-            "op_to_debt_now": 0.0191056003903552,
-            "op_to_debt_yoy": 0.018051157836474097
-        },
-        {
-            "rank": 45,
             "name": "더테크놀로지",
             "code": "043090",
             "price": 1140,
@@ -10853,6 +10819,40 @@ const KOSPI_QUANT_PACKAGE = {
             "assets_yoy": 377,
             "op_to_debt_now": -0.3660384673899066,
             "op_to_debt_yoy": -0.2892570363516524
+        },
+        {
+            "rank": 45,
+            "name": "이마트",
+            "code": "139480",
+            "price": 79400,
+            "market_cap": 21911,
+            "market_cap_pct_from_top": 8,
+            "per": 27.6,
+            "per_r": 379,
+            "pcr": 8.52,
+            "pcr_r": 185,
+            "pbr": 0.16,
+            "pbr_r": 22,
+            "psr": 0.31,
+            "psr_r": 40,
+            "gpa": 6.3,
+            "gpa_r": 191,
+            "op_debt_growth_yoy": 5.8,
+            "op_debt_r": 496,
+            "asset_growth_yoy": 3.6,
+            "asset_growth_r": 299,
+            "price_volatility": -0.16,
+            "volatility_r": 154,
+            "avg_r": 220.8,
+            "equity": 141352,
+            "quarter_operating_cf": 2571,
+            "quarter_net_income": 793,
+            "quarter_revenue": 71234,
+            "quarter_cost_of_sales": 49222,
+            "assets": 348831,
+            "assets_yoy": 336549,
+            "op_to_debt_now": 0.0191056003903552,
+            "op_to_debt_yoy": 0.018051157836474097
         },
         {
             "rank": 46,
@@ -10910,8 +10910,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -4.2,
             "asset_growth_r": 75,
             "price_volatility": 0.25,
-            "volatility_r": 532,
-            "avg_r": 222.8,
+            "volatility_r": 530,
+            "avg_r": 222.5,
             "equity": 24475,
             "quarter_operating_cf": 4923,
             "quarter_net_income": 2163,
@@ -10944,8 +10944,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -2.0,
             "asset_growth_r": 106,
             "price_volatility": -0.04,
-            "volatility_r": 275,
-            "avg_r": 223.2,
+            "volatility_r": 274,
+            "avg_r": 223.1,
             "equity": 399,
             "quarter_operating_cf": 50,
             "quarter_net_income": 14,
@@ -10992,37 +10992,37 @@ const KOSPI_QUANT_PACKAGE = {
         },
         {
             "rank": 50,
-            "name": "영우디에스피",
-            "code": "143540",
-            "price": 1022,
-            "market_cap": 455,
-            "market_cap_pct_from_top": 72,
-            "per": 10.79,
-            "per_r": 104,
-            "pcr": 4.59,
-            "pcr_r": 70,
-            "pbr": 1.33,
-            "pbr_r": 640,
-            "psr": 1.95,
-            "psr_r": 364,
-            "gpa": 9.8,
-            "gpa_r": 64,
-            "op_debt_growth_yoy": 11382.9,
-            "op_debt_r": 5,
-            "asset_growth_yoy": -13.7,
-            "asset_growth_r": 16,
-            "price_volatility": 0.28,
-            "volatility_r": 549,
-            "avg_r": 226.5,
-            "equity": 343,
-            "quarter_operating_cf": 99,
-            "quarter_net_income": 42,
-            "quarter_revenue": 233,
-            "quarter_cost_of_sales": 176,
-            "assets": 580,
-            "assets_yoy": 673,
-            "op_to_debt_now": 0.8437861697619048,
-            "op_to_debt_yoy": -0.007478435301866081
+            "name": "아이윈",
+            "code": "090150",
+            "price": 500,
+            "market_cap": 209,
+            "market_cap_pct_from_top": 91,
+            "per": 8.3,
+            "per_r": 71,
+            "pcr": 25.19,
+            "pcr_r": 427,
+            "pbr": 0.39,
+            "pbr_r": 217,
+            "psr": 0.76,
+            "psr_r": 139,
+            "gpa": 7.1,
+            "gpa_r": 148,
+            "op_debt_growth_yoy": 75.9,
+            "op_debt_r": 297,
+            "asset_growth_yoy": -12.4,
+            "asset_growth_r": 21,
+            "price_volatility": 0.19,
+            "volatility_r": 490,
+            "avg_r": 226.2,
+            "equity": 532,
+            "quarter_operating_cf": 8,
+            "quarter_net_income": 25,
+            "quarter_revenue": 274,
+            "quarter_cost_of_sales": 194,
+            "assets": 1136,
+            "assets_yoy": 1296,
+            "op_to_debt_now": 0.04169996397142,
+            "op_to_debt_yoy": 0.023709396045787978
         }
     ],
     "value_momentum_value": [
@@ -11909,7 +11909,7 @@ const KOSPI_QUANT_PACKAGE = {
             "market_cap": 4216,
             "market_cap_pct_from_top": 20,
             "per": 67.91,
-            "per_r": 395,
+            "per_r": 396,
             "pfcr": 6.17,
             "pfcr_r": 38,
             "pbr": 0.22,
@@ -11924,7 +11924,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 259,
             "ni_growth_yoy": 153.3,
             "ni_yoy_r": 254,
-            "avg_r": 143.6,
+            "avg_r": 143.8,
             "equity": 18806,
             "quarter_operating_cf": 833,
             "quarter_capex": 150,
@@ -12016,7 +12016,7 @@ const KOSPI_QUANT_PACKAGE = {
             "per": 4.46,
             "per_r": 25,
             "pfcr": -37.07,
-            "pfcr_r": 401,
+            "pfcr_r": 400,
             "pbr": 0.46,
             "pbr_r": 184,
             "psr": 1.2,
@@ -12029,7 +12029,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 113,
             "ni_growth_yoy": 175.9,
             "ni_yoy_r": 222,
-            "avg_r": 152.4,
+            "avg_r": 152.2,
             "equity": 970378,
             "quarter_operating_cf": 6610,
             "quarter_capex": 18523,
@@ -12121,7 +12121,7 @@ const KOSPI_QUANT_PACKAGE = {
             "per": 0.74,
             "per_r": 3,
             "pfcr": -50.13,
-            "pfcr_r": 379,
+            "pfcr_r": 378,
             "pbr": 0.2,
             "pbr_r": 37,
             "psr": 0.29,
@@ -12134,7 +12134,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 185,
             "ni_growth_yoy": 290.0,
             "ni_yoy_r": 136,
-            "avg_r": 154.4,
+            "avg_r": 154.2,
             "equity": 1307,
             "quarter_operating_cf": 9,
             "quarter_capex": 14,
@@ -12331,7 +12331,7 @@ const KOSPI_QUANT_PACKAGE = {
             "per": 16.71,
             "per_r": 162,
             "pfcr": -54.67,
-            "pfcr_r": 376,
+            "pfcr_r": 375,
             "pbr": 0.23,
             "pbr_r": 51,
             "psr": 1.43,
@@ -12344,7 +12344,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 89,
             "ni_growth_yoy": 204.6,
             "ni_yoy_r": 185,
-            "avg_r": 160.8,
+            "avg_r": 160.6,
             "equity": 3423,
             "quarter_operating_cf": -7,
             "quarter_capex": 6,
@@ -12829,7 +12829,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 3.6,
             "asset_growth_r": 110,
             "price_volatility": -0.23,
-            "volatility_r": 36,
+            "volatility_r": 34,
             "op_growth_qoq": 381.0,
             "op_qoq_r": 104,
             "op_growth_yoy": 394.8,
@@ -12838,7 +12838,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 63,
             "ni_growth_yoy": 1306.5,
             "ni_yoy_r": 43,
-            "avg_r": 67.9,
+            "avg_r": 67.6,
             "quarter_revenue": 1306,
             "quarter_cost_of_sales": 708,
             "assets": 6479,
@@ -12866,7 +12866,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -1.6,
             "asset_growth_r": 46,
             "price_volatility": -0.2,
-            "volatility_r": 50,
+            "volatility_r": 48,
             "op_growth_qoq": 343.1,
             "op_qoq_r": 117,
             "op_growth_yoy": 569.4,
@@ -12875,7 +12875,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 137,
             "ni_growth_yoy": 347.6,
             "ni_yoy_r": 114,
-            "avg_r": 69.5,
+            "avg_r": 69.2,
             "quarter_revenue": 544,
             "quarter_cost_of_sales": 379,
             "assets": 1009,
@@ -12940,7 +12940,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 0.4,
             "asset_growth_r": 71,
             "price_volatility": -0.26,
-            "volatility_r": 32,
+            "volatility_r": 31,
             "op_growth_qoq": 493.2,
             "op_qoq_r": 80,
             "op_growth_yoy": 351.3,
@@ -12949,7 +12949,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 183,
             "ni_growth_yoy": 519.2,
             "ni_yoy_r": 81,
-            "avg_r": 86.2,
+            "avg_r": 86.1,
             "quarter_revenue": 357,
             "quarter_cost_of_sales": 232,
             "assets": 2106,
@@ -13162,7 +13162,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -1.5,
             "asset_growth_r": 49,
             "price_volatility": 0.01,
-            "volatility_r": 140,
+            "volatility_r": 138,
             "op_growth_qoq": 205.3,
             "op_qoq_r": 183,
             "op_growth_yoy": 414.1,
@@ -13171,7 +13171,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 190,
             "ni_growth_yoy": 451.0,
             "ni_yoy_r": 92,
-            "avg_r": 100.4,
+            "avg_r": 100.1,
             "quarter_revenue": 344,
             "quarter_cost_of_sales": 200,
             "assets": 1466,
@@ -13273,7 +13273,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 2.2,
             "asset_growth_r": 94,
             "price_volatility": 0.06,
-            "volatility_r": 162,
+            "volatility_r": 161,
             "op_growth_qoq": 132.9,
             "op_qoq_r": 257,
             "op_growth_yoy": 390.0,
@@ -13282,7 +13282,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 107,
             "ni_growth_yoy": 472.2,
             "ni_yoy_r": 88,
-            "avg_r": 105.2,
+            "avg_r": 105.1,
             "quarter_revenue": 1037,
             "quarter_cost_of_sales": 607,
             "assets": 3851,
@@ -13495,7 +13495,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 1.9,
             "asset_growth_r": 92,
             "price_volatility": 0.01,
-            "volatility_r": 141,
+            "volatility_r": 139,
             "op_growth_qoq": 266.7,
             "op_qoq_r": 146,
             "op_growth_yoy": 267.1,
@@ -13504,7 +13504,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 131,
             "ni_growth_yoy": 2497.9,
             "ni_yoy_r": 18,
-            "avg_r": 114.5,
+            "avg_r": 114.2,
             "quarter_revenue": 9376,
             "quarter_cost_of_sales": 7345,
             "assets": 57196,
@@ -13532,7 +13532,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 29.3,
             "asset_growth_r": 289,
             "price_volatility": -0.03,
-            "volatility_r": 118,
+            "volatility_r": 117,
             "op_growth_qoq": 202.8,
             "op_qoq_r": 185,
             "op_growth_yoy": 844.9,
@@ -13541,7 +13541,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 14,
             "ni_growth_yoy": 2164.0,
             "ni_yoy_r": 21,
-            "avg_r": 116.2,
+            "avg_r": 116.1,
             "quarter_revenue": 8471,
             "quarter_cost_of_sales": 7541,
             "assets": 28707,
@@ -13606,7 +13606,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -4.9,
             "asset_growth_r": 25,
             "price_volatility": -0.22,
-            "volatility_r": 44,
+            "volatility_r": 42,
             "op_growth_qoq": 497.2,
             "op_qoq_r": 79,
             "op_growth_yoy": 91.0,
@@ -13615,7 +13615,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 247,
             "ni_growth_yoy": 366.6,
             "ni_yoy_r": 112,
-            "avg_r": 120.0,
+            "avg_r": 119.8,
             "quarter_revenue": 9525,
             "quarter_cost_of_sales": 6309,
             "assets": 42698,
@@ -13753,7 +13753,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 49,
             "asset_growth_yoy": 10.7,
             "asset_growth_r": 204,
-            "price_volatility": -0.33,
+            "price_volatility": -0.31,
             "volatility_r": 27,
             "op_growth_qoq": 174.7,
             "op_qoq_r": 212,
@@ -13791,7 +13791,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 25.2,
             "asset_growth_r": 278,
             "price_volatility": 0.05,
-            "volatility_r": 161,
+            "volatility_r": 160,
             "op_growth_qoq": 365.5,
             "op_qoq_r": 112,
             "op_growth_yoy": 201.8,
@@ -13800,7 +13800,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 44,
             "ni_growth_yoy": 434.4,
             "ni_yoy_r": 96,
-            "avg_r": 126.1,
+            "avg_r": 126.0,
             "quarter_revenue": 341,
             "quarter_cost_of_sales": 254,
             "assets": 1428,
@@ -13865,7 +13865,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 0.8,
             "asset_growth_r": 76,
             "price_volatility": 0.6,
-            "volatility_r": 262,
+            "volatility_r": 261,
             "op_growth_qoq": 92.4,
             "op_qoq_r": 346,
             "op_growth_yoy": 402.8,
@@ -13874,7 +13874,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 30,
             "ni_growth_yoy": 556.3,
             "ni_yoy_r": 74,
-            "avg_r": 127.4,
+            "avg_r": 127.2,
             "quarter_revenue": 4425,
             "quarter_cost_of_sales": 3497,
             "assets": 18290,
@@ -13902,7 +13902,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 4.6,
             "asset_growth_r": 126,
             "price_volatility": -0.22,
-            "volatility_r": 45,
+            "volatility_r": 43,
             "op_growth_qoq": 415.7,
             "op_qoq_r": 96,
             "op_growth_yoy": 53.1,
@@ -13911,7 +13911,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 22,
             "ni_growth_yoy": 241.4,
             "ni_yoy_r": 165,
-            "avg_r": 129.8,
+            "avg_r": 129.5,
             "quarter_revenue": 1063,
             "quarter_cost_of_sales": 798,
             "assets": 5031,
@@ -14049,7 +14049,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 96,
             "asset_growth_yoy": -19.8,
             "asset_growth_r": 4,
-            "price_volatility": -8.13,
+            "price_volatility": -7.98,
             "volatility_r": 1,
             "op_growth_qoq": 118.8,
             "op_qoq_r": 284,
@@ -14234,7 +14234,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 295,
             "asset_growth_yoy": 7.5,
             "asset_growth_r": 171,
-            "price_volatility": -2.55,
+            "price_volatility": -2.53,
             "volatility_r": 6,
             "op_growth_qoq": 258.3,
             "op_qoq_r": 149,
@@ -14272,7 +14272,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -1.2,
             "asset_growth_r": 54,
             "price_volatility": -0.01,
-            "volatility_r": 126,
+            "volatility_r": 125,
             "op_growth_qoq": 181.5,
             "op_qoq_r": 204,
             "op_growth_yoy": 319.5,
@@ -14281,7 +14281,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 194,
             "ni_growth_yoy": 279.6,
             "ni_yoy_r": 138,
-            "avg_r": 138.5,
+            "avg_r": 138.4,
             "quarter_revenue": 549,
             "quarter_cost_of_sales": 467,
             "assets": 2752,
@@ -14383,7 +14383,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 5.6,
             "asset_growth_r": 140,
             "price_volatility": -0.23,
-            "volatility_r": 38,
+            "volatility_r": 36,
             "op_growth_qoq": 3159.6,
             "op_qoq_r": 16,
             "op_growth_yoy": 85.5,
@@ -14392,7 +14392,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 237,
             "ni_growth_yoy": 1754.9,
             "ni_yoy_r": 32,
-            "avg_r": 140.9,
+            "avg_r": 140.6,
             "quarter_revenue": 1052,
             "quarter_cost_of_sales": 908,
             "assets": 4400,
@@ -14493,8 +14493,8 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 138,
             "asset_growth_yoy": 27.6,
             "asset_growth_r": 285,
-            "price_volatility": 0.0,
-            "volatility_r": 138,
+            "price_volatility": 0.01,
+            "volatility_r": 142,
             "op_growth_qoq": 271.6,
             "op_qoq_r": 145,
             "op_growth_yoy": 227.0,
@@ -14503,7 +14503,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 60,
             "ni_growth_yoy": 188.9,
             "ni_yoy_r": 197,
-            "avg_r": 145.9,
+            "avg_r": 146.4,
             "quarter_revenue": 5720,
             "quarter_cost_of_sales": 4592,
             "assets": 16617,
@@ -14531,7 +14531,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 0.3,
             "asset_growth_r": 70,
             "price_volatility": 0.03,
-            "volatility_r": 148,
+            "volatility_r": 147,
             "op_growth_qoq": 71.5,
             "op_qoq_r": 398,
             "op_growth_yoy": 549.8,
@@ -14540,7 +14540,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 193,
             "ni_growth_yoy": 3557.3,
             "ni_yoy_r": 16,
-            "avg_r": 146.5,
+            "avg_r": 146.4,
             "quarter_revenue": 1519,
             "quarter_cost_of_sales": 1211,
             "assets": 12916,
@@ -14567,7 +14567,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 69,
             "asset_growth_yoy": -20.1,
             "asset_growth_r": 3,
-            "price_volatility": 3.03,
+            "price_volatility": 3.44,
             "volatility_r": 308,
             "op_growth_qoq": 2414.9,
             "op_qoq_r": 23,
@@ -14652,7 +14652,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -1.6,
             "asset_growth_r": 43,
             "price_volatility": -0.2,
-            "volatility_r": 43,
+            "volatility_r": 42,
             "op_growth_qoq": 343.1,
             "op_qoq_r": 117,
             "op_growth_yoy": 569.4,
@@ -14661,7 +14661,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 137,
             "ni_growth_yoy": 347.6,
             "ni_yoy_r": 114,
-            "avg_r": 67.8,
+            "avg_r": 67.7,
             "equity": 656,
             "quarter_operating_cf": 81,
             "quarter_capex": 8,
@@ -14892,7 +14892,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 29.3,
             "asset_growth_r": 269,
             "price_volatility": -0.03,
-            "volatility_r": 108,
+            "volatility_r": 107,
             "op_growth_qoq": 202.8,
             "op_qoq_r": 185,
             "op_growth_yoy": 844.9,
@@ -14901,7 +14901,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 14,
             "ni_growth_yoy": 2164.0,
             "ni_yoy_r": 21,
-            "avg_r": 89.2,
+            "avg_r": 89.1,
             "equity": 21311,
             "quarter_operating_cf": 1378,
             "quarter_capex": 81,
@@ -14940,7 +14940,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 3.6,
             "asset_growth_r": 103,
             "price_volatility": -0.23,
-            "volatility_r": 32,
+            "volatility_r": 31,
             "op_growth_qoq": 381.0,
             "op_qoq_r": 104,
             "op_growth_yoy": 394.8,
@@ -14949,7 +14949,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 63,
             "ni_growth_yoy": 1306.5,
             "ni_yoy_r": 43,
-            "avg_r": 90.0,
+            "avg_r": 89.9,
             "equity": 4096,
             "quarter_operating_cf": 6,
             "quarter_capex": 36,
@@ -14988,7 +14988,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 2.2,
             "asset_growth_r": 88,
             "price_volatility": 0.06,
-            "volatility_r": 150,
+            "volatility_r": 149,
             "op_growth_qoq": 132.9,
             "op_qoq_r": 257,
             "op_growth_yoy": 390.0,
@@ -14997,7 +14997,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 107,
             "ni_growth_yoy": 472.2,
             "ni_yoy_r": 88,
-            "avg_r": 93.5,
+            "avg_r": 93.4,
             "equity": 2737,
             "quarter_operating_cf": 79,
             "quarter_capex": 21,
@@ -15036,7 +15036,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 25.2,
             "asset_growth_r": 259,
             "price_volatility": 0.05,
-            "volatility_r": 149,
+            "volatility_r": 148,
             "op_growth_qoq": 365.5,
             "op_qoq_r": 112,
             "op_growth_yoy": 201.8,
@@ -15045,7 +15045,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 44,
             "ni_growth_yoy": 434.4,
             "ni_yoy_r": 96,
-            "avg_r": 94.8,
+            "avg_r": 94.7,
             "equity": 762,
             "quarter_operating_cf": 64,
             "quarter_capex": 5,
@@ -15084,7 +15084,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 1.9,
             "asset_growth_r": 86,
             "price_volatility": 0.01,
-            "volatility_r": 129,
+            "volatility_r": 127,
             "op_growth_qoq": 266.7,
             "op_qoq_r": 146,
             "op_growth_yoy": 267.1,
@@ -15093,7 +15093,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 131,
             "ni_growth_yoy": 2497.9,
             "ni_yoy_r": 18,
-            "avg_r": 97.1,
+            "avg_r": 96.9,
             "equity": 10073,
             "quarter_operating_cf": 1463,
             "quarter_capex": 2774,
@@ -15179,8 +15179,8 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 45,
             "asset_growth_yoy": 10.7,
             "asset_growth_r": 188,
-            "price_volatility": -0.33,
-            "volatility_r": 23,
+            "price_volatility": -0.31,
+            "volatility_r": 24,
             "op_growth_qoq": 174.7,
             "op_qoq_r": 212,
             "op_growth_yoy": 420.1,
@@ -15189,7 +15189,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 314,
             "ni_growth_yoy": 368.9,
             "ni_yoy_r": 110,
-            "avg_r": 101.3,
+            "avg_r": 101.4,
             "equity": 213,
             "quarter_operating_cf": 63,
             "quarter_capex": 0,
@@ -15275,7 +15275,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 63,
             "asset_growth_yoy": -20.1,
             "asset_growth_r": 3,
-            "price_volatility": 3.03,
+            "price_volatility": 3.44,
             "volatility_r": 285,
             "op_growth_qoq": 2414.9,
             "op_qoq_r": 23,
@@ -15420,7 +15420,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 0.8,
             "asset_growth_r": 71,
             "price_volatility": 0.6,
-            "volatility_r": 242,
+            "volatility_r": 241,
             "op_growth_qoq": 92.4,
             "op_qoq_r": 346,
             "op_growth_yoy": 402.8,
@@ -15429,7 +15429,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 30,
             "ni_growth_yoy": 556.3,
             "ni_yoy_r": 74,
-            "avg_r": 108.7,
+            "avg_r": 108.6,
             "equity": 14354,
             "quarter_operating_cf": 531,
             "quarter_capex": 378,
@@ -15516,7 +15516,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 5.6,
             "asset_growth_r": 128,
             "price_volatility": -0.23,
-            "volatility_r": 33,
+            "volatility_r": 32,
             "op_growth_qoq": 3159.6,
             "op_qoq_r": 16,
             "op_growth_yoy": 85.5,
@@ -15525,7 +15525,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 237,
             "ni_growth_yoy": 1754.9,
             "ni_yoy_r": 32,
-            "avg_r": 109.5,
+            "avg_r": 109.4,
             "equity": 2494,
             "quarter_operating_cf": 161,
             "quarter_capex": 44,
@@ -15563,8 +15563,8 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 126,
             "asset_growth_yoy": 27.6,
             "asset_growth_r": 265,
-            "price_volatility": 0.0,
-            "volatility_r": 126,
+            "price_volatility": 0.01,
+            "volatility_r": 130,
             "op_growth_qoq": 271.6,
             "op_qoq_r": 145,
             "op_growth_yoy": 227.0,
@@ -15573,7 +15573,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 60,
             "ni_growth_yoy": 188.9,
             "ni_yoy_r": 197,
-            "avg_r": 111.0,
+            "avg_r": 111.3,
             "equity": 6835,
             "quarter_operating_cf": 1246,
             "quarter_capex": 80,
@@ -15611,7 +15611,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 89,
             "asset_growth_yoy": -19.8,
             "asset_growth_r": 4,
-            "price_volatility": -8.13,
+            "price_volatility": -7.98,
             "volatility_r": 1,
             "op_growth_qoq": 118.8,
             "op_qoq_r": 284,
@@ -15660,7 +15660,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -1.5,
             "asset_growth_r": 45,
             "price_volatility": 0.01,
-            "volatility_r": 128,
+            "volatility_r": 126,
             "op_growth_qoq": 205.3,
             "op_qoq_r": 183,
             "op_growth_yoy": 414.1,
@@ -15669,7 +15669,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 190,
             "ni_growth_yoy": 451.0,
             "ni_yoy_r": 92,
-            "avg_r": 112.8,
+            "avg_r": 112.7,
             "equity": 762,
             "quarter_operating_cf": 27,
             "quarter_capex": 3,
@@ -15708,7 +15708,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 4.6,
             "asset_growth_r": 115,
             "price_volatility": -0.22,
-            "volatility_r": 39,
+            "volatility_r": 38,
             "op_growth_qoq": 415.7,
             "op_qoq_r": 96,
             "op_growth_yoy": 53.1,
@@ -15717,7 +15717,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 22,
             "ni_growth_yoy": 241.4,
             "ni_yoy_r": 165,
-            "avg_r": 115.3,
+            "avg_r": 115.2,
             "equity": 4127,
             "quarter_operating_cf": 40,
             "quarter_capex": 2,
@@ -15804,7 +15804,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -1.2,
             "asset_growth_r": 50,
             "price_volatility": -0.01,
-            "volatility_r": 115,
+            "volatility_r": 114,
             "op_growth_qoq": 181.5,
             "op_qoq_r": 204,
             "op_growth_yoy": 319.5,
@@ -15899,7 +15899,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 272,
             "asset_growth_yoy": 7.5,
             "asset_growth_r": 157,
-            "price_volatility": -2.55,
+            "price_volatility": -2.53,
             "volatility_r": 5,
             "op_growth_qoq": 258.3,
             "op_qoq_r": 149,
@@ -15996,7 +15996,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -4.9,
             "asset_growth_r": 24,
             "price_volatility": -0.22,
-            "volatility_r": 38,
+            "volatility_r": 37,
             "op_growth_qoq": 497.2,
             "op_qoq_r": 79,
             "op_growth_yoy": 91.0,
@@ -16236,7 +16236,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 0.3,
             "asset_growth_r": 65,
             "price_volatility": 0.03,
-            "volatility_r": 136,
+            "volatility_r": 135,
             "op_growth_qoq": 71.5,
             "op_qoq_r": 398,
             "op_growth_yoy": 549.8,
@@ -16245,7 +16245,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 193,
             "ni_growth_yoy": 3557.3,
             "ni_yoy_r": 16,
-            "avg_r": 127.9,
+            "avg_r": 127.8,
             "equity": 8390,
             "quarter_operating_cf": 81,
             "quarter_capex": 25,
@@ -16428,7 +16428,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 5.4,
             "asset_growth_r": 125,
             "price_volatility": -0.01,
-            "volatility_r": 118,
+            "volatility_r": 117,
             "op_growth_qoq": 36.8,
             "op_qoq_r": 515,
             "op_growth_yoy": 476.5,
@@ -16437,7 +16437,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 84,
             "ni_growth_yoy": 253.2,
             "ni_yoy_r": 153,
-            "avg_r": 130.5,
+            "avg_r": 130.4,
             "equity": 1996,
             "quarter_operating_cf": 70,
             "quarter_capex": 9,
@@ -16476,7 +16476,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -10.0,
             "asset_growth_r": 8,
             "price_volatility": 0.02,
-            "volatility_r": 132,
+            "volatility_r": 131,
             "op_growth_qoq": 182.9,
             "op_qoq_r": 201,
             "op_growth_yoy": 122.5,
@@ -16485,7 +16485,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 156,
             "ni_growth_yoy": 192.9,
             "ni_yoy_r": 194,
-            "avg_r": 131.5,
+            "avg_r": 131.4,
             "equity": 403,
             "quarter_operating_cf": 5,
             "quarter_capex": 1,
@@ -16620,7 +16620,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 0.4,
             "asset_growth_r": 67,
             "price_volatility": 0.63,
-            "volatility_r": 250,
+            "volatility_r": 249,
             "op_growth_qoq": 1359.0,
             "op_qoq_r": 29,
             "op_growth_yoy": 211.7,
@@ -16629,7 +16629,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 77,
             "ni_growth_yoy": 119.8,
             "ni_yoy_r": 306,
-            "avg_r": 135.6,
+            "avg_r": 135.5,
             "equity": 1479,
             "quarter_operating_cf": 78,
             "quarter_capex": 14,
@@ -17101,7 +17101,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 20,
             "asset_growth_yoy": 7.5,
             "asset_growth_r": 16,
-            "price_volatility": -2.55,
+            "price_volatility": -2.53,
             "volatility_r": 3,
             "op_growth_qoq": 258.3,
             "op_qoq_r": 149,
@@ -17245,7 +17245,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 4,
             "asset_growth_yoy": -20.1,
             "asset_growth_r": 2,
-            "price_volatility": 3.03,
+            "price_volatility": 3.44,
             "volatility_r": 20,
             "op_growth_qoq": 2414.9,
             "op_qoq_r": 23,
@@ -17293,7 +17293,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 2,
             "asset_growth_yoy": 10.7,
             "asset_growth_r": 17,
-            "price_volatility": -0.33,
+            "price_volatility": -0.31,
             "volatility_r": 4,
             "op_growth_qoq": 174.7,
             "op_qoq_r": 212,
@@ -17341,7 +17341,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 6,
             "asset_growth_yoy": -19.8,
             "asset_growth_r": 3,
-            "price_volatility": -8.13,
+            "price_volatility": -7.98,
             "volatility_r": 1,
             "op_growth_qoq": 118.8,
             "op_qoq_r": 284,
@@ -17438,7 +17438,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -25.9,
             "asset_growth_r": 1,
             "price_volatility": 0.59,
-            "volatility_r": 18,
+            "volatility_r": 17,
             "op_growth_qoq": 129.0,
             "op_qoq_r": 268,
             "op_growth_yoy": 159.0,
@@ -17485,7 +17485,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 11,
             "asset_growth_yoy": -7.8,
             "asset_growth_r": 6,
-            "price_volatility": -2.6,
+            "price_volatility": -2.53,
             "volatility_r": 2,
             "op_growth_qoq": 101.9,
             "op_qoq_r": 326,
@@ -17533,8 +17533,8 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 13,
             "asset_growth_yoy": 1.5,
             "asset_growth_r": 13,
-            "price_volatility": 0.49,
-            "volatility_r": 17,
+            "price_volatility": 0.63,
+            "volatility_r": 18,
             "op_growth_qoq": 192.7,
             "op_qoq_r": 194,
             "op_growth_yoy": 41.2,
@@ -18111,7 +18111,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 37,
             "asset_growth_yoy": 7.5,
             "asset_growth_r": 27,
-            "price_volatility": -2.55,
+            "price_volatility": -2.53,
             "volatility_r": 3,
             "op_growth_qoq": 258.3,
             "op_qoq_r": 149,
@@ -18255,7 +18255,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 8,
             "asset_growth_yoy": -20.1,
             "asset_growth_r": 2,
-            "price_volatility": 3.03,
+            "price_volatility": 3.44,
             "volatility_r": 39,
             "op_growth_qoq": 2414.9,
             "op_qoq_r": 23,
@@ -18399,7 +18399,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 6,
             "asset_growth_yoy": 10.7,
             "asset_growth_r": 29,
-            "price_volatility": -0.33,
+            "price_volatility": -0.31,
             "volatility_r": 4,
             "op_growth_qoq": 174.7,
             "op_qoq_r": 212,
@@ -18447,7 +18447,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 14,
             "asset_growth_yoy": -19.8,
             "asset_growth_r": 3,
-            "price_volatility": -8.13,
+            "price_volatility": -7.98,
             "volatility_r": 1,
             "op_growth_qoq": 118.8,
             "op_qoq_r": 284,
@@ -18592,7 +18592,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -25.9,
             "asset_growth_r": 1,
             "price_volatility": 0.59,
-            "volatility_r": 34,
+            "volatility_r": 33,
             "op_growth_qoq": 129.0,
             "op_qoq_r": 268,
             "op_growth_yoy": 159.0,
@@ -18601,7 +18601,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 173,
             "ni_growth_yoy": 140.7,
             "ni_yoy_r": 274,
-            "avg_r": 88.1,
+            "avg_r": 88.0,
             "equity": 184,
             "quarter_operating_cf": 5,
             "quarter_capex": 0,
@@ -18688,7 +18688,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -5.9,
             "asset_growth_r": 8,
             "price_volatility": 0.52,
-            "volatility_r": 33,
+            "volatility_r": 32,
             "op_growth_qoq": 112.7,
             "op_qoq_r": 295,
             "op_growth_yoy": 164.1,
@@ -18697,7 +18697,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 318,
             "ni_growth_yoy": 374.8,
             "ni_yoy_r": 108,
-            "avg_r": 92.5,
+            "avg_r": 92.4,
             "equity": 478,
             "quarter_operating_cf": 2,
             "quarter_capex": 1,
@@ -18783,7 +18783,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 21,
             "asset_growth_yoy": -7.8,
             "asset_growth_r": 6,
-            "price_volatility": -2.6,
+            "price_volatility": -2.53,
             "volatility_r": 2,
             "op_growth_qoq": 101.9,
             "op_qoq_r": 326,
@@ -18831,8 +18831,8 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 24,
             "asset_growth_yoy": 1.5,
             "asset_growth_r": 19,
-            "price_volatility": 0.49,
-            "volatility_r": 32,
+            "price_volatility": 0.63,
+            "volatility_r": 34,
             "op_growth_qoq": 192.7,
             "op_qoq_r": 194,
             "op_growth_yoy": 41.2,
@@ -18841,7 +18841,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 65,
             "ni_growth_yoy": 60.7,
             "ni_yoy_r": 441,
-            "avg_r": 107.2,
+            "avg_r": 107.4,
             "equity": 1552,
             "quarter_operating_cf": 44,
             "quarter_capex": 2,
@@ -19503,7 +19503,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 35,
             "asset_growth_yoy": 5.6,
             "asset_growth_r": 23,
-            "price_volatility": 2.21,
+            "price_volatility": 2.56,
             "volatility_r": 38,
             "op_growth_qoq": 411.4,
             "op_qoq_r": 98,
@@ -20328,7 +20328,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "프리티": [
             "관리",
-            "동전주",
             "자본잠식50%↑"
         ],
         "대림통상": [
@@ -25086,18473 +25085,21112 @@ const KOSPI_QUANT_PACKAGE = {
             "gpa": 9.2,
             "f_score": 3,
             "asset_growth_yoy": 3.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "KR모터스": {
             "pbr": 0.37,
             "gpa": 0.3,
             "f_score": 1,
             "asset_growth_yoy": 91.7,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "경방": {
             "pbr": 0.27,
             "gpa": 3.2,
             "f_score": 3,
             "asset_growth_yoy": 4.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "삼양홀딩스": {
             "pbr": 0.16,
             "gpa": 2.7,
             "f_score": 2,
             "asset_growth_yoy": -0.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "하이트진로": {
             "pbr": 0.89,
             "gpa": 7.9,
             "f_score": 3,
             "asset_growth_yoy": -4.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "유한양행": {
             "pbr": 2.37,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": 9.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "CJ대한통운": {
             "pbr": 0.37,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": 10.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "하이트진로홀딩스": {
             "pbr": 0.17,
             "gpa": 6.7,
             "f_score": 3,
             "asset_growth_yoy": -3.7,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "두산": {
             "pbr": 1.57,
             "gpa": 2.7,
             "f_score": 2,
             "asset_growth_yoy": 12.9,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "성창기업지주": {
             "pbr": 0.1,
             "gpa": 0.4,
             "f_score": 2,
             "asset_growth_yoy": 19.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "DL": {
             "pbr": 0.2,
             "gpa": 2.6,
             "f_score": 3,
             "asset_growth_yoy": -1.4,
-            "pbr_judgment": "저평가"
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "유유제약": {
             "pbr": 0.41,
             "gpa": 7.0,
             "f_score": 3,
             "asset_growth_yoy": -1.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "일동홀딩스": {
             "pbr": 0.2,
             "gpa": 7.6,
             "f_score": 3,
             "asset_growth_yoy": -4.5,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한국앤컴퍼니": {
             "pbr": 0.48,
             "gpa": 2.8,
             "f_score": 3,
             "asset_growth_yoy": 7.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "기아": {
             "pbr": 0.92,
             "gpa": 5.5,
             "f_score": 3,
             "asset_growth_yoy": 9.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "DH오토넥스": {
             "pbr": 5.46,
             "gpa": 3.5,
             "f_score": 1,
             "asset_growth_yoy": -23.9,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "노루홀딩스": {
             "pbr": 0.26,
             "gpa": 5.5,
             "f_score": 2,
             "asset_growth_yoy": 6.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "한화손해보험": {
             "pbr": 0.24,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -4.8,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "SP삼화": {
             "pbr": 0.49,
             "gpa": 5.4,
             "f_score": 2,
             "asset_growth_yoy": 3.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "롯데손해보험": {
             "pbr": 1.17,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": -11.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "대원강업": {
             "pbr": 0.3,
             "gpa": 3.3,
             "f_score": 3,
             "asset_growth_yoy": 13.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "CR홀딩스": {
             "pbr": 0.28,
             "gpa": 2.2,
             "f_score": 3,
             "asset_growth_yoy": -2.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "대동": {
             "pbr": 0.3,
             "gpa": 3.3,
             "f_score": 0,
             "asset_growth_yoy": 1.4,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "가온전선": {
             "pbr": 7.28,
             "gpa": 4.9,
             "f_score": 2,
             "asset_growth_yoy": 15.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "삼일제약": {
             "pbr": 1.06,
             "gpa": 4.6,
             "f_score": 2,
             "asset_growth_yoy": -6.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "흥국화재": {
             "pbr": 0.23,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -12.7,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "CS홀딩스": {
             "pbr": 0.2,
             "gpa": 2.0,
             "f_score": 3,
             "asset_growth_yoy": 3.1,
-            "pbr_judgment": "저평가"
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "동아쏘시오홀딩스": {
             "pbr": 0.46,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": 2.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "천일고속": {
             "pbr": 30.2,
             "gpa": 0.6,
             "f_score": 1,
             "asset_growth_yoy": -1.0,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "SK하이닉스": {
             "pbr": 9.03,
             "gpa": 18.7,
             "f_score": 2,
             "asset_growth_yoy": 79.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "영풍": {
             "pbr": 0.16,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": 13.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "LS네트웍스": {
             "pbr": 0.18,
             "gpa": 0.9,
             "f_score": 2,
             "asset_growth_yoy": 53.1,
-            "pbr_judgment": "저평가"
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "유수홀딩스": {
             "pbr": 0.36,
             "gpa": 5.3,
             "f_score": 3,
             "asset_growth_yoy": 4.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "현대건설": {
             "pbr": 1.02,
             "gpa": 1.8,
             "f_score": 2,
             "asset_growth_yoy": 6.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "이화산업": {
             "pbr": 0.17,
             "gpa": 1.1,
             "f_score": 3,
             "asset_growth_yoy": 0.4,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "삼성화재": {
             "pbr": 1.22,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 13.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "화천기공": {
             "pbr": 0.23,
             "gpa": 2.4,
             "f_score": 2,
             "asset_growth_yoy": 2.6,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "강남제비스코": {
             "pbr": 0.25,
             "gpa": 1.8,
             "f_score": 1,
             "asset_growth_yoy": 3.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "한화": {
             "pbr": 0.13,
             "gpa": 0.9,
             "f_score": 3,
             "asset_growth_yoy": 14.1,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "보해양조": {
             "pbr": 0.46,
             "gpa": 5.0,
             "f_score": 3,
             "asset_growth_yoy": 5.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "유니온": {
             "pbr": 0.29,
             "gpa": 1.6,
             "f_score": 2,
             "asset_growth_yoy": 24.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "전방": {
             "pbr": 0.19,
             "gpa": 0.1,
             "f_score": 3,
             "asset_growth_yoy": -6.6,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한국주철관": {
             "pbr": 0.42,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 1.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "DB하이텍": {
             "pbr": 2.22,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": 26.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "페이퍼코리아": {
             "pbr": 0.26,
             "gpa": 1.9,
             "f_score": 2,
             "asset_growth_yoy": -2.3,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "CJ": {
             "pbr": 0.23,
             "gpa": 6.6,
             "f_score": 3,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "JW중외제약": {
             "pbr": 1.48,
             "gpa": 15.8,
             "f_score": 3,
             "asset_growth_yoy": 1.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "대한방직": {
             "pbr": 0.21,
             "gpa": 1.5,
             "f_score": 2,
             "asset_growth_yoy": 18.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "만호제강": {
             "pbr": 0.93,
             "gpa": 2.1,
             "f_score": 3,
             "asset_growth_yoy": 3.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "LX인터내셔널": {
             "pbr": 0.39,
             "gpa": 4.1,
             "f_score": 2,
             "asset_growth_yoy": 7.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "대한제분": {
             "pbr": 0.18,
             "gpa": 4.2,
             "f_score": 2,
             "asset_growth_yoy": 1.3,
-            "pbr_judgment": "저평가"
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "유진투자증권": {
             "pbr": 0.36,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 33.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "금호전기": {
             "pbr": 4.16,
             "gpa": 11.7,
             "f_score": 1,
             "asset_growth_yoy": -5.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "동국홀딩스": {
             "pbr": 0.13,
             "gpa": 1.2,
             "f_score": 3,
             "asset_growth_yoy": 8.0,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "GS글로벌": {
             "pbr": 0.37,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": 13.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "남광토건": {
             "pbr": 0.63,
             "gpa": 2.1,
             "f_score": 3,
             "asset_growth_yoy": 16.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "부국증권": {
             "pbr": 0.7,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 16.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "상상인증권": {
             "pbr": 0.4,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 9.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "PKC": {
             "pbr": 1.09,
             "gpa": 2.9,
             "f_score": 2,
             "asset_growth_yoy": 13.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "삼성제약": {
             "pbr": 0.93,
             "gpa": 3.0,
             "f_score": 2,
             "asset_growth_yoy": 6.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "SG글로벌": {
             "pbr": 0.2,
             "gpa": 2.3,
             "f_score": 3,
             "asset_growth_yoy": 1.5,
-            "pbr_judgment": "저평가"
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "KG케미칼": {
             "pbr": 0.07,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": 6.0,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "태원물산": {
             "pbr": 0.56,
             "gpa": -0.2,
             "f_score": 2,
             "asset_growth_yoy": -12.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "세아베스틸지주": {
             "pbr": 0.61,
             "gpa": 2.1,
             "f_score": 3,
             "asset_growth_yoy": 3.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "대한전선": {
             "pbr": 3.63,
             "gpa": 3.1,
             "f_score": 1,
             "asset_growth_yoy": 25.1,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "현대해상": {
             "pbr": 0.56,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -1.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "BYC": {
             "pbr": 0.36,
             "gpa": 2.3,
             "f_score": 3,
             "asset_growth_yoy": 9.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "삼부토건": {
             "pbr": -0.55,
             "gpa": -0.2,
             "f_score": 1,
             "asset_growth_yoy": -44.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "현대차증권": {
             "pbr": 0.35,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": -6.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "SK증권": {
             "pbr": 0.86,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 14.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "동양": {
             "pbr": 0.15,
             "gpa": 0.7,
             "f_score": 2,
             "asset_growth_yoy": 13.3,
-            "pbr_judgment": "저평가"
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "DI동일": {
             "pbr": 0.95,
             "gpa": 1.5,
             "f_score": 2,
             "asset_growth_yoy": 9.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "조비": {
             "pbr": 0.98,
             "gpa": 7.6,
             "f_score": 2,
             "asset_growth_yoy": 15.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "제일연마": {
             "pbr": 0.62,
             "gpa": 4.0,
             "f_score": 2,
             "asset_growth_yoy": 8.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "금양": {
             "pbr": 1.42,
             "gpa": 0.3,
             "f_score": 0,
             "asset_growth_yoy": -3.4,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "케이비아이동국실업": {
             "pbr": 0.17,
             "gpa": 2.4,
             "f_score": 3,
             "asset_growth_yoy": 16.5,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "종근당홀딩스": {
             "pbr": 0.21,
             "gpa": 6.6,
             "f_score": 3,
             "asset_growth_yoy": 10.9,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "대상": {
             "pbr": 0.53,
             "gpa": 8.3,
             "f_score": 3,
             "asset_growth_yoy": 5.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "신영증권": {
             "pbr": 1.34,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -2.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "SK네트웍스": {
             "pbr": 0.77,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": 12.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한양증권": {
             "pbr": 0.39,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 39.1,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "SHD": {
             "pbr": 0.15,
             "gpa": 0.9,
             "f_score": 2,
             "asset_growth_yoy": 0.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "알루코": {
             "pbr": 0.37,
             "gpa": 2.4,
             "f_score": 2,
             "asset_growth_yoy": 1.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "대한제당": {
             "pbr": 0.48,
             "gpa": 2.4,
             "f_score": 2,
             "asset_growth_yoy": 0.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "오리온홀딩스": {
             "pbr": 0.29,
             "gpa": 5.8,
             "f_score": 3,
             "asset_growth_yoy": 9.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "삼화콘덴서": {
             "pbr": 3.57,
             "gpa": 3.5,
             "f_score": 3,
             "asset_growth_yoy": 4.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "KISCO홀딩스": {
             "pbr": 0.25,
             "gpa": -0.2,
             "f_score": 1,
             "asset_growth_yoy": -3.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "코오롱": {
             "pbr": 0.2,
             "gpa": 2.5,
             "f_score": 2,
             "asset_growth_yoy": 8.7,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "아세아": {
             "pbr": 0.18,
             "gpa": 2.4,
             "f_score": 3,
             "asset_growth_yoy": 0.4,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "비비안": {
             "pbr": 0.33,
             "gpa": 11.9,
             "f_score": 0,
             "asset_growth_yoy": -20.6,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "경농": {
             "pbr": 0.59,
             "gpa": 9.8,
             "f_score": 2,
             "asset_growth_yoy": 4.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "고려산업": {
             "pbr": 0.4,
             "gpa": 4.7,
             "f_score": 3,
             "asset_growth_yoy": -0.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "도화엔지니어링": {
             "pbr": 0.69,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 17.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "SYTS": {
             "pbr": 0.37,
             "gpa": 0.9,
             "f_score": 3,
             "asset_growth_yoy": 5.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "한국수출포장": {
             "pbr": 0.29,
             "gpa": -0.0,
             "f_score": 2,
             "asset_growth_yoy": -1.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "동성제약": {
             "pbr": 1.01,
             "gpa": 3.1,
             "f_score": 1,
             "asset_growth_yoy": 71.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "한일철강": {
             "pbr": 0.71,
             "gpa": 1.2,
             "f_score": 2,
             "asset_growth_yoy": -0.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "고려제강": {
             "pbr": 0.23,
             "gpa": 1.9,
             "f_score": 3,
             "asset_growth_yoy": 6.0,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "아세아제지": {
             "pbr": 0.36,
             "gpa": 3.6,
             "f_score": 3,
             "asset_growth_yoy": 1.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한진": {
             "pbr": 0.16,
             "gpa": 1.3,
             "f_score": 2,
             "asset_growth_yoy": 2.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "넥센타이어": {
             "pbr": 0.3,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": 2.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "SH에너지화학": {
             "pbr": 0.3,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": -6.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "KCC": {
             "pbr": 0.46,
             "gpa": 2.3,
             "f_score": 3,
             "asset_growth_yoy": 17.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한독": {
             "pbr": 0.42,
             "gpa": 4.9,
             "f_score": 2,
             "asset_growth_yoy": -2.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "범양건영": {
             "pbr": -0.76,
             "gpa": 0.9,
             "f_score": 1,
             "asset_growth_yoy": -38.4,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "세기상사": {
             "pbr": 1.25,
             "gpa": 2.5,
             "f_score": 3,
             "asset_growth_yoy": -0.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "삼익악기": {
             "pbr": 0.34,
             "gpa": 3.8,
             "f_score": 3,
             "asset_growth_yoy": 2.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "HS화성": {
             "pbr": 0.26,
             "gpa": 1.2,
             "f_score": 3,
             "asset_growth_yoy": -7.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "조흥": {
             "pbr": 0.57,
             "gpa": 2.4,
             "f_score": 2,
             "asset_growth_yoy": 4.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "제일파마홀딩스": {
             "pbr": 0.21,
             "gpa": 7.0,
             "f_score": 3,
             "asset_growth_yoy": 0.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "오리엔트바이오": {
             "pbr": 0.72,
             "gpa": 4.7,
             "f_score": 2,
             "asset_growth_yoy": -12.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "동일제강": {
             "pbr": 0.2,
             "gpa": 0.9,
             "f_score": 3,
             "asset_growth_yoy": 4.0,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "신일전자": {
             "pbr": 0.98,
             "gpa": 6.1,
             "f_score": 1,
             "asset_growth_yoy": 2.9,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "TCC스틸": {
             "pbr": 0.98,
             "gpa": 0.8,
             "f_score": 1,
             "asset_growth_yoy": 1.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "국제약품": {
             "pbr": 0.73,
             "gpa": 13.3,
             "f_score": 2,
             "asset_growth_yoy": 8.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "보락": {
             "pbr": 1.19,
             "gpa": 3.5,
             "f_score": 2,
             "asset_growth_yoy": -0.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "진흥기업": {
             "pbr": 0.46,
             "gpa": 3.5,
             "f_score": 2,
             "asset_growth_yoy": 12.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "아모레퍼시픽홀딩스": {
             "pbr": 0.25,
             "gpa": 10.2,
             "f_score": 3,
             "asset_growth_yoy": 2.7,
-            "pbr_judgment": "저평가"
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "삼영무역": {
             "pbr": 0.54,
             "gpa": 1.5,
             "f_score": 2,
             "asset_growth_yoy": 7.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "SUN&L": {
             "pbr": 0.13,
             "gpa": 1.1,
             "f_score": 1,
             "asset_growth_yoy": -6.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "미원상사": {
             "pbr": 1.39,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": 4.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "신풍": {
             "pbr": 0.47,
             "gpa": 1.4,
             "f_score": 2,
             "asset_growth_yoy": 1.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "디와이에이": {
             "pbr": 0.81,
             "gpa": 3.6,
             "f_score": 2,
             "asset_growth_yoy": 21.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "TYM": {
             "pbr": 0.6,
             "gpa": 8.3,
             "f_score": 2,
             "asset_growth_yoy": 4.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "유성기업": {
             "pbr": 0.15,
             "gpa": 0.2,
             "f_score": 2,
             "asset_growth_yoy": -0.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "한국쉘석유": {
             "pbr": 5.94,
             "gpa": 13.6,
             "f_score": 3,
             "asset_growth_yoy": 9.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "금호건설": {
             "pbr": 2.14,
             "gpa": 2.2,
             "f_score": 2,
             "asset_growth_yoy": -7.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "부광약품": {
             "pbr": 1.15,
             "gpa": 4.0,
             "f_score": 2,
             "asset_growth_yoy": 26.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "혜인": {
             "pbr": 0.43,
             "gpa": 3.0,
             "f_score": 2,
             "asset_growth_yoy": -7.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "세아제강지주": {
             "pbr": 0.15,
             "gpa": 1.5,
             "f_score": 3,
             "asset_growth_yoy": 11.4,
-            "pbr_judgment": "저평가"
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "에이프로젠바이오로직스": {
             "pbr": 0.11,
             "gpa": -0.8,
             "f_score": 0,
             "asset_growth_yoy": -9.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "코오롱글로벌": {
             "pbr": 0.34,
             "gpa": 2.1,
             "f_score": 3,
             "asset_growth_yoy": 6.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "SB성보": {
             "pbr": 0.29,
             "gpa": 5.7,
             "f_score": 2,
             "asset_growth_yoy": -1.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "대웅": {
             "pbr": 0.52,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 23.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "대신밸류리츠": {
             "pbr": 0.78,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "일성아이에스": {
             "pbr": 0.7,
             "gpa": 1.9,
             "f_score": 2,
             "asset_growth_yoy": 0.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "디아이": {
             "pbr": 3.03,
             "gpa": 7.8,
             "f_score": 2,
             "asset_growth_yoy": 21.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "일신방직": {
             "pbr": 0.25,
             "gpa": 2.3,
             "f_score": 3,
             "asset_growth_yoy": -1.4,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "대원제약": {
             "pbr": 0.65,
             "gpa": 12.6,
             "f_score": 3,
             "asset_growth_yoy": -0.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "삼양식품": {
             "pbr": 5.75,
             "gpa": 12.7,
             "f_score": 3,
             "asset_growth_yoy": 41.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "태광산업": {
             "pbr": 0.24,
             "gpa": 0.9,
             "f_score": 2,
             "asset_growth_yoy": -3.2,
-            "pbr_judgment": "저평가"
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "흥아해운": {
             "pbr": 1.59,
             "gpa": 1.1,
             "f_score": 3,
             "asset_growth_yoy": 7.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "한일홀딩스": {
             "pbr": 0.22,
             "gpa": 1.5,
             "f_score": 3,
             "asset_growth_yoy": 0.3,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한국화장품제조": {
             "pbr": 1.62,
             "gpa": 6.1,
             "f_score": 2,
             "asset_growth_yoy": 80.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "유화증권": {
             "pbr": 0.33,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 20.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "유안타증권": {
             "pbr": 0.45,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 28.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "한진중공업홀딩스": {
             "pbr": 0.27,
             "gpa": 3.9,
             "f_score": 3,
             "asset_growth_yoy": -2.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "대한항공": {
             "pbr": 0.87,
             "gpa": 2.2,
             "f_score": 3,
             "asset_growth_yoy": 12.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "영진약품": {
             "pbr": 2.47,
             "gpa": 7.7,
             "f_score": 1,
             "asset_growth_yoy": -1.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "한화투자증권": {
             "pbr": 0.49,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 35.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "대신증권": {
             "pbr": 0.31,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 38.2,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "LG": {
             "pbr": 0.49,
             "gpa": 1.5,
             "f_score": 3,
             "asset_growth_yoy": 7.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "SNT다이내믹스": {
             "pbr": 1.3,
             "gpa": 2.4,
             "f_score": 3,
             "asset_growth_yoy": 14.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "HLB글로벌": {
             "pbr": 0.98,
             "gpa": 12.3,
             "f_score": 1,
             "asset_growth_yoy": -7.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "방림": {
             "pbr": 0.91,
             "gpa": 1.0,
             "f_score": null,
             "asset_growth_yoy": 10.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "KG모빌리티": {
             "pbr": 0.38,
             "gpa": 3.6,
             "f_score": 3,
             "asset_growth_yoy": 11.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "미창석유": {
             "pbr": 0.51,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": 15.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "포스코퓨처엠": {
             "pbr": 2.95,
             "gpa": 0.8,
-            "f_score": 1,
+            "f_score": 2,
             "asset_growth_yoy": 17.2,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "한성기업": {
             "pbr": 1.3,
             "gpa": 5.0,
             "f_score": 3,
             "asset_growth_yoy": -1.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "코리안리": {
             "pbr": 0.65,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 9.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "삼영": {
             "pbr": 2.22,
             "gpa": 4.9,
             "f_score": 3,
             "asset_growth_yoy": 51.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "진양산업": {
             "pbr": 0.93,
             "gpa": 3.5,
             "f_score": 2,
             "asset_growth_yoy": 17.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "대한화섬": {
             "pbr": 0.2,
             "gpa": 0.1,
             "f_score": 2,
             "asset_growth_yoy": 1.2,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "보령": {
             "pbr": 0.81,
             "gpa": 6.7,
             "f_score": 3,
             "asset_growth_yoy": 24.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "남양유업": {
             "pbr": 0.27,
             "gpa": 4.0,
             "f_score": 3,
             "asset_growth_yoy": 54.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "사조대림": {
             "pbr": 0.34,
             "gpa": 4.9,
             "f_score": 3,
             "asset_growth_yoy": -2.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "롯데정밀화학": {
             "pbr": 0.47,
             "gpa": 2.3,
             "f_score": 3,
             "asset_growth_yoy": -0.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "현대제철": {
             "pbr": 0.18,
             "gpa": 1.0,
             "f_score": 2,
             "asset_growth_yoy": 0.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "SG세계물산": {
             "pbr": 0.19,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": -3.8,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "신흥": {
             "pbr": 1.14,
             "gpa": 4.8,
             "f_score": 2,
             "asset_growth_yoy": 4.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "한국석유": {
             "pbr": 0.71,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": 16.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "태양금속": {
             "pbr": 0.52,
             "gpa": 3.6,
             "f_score": 2,
             "asset_growth_yoy": 15.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "동방": {
             "pbr": 0.49,
             "gpa": 2.7,
             "f_score": 3,
             "asset_growth_yoy": 6.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "한솔홀딩스": {
             "pbr": 0.2,
             "gpa": 2.8,
             "f_score": 3,
             "asset_growth_yoy": -2.7,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "신세계": {
             "pbr": 0.85,
             "gpa": 7.2,
             "f_score": 3,
             "asset_growth_yoy": 6.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "NPC": {
             "pbr": 0.24,
             "gpa": 3.2,
             "f_score": 3,
             "asset_growth_yoy": 8.1,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "남성": {
             "pbr": 0.25,
             "gpa": 2.3,
             "f_score": 2,
             "asset_growth_yoy": 2.0,
-            "pbr_judgment": "저평가"
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "현대약품": {
             "pbr": 1.59,
             "gpa": 8.9,
             "f_score": 3,
             "asset_growth_yoy": 41.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "세방": {
             "pbr": 0.2,
             "gpa": 2.0,
             "f_score": 3,
             "asset_growth_yoy": 5.0,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "농심": {
             "pbr": 0.71,
             "gpa": 7.1,
             "f_score": 3,
             "asset_growth_yoy": 8.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "삼익THK": {
             "pbr": 1.06,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": -12.4,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "서울식품": {
             "pbr": 1.47,
             "gpa": 4.0,
             "f_score": 2,
             "asset_growth_yoy": 9.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "송원산업": {
             "pbr": 0.36,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": 1.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "삼일씨엔에스": {
             "pbr": 0.25,
             "gpa": 1.6,
             "f_score": 2,
             "asset_growth_yoy": 15.6,
-            "pbr_judgment": "저평가"
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "삼화왕관": {
             "pbr": 0.46,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": 6.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "세방전지": {
             "pbr": 0.46,
             "gpa": 3.3,
             "f_score": 3,
             "asset_growth_yoy": 8.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "깨끗한나라": {
             "pbr": 0.35,
             "gpa": 2.8,
             "f_score": 2,
             "asset_growth_yoy": 0.3,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "현대비앤지스틸": {
             "pbr": 0.32,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": 4.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "삼천리": {
             "pbr": 0.21,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": 0.9,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "조광피혁": {
             "pbr": 0.71,
             "gpa": 0.6,
             "f_score": 3,
             "asset_growth_yoy": 1.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "한솔테크닉스": {
             "pbr": 0.83,
             "gpa": 4.5,
             "f_score": 1,
             "asset_growth_yoy": 18.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "팜젠사이언스": {
             "pbr": 0.51,
             "gpa": 14.3,
             "f_score": 2,
             "asset_growth_yoy": 9.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "써니전자": {
             "pbr": 0.73,
             "gpa": 1.6,
             "f_score": 3,
             "asset_growth_yoy": 0.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "효성": {
             "pbr": 0.86,
             "gpa": 2.8,
             "f_score": 2,
             "asset_growth_yoy": 26.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "덕성": {
             "pbr": 0.57,
             "gpa": 3.2,
             "f_score": 3,
             "asset_growth_yoy": 6.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "DRB동일": {
             "pbr": 0.15,
             "gpa": 3.9,
             "f_score": 2,
             "asset_growth_yoy": 3.9,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "티웨이홀딩스": {
             "pbr": 0.48,
             "gpa": -0.1,
             "f_score": 2,
             "asset_growth_yoy": -52.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "동일산업": {
             "pbr": 0.21,
             "gpa": 1.6,
             "f_score": 2,
             "asset_growth_yoy": -1.9,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "조광페인트": {
             "pbr": 0.22,
             "gpa": 1.2,
             "f_score": 1,
             "asset_growth_yoy": 10.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "씨아이테크": {
             "pbr": 0.62,
             "gpa": 2.2,
             "f_score": 1,
             "asset_growth_yoy": 11.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "한신공영": {
             "pbr": 0.14,
             "gpa": 1.6,
             "f_score": 2,
             "asset_growth_yoy": -6.9,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "신라교역": {
             "pbr": 0.25,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": -5.4,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "성신양회": {
             "pbr": 0.37,
             "gpa": 2.2,
             "f_score": 2,
             "asset_growth_yoy": 0.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "롯데지주": {
             "pbr": 0.24,
             "gpa": 4.5,
             "f_score": 3,
             "asset_growth_yoy": 0.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "휴스틸": {
             "pbr": 0.19,
             "gpa": 0.4,
             "f_score": 2,
             "asset_growth_yoy": -3.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "부산주공": {
             "pbr": 1.88,
             "gpa": 2.3,
             "f_score": 1,
             "asset_growth_yoy": -6.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "코스모신소재": {
             "pbr": 2.44,
             "gpa": 0.9,
             "f_score": 0,
             "asset_growth_yoy": 8.1,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "SGC에너지": {
             "pbr": 0.77,
             "gpa": 1.8,
             "f_score": 2,
             "asset_growth_yoy": -2.1,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "한창": {
             "pbr": 6.99,
             "gpa": 0.8,
             "f_score": 1,
             "asset_growth_yoy": -29.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "빙그레": {
             "pbr": 0.82,
             "gpa": 8.3,
             "f_score": 2,
             "asset_growth_yoy": 6.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "녹십자홀딩스": {
             "pbr": 0.27,
             "gpa": 3.8,
             "f_score": 1,
             "asset_growth_yoy": 3.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "롯데칠성": {
             "pbr": 0.57,
             "gpa": 7.5,
             "f_score": 3,
             "asset_growth_yoy": -4.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "온타이드": {
             "pbr": 0.28,
             "gpa": 0.5,
             "f_score": 1,
             "asset_growth_yoy": -6.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "모나미": {
             "pbr": 0.84,
             "gpa": 4.9,
             "f_score": 2,
             "asset_growth_yoy": -4.6,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "현대차": {
             "pbr": 0.67,
             "gpa": 2.1,
             "f_score": 3,
             "asset_growth_yoy": 11.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "코스모화학": {
             "pbr": 0.59,
             "gpa": 1.3,
             "f_score": 1,
             "asset_growth_yoy": 7.7,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "한국공항": {
             "pbr": 0.65,
             "gpa": 5.2,
             "f_score": 3,
             "asset_growth_yoy": 12.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "현대지에프홀딩스": {
             "pbr": 0.29,
             "gpa": 6.7,
             "f_score": 3,
             "asset_growth_yoy": 6.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "POSCO홀딩스": {
             "pbr": 0.39,
             "gpa": 1.4,
             "f_score": 2,
             "asset_growth_yoy": 6.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "삼진제약": {
             "pbr": 0.87,
             "gpa": 5.5,
             "f_score": 3,
             "asset_growth_yoy": 6.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "삼립": {
             "pbr": 0.68,
             "gpa": 8.9,
             "f_score": 2,
             "asset_growth_yoy": -5.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "삼영전자": {
             "pbr": 0.54,
             "gpa": 1.1,
             "f_score": 3,
             "asset_growth_yoy": 3.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "파미셀": {
             "pbr": 5.41,
             "gpa": 10.3,
             "f_score": 2,
             "asset_growth_yoy": 58.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "넥센": {
             "pbr": 0.11,
             "gpa": 4.7,
             "f_score": 3,
             "asset_growth_yoy": 2.8,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "크라운해태홀딩스": {
             "pbr": 0.14,
             "gpa": 7.1,
             "f_score": 3,
             "asset_growth_yoy": 0.7,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "대림바스": {
             "pbr": 0.38,
             "gpa": 6.1,
             "f_score": 3,
             "asset_growth_yoy": 3.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "신영와코루": {
             "pbr": 0.31,
             "gpa": 5.8,
             "f_score": 2,
             "asset_growth_yoy": 5.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "풍산홀딩스": {
             "pbr": 0.41,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": 4.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "원림": {
             "pbr": 0.2,
             "gpa": 2.3,
             "f_score": 3,
             "asset_growth_yoy": 3.1,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "DB손해보험": {
             "pbr": 0.91,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 7.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "에스엘": {
             "pbr": 0.95,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": 12.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "휴니드": {
             "pbr": 0.39,
             "gpa": 0.8,
             "f_score": 1,
             "asset_growth_yoy": 56.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "대한해운": {
             "pbr": 0.24,
             "gpa": 2.0,
             "f_score": 3,
             "asset_growth_yoy": -2.5,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "삼성전자": {
             "pbr": 3.36,
             "gpa": 12.9,
             "f_score": 3,
             "asset_growth_yoy": 22.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "NH투자증권": {
             "pbr": 1.15,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 45.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "이수화학": {
             "pbr": 0.91,
             "gpa": 5.0,
             "f_score": 2,
             "asset_growth_yoy": 17.2,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "동부건설": {
             "pbr": 0.28,
             "gpa": 3.0,
             "f_score": 2,
             "asset_growth_yoy": 9.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "동원산업": {
             "pbr": 0.38,
             "gpa": 5.7,
             "f_score": 3,
             "asset_growth_yoy": 7.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "화승인더": {
             "pbr": 0.23,
             "gpa": 3.2,
             "f_score": 2,
             "asset_growth_yoy": -3.2,
-            "pbr_judgment": "저평가"
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "사조오양": {
             "pbr": 0.31,
             "gpa": 3.3,
             "f_score": 3,
             "asset_growth_yoy": 5.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "삼아알미늄": {
             "pbr": 2.39,
             "gpa": 0.2,
             "f_score": 1,
             "asset_growth_yoy": 7.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "SK디스커버리": {
             "pbr": 0.14,
             "gpa": 2.5,
             "f_score": 3,
             "asset_growth_yoy": 14.4,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "한국전자홀딩스": {
             "pbr": 0.06,
             "gpa": 1.8,
             "f_score": 2,
             "asset_growth_yoy": 0.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "제주은행": {
             "pbr": 0.59,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 9.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "LS": {
             "pbr": 1.23,
             "gpa": 3.5,
             "f_score": 2,
             "asset_growth_yoy": 26.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "녹십자": {
             "pbr": 1.08,
             "gpa": 4.4,
             "f_score": 2,
             "asset_growth_yoy": -7.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "대원전선": {
             "pbr": 6.27,
             "gpa": 5.1,
             "f_score": 2,
             "asset_growth_yoy": 15.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "GS건설": {
             "pbr": 0.44,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": 1.3,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "대구백화점": {
             "pbr": 0.46,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -2.9,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "카프로": {
             "pbr": 8.8,
             "gpa": -1.2,
             "f_score": 1,
             "asset_growth_yoy": 6.1,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "삼성SDI": {
             "pbr": 1.47,
             "gpa": 1.3,
             "f_score": 3,
             "asset_growth_yoy": 9.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "프리티": {
             "pbr": 2.77,
             "gpa": 16.3,
             "f_score": 2,
             "asset_growth_yoy": -30.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "대림통상": {
             "pbr": 0.89,
             "gpa": 4.4,
             "f_score": 2,
             "asset_growth_yoy": -3.9,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "대한유화": {
             "pbr": 0.32,
             "gpa": 3.2,
             "f_score": 3,
             "asset_growth_yoy": 29.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "삼성공조": {
             "pbr": 0.32,
             "gpa": 1.3,
             "f_score": 2,
             "asset_growth_yoy": 4.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "블루산업개발": {
             "pbr": 0.27,
             "gpa": 1.6,
             "f_score": 0,
             "asset_growth_yoy": -5.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "미래에셋증권": {
             "pbr": 1.63,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 27.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "AK홀딩스": {
             "pbr": 0.08,
             "gpa": 3.6,
             "f_score": 3,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "신송홀딩스": {
             "pbr": 0.51,
             "gpa": 2.7,
             "f_score": 3,
             "asset_growth_yoy": 2.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "태경케미컬": {
             "pbr": 0.4,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": 1.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "우성": {
             "pbr": 0.24,
             "gpa": 5.4,
             "f_score": 1,
             "asset_growth_yoy": 9.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "GS리테일": {
             "pbr": 0.66,
             "gpa": 9.3,
             "f_score": 3,
             "asset_growth_yoy": -4.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "일신석재": {
             "pbr": 1.1,
             "gpa": 2.8,
             "f_score": 2,
             "asset_growth_yoy": -3.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "미래아이앤지": {
             "pbr": 0.67,
             "gpa": 2.5,
             "f_score": 3,
             "asset_growth_yoy": -3.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "사조산업": {
             "pbr": 0.38,
             "gpa": 1.2,
             "f_score": 1,
             "asset_growth_yoy": -0.4,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "벽산": {
             "pbr": 0.26,
             "gpa": 3.8,
             "f_score": 3,
             "asset_growth_yoy": 6.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한국특강": {
             "pbr": 0.27,
             "gpa": 0.8,
             "f_score": 2,
             "asset_growth_yoy": 4.2,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "오뚜기": {
             "pbr": 0.55,
             "gpa": 4.3,
             "f_score": 3,
             "asset_growth_yoy": 0.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "DN오토모티브": {
             "pbr": 0.94,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": 30.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "에이프로젠": {
             "pbr": 0.12,
             "gpa": 1.4,
             "f_score": 0,
             "asset_growth_yoy": 3.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "샘표": {
             "pbr": 0.34,
             "gpa": 8.8,
             "f_score": 3,
             "asset_growth_yoy": 1.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "일양약품": {
             "pbr": 0.61,
             "gpa": 5.3,
             "f_score": 3,
             "asset_growth_yoy": 6.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "동방아그로": {
             "pbr": 0.42,
             "gpa": 10.1,
             "f_score": 2,
             "asset_growth_yoy": 6.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "선도전기": {
             "pbr": 2.69,
             "gpa": 1.1,
             "f_score": 1,
             "asset_growth_yoy": -5.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "이수페타시스": {
             "pbr": 9.4,
             "gpa": 6.2,
             "f_score": 2,
             "asset_growth_yoy": 67.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "국도화학": {
             "pbr": 0.38,
             "gpa": 3.1,
             "f_score": 2,
             "asset_growth_yoy": 15.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "F&F홀딩스": {
             "pbr": 0.15,
             "gpa": 8.2,
             "f_score": 3,
             "asset_growth_yoy": 12.5,
-            "pbr_judgment": "저평가"
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "코리아써키트": {
             "pbr": 2.19,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": 22.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "서연": {
             "pbr": 0.1,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": 10.1,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "TP": {
             "pbr": 0.27,
             "gpa": 4.9,
             "f_score": 2,
             "asset_growth_yoy": 4.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "사조동아원": {
             "pbr": 0.92,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 0.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "대덕": {
             "pbr": 0.34,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": 0.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "이건산업": {
             "pbr": 0.15,
             "gpa": 1.9,
             "f_score": 2,
             "asset_growth_yoy": -8.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "NI스틸": {
             "pbr": 0.32,
             "gpa": 2.1,
             "f_score": 3,
             "asset_growth_yoy": 15.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "남선알미늄": {
             "pbr": 0.5,
             "gpa": 1.0,
             "f_score": 1,
             "asset_growth_yoy": 10.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "문배철강": {
             "pbr": 0.23,
             "gpa": 0.9,
             "f_score": 3,
             "asset_growth_yoy": 4.1,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "서흥": {
             "pbr": 0.44,
             "gpa": 3.5,
             "f_score": 3,
             "asset_growth_yoy": 7.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "윌비스": {
             "pbr": 0.43,
             "gpa": 2.0,
             "f_score": 0,
             "asset_growth_yoy": -9.4,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "아남전자": {
             "pbr": 959.51,
             "gpa": 1.0,
             "f_score": 2,
             "asset_growth_yoy": -2.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "율촌화학": {
             "pbr": 1.18,
             "gpa": 1.9,
             "f_score": 2,
             "asset_growth_yoy": 2.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "호텔신라": {
             "pbr": 1.66,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -7.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "금비": {
             "pbr": 0.27,
             "gpa": 2.8,
             "f_score": null,
             "asset_growth_yoy": 5.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "한미사이언스": {
             "pbr": 2.21,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 9.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "KBI동양철관": {
             "pbr": 0.81,
             "gpa": 3.5,
             "f_score": 1,
             "asset_growth_yoy": 32.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "KCTC": {
             "pbr": 0.35,
             "gpa": 3.6,
             "f_score": 3,
             "asset_growth_yoy": 1.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "경인전자": {
             "pbr": 0.41,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": 12.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "삼성전기": {
             "pbr": 10.46,
             "gpa": 4.2,
             "f_score": 3,
             "asset_growth_yoy": 17.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "SIMPAC": {
             "pbr": 0.5,
             "gpa": 3.0,
             "f_score": 3,
             "asset_growth_yoy": 16.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한솔로지스틱스": {
             "pbr": 0.53,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": 7.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "대양금속": {
             "pbr": 0.84,
             "gpa": 3.0,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "무림페이퍼": {
             "pbr": 0.09,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": 4.5,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "한샘": {
             "pbr": 2.04,
             "gpa": 11.9,
             "f_score": 3,
             "asset_growth_yoy": -7.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "신원": {
             "pbr": 0.52,
             "gpa": 9.5,
             "f_score": 2,
             "asset_growth_yoy": -2.3,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "광동제약": {
             "pbr": 0.43,
             "gpa": 5.7,
             "f_score": 2,
             "asset_growth_yoy": 13.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "참엔지니어링": {
             "pbr": 0.27,
             "gpa": 0.8,
             "f_score": 2,
             "asset_growth_yoy": 51.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "아진전자부품": {
             "pbr": 1.35,
             "gpa": 4.8,
             "f_score": 3,
             "asset_growth_yoy": 18.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "태영건설": {
             "pbr": 0.74,
             "gpa": 1.3,
             "f_score": 0,
             "asset_growth_yoy": -10.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "한올바이오파마": {
             "pbr": 17.5,
             "gpa": 8.7,
             "f_score": 3,
             "asset_growth_yoy": 24.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "KC그린홀딩스": {
             "pbr": 0.15,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -36.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "경동나비엔": {
             "pbr": 1.12,
             "gpa": 11.5,
             "f_score": 3,
             "asset_growth_yoy": 16.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한창제지": {
             "pbr": 0.23,
             "gpa": 2.3,
             "f_score": 2,
             "asset_growth_yoy": 18.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "삼화전기": {
             "pbr": 1.29,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": 2.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "HD한국조선해양": {
             "pbr": 1.37,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": 6.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "무림P&P": {
             "pbr": 0.17,
             "gpa": 0.6,
             "f_score": 2,
             "asset_growth_yoy": 6.4,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "모토닉": {
             "pbr": 0.45,
             "gpa": 1.7,
             "f_score": 3,
             "asset_growth_yoy": 2.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "삼정펄프": {
             "pbr": 0.26,
             "gpa": 0.7,
             "f_score": 2,
             "asset_growth_yoy": -0.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "플레이그램": {
             "pbr": 0.16,
             "gpa": 5.0,
             "f_score": 1,
             "asset_growth_yoy": -11.6,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "한화솔루션": {
             "pbr": 0.44,
             "gpa": 1.6,
             "f_score": 0,
             "asset_growth_yoy": 14.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "명신산업": {
             "pbr": 0.45,
             "gpa": 2.6,
             "f_score": 3,
             "asset_growth_yoy": 28.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "영원무역홀딩스": {
             "pbr": 0.45,
             "gpa": 5.8,
             "f_score": 3,
             "asset_growth_yoy": 10.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "한국내화": {
             "pbr": 0.35,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": -9.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "OCI홀딩스": {
             "pbr": 0.78,
             "gpa": 1.4,
             "f_score": 2,
             "asset_growth_yoy": 2.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "한국무브넥스": {
             "pbr": 0.23,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 9.3,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "LS ELECTRIC": {
             "pbr": 14.16,
             "gpa": 5.5,
             "f_score": 2,
             "asset_growth_yoy": 15.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "고려아연": {
             "pbr": 1.86,
             "gpa": 4.4,
             "f_score": 1,
             "asset_growth_yoy": 49.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "삼성중공업": {
             "pbr": 4.32,
             "gpa": 2.4,
             "f_score": 3,
             "asset_growth_yoy": 1.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "우진아이엔에스": {
             "pbr": 0.4,
             "gpa": 0.3,
             "f_score": 1,
             "asset_growth_yoy": 17.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에스엠벡셀": {
             "pbr": 2.62,
             "gpa": 5.1,
             "f_score": 2,
             "asset_growth_yoy": -4.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "진양폴리": {
             "pbr": 0.7,
             "gpa": 1.9,
             "f_score": 2,
             "asset_growth_yoy": 43.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "화천기계": {
             "pbr": 0.42,
             "gpa": 2.6,
             "f_score": 3,
             "asset_growth_yoy": 6.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "화신": {
             "pbr": 0.49,
             "gpa": 2.7,
             "f_score": 3,
             "asset_growth_yoy": 21.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "평화홀딩스": {
             "pbr": 0.31,
             "gpa": 4.5,
             "f_score": 3,
             "asset_growth_yoy": 5.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "아이에스동서": {
             "pbr": 0.37,
             "gpa": 4.4,
             "f_score": 3,
             "asset_growth_yoy": -2.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "퍼스텍": {
             "pbr": 3.48,
             "gpa": 1.4,
             "f_score": 2,
             "asset_growth_yoy": 1.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "S-Oil": {
             "pbr": 1.65,
             "gpa": 5.0,
             "f_score": 2,
             "asset_growth_yoy": 19.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "삼호개발": {
             "pbr": 0.37,
             "gpa": 2.1,
             "f_score": 3,
             "asset_growth_yoy": 4.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "진원생명과학": {
             "pbr": 0.95,
             "gpa": 0.0,
             "f_score": 0,
             "asset_growth_yoy": -9.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "LG이노텍": {
             "pbr": 2.68,
             "gpa": 4.7,
             "f_score": 3,
             "asset_growth_yoy": 8.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "에넥스": {
             "pbr": 0.66,
             "gpa": 1.4,
             "f_score": 1,
             "asset_growth_yoy": -15.7,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "CJ씨푸드": {
             "pbr": 0.84,
             "gpa": 3.0,
             "f_score": 1,
             "asset_growth_yoy": 1.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "롯데케미칼": {
             "pbr": 0.14,
             "gpa": 1.2,
             "f_score": 2,
             "asset_growth_yoy": -8.2,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "HMM": {
             "pbr": 0.68,
             "gpa": 1.1,
             "f_score": 3,
             "asset_growth_yoy": 5.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "현대위아": {
             "pbr": 0.38,
             "gpa": 1.9,
             "f_score": 3,
             "asset_growth_yoy": 2.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "삼화전자": {
             "pbr": 2.57,
             "gpa": -0.9,
             "f_score": 0,
             "asset_growth_yoy": 8.8,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "태림포장": {
             "pbr": 0.37,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": -2.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "우성머티리얼스": {
             "pbr": 1.51,
             "gpa": 0.2,
             "f_score": 1,
             "asset_growth_yoy": -16.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "유니켐": {
             "pbr": 0.26,
             "gpa": 0.7,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "부산산업": {
             "pbr": 0.26,
             "gpa": 1.1,
             "f_score": 1,
             "asset_growth_yoy": -3.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "갤럭시아에스엠": {
             "pbr": 0.61,
             "gpa": 4.0,
             "f_score": 2,
             "asset_growth_yoy": 15.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "한농화성": {
             "pbr": 1.11,
             "gpa": 2.7,
             "f_score": 2,
             "asset_growth_yoy": 3.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "와이투솔루션": {
             "pbr": 1.2,
             "gpa": 2.8,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "한신기계": {
             "pbr": 0.91,
             "gpa": 0.5,
             "f_score": 1,
             "asset_growth_yoy": -1.2,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "현대코퍼레이션": {
             "pbr": 0.42,
             "gpa": 3.2,
             "f_score": 2,
             "asset_growth_yoy": 20.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "금호석유화학": {
             "pbr": 0.46,
             "gpa": 1.5,
             "f_score": 3,
             "asset_growth_yoy": 4.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "SKC": {
             "pbr": 2.23,
             "gpa": 0.6,
             "f_score": 0,
             "asset_growth_yoy": -1.5,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "STX": {
             "pbr": -1.17,
             "gpa": 0.6,
             "f_score": 1,
             "asset_growth_yoy": -30.3,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "신성이엔지": {
             "pbr": 1.5,
             "gpa": 1.9,
             "f_score": 1,
             "asset_growth_yoy": 11.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "DB": {
             "pbr": 0.64,
             "gpa": 2.9,
             "f_score": 2,
             "asset_growth_yoy": 22.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "삼양바이오팜": {
             "pbr": 1.41,
             "gpa": 4.3,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "영흥": {
             "pbr": 0.21,
             "gpa": 1.6,
             "f_score": 1,
             "asset_growth_yoy": -20.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "아센디오": {
             "pbr": 0.82,
             "gpa": 0.0,
             "f_score": 0,
             "asset_growth_yoy": -1.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "계양전기": {
             "pbr": 5.6,
             "gpa": 5.2,
             "f_score": 2,
             "asset_growth_yoy": 8.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "영화금속": {
             "pbr": 0.5,
             "gpa": 2.7,
             "f_score": 3,
             "asset_growth_yoy": 1.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "경동인베스트": {
             "pbr": 0.22,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 3.1,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "현대모비스": {
             "pbr": 0.88,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": 7.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "한화에어로스페이스": {
             "pbr": 2.75,
             "gpa": 2.2,
             "f_score": 2,
             "asset_growth_yoy": 29.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "경인양행": {
             "pbr": 0.47,
             "gpa": 4.1,
             "f_score": 2,
             "asset_growth_yoy": 2.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "HDC": {
             "pbr": 0.22,
             "gpa": 2.2,
             "f_score": 3,
             "asset_growth_yoy": -2.9,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "모나리자": {
             "pbr": 0.71,
             "gpa": 7.6,
             "f_score": 3,
             "asset_growth_yoy": 9.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "삼성에피스홀딩스": {
             "pbr": 1.68,
             "gpa": 3.0,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "에스원": {
             "pbr": 1.62,
             "gpa": 5.9,
             "f_score": 3,
             "asset_growth_yoy": 5.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "대창": {
             "pbr": 0.32,
             "gpa": 3.6,
             "f_score": 2,
             "asset_growth_yoy": 10.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "세우글로벌": {
             "pbr": 0.61,
             "gpa": 1.9,
             "f_score": 3,
             "asset_growth_yoy": 6.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "일성건설": {
             "pbr": 1.06,
             "gpa": 2.0,
             "f_score": 2,
             "asset_growth_yoy": -2.2,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "화승코퍼레이션": {
             "pbr": 0.29,
             "gpa": 6.9,
             "f_score": 3,
             "asset_growth_yoy": -4.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "디와이": {
             "pbr": 0.17,
             "gpa": 3.4,
             "f_score": 3,
             "asset_growth_yoy": 5.0,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "계룡건설": {
             "pbr": 0.17,
             "gpa": 2.2,
             "f_score": 2,
             "asset_growth_yoy": 5.9,
-            "pbr_judgment": "저평가"
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "까뮤이앤씨": {
             "pbr": 0.71,
             "gpa": 5.7,
             "f_score": 3,
             "asset_growth_yoy": 9.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "지엠비코리아": {
             "pbr": 0.24,
             "gpa": 4.8,
             "f_score": 3,
             "asset_growth_yoy": 6.1,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "지누스": {
             "pbr": 0.29,
             "gpa": 3.3,
             "f_score": 1,
             "asset_growth_yoy": -9.7,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "한익스프레스": {
             "pbr": 0.32,
             "gpa": 0.4,
             "f_score": 1,
             "asset_growth_yoy": 4.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "대영포장": {
             "pbr": 0.4,
             "gpa": 1.9,
             "f_score": 1,
             "asset_growth_yoy": 5.2,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "금강공업": {
             "pbr": 0.22,
             "gpa": 3.1,
             "f_score": 2,
             "asset_growth_yoy": 4.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "영보화학": {
             "pbr": 0.48,
             "gpa": 3.4,
             "f_score": 3,
             "asset_growth_yoy": 5.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "극동유화": {
             "pbr": 0.49,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": 7.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "태경비케이": {
             "pbr": 0.26,
             "gpa": 3.8,
             "f_score": 3,
             "asset_growth_yoy": 10.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "한솔케미칼": {
             "pbr": 2.28,
             "gpa": 3.9,
             "f_score": 3,
             "asset_growth_yoy": 5.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "사조씨푸드": {
             "pbr": 0.8,
             "gpa": 1.7,
             "f_score": 2,
             "asset_growth_yoy": 12.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "HL D&I": {
             "pbr": 0.16,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": 15.0,
-            "pbr_judgment": "저평가"
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "동원시스템즈": {
             "pbr": 0.65,
             "gpa": 2.1,
             "f_score": 3,
             "asset_growth_yoy": -0.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "유니드": {
             "pbr": 0.37,
             "gpa": 3.7,
             "f_score": 2,
             "asset_growth_yoy": 24.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "성문전자": {
             "pbr": 1.04,
             "gpa": 3.0,
             "f_score": 3,
             "asset_growth_yoy": 16.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "인디에프": {
             "pbr": 0.75,
             "gpa": 13.3,
             "f_score": 2,
             "asset_growth_yoy": -0.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "이스타코": {
             "pbr": 0.54,
             "gpa": 0.9,
             "f_score": 1,
             "asset_growth_yoy": 6.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "대창단조": {
             "pbr": 0.47,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": 8.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "에이엔피": {
             "pbr": 0.84,
             "gpa": 1.0,
             "f_score": 0,
             "asset_growth_yoy": 4.2,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "INVENI": {
             "pbr": 0.56,
             "gpa": 6.8,
             "f_score": 3,
             "asset_growth_yoy": 27.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "DKME": {
             "pbr": 0.79,
             "gpa": 2.2,
             "f_score": 2,
             "asset_growth_yoy": -1.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "한국전력": {
             "pbr": 0.42,
             "gpa": 1.7,
             "f_score": 3,
             "asset_growth_yoy": 3.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "일진홀딩스": {
             "pbr": 0.24,
             "gpa": 3.9,
             "f_score": 2,
             "asset_growth_yoy": 21.5,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "태경산업": {
             "pbr": 0.23,
             "gpa": 4.5,
             "f_score": 3,
             "asset_growth_yoy": 6.4,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "대현": {
             "pbr": 0.24,
             "gpa": 11.4,
             "f_score": 3,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": "저평가"
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "삼성증권": {
             "pbr": 1.21,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 38.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "KG스틸": {
             "pbr": 0.25,
             "gpa": 1.5,
             "f_score": 3,
             "asset_growth_yoy": -0.9,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "한세예스24홀딩스": {
             "pbr": 0.18,
             "gpa": 5.6,
             "f_score": 3,
             "asset_growth_yoy": 2.5,
-            "pbr_judgment": "저평가"
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "환인제약": {
             "pbr": 0.43,
             "gpa": 5.5,
             "f_score": 3,
             "asset_growth_yoy": 12.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "신대양제지": {
             "pbr": 0.53,
             "gpa": 2.5,
             "f_score": 3,
             "asset_growth_yoy": 4.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "DB증권": {
             "pbr": 0.32,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 29.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "대성홀딩스": {
             "pbr": 0.17,
             "gpa": 5.2,
             "f_score": 3,
             "asset_growth_yoy": -1.3,
-            "pbr_judgment": "저평가"
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "두올": {
             "pbr": 0.36,
             "gpa": 5.5,
             "f_score": 3,
             "asset_growth_yoy": 8.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "퍼시스": {
             "pbr": 0.51,
             "gpa": 4.3,
             "f_score": 3,
             "asset_growth_yoy": 5.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "웅진": {
             "pbr": 0.51,
             "gpa": 2.8,
             "f_score": 3,
             "asset_growth_yoy": 304.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "광명전기": {
             "pbr": -19.62,
             "gpa": -0.3,
             "f_score": 1,
             "asset_growth_yoy": -19.9,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "명문제약": {
             "pbr": 0.43,
             "gpa": 9.8,
             "f_score": 1,
             "asset_growth_yoy": 5.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "우신시스템": {
             "pbr": 0.43,
             "gpa": 1.9,
             "f_score": 2,
             "asset_growth_yoy": 1.6,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "서울가스": {
             "pbr": 0.24,
             "gpa": 4.3,
             "f_score": 3,
             "asset_growth_yoy": -1.4,
-            "pbr_judgment": "저평가"
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "수산세보틱스": {
             "pbr": 0.53,
             "gpa": 4.1,
             "f_score": 2,
             "asset_growth_yoy": 16.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "SK텔레콤": {
             "pbr": 1.37,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 0.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "현대엘리베이터": {
             "pbr": 2.58,
             "gpa": 3.6,
             "f_score": 3,
             "asset_growth_yoy": 9.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "풀무원": {
             "pbr": 0.55,
             "gpa": 8.6,
             "f_score": 3,
             "asset_growth_yoy": 3.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "DS단석": {
             "pbr": 0.81,
             "gpa": 2.0,
             "f_score": 1,
             "asset_growth_yoy": 8.4,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "광전자": {
             "pbr": 1.55,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": -0.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "E1": {
             "pbr": 0.22,
             "gpa": -0.1,
             "f_score": 3,
             "asset_growth_yoy": 35.7,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한국카본": {
             "pbr": 2.07,
             "gpa": 5.8,
             "f_score": 3,
             "asset_growth_yoy": 18.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "애경산업": {
             "pbr": 0.74,
             "gpa": 13.7,
             "f_score": 2,
             "asset_growth_yoy": 0.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "삼성에스디에스": {
             "pbr": 1.51,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": 2.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "조일알미늄": {
             "pbr": 0.53,
             "gpa": 3.7,
             "f_score": 2,
             "asset_growth_yoy": -2.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "동원금속": {
             "pbr": 0.49,
             "gpa": 3.9,
             "f_score": 2,
             "asset_growth_yoy": 7.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "SK가스": {
             "pbr": 0.62,
             "gpa": 3.4,
             "f_score": 3,
             "asset_growth_yoy": 23.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한온시스템": {
             "pbr": 0.88,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": 3.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "신풍제약": {
             "pbr": 1.46,
             "gpa": 5.8,
             "f_score": 3,
             "asset_growth_yoy": 10.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "티에이치엔": {
             "pbr": 0.42,
             "gpa": 5.9,
             "f_score": 2,
             "asset_growth_yoy": 39.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "엑시큐어하이트론": {
             "pbr": 3.26,
             "gpa": 0.2,
             "f_score": 0,
             "asset_growth_yoy": -41.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "대교": {
             "pbr": 0.3,
             "gpa": 5.2,
             "f_score": 1,
             "asset_growth_yoy": -2.3,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "한섬": {
             "pbr": 0.32,
             "gpa": 14.2,
             "f_score": 3,
             "asset_growth_yoy": -1.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "키다리스튜디오": {
             "pbr": 0.64,
             "gpa": 8.0,
             "f_score": 3,
             "asset_growth_yoy": 4.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "롯데에너지머티리얼즈": {
             "pbr": 0.96,
             "gpa": 0.6,
             "f_score": 2,
             "asset_growth_yoy": 1.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "아시아나항공": {
             "pbr": 2.59,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": -4.5,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "일진디스플": {
             "pbr": 1.51,
             "gpa": 2.4,
             "f_score": 2,
             "asset_growth_yoy": -20.7,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "서원": {
             "pbr": 0.14,
             "gpa": 3.6,
             "f_score": 2,
             "asset_growth_yoy": 12.3,
-            "pbr_judgment": "저평가"
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "코웨이": {
             "pbr": 1.84,
             "gpa": 11.0,
             "f_score": 3,
             "asset_growth_yoy": 28.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "세원정공": {
             "pbr": 0.14,
             "gpa": 1.5,
             "f_score": 3,
             "asset_growth_yoy": 7.5,
-            "pbr_judgment": "저평가"
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "포스코DX": {
             "pbr": 5.22,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": -2.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "삼원강재": {
             "pbr": 0.34,
             "gpa": 2.1,
             "f_score": 3,
             "asset_growth_yoy": 5.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "MH에탄올": {
             "pbr": 0.51,
             "gpa": 2.9,
             "f_score": 2,
             "asset_growth_yoy": -36.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "한국종합기술": {
             "pbr": 0.26,
             "gpa": 2.4,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "동남합성": {
             "pbr": 1.83,
             "gpa": 5.9,
             "f_score": 2,
             "asset_growth_yoy": -2.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "롯데쇼핑": {
             "pbr": 0.24,
             "gpa": 4.5,
             "f_score": 3,
             "asset_growth_yoy": -0.5,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "다우기술": {
             "pbr": 0.2,
             "gpa": 0.9,
             "f_score": 3,
             "asset_growth_yoy": 54.6,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "인지컨트롤스": {
             "pbr": 0.35,
             "gpa": 3.5,
             "f_score": 3,
             "asset_growth_yoy": -0.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "인팩": {
             "pbr": 0.28,
             "gpa": 3.4,
             "f_score": 2,
             "asset_growth_yoy": 26.2,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "에쓰씨엔지니어링": {
             "pbr": 0.83,
             "gpa": 3.3,
             "f_score": 1,
             "asset_growth_yoy": 14.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "WISCOM": {
             "pbr": 0.32,
             "gpa": 0.2,
             "f_score": 2,
             "asset_growth_yoy": 5.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "디씨엠": {
             "pbr": 0.49,
             "gpa": 1.6,
             "f_score": 3,
             "asset_growth_yoy": -2.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "기업은행": {
             "pbr": 0.46,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 5.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "콜마홀딩스": {
             "pbr": 0.35,
             "gpa": 2.4,
             "f_score": 3,
             "asset_growth_yoy": 0.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "대원화성": {
             "pbr": 0.58,
             "gpa": 3.6,
             "f_score": 1,
             "asset_growth_yoy": 3.3,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "디와이덕양": {
             "pbr": 0.48,
             "gpa": 1.3,
             "f_score": 3,
             "asset_growth_yoy": 14.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "KPX케미칼": {
             "pbr": 0.33,
             "gpa": 3.0,
             "f_score": 3,
             "asset_growth_yoy": 3.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "SJM홀딩스": {
             "pbr": 0.16,
             "gpa": 3.5,
             "f_score": 3,
             "asset_growth_yoy": 6.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한국단자": {
             "pbr": 0.54,
             "gpa": 3.3,
             "f_score": 3,
             "asset_growth_yoy": 6.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "미래산업": {
             "pbr": 1.65,
             "gpa": 4.3,
             "f_score": 2,
             "asset_growth_yoy": 19.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "차AI헬스케어": {
             "pbr": 1.54,
             "gpa": 0.2,
             "f_score": 0,
             "asset_growth_yoy": 180.8,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "한솔홈데코": {
             "pbr": 0.3,
             "gpa": 4.8,
             "f_score": 3,
             "asset_growth_yoy": -20.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "이구산업": {
             "pbr": 0.83,
             "gpa": 5.1,
             "f_score": 2,
             "asset_growth_yoy": 26.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "남해화학": {
             "pbr": 0.54,
             "gpa": 3.0,
             "f_score": 1,
             "asset_growth_yoy": 6.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "한국주강": {
             "pbr": 0.74,
             "gpa": 1.2,
             "f_score": 2,
             "asset_growth_yoy": 4.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "스틱인베스트먼트": {
             "pbr": 1.27,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 23.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "부국철강": {
             "pbr": 0.34,
             "gpa": 1.0,
             "f_score": 2,
             "asset_growth_yoy": 1.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "동서": {
             "pbr": 1.46,
             "gpa": 1.2,
             "f_score": 3,
             "asset_growth_yoy": 1.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "BGF": {
             "pbr": 0.18,
             "gpa": 1.2,
             "f_score": 2,
             "asset_growth_yoy": 5.2,
-            "pbr_judgment": "저평가"
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "마니커": {
             "pbr": 0.88,
             "gpa": 2.6,
             "f_score": 1,
             "asset_growth_yoy": 1.3,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "한국제지": {
             "pbr": 0.29,
             "gpa": 4.2,
             "f_score": 1,
             "asset_growth_yoy": -7.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "삼성E&A": {
             "pbr": 1.85,
             "gpa": 3.4,
             "f_score": 3,
             "asset_growth_yoy": 2.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "동아지질": {
             "pbr": 0.88,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": 7.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "삼성물산": {
             "pbr": 0.85,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": 68.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "팬오션": {
             "pbr": 0.46,
             "gpa": 1.4,
             "f_score": 3,
             "asset_growth_yoy": 6.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "케이씨": {
             "pbr": 0.33,
             "gpa": 3.0,
             "f_score": 2,
             "asset_growth_yoy": 16.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "신도리코": {
             "pbr": 0.37,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "삼성카드": {
             "pbr": 0.63,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 11.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "제일기획": {
             "pbr": 1.38,
             "gpa": 12.9,
             "f_score": 3,
             "asset_growth_yoy": 9.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "NICE평가정보": {
             "pbr": 1.75,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 11.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "KT": {
             "pbr": 0.66,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 3.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "다올투자증권": {
             "pbr": 0.26,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 5.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "교보증권": {
             "pbr": 0.52,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 22.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "동원수산": {
             "pbr": 0.53,
             "gpa": 5.1,
             "f_score": 2,
             "asset_growth_yoy": 25.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "서울보증보험": {
             "pbr": 0.59,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -0.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "신세계인터내셔날": {
             "pbr": 0.5,
             "gpa": 14.0,
             "f_score": 3,
             "asset_growth_yoy": -1.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "신세계푸드": {
             "pbr": 0.42,
             "gpa": 6.9,
             "f_score": 2,
             "asset_growth_yoy": -1.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "아이티센씨티에스": {
             "pbr": 0.16,
             "gpa": 3.7,
             "f_score": 2,
             "asset_growth_yoy": 33.7,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "롯데관광개발": {
             "pbr": 2.62,
             "gpa": 1.3,
             "f_score": 1,
             "asset_growth_yoy": 0.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "황금에스티": {
             "pbr": 0.2,
             "gpa": 2.7,
             "f_score": 3,
             "asset_growth_yoy": 10.9,
-            "pbr_judgment": "저평가"
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "LG유플러스": {
             "pbr": 0.67,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 0.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "삼성생명": {
             "pbr": 0.81,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 16.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "자화전자": {
             "pbr": 1.1,
             "gpa": 6.6,
             "f_score": 3,
             "asset_growth_yoy": 24.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "체시스": {
             "pbr": 0.5,
             "gpa": 2.9,
             "f_score": 2,
             "asset_growth_yoy": 8.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "유나이티드제약": {
             "pbr": 0.62,
             "gpa": 7.2,
             "f_score": 3,
             "asset_growth_yoy": 15.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "SJG세종": {
             "pbr": 0.3,
             "gpa": 5.2,
             "f_score": 2,
             "asset_growth_yoy": 8.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "KT&G": {
             "pbr": 1.92,
             "gpa": 5.6,
             "f_score": 3,
             "asset_growth_yoy": 4.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "무학": {
             "pbr": 0.35,
             "gpa": 2.2,
             "f_score": 2,
             "asset_growth_yoy": 6.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "두산에너빌리티": {
             "pbr": 3.76,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": 6.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "SBS": {
             "pbr": 0.23,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 13.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "LG디스플레이": {
             "pbr": 0.69,
             "gpa": 2.8,
             "f_score": 1,
             "asset_growth_yoy": -14.7,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "파라다이스": {
             "pbr": 0.44,
             "gpa": 1.6,
             "f_score": 2,
             "asset_growth_yoy": 8.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "NICE": {
             "pbr": 0.3,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 7.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "인천도시가스": {
             "pbr": 0.48,
             "gpa": 4.5,
             "f_score": 3,
             "asset_growth_yoy": -3.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "SK": {
             "pbr": 0.46,
             "gpa": 2.5,
             "f_score": 3,
             "asset_growth_yoy": 5.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한국토지신탁": {
             "pbr": 0.27,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 12.5,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "HS애드": {
             "pbr": 0.49,
             "gpa": 9.9,
             "f_score": 2,
             "asset_growth_yoy": -0.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "백산": {
             "pbr": 0.74,
             "gpa": 6.1,
             "f_score": 3,
             "asset_growth_yoy": -0.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "강원랜드": {
             "pbr": 0.81,
             "gpa": 2.2,
             "f_score": 2,
             "asset_growth_yoy": -0.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "NAVER": {
             "pbr": 0.96,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 14.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "신세계 I&C": {
             "pbr": 0.41,
             "gpa": 4.5,
             "f_score": 3,
             "asset_growth_yoy": 13.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "카카오": {
             "pbr": 1.0,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 11.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "콘텐트리중앙": {
             "pbr": 0.14,
             "gpa": 2.7,
             "f_score": 1,
             "asset_growth_yoy": -6.3,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "한국가스공사": {
             "pbr": 0.26,
             "gpa": 1.9,
             "f_score": 3,
             "asset_growth_yoy": -3.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "SNT홀딩스": {
             "pbr": 0.33,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": 16.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "NC": {
             "pbr": 1.38,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 18.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "팜스코": {
             "pbr": 0.49,
             "gpa": 5.6,
             "f_score": 2,
             "asset_growth_yoy": -10.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "YG PLUS": {
             "pbr": 1.06,
             "gpa": 4.0,
             "f_score": 3,
             "asset_growth_yoy": 18.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "LG헬로비전": {
             "pbr": 0.26,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -5.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "광주신세계": {
             "pbr": 0.42,
             "gpa": 3.5,
             "f_score": 3,
             "asset_growth_yoy": 3.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "하나투어": {
             "pbr": 2.97,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 0.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "키움증권": {
             "pbr": 1.24,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 55.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "HDC랩스": {
             "pbr": 0.75,
             "gpa": 4.4,
             "f_score": 3,
             "asset_growth_yoy": 1.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "상신브레이크": {
             "pbr": 0.2,
             "gpa": 4.9,
             "f_score": 2,
             "asset_growth_yoy": -0.3,
-            "pbr_judgment": "저평가"
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "한화오션": {
             "pbr": 3.68,
             "gpa": 3.0,
             "f_score": 3,
             "asset_growth_yoy": 14.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한미반도체": {
             "pbr": 40.4,
             "gpa": 3.7,
             "f_score": 2,
             "asset_growth_yoy": 8.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "주연테크": {
             "pbr": 0.27,
             "gpa": 4.7,
             "f_score": 2,
             "asset_growth_yoy": 4.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "KSS해운": {
             "pbr": 0.35,
             "gpa": 1.3,
             "f_score": 3,
             "asset_growth_yoy": 11.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "코스맥스비티아이": {
             "pbr": 0.6,
             "gpa": 4.4,
             "f_score": 2,
             "asset_growth_yoy": 9.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "대우건설": {
             "pbr": 1.79,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": 9.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "포스코인터내셔널": {
             "pbr": 1.17,
             "gpa": 2.9,
             "f_score": 2,
             "asset_growth_yoy": 13.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "유니온머티리얼": {
             "pbr": 2.26,
             "gpa": 2.4,
             "f_score": 2,
             "asset_growth_yoy": 4.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "한국항공우주": {
             "pbr": 7.39,
             "gpa": 1.2,
             "f_score": 2,
             "asset_growth_yoy": 27.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "우진플라임": {
             "pbr": 0.33,
             "gpa": 2.9,
             "f_score": 1,
             "asset_growth_yoy": -1.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "한전KPS": {
             "pbr": 1.51,
             "gpa": 3.7,
             "f_score": 2,
             "asset_growth_yoy": 2.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "진양화학": {
             "pbr": 0.87,
             "gpa": 1.2,
             "f_score": 2,
             "asset_growth_yoy": -23.2,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "LG생활건강": {
             "pbr": 0.63,
             "gpa": 11.5,
             "f_score": 3,
             "asset_growth_yoy": -6.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "LG화학": {
             "pbr": 0.39,
             "gpa": 2.2,
             "f_score": 1,
             "asset_growth_yoy": 11.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "한전기술": {
             "pbr": 6.17,
             "gpa": 3.3,
             "f_score": 2,
             "asset_growth_yoy": -2.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "스카이라이프": {
             "pbr": 0.35,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -3.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한미글로벌": {
             "pbr": 0.72,
             "gpa": 7.1,
             "f_score": 2,
             "asset_growth_yoy": 2.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "테이팩스": {
             "pbr": 0.4,
             "gpa": 2.9,
             "f_score": 2,
             "asset_growth_yoy": 10.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "신한지주": {
             "pbr": 0.83,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 9.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "현대홈쇼핑": {
             "pbr": 0.28,
             "gpa": 9.7,
             "f_score": 3,
             "asset_growth_yoy": -0.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "포스코스틸리온": {
             "pbr": 0.71,
             "gpa": 3.9,
             "f_score": 3,
             "asset_growth_yoy": 1.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "세아홀딩스": {
             "pbr": 0.16,
             "gpa": 2.0,
             "f_score": 3,
             "asset_growth_yoy": 3.7,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "다스코": {
             "pbr": 0.77,
             "gpa": 0.9,
             "f_score": 2,
             "asset_growth_yoy": 5.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "KTcs": {
             "pbr": 0.42,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 0.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "KTis": {
             "pbr": 0.38,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": -3.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "HL홀딩스": {
             "pbr": 0.3,
             "gpa": 3.0,
             "f_score": 2,
             "asset_growth_yoy": 2.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "산일전기": {
             "pbr": 9.22,
             "gpa": 9.7,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "종근당바이오": {
             "pbr": 0.58,
             "gpa": 1.7,
             "f_score": 2,
             "asset_growth_yoy": 1.5,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "현대로템": {
             "pbr": 5.75,
             "gpa": 3.4,
             "f_score": 3,
             "asset_growth_yoy": 75.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "LG씨엔에스": {
             "pbr": 2.26,
             "gpa": 3.8,
             "f_score": 3,
             "asset_growth_yoy": 1.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "SNT모티브": {
             "pbr": 0.67,
             "gpa": 3.0,
             "f_score": 3,
             "asset_growth_yoy": 0.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "LG전자": {
             "pbr": 1.04,
             "gpa": 8.7,
             "f_score": 3,
             "asset_growth_yoy": 8.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "엘앤에프": {
             "pbr": 5.75,
             "gpa": 4.3,
             "f_score": 1,
             "asset_growth_yoy": 17.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "세이브존I&C": {
             "pbr": 0.19,
             "gpa": 2.4,
             "f_score": 3,
             "asset_growth_yoy": 11.2,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "셀트리온": {
             "pbr": 2.29,
             "gpa": 3.0,
             "f_score": 3,
             "asset_growth_yoy": 10.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "삼성출판사": {
             "pbr": 0.41,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": -15.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "TKG휴켐스": {
             "pbr": 0.71,
             "gpa": 2.4,
             "f_score": 3,
             "asset_growth_yoy": 3.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "대호에이엘": {
             "pbr": 0.56,
             "gpa": 3.9,
             "f_score": 1,
             "asset_growth_yoy": -2.7,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "대웅제약": {
             "pbr": 1.19,
             "gpa": 7.4,
             "f_score": 3,
             "asset_growth_yoy": 23.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한세엠케이": {
             "pbr": 1.52,
             "gpa": 13.7,
             "f_score": 1,
             "asset_growth_yoy": -0.7,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "DSR제강": {
             "pbr": 0.42,
             "gpa": 4.3,
             "f_score": 3,
             "asset_growth_yoy": 7.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "현대백화점": {
             "pbr": 0.54,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": 4.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "모나용평": {
             "pbr": 0.28,
             "gpa": 1.4,
             "f_score": 3,
             "asset_growth_yoy": -0.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "한국금융지주": {
             "pbr": 1.02,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 32.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "하이스틸": {
             "pbr": 0.42,
             "gpa": 3.0,
             "f_score": 3,
             "asset_growth_yoy": -1.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "지역난방공사": {
             "pbr": 0.31,
             "gpa": 4.2,
             "f_score": 3,
             "asset_growth_yoy": -4.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "롯데하이마트": {
             "pbr": 0.16,
             "gpa": 7.4,
             "f_score": 1,
             "asset_growth_yoy": -4.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "코아스": {
             "pbr": 0.73,
             "gpa": 7.8,
             "f_score": 1,
             "asset_growth_yoy": 5.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "HD현대마린엔진": {
             "pbr": 3.96,
             "gpa": 4.7,
             "f_score": 3,
             "asset_growth_yoy": 66.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "유엔젤": {
             "pbr": 1.03,
             "gpa": 8.1,
             "f_score": 2,
             "asset_growth_yoy": 12.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "농심홀딩스": {
             "pbr": 0.31,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": 17.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "금호타이어": {
             "pbr": 0.78,
             "gpa": 6.3,
             "f_score": 3,
             "asset_growth_yoy": 11.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "이엔플러스": {
             "pbr": 2.42,
             "gpa": 4.4,
             "f_score": 0,
             "asset_growth_yoy": -30.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "새론오토모티브": {
             "pbr": 0.22,
             "gpa": 1.0,
             "f_score": 2,
             "asset_growth_yoy": 5.9,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "세진중공업": {
             "pbr": 2.16,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": 3.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "유니퀘스트": {
             "pbr": 0.49,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 4.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "STX엔진": {
             "pbr": 2.85,
             "gpa": 2.7,
             "f_score": 2,
             "asset_growth_yoy": 27.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "텔코웨어": {
             "pbr": 1.03,
             "gpa": 1.6,
             "f_score": 2,
             "asset_growth_yoy": 18.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "에이블씨엔씨": {
             "pbr": 3.44,
             "gpa": 21.1,
             "f_score": 3,
             "asset_growth_yoy": -1.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "GS": {
             "pbr": 0.38,
             "gpa": 5.4,
             "f_score": 3,
             "asset_growth_yoy": 3.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "CJ CGV": {
             "pbr": 1.53,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 8.5,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "현대리바트": {
             "pbr": 0.27,
             "gpa": 7.8,
             "f_score": 3,
             "asset_growth_yoy": -5.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "LIG디펜스앤에어로스페이스": {
             "pbr": 10.7,
             "gpa": 3.0,
             "f_score": 1,
             "asset_growth_yoy": 27.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "전진건설로봇": {
             "pbr": 3.14,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": 4.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "휴비스": {
             "pbr": 0.28,
             "gpa": 2.2,
             "f_score": 1,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "일진다이아": {
             "pbr": 0.24,
             "gpa": 1.5,
             "f_score": 2,
             "asset_growth_yoy": 0.9,
-            "pbr_judgment": "저평가"
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "미스토홀딩스": {
             "pbr": 0.87,
             "gpa": 10.8,
             "f_score": 2,
             "asset_growth_yoy": 9.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "동양생명": {
             "pbr": 0.65,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -1.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "한화엔진": {
             "pbr": 6.46,
             "gpa": 3.4,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "그린케미칼": {
             "pbr": 0.86,
             "gpa": 3.1,
             "f_score": 2,
             "asset_growth_yoy": 3.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "대한제강": {
             "pbr": 0.27,
             "gpa": 1.3,
             "f_score": 2,
             "asset_growth_yoy": 5.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "동양고속": {
             "pbr": 1.4,
             "gpa": 2.0,
             "f_score": 2,
             "asset_growth_yoy": 2.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "이월드": {
             "pbr": 0.44,
             "gpa": 1.8,
             "f_score": 2,
             "asset_growth_yoy": -4.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "대상홀딩스": {
             "pbr": 0.2,
             "gpa": 8.4,
             "f_score": 3,
             "asset_growth_yoy": 4.7,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "TBH글로벌": {
             "pbr": 0.69,
             "gpa": 21.2,
             "f_score": 2,
             "asset_growth_yoy": -2.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "엔케이": {
             "pbr": 0.35,
             "gpa": 2.5,
             "f_score": 3,
             "asset_growth_yoy": 5.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "미래에셋생명": {
             "pbr": 0.95,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": -0.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "현대글로비스": {
             "pbr": 1.38,
             "gpa": 3.5,
             "f_score": 3,
             "asset_growth_yoy": 12.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "하나금융지주": {
             "pbr": 0.81,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 6.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "이리츠코크렙": {
             "pbr": 1.02,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": -0.6,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "한화생명": {
             "pbr": 0.22,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 7.7,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "진도": {
             "pbr": 0.27,
             "gpa": 8.7,
             "f_score": 3,
             "asset_growth_yoy": 10.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "HDC현대EP": {
             "pbr": 0.34,
             "gpa": 3.8,
             "f_score": 3,
             "asset_growth_yoy": 8.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "제주항공": {
             "pbr": 1.18,
             "gpa": 4.7,
             "f_score": 3,
             "asset_growth_yoy": 23.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "롯데렌탈": {
             "pbr": 0.8,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 5.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "평화산업": {
             "pbr": 0.66,
             "gpa": 4.2,
             "f_score": 3,
             "asset_growth_yoy": 7.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "노루페인트": {
             "pbr": 0.36,
             "gpa": 5.2,
             "f_score": 2,
             "asset_growth_yoy": 6.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "메타랩스": {
             "pbr": 0.21,
             "gpa": 2.1,
             "f_score": 1,
             "asset_growth_yoy": 77.3,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "아모레퍼시픽": {
             "pbr": 1.28,
             "gpa": 11.8,
             "f_score": 3,
             "asset_growth_yoy": 2.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "비에이치": {
             "pbr": 0.78,
             "gpa": 2.6,
             "f_score": 3,
             "asset_growth_yoy": 10.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "트리니티항공": {
             "pbr": 2.41,
             "gpa": 3.8,
             "f_score": 1,
             "asset_growth_yoy": 45.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "디아이씨": {
             "pbr": 0.93,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": -2.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "KEC": {
             "pbr": 0.36,
             "gpa": 1.1,
             "f_score": 1,
             "asset_growth_yoy": -1.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "KPX홀딩스": {
             "pbr": 0.22,
             "gpa": 2.0,
             "f_score": 3,
             "asset_growth_yoy": 14.2,
-            "pbr_judgment": "저평가"
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "기신정기": {
             "pbr": 0.22,
             "gpa": 2.5,
             "f_score": 3,
             "asset_growth_yoy": 0.3,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "DYP": {
             "pbr": 0.29,
             "gpa": 2.2,
             "f_score": 2,
             "asset_growth_yoy": 18.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "넥스틸": {
             "pbr": 0.62,
             "gpa": 3.0,
             "f_score": 3,
             "asset_growth_yoy": 8.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "LF": {
             "pbr": 0.35,
             "gpa": 9.0,
             "f_score": 3,
             "asset_growth_yoy": 3.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "형지엘리트": {
             "pbr": 0.39,
             "gpa": 11.5,
             "f_score": 1,
             "asset_growth_yoy": 29.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "후성": {
             "pbr": 3.34,
             "gpa": 2.9,
             "f_score": 1,
             "asset_growth_yoy": -0.1,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "효성ITX": {
             "pbr": 1.87,
             "gpa": 5.6,
             "f_score": 2,
             "asset_growth_yoy": 15.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "AJ네트웍스": {
             "pbr": 0.42,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 2.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "웅진씽크빅": {
             "pbr": 0.28,
             "gpa": 12.2,
             "f_score": 2,
             "asset_growth_yoy": 7.8,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "JW홀딩스": {
             "pbr": 0.48,
             "gpa": 10.3,
             "f_score": 3,
             "asset_growth_yoy": 0.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "SK이노베이션": {
             "pbr": 0.52,
             "gpa": 2.9,
             "f_score": 1,
             "asset_growth_yoy": -1.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "HJ중공업": {
             "pbr": 2.06,
             "gpa": 2.3,
             "f_score": 1,
             "asset_growth_yoy": 10.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "엠씨넥스": {
             "pbr": 0.81,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": -0.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "CJ제일제당": {
             "pbr": 0.23,
             "gpa": 5.0,
             "f_score": 3,
             "asset_growth_yoy": 2.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "SK오션플랜트": {
             "pbr": 1.01,
             "gpa": 2.1,
             "f_score": 3,
             "asset_growth_yoy": -17.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "비상교육": {
             "pbr": 0.29,
             "gpa": 16.5,
             "f_score": 3,
             "asset_growth_yoy": 4.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "진양홀딩스": {
             "pbr": 0.41,
             "gpa": 1.3,
             "f_score": 1,
             "asset_growth_yoy": 12.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "SNT에너지": {
             "pbr": 1.38,
             "gpa": 5.2,
             "f_score": 2,
             "asset_growth_yoy": 13.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "인바이오젠": {
             "pbr": 0.38,
             "gpa": -0.1,
             "f_score": 1,
             "asset_growth_yoy": -9.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "해태제과식품": {
             "pbr": 0.53,
             "gpa": 7.7,
             "f_score": 3,
             "asset_growth_yoy": 0.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "동성케미컬": {
             "pbr": 0.27,
             "gpa": 4.8,
             "f_score": 2,
             "asset_growth_yoy": 6.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "이연제약": {
             "pbr": 0.98,
             "gpa": 2.2,
             "f_score": 1,
             "asset_growth_yoy": -7.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "풍산": {
             "pbr": 0.74,
             "gpa": 3.6,
             "f_score": 3,
             "asset_growth_yoy": 15.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "일진전기": {
             "pbr": 5.04,
             "gpa": 4.7,
             "f_score": 2,
             "asset_growth_yoy": 25.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한국철강": {
             "pbr": 0.45,
             "gpa": -0.6,
             "f_score": 1,
             "asset_growth_yoy": -3.7,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "KB금융": {
             "pbr": 1.05,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 7.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한세실업": {
             "pbr": 0.5,
             "gpa": 3.7,
             "f_score": 2,
             "asset_growth_yoy": 7.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "우진": {
             "pbr": 1.2,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": 14.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "미원홀딩스": {
             "pbr": 0.36,
             "gpa": 3.5,
             "f_score": null,
             "asset_growth_yoy": 7.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "LX세미콘": {
             "pbr": 0.6,
             "gpa": 7.7,
             "f_score": 3,
             "asset_growth_yoy": -5.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "LX하우시스": {
             "pbr": 0.32,
             "gpa": 9.0,
             "f_score": 3,
             "asset_growth_yoy": -0.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "주성코퍼레이션": {
             "pbr": 2.64,
             "gpa": 3.1,
             "f_score": 2,
             "asset_growth_yoy": 12.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "호전실업": {
             "pbr": 0.32,
             "gpa": 3.1,
             "f_score": 2,
             "asset_growth_yoy": 4.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "동인기연": {
             "pbr": 0.5,
             "gpa": 6.2,
             "f_score": 3,
             "asset_growth_yoy": 3.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "영원무역": {
             "pbr": 0.86,
             "gpa": 4.4,
             "f_score": 3,
             "asset_growth_yoy": 12.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "씨에스윈드": {
             "pbr": 1.36,
             "gpa": 3.2,
             "f_score": 2,
             "asset_growth_yoy": -4.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "GKL": {
             "pbr": 1.31,
             "gpa": 4.0,
             "f_score": 3,
             "asset_growth_yoy": 5.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "대성에너지": {
             "pbr": 0.55,
             "gpa": 7.1,
             "f_score": 3,
             "asset_growth_yoy": -2.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "메타케어": {
             "pbr": 0.23,
             "gpa": 1.7,
             "f_score": 2,
             "asset_growth_yoy": 8.4,
-            "pbr_judgment": "저평가"
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "KC코트렐": {
             "pbr": 1.69,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": -26.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "조선선재": {
             "pbr": 0.65,
             "gpa": 2.1,
             "f_score": 3,
             "asset_growth_yoy": 4.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "코오롱인더": {
             "pbr": 0.37,
             "gpa": 4.2,
             "f_score": 3,
             "asset_growth_yoy": 8.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "아이마켓코리아": {
             "pbr": 0.58,
             "gpa": 3.0,
             "f_score": 3,
             "asset_growth_yoy": 8.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "한국화장품": {
             "pbr": 2.77,
             "gpa": 18.6,
             "f_score": 3,
             "asset_growth_yoy": 0.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "SJM": {
             "pbr": 0.21,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": 6.8,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한국자산신탁": {
             "pbr": 0.25,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -6.6,
-            "pbr_judgment": "저평가"
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "현대퓨처넷": {
             "pbr": 0.4,
             "gpa": 2.1,
             "f_score": 2,
             "asset_growth_yoy": -1.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "수산인더스트리": {
             "pbr": 0.53,
             "gpa": 3.0,
             "f_score": 3,
             "asset_growth_yoy": 12.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "대성산업": {
             "pbr": 0.29,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": 4.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한미약품": {
             "pbr": 3.33,
             "gpa": 9.8,
             "f_score": 3,
             "asset_growth_yoy": 12.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "인터지스": {
             "pbr": 0.2,
             "gpa": 2.2,
             "f_score": 3,
             "asset_growth_yoy": 7.0,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한전산업": {
             "pbr": 3.78,
             "gpa": 5.7,
             "f_score": 2,
             "asset_growth_yoy": 3.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "화인베스틸": {
             "pbr": 0.76,
             "gpa": 2.4,
             "f_score": 2,
             "asset_growth_yoy": 11.9,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "미원화학": {
             "pbr": 1.25,
             "gpa": 6.6,
             "f_score": 3,
             "asset_growth_yoy": 13.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "시디즈": {
             "pbr": 0.58,
             "gpa": 16.4,
             "f_score": 3,
             "asset_growth_yoy": -1.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "선진": {
             "pbr": 0.38,
             "gpa": 7.9,
             "f_score": 3,
             "asset_growth_yoy": 12.4,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "에스디바이오센서": {
             "pbr": 0.31,
             "gpa": 3.4,
             "f_score": 2,
             "asset_growth_yoy": -23.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "메리츠금융지주": {
             "pbr": 1.66,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 20.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "BNK금융지주": {
             "pbr": 0.5,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 6.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "iM금융지주": {
             "pbr": 0.45,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 8.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "이마트": {
             "pbr": 0.16,
             "gpa": 6.3,
             "f_score": 3,
             "asset_growth_yoy": 3.6,
-            "pbr_judgment": "저평가"
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "아주스틸": {
             "pbr": 0.57,
             "gpa": 1.2,
             "f_score": 2,
             "asset_growth_yoy": 3.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "핸즈코퍼레이션": {
             "pbr": 0.52,
             "gpa": 0.3,
             "f_score": 1,
             "asset_growth_yoy": -16.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "다이나믹디자인": {
             "pbr": 0.21,
             "gpa": 5.1,
             "f_score": 2,
             "asset_growth_yoy": 8.3,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "케이탑리츠": {
             "pbr": 0.35,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 4.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "덴티움": {
             "pbr": 0.59,
             "gpa": 5.6,
             "f_score": 3,
             "asset_growth_yoy": 9.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "삼양사": {
             "pbr": 0.25,
             "gpa": 3.0,
             "f_score": 2,
             "asset_growth_yoy": 7.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "DSR": {
             "pbr": 0.28,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": 14.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "애경케미칼": {
             "pbr": 0.62,
             "gpa": 2.4,
             "f_score": 1,
             "asset_growth_yoy": 4.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "한국타이어앤테크놀로지": {
             "pbr": 0.59,
             "gpa": 4.3,
             "f_score": 3,
             "asset_growth_yoy": 15.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한국콜마": {
             "pbr": 1.49,
             "gpa": 5.7,
             "f_score": 3,
             "asset_growth_yoy": 10.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "동일고무벨트": {
             "pbr": 0.33,
             "gpa": 5.6,
             "f_score": 2,
             "asset_growth_yoy": 7.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "동아에스티": {
             "pbr": 0.51,
             "gpa": 6.4,
             "f_score": 2,
             "asset_growth_yoy": 0.8,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "JB금융지주": {
             "pbr": 0.85,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 8.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "PI첨단소재": {
             "pbr": 1.6,
             "gpa": 4.7,
             "f_score": 3,
             "asset_growth_yoy": -6.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "한진칼": {
             "pbr": 2.14,
             "gpa": 0.8,
             "f_score": 3,
             "asset_growth_yoy": -3.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "NHN": {
             "pbr": 0.69,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 9.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "아세아시멘트": {
             "pbr": 0.3,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": 0.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "종근당": {
             "pbr": 0.91,
             "gpa": 6.8,
             "f_score": 3,
             "asset_growth_yoy": 23.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "더블유게임즈": {
             "pbr": 0.72,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 14.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "쿠쿠홀딩스": {
             "pbr": 0.69,
             "gpa": 5.6,
             "f_score": 3,
             "asset_growth_yoy": 16.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "드림텍": {
             "pbr": 0.62,
             "gpa": 2.7,
             "f_score": 1,
             "asset_growth_yoy": -4.5,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "코스맥스": {
             "pbr": 3.16,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": 22.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "제이에스코퍼레이션": {
             "pbr": 0.57,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": 7.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "해성디에스": {
             "pbr": 1.86,
             "gpa": 2.6,
             "f_score": 3,
             "asset_growth_yoy": 14.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "서연이화": {
             "pbr": 0.23,
             "gpa": 5.0,
             "f_score": 3,
             "asset_growth_yoy": 10.1,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "HL만도": {
             "pbr": 0.72,
             "gpa": 5.0,
             "f_score": 2,
             "asset_growth_yoy": 0.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "삼성바이오로직스": {
             "pbr": 8.08,
             "gpa": 5.7,
             "f_score": 3,
             "asset_growth_yoy": -31.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "디와이파워": {
             "pbr": 0.38,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": 8.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "SK디앤디": {
             "pbr": 0.21,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": -1.2,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "한솔제지": {
             "pbr": 0.24,
             "gpa": 4.4,
             "f_score": 2,
             "asset_growth_yoy": 2.2,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "이노션": {
             "pbr": 0.66,
             "gpa": 9.0,
             "f_score": 3,
             "asset_growth_yoy": 6.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "금호에이치티": {
             "pbr": 0.21,
             "gpa": 1.6,
             "f_score": 3,
             "asset_growth_yoy": -7.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "경보제약": {
             "pbr": 0.86,
             "gpa": 8.1,
             "f_score": 2,
             "asset_growth_yoy": 17.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "토니모리": {
             "pbr": 1.01,
             "gpa": 9.8,
             "f_score": 2,
             "asset_growth_yoy": 4.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "티엠씨": {
             "pbr": 2.68,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "잇츠한불": {
             "pbr": 0.43,
             "gpa": 5.2,
             "f_score": 2,
             "asset_growth_yoy": 4.4,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "현대코퍼레이션홀딩스": {
             "pbr": 0.32,
             "gpa": 3.2,
             "f_score": 2,
             "asset_growth_yoy": 10.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "LS에코에너지": {
             "pbr": 5.53,
             "gpa": 5.2,
             "f_score": 3,
             "asset_growth_yoy": 11.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "JW생명과학": {
             "pbr": 0.81,
             "gpa": 6.0,
             "f_score": 3,
             "asset_growth_yoy": -3.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "두산밥캣": {
             "pbr": 1210.13,
             "gpa": 4.0,
             "f_score": 3,
             "asset_growth_yoy": 3.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "화승엔터프라이즈": {
             "pbr": 0.39,
             "gpa": 2.2,
             "f_score": 1,
             "asset_growth_yoy": -3.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "에이플러스에셋": {
             "pbr": 0.99,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 8.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "솔루엠": {
             "pbr": 1.24,
             "gpa": 6.1,
             "f_score": 3,
             "asset_growth_yoy": 26.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "샘표식품": {
             "pbr": 0.39,
             "gpa": 11.2,
             "f_score": 3,
             "asset_growth_yoy": 2.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "일동제약": {
             "pbr": 1.9,
             "gpa": 10.4,
             "f_score": 2,
             "asset_growth_yoy": -2.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "넷마블": {
             "pbr": 0.5,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 4.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "크래프톤": {
             "pbr": 1.42,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 17.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "크라운제과": {
             "pbr": 0.45,
             "gpa": 9.7,
             "f_score": 3,
             "asset_growth_yoy": -0.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "HD현대": {
             "pbr": 0.5,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": 8.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "HD현대일렉트릭": {
             "pbr": 14.24,
             "gpa": 6.7,
             "f_score": 3,
             "asset_growth_yoy": 27.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "HD건설기계": {
             "pbr": 1.28,
             "gpa": 6.0,
             "f_score": 3,
             "asset_growth_yoy": 173.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "경동도시가스": {
             "pbr": 0.23,
             "gpa": 4.8,
             "f_score": 3,
             "asset_growth_yoy": -9.3,
-            "pbr_judgment": "저평가"
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "아시아나IDT": {
             "pbr": 0.6,
             "gpa": 2.1,
             "f_score": 3,
             "asset_growth_yoy": -6.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "미원에스씨": {
             "pbr": 1.17,
             "gpa": 5.4,
             "f_score": 3,
             "asset_growth_yoy": 10.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "오리온": {
             "pbr": 1.25,
             "gpa": 7.2,
             "f_score": 3,
             "asset_growth_yoy": 11.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "일진하이솔루스": {
             "pbr": 1.18,
             "gpa": 0.7,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "제일약품": {
             "pbr": 0.57,
             "gpa": 10.4,
             "f_score": 2,
             "asset_growth_yoy": 1.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "한화시스템": {
             "pbr": 2.47,
             "gpa": 1.0,
             "f_score": 1,
             "asset_growth_yoy": 50.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "진에어": {
             "pbr": 1.09,
             "gpa": 7.0,
             "f_score": 3,
             "asset_growth_yoy": 14.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "삼양패키징": {
             "pbr": 0.34,
             "gpa": 1.8,
             "f_score": 1,
             "asset_growth_yoy": 5.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에이피알": {
             "pbr": 28.49,
             "gpa": 47.9,
             "f_score": 3,
             "asset_growth_yoy": 64.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "케이뱅크": {
             "pbr": 0.96,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 6.7,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "롯데웰푸드": {
             "pbr": 0.4,
             "gpa": 6.0,
             "f_score": 3,
             "asset_growth_yoy": 6.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "케이씨텍": {
             "pbr": 3.75,
             "gpa": 9.2,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "BGF리테일": {
             "pbr": 1.68,
             "gpa": 11.1,
             "f_score": 3,
             "asset_growth_yoy": 4.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "쿠쿠홈시스": {
             "pbr": 0.36,
             "gpa": 10.8,
             "f_score": 3,
             "asset_growth_yoy": 15.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "SK케미칼": {
             "pbr": 0.22,
             "gpa": 1.9,
             "f_score": 2,
             "asset_growth_yoy": 8.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "롯데이노베이트": {
             "pbr": 0.57,
             "gpa": 3.2,
             "f_score": 2,
             "asset_growth_yoy": -6.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "하나제약": {
             "pbr": 0.48,
             "gpa": 9.0,
             "f_score": 3,
             "asset_growth_yoy": 12.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "신한알파리츠": {
             "pbr": 0.77,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": 45.7,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "IPARK현대산업개발": {
             "pbr": 0.35,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": -5.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "효성화학": {
             "pbr": 0.35,
             "gpa": 0.7,
             "f_score": 1,
             "asset_growth_yoy": -6.4,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "효성티앤씨": {
             "pbr": 0.6,
             "gpa": 3.0,
             "f_score": 3,
             "asset_growth_yoy": 7.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "효성중공업": {
             "pbr": 10.54,
             "gpa": 3.4,
             "f_score": 3,
             "asset_growth_yoy": 17.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "HS효성첨단소재": {
             "pbr": 0.72,
             "gpa": 1.9,
             "f_score": 3,
             "asset_growth_yoy": 6.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "에어부산": {
             "pbr": 1.69,
             "gpa": 3.2,
             "f_score": 2,
             "asset_growth_yoy": 10.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "한일시멘트": {
             "pbr": 0.56,
             "gpa": 1.7,
             "f_score": 3,
             "asset_growth_yoy": 0.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "SK바이오사이언스": {
             "pbr": 1.36,
             "gpa": 0.5,
             "f_score": 1,
             "asset_growth_yoy": 3.1,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "세아제강": {
             "pbr": 0.31,
             "gpa": 2.5,
             "f_score": 3,
             "asset_growth_yoy": 6.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "현대오토에버": {
             "pbr": 6.31,
             "gpa": 2.1,
             "f_score": 2,
             "asset_growth_yoy": 9.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "씨티알모빌리티": {
             "pbr": 0.35,
             "gpa": 2.1,
             "f_score": 1,
             "asset_growth_yoy": 10.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "우리금융지주": {
             "pbr": 0.57,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 15.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "자이에스앤디": {
             "pbr": 0.28,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": -4.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "명인제약": {
             "pbr": 0.78,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "HD현대에너지솔루션": {
             "pbr": 3.09,
             "gpa": 8.3,
             "f_score": 3,
             "asset_growth_yoy": 28.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "카카오뱅크": {
             "pbr": 1.63,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 13.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "SK바이오팜": {
             "pbr": 6.57,
             "gpa": 16.2,
             "f_score": 3,
             "asset_growth_yoy": 31.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "HD현대중공업": {
             "pbr": 5.09,
             "gpa": 4.3,
             "f_score": 3,
             "asset_growth_yoy": 31.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "롯데리츠": {
             "pbr": 0.89,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": 10.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "이지스밸류플러스리츠": {
             "pbr": 0.63,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": 11.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "두산퓨얼셀": {
             "pbr": 8.49,
             "gpa": 0.8,
             "f_score": 1,
             "asset_growth_yoy": 6.5,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "솔루스첨단소재": {
             "pbr": 0.55,
             "gpa": 0.3,
             "f_score": 1,
             "asset_growth_yoy": 17.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "NH프라임리츠": {
             "pbr": 0.67,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": -0.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "교촌에프앤비": {
             "pbr": 1.0,
             "gpa": 9.8,
             "f_score": 3,
             "asset_growth_yoy": 4.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "KCC글라스": {
             "pbr": 0.27,
             "gpa": 1.7,
             "f_score": 1,
             "asset_growth_yoy": -1.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "제이알글로벌리츠": {
             "pbr": 0.2,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": 3.7,
-            "pbr_judgment": "저평가"
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "이지스레지던스리츠": {
             "pbr": 0.4,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": 0.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "하이브": {
             "pbr": 2.48,
             "gpa": 5.0,
             "f_score": 2,
             "asset_growth_yoy": 7.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "대덕전자": {
             "pbr": 7.7,
             "gpa": 6.1,
             "f_score": 3,
             "asset_growth_yoy": 8.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "코람코라이프인프라리츠": {
             "pbr": 0.83,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": 3.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "미래에셋맵스리츠": {
             "pbr": 0.48,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": -0.8,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "마스턴프리미어리츠": {
             "pbr": 0.19,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": -3.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "SK아이이테크놀로지": {
             "pbr": 0.46,
             "gpa": -1.2,
             "f_score": 0,
             "asset_growth_yoy": 1.7,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "티와이홀딩스": {
             "pbr": 0.09,
             "gpa": 0.4,
             "f_score": 1,
             "asset_growth_yoy": -10.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "ESR켄달스퀘어리츠": {
             "pbr": 0.69,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": 7.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "한컴라이프케어": {
             "pbr": 0.38,
             "gpa": 0.3,
             "f_score": 1,
             "asset_growth_yoy": 4.7,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "LG에너지솔루션": {
             "pbr": 2.62,
             "gpa": 1.7,
             "f_score": 1,
             "asset_growth_yoy": 15.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "DL이앤씨": {
             "pbr": 0.45,
             "gpa": 2.6,
             "f_score": 3,
             "asset_growth_yoy": 0.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "디앤디플랫폼리츠": {
             "pbr": 0.48,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": 22.2,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "카카오페이": {
             "pbr": 2.76,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 33.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "바이오노트": {
             "pbr": 0.31,
             "gpa": 1.2,
             "f_score": 3,
             "asset_growth_yoy": -5.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "화승알앤에이": {
             "pbr": 0.31,
             "gpa": 7.2,
             "f_score": 3,
             "asset_growth_yoy": 5.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "케이카": {
             "pbr": 1.67,
             "gpa": 10.1,
             "f_score": 3,
             "asset_growth_yoy": 0.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "F&F": {
             "pbr": 1.52,
             "gpa": 13.0,
             "f_score": 3,
             "asset_growth_yoy": 25.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "LX홀딩스": {
             "pbr": 0.28,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 23.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "SK리츠": {
             "pbr": 0.82,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": 22.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "미래에셋글로벌리츠": {
             "pbr": 0.43,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": 1.3,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "NH올원리츠": {
             "pbr": 0.84,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": -1.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "SK스퀘어": {
             "pbr": 5.03,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 66.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "쏘카": {
             "pbr": 2.47,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": -0.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "신한서부티엔디리츠": {
             "pbr": 0.63,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": 0.4,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "코람코더원리츠": {
             "pbr": 2.05,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": -0.9,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "KB스타리츠": {
             "pbr": 0.78,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": 12.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "대한조선": {
             "pbr": 1.53,
             "gpa": 5.5,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "HD현대마린솔루션": {
             "pbr": 10.69,
             "gpa": 8.7,
             "f_score": 3,
             "asset_growth_yoy": 13.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "유니드비티플러스": {
             "pbr": 0.18,
             "gpa": 1.9,
             "f_score": 1,
             "asset_growth_yoy": -5.5,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "삼성FN리츠": {
             "pbr": 1.21,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": -1.7,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "에코프로머티": {
             "pbr": 1.79,
             "gpa": 1.3,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "한화리츠": {
             "pbr": 1.23,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": -2.5,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "한화갤러리아": {
             "pbr": 0.48,
             "gpa": 4.3,
             "f_score": 2,
             "asset_growth_yoy": 10.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "현대그린푸드": {
             "pbr": 0.78,
             "gpa": 11.7,
             "f_score": 3,
             "asset_growth_yoy": 11.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "두산로보틱스": {
             "pbr": 13.42,
             "gpa": 1.1,
             "f_score": 1,
             "asset_growth_yoy": -1.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "OCI": {
             "pbr": 0.68,
             "gpa": 3.4,
             "f_score": 2,
             "asset_growth_yoy": -3.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "이수스페셜티케미컬": {
             "pbr": 13.65,
             "gpa": 3.4,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "동국씨엠": {
             "pbr": 0.13,
             "gpa": 1.6,
             "f_score": 2,
             "asset_growth_yoy": 0.9,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "동국제강": {
             "pbr": 0.22,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": 29.2,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "조선내화": {
             "pbr": 0.67,
             "gpa": 4.0,
             "f_score": 3,
             "asset_growth_yoy": -8.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "시프트업": {
             "pbr": 2.0,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "STX그린로지스": {
             "pbr": 0.71,
             "gpa": -0.5,
             "f_score": 2,
             "asset_growth_yoy": -57.3,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "SK이터닉스": {
             "pbr": 6.72,
             "gpa": 0.8,
             "f_score": 1,
             "asset_growth_yoy": 55.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "더본코리아": {
             "pbr": 0.9,
             "gpa": 7.3,
             "f_score": 1,
             "asset_growth_yoy": -9.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "씨케이솔루션": {
             "pbr": 0.61,
             "gpa": -3.6,
             "f_score": 1,
             "asset_growth_yoy": -5.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "신한글로벌액티브리츠": {
             "pbr": 0.44,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": -34.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "달바글로벌": {
             "pbr": 10.68,
             "gpa": 44.1,
             "f_score": 3,
             "asset_growth_yoy": 77.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "엠앤씨솔루션": {
             "pbr": 1.21,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": -2.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "HS효성": {
             "pbr": 0.3,
             "gpa": 3.0,
             "f_score": 2,
             "asset_growth_yoy": -13.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한화비전": {
             "pbr": 2.8,
             "gpa": 10.7,
             "f_score": 2,
             "asset_growth_yoy": 34.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "GS피앤엘": {
             "pbr": 0.64,
             "gpa": 1.4,
             "f_score": 3,
             "asset_growth_yoy": 7.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "프레스티지바이오파마": {
             "pbr": 861.15,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 7.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "엘브이엠씨홀딩스": {
             "pbr": 657.09,
             "gpa": 4.8,
             "f_score": 3,
             "asset_growth_yoy": -0.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "딥커머스": {
             "pbr": 8.23,
             "gpa": 1.2,
             "f_score": 2,
             "asset_growth_yoy": 6.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "헝셩그룹": {
             "pbr": 7.11,
             "gpa": 0.6,
             "f_score": 2,
             "asset_growth_yoy": 4.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "로스웰": {
             "pbr": 54.8,
             "gpa": 1.8,
             "f_score": 1,
             "asset_growth_yoy": -16.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "GRT": {
             "pbr": 36.79,
             "gpa": 3.3,
             "f_score": 2,
             "asset_growth_yoy": 7.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "오가닉티코스메틱": {
             "pbr": 12.13,
             "gpa": 4.6,
             "f_score": 1,
             "asset_growth_yoy": 1.7,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "컬러레이": {
             "pbr": 18.82,
             "gpa": 0.9,
             "f_score": 2,
             "asset_growth_yoy": -5.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "윙입푸드": {
             "pbr": 13.54,
             "gpa": 4.2,
             "f_score": null,
             "asset_growth_yoy": 3.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "덕양에너젠": {
             "pbr": 1.92,
             "gpa": 1.9,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "삼천당제약": {
             "pbr": 11.39,
             "gpa": 5.6,
             "f_score": 2,
             "asset_growth_yoy": 16.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "중앙에너비스": {
             "pbr": 1.73,
             "gpa": 4.1,
             "f_score": 1,
             "asset_growth_yoy": -5.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "엔비알모션": {
             "pbr": 2.05,
             "gpa": 0.2,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "디비금융제14호스팩": {
             "pbr": 1.02,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "아크릴": {
             "pbr": 3.12,
             "gpa": -1.5,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "인벤테라": {
             "pbr": 1.98,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에스엔시스": {
             "pbr": 1.2,
             "gpa": 3.5,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "에임드바이오": {
             "pbr": 7.53,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "신라섬유": {
             "pbr": 1.4,
             "gpa": 1.4,
             "f_score": 3,
             "asset_growth_yoy": 0.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "보원케미칼": {
             "pbr": 0.75,
             "gpa": 3.5,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "제이피아이헬스케어": {
             "pbr": 0.63,
             "gpa": 5.2,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "액스비스": {
             "pbr": 1.68,
             "gpa": 3.4,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "채비": {
             "pbr": 4.73,
             "gpa": -0.2,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "삼진식품": {
             "pbr": 1.14,
             "gpa": 19.2,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "안국약품": {
             "pbr": 0.93,
             "gpa": 20.3,
             "f_score": 3,
             "asset_growth_yoy": 7.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "그린광학": {
             "pbr": 3.22,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "아로마티카": {
             "pbr": 1.51,
             "gpa": 18.7,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "페스카로": {
             "pbr": 1.16,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "세미티에스": {
             "pbr": 2.3,
             "gpa": 14.0,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "무림SP": {
             "pbr": 0.13,
             "gpa": 1.4,
             "f_score": 1,
             "asset_growth_yoy": 2.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "이화공영": {
             "pbr": 4.23,
             "gpa": 2.7,
             "f_score": 1,
             "asset_growth_yoy": -30.5,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "피에스텍": {
             "pbr": 0.62,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": 3.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "삼일기업공사": {
             "pbr": 0.56,
             "gpa": 2.6,
             "f_score": 3,
             "asset_growth_yoy": 6.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한탑": {
             "pbr": 0.31,
             "gpa": 1.9,
             "f_score": 2,
             "asset_growth_yoy": 1.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "신신제약": {
             "pbr": 0.86,
             "gpa": 8.2,
             "f_score": 3,
             "asset_growth_yoy": 7.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "선광": {
             "pbr": 0.29,
             "gpa": 2.0,
             "f_score": 3,
             "asset_growth_yoy": 10.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "대주산업": {
             "pbr": 0.53,
             "gpa": 4.3,
             "f_score": 3,
             "asset_growth_yoy": 28.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "하림지주": {
             "pbr": 0.17,
             "gpa": 3.4,
             "f_score": 3,
             "asset_growth_yoy": 6.2,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "KB제32호스팩": {
             "pbr": 1.01,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "에이스침대": {
             "pbr": 0.48,
             "gpa": 6.3,
             "f_score": 3,
             "asset_growth_yoy": 6.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "교보18호스팩": {
             "pbr": 1.06,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "엘에스스팩1호": {
             "pbr": 0.99,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "하나35호스팩": {
             "pbr": 1.04,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "삼성스팩10호": {
             "pbr": 1.02,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "한국가구": {
             "pbr": 0.39,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": 6.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "창해에탄올": {
             "pbr": 0.59,
             "gpa": 3.6,
             "f_score": 3,
             "asset_growth_yoy": 2.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "대륙제관": {
             "pbr": 0.39,
             "gpa": 3.5,
             "f_score": 3,
             "asset_growth_yoy": 6.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "동국산업": {
             "pbr": 0.28,
             "gpa": 1.1,
             "f_score": 1,
             "asset_growth_yoy": -8.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "동진쎄미켐": {
             "pbr": 2.07,
             "gpa": 4.8,
             "f_score": 3,
             "asset_growth_yoy": 7.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "엔에이치스팩32호": {
             "pbr": 1.07,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "푸드웰": {
             "pbr": 0.54,
             "gpa": 5.4,
             "f_score": 3,
             "asset_growth_yoy": 5.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "대원산업": {
             "pbr": 0.35,
             "gpa": 2.5,
             "f_score": 3,
             "asset_growth_yoy": 5.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한일사료": {
             "pbr": 0.61,
             "gpa": 5.4,
             "f_score": 2,
             "asset_growth_yoy": 0.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "매일홀딩스": {
             "pbr": 0.16,
             "gpa": 11.6,
             "f_score": 3,
             "asset_growth_yoy": 8.1,
-            "pbr_judgment": "저평가"
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "국영지앤엠": {
             "pbr": 0.32,
             "gpa": -1.3,
             "f_score": 2,
             "asset_growth_yoy": 1.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "피제이전자": {
             "pbr": 0.48,
             "gpa": 1.3,
             "f_score": 3,
             "asset_growth_yoy": 6.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "동구바이오제약": {
             "pbr": 0.72,
             "gpa": 10.2,
             "f_score": 2,
             "asset_growth_yoy": 33.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "서부T&D": {
             "pbr": 0.47,
             "gpa": 1.0,
             "f_score": 3,
             "asset_growth_yoy": 13.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "비엔케이제3호스팩": {
             "pbr": 1.02,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "보성파워텍": {
             "pbr": 2.96,
             "gpa": 6.1,
             "f_score": 3,
             "asset_growth_yoy": 29.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "모헨즈": {
             "pbr": 0.98,
             "gpa": 1.3,
             "f_score": 1,
             "asset_growth_yoy": -7.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "삼성스팩11호": {
             "pbr": 1.05,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "KB제33호스팩": {
             "pbr": 1.0,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "푸른저축은행": {
             "pbr": 0.48,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 10.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "진양제약": {
             "pbr": 0.34,
             "gpa": 7.9,
             "f_score": 3,
             "asset_growth_yoy": 18.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "네이처셀": {
             "pbr": 26.66,
             "gpa": 2.2,
             "f_score": 1,
             "asset_growth_yoy": 22.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "와이엠": {
             "pbr": 0.79,
             "gpa": 4.9,
             "f_score": 2,
             "asset_growth_yoy": -2.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "대원": {
             "pbr": 0.17,
             "gpa": 0.8,
             "f_score": 3,
             "asset_growth_yoy": 8.8,
-            "pbr_judgment": "저평가"
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "소노스퀘어": {
             "pbr": 0.47,
             "gpa": 10.9,
             "f_score": 1,
             "asset_growth_yoy": -49.1,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "한일화학": {
             "pbr": 0.27,
             "gpa": 2.0,
             "f_score": 2,
             "asset_growth_yoy": -8.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "엠엑스로보틱스": {
             "pbr": 1.05,
             "gpa": 1.5,
             "f_score": 3,
             "asset_growth_yoy": 2.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "원풍물산": {
             "pbr": 0.36,
             "gpa": 11.0,
             "f_score": 2,
             "asset_growth_yoy": -21.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "카나프테라퓨틱스": {
             "pbr": 3.41,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "원풍": {
             "pbr": 0.62,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": 5.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "부스타": {
             "pbr": 0.36,
             "gpa": 3.1,
             "f_score": 1,
             "asset_growth_yoy": -3.9,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "대동기어": {
             "pbr": 1.09,
             "gpa": 0.6,
             "f_score": 1,
             "asset_growth_yoy": 14.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "메리츠제1호스팩": {
             "pbr": 1.08,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "메쥬": {
             "pbr": 3.54,
             "gpa": 7.2,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "신영스팩11호": {
             "pbr": 1.02,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "삼아제약": {
             "pbr": 0.35,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": -3.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "미래에셋비전스팩8호": {
             "pbr": 1.0,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "포스코엠텍": {
             "pbr": 4.0,
             "gpa": 5.2,
             "f_score": 3,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "삼보산업": {
             "pbr": 0.44,
             "gpa": 2.8,
             "f_score": 1,
             "asset_growth_yoy": 10.3,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "삼성스팩12호": {
             "pbr": 1.03,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "미래에셋비전스팩9호": {
             "pbr": 1.04,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "이렘": {
             "pbr": 0.31,
             "gpa": -0.3,
             "f_score": 0,
             "asset_growth_yoy": -24.7,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "엠에스씨": {
             "pbr": 0.55,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": 7.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "미래에셋비전스팩10호": {
             "pbr": 1.03,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "교보19호스팩": {
             "pbr": 1.03,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "미래에셋비전스팩11호": {
             "pbr": 1.07,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "IBKS제25호스팩": {
             "pbr": 1.18,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "대한광통신": {
             "pbr": 15.66,
             "gpa": 1.1,
             "f_score": 0,
             "asset_growth_yoy": 21.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "하나36호스팩": {
             "pbr": 1.04,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "흥국": {
             "pbr": 0.53,
             "gpa": 5.2,
             "f_score": 3,
             "asset_growth_yoy": 12.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "아이티센엔텍": {
             "pbr": 0.55,
             "gpa": 6.5,
             "f_score": 2,
             "asset_growth_yoy": 8.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "오리콤": {
             "pbr": 0.45,
             "gpa": 9.4,
             "f_score": 2,
             "asset_growth_yoy": 11.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "유진스팩12호": {
             "pbr": 1.06,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "경동제약": {
             "pbr": 0.66,
             "gpa": 9.6,
             "f_score": 3,
             "asset_growth_yoy": 3.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "형지I&C": {
             "pbr": 0.31,
             "gpa": 13.5,
             "f_score": 0,
             "asset_growth_yoy": -7.8,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "유니크": {
             "pbr": 0.49,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": 16.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "서한": {
             "pbr": 0.15,
             "gpa": 1.2,
             "f_score": 1,
             "asset_growth_yoy": -7.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "세보엠이씨": {
             "pbr": 0.8,
             "gpa": 4.3,
             "f_score": 2,
             "asset_growth_yoy": 15.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "삼성스팩13호": {
             "pbr": 1.1,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "피스피스스튜디오": {
             "pbr": 0.71,
             "gpa": 9.2,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "삼미금속": {
             "pbr": 1.66,
             "gpa": 1.4,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "뉴인텍": {
             "pbr": 0.81,
             "gpa": 2.6,
             "f_score": 1,
             "asset_growth_yoy": -2.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "원일특강": {
             "pbr": 0.18,
             "gpa": 2.2,
             "f_score": 3,
             "asset_growth_yoy": 10.9,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "리드코프": {
             "pbr": 0.17,
             "gpa": 3.4,
             "f_score": 2,
             "asset_growth_yoy": 28.8,
-            "pbr_judgment": "저평가"
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "신일제약": {
             "pbr": 0.41,
             "gpa": 5.8,
             "f_score": 3,
             "asset_growth_yoy": 3.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "모베이스전자": {
             "pbr": 0.66,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": 7.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "신한제18호스팩": {
             "pbr": 14.49,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "하이록코리아": {
             "pbr": 0.8,
             "gpa": 4.4,
             "f_score": 3,
             "asset_growth_yoy": 6.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "신한제17호스팩": {
             "pbr": 1.02,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "엔에이치스팩33호": {
             "pbr": 1.09,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "동원개발": {
             "pbr": 0.2,
             "gpa": 0.7,
             "f_score": 2,
             "asset_growth_yoy": 7.6,
-            "pbr_judgment": "저평가"
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "키움히어로제2호스팩": {
             "pbr": 24.52,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "교보20호스팩": {
             "pbr": 1.03,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "아진산업": {
             "pbr": 0.27,
             "gpa": 2.4,
             "f_score": 3,
             "asset_growth_yoy": 19.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "청보": {
             "pbr": 0.45,
             "gpa": 1.4,
             "f_score": 1,
             "asset_growth_yoy": 22.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "스페코": {
             "pbr": 0.56,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": -16.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "아가방컴퍼니": {
             "pbr": 0.71,
             "gpa": 12.4,
             "f_score": 3,
             "asset_growth_yoy": 1.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "메디앙스": {
             "pbr": 0.3,
             "gpa": 5.0,
             "f_score": 2,
             "asset_growth_yoy": 4.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "원익큐브": {
             "pbr": 0.37,
             "gpa": 4.8,
             "f_score": 2,
             "asset_growth_yoy": 0.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "부방": {
             "pbr": 0.33,
             "gpa": 7.8,
             "f_score": 2,
             "asset_growth_yoy": -8.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "고려제약": {
             "pbr": 0.45,
             "gpa": 6.4,
             "f_score": 3,
             "asset_growth_yoy": 6.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "성광벤드": {
             "pbr": 1.28,
             "gpa": 3.8,
             "f_score": 3,
             "asset_growth_yoy": 5.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "오리엔탈정공": {
             "pbr": 1.54,
             "gpa": 4.5,
             "f_score": 3,
             "asset_growth_yoy": 8.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "삼익제약": {
             "pbr": 0.61,
             "gpa": 12.7,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "삼륭물산": {
             "pbr": 1.16,
             "gpa": 2.6,
             "f_score": 3,
             "asset_growth_yoy": -4.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "코콤": {
             "pbr": 0.38,
             "gpa": 2.9,
             "f_score": 1,
             "asset_growth_yoy": -0.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "성우하이텍": {
             "pbr": 0.22,
             "gpa": 2.4,
             "f_score": 3,
             "asset_growth_yoy": 9.9,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "리더스코스메틱": {
             "pbr": 0.34,
             "gpa": 2.2,
             "f_score": 1,
             "asset_growth_yoy": 37.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "SGC E&C": {
             "pbr": 0.17,
             "gpa": 2.2,
             "f_score": 2,
             "asset_growth_yoy": 9.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "큐캐피탈": {
             "pbr": 0.25,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 0.6,
-            "pbr_judgment": "저평가"
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "디모아": {
             "pbr": 0.28,
             "gpa": 5.4,
             "f_score": 2,
             "asset_growth_yoy": 39.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "현대사료": {
             "pbr": 2.67,
             "gpa": 3.8,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "카스": {
             "pbr": 0.38,
             "gpa": 6.7,
             "f_score": 2,
             "asset_growth_yoy": -4.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "신원종합개발": {
             "pbr": 0.24,
             "gpa": 3.3,
             "f_score": 2,
             "asset_growth_yoy": 4.3,
-            "pbr_judgment": "저평가"
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "인터엠": {
             "pbr": 0.5,
             "gpa": 5.5,
             "f_score": null,
             "asset_growth_yoy": 3.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "삼현철강": {
             "pbr": 0.37,
             "gpa": 1.9,
             "f_score": 3,
             "asset_growth_yoy": 1.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "세명전기": {
             "pbr": 1.19,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": 19.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "대림제지": {
             "pbr": 0.28,
             "gpa": 1.5,
             "f_score": 3,
             "asset_growth_yoy": 2.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한국알콜": {
             "pbr": 0.5,
             "gpa": 2.7,
             "f_score": 3,
             "asset_growth_yoy": 6.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "유니슨": {
             "pbr": 2.29,
             "gpa": -0.0,
             "f_score": 0,
             "asset_growth_yoy": 4.0,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "진로발효": {
             "pbr": 1.23,
             "gpa": 3.9,
             "f_score": 3,
             "asset_growth_yoy": 1.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "브이티": {
             "pbr": 1.55,
             "gpa": 19.6,
             "f_score": 3,
             "asset_growth_yoy": -0.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "삼목에스폼": {
             "pbr": 0.32,
             "gpa": 0.6,
             "f_score": 2,
             "asset_growth_yoy": -1.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "우진비앤지": {
             "pbr": 0.28,
             "gpa": 4.4,
             "f_score": 1,
             "asset_growth_yoy": -2.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "서울제약": {
             "pbr": 0.64,
             "gpa": 10.2,
             "f_score": 2,
             "asset_growth_yoy": -0.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "졸스": {
             "pbr": 0.54,
             "gpa": -3.6,
             "f_score": 0,
             "asset_growth_yoy": -18.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "베뉴지": {
             "pbr": 0.43,
             "gpa": 1.0,
             "f_score": 2,
             "asset_growth_yoy": 22.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "와이지-원": {
             "pbr": 1.91,
             "gpa": 6.1,
             "f_score": 3,
             "asset_growth_yoy": 13.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "일지테크": {
             "pbr": 0.41,
             "gpa": 6.4,
             "f_score": 3,
             "asset_growth_yoy": 7.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "SBI인베스트먼트": {
             "pbr": 0.51,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 9.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "플루토스": {
             "pbr": 0.6,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": 47.7,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "글로본": {
             "pbr": 2.7,
             "gpa": 1.2,
             "f_score": 1,
             "asset_growth_yoy": 62.7,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "서연탑메탈": {
             "pbr": 0.36,
             "gpa": 2.4,
             "f_score": 3,
             "asset_growth_yoy": 8.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "에너토크": {
             "pbr": 1.3,
             "gpa": 3.2,
             "f_score": 3,
             "asset_growth_yoy": 2.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "대신정보통신": {
             "pbr": 0.88,
             "gpa": -5.5,
             "f_score": 1,
             "asset_growth_yoy": 29.8,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "대동금속": {
             "pbr": 0.44,
             "gpa": 1.0,
             "f_score": 1,
             "asset_growth_yoy": 5.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "시공테크": {
             "pbr": 0.42,
             "gpa": 0.5,
             "f_score": 1,
             "asset_growth_yoy": 11.7,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "대호특수강": {
             "pbr": 0.52,
             "gpa": 1.7,
             "f_score": 2,
             "asset_growth_yoy": -1.7,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "에이티넘인베스트": {
             "pbr": 0.53,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 2.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "KCC건설": {
             "pbr": 0.2,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": -9.4,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "한국큐빅": {
             "pbr": 0.35,
             "gpa": 3.8,
             "f_score": 2,
             "asset_growth_yoy": -5.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "메이슨캐피탈": {
             "pbr": 0.5,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -14.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "티케이지애강": {
             "pbr": 0.34,
             "gpa": 0.8,
             "f_score": 1,
             "asset_growth_yoy": -13.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "태광": {
             "pbr": 0.84,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": 14.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "유진기업": {
             "pbr": 0.24,
             "gpa": 1.7,
             "f_score": 2,
             "asset_growth_yoy": 32.3,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "제이스코홀딩스": {
             "pbr": 0.91,
             "gpa": 0.4,
             "f_score": 0,
             "asset_growth_yoy": -11.9,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "삼보판지": {
             "pbr": 0.2,
             "gpa": 2.6,
             "f_score": 3,
             "asset_growth_yoy": 4.9,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "한국캐피탈": {
             "pbr": 0.3,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 15.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "플레이위드": {
             "pbr": 1.19,
             "gpa": -6.0,
             "f_score": 2,
             "asset_growth_yoy": -22.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "동일스틸럭스": {
             "pbr": 0.9,
             "gpa": 0.5,
             "f_score": 1,
             "asset_growth_yoy": 4.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "풍국주정": {
             "pbr": 0.47,
             "gpa": 3.6,
             "f_score": 3,
             "asset_growth_yoy": 4.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "대한약품": {
             "pbr": 0.51,
             "gpa": 4.5,
             "f_score": 3,
             "asset_growth_yoy": 6.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "흥구석유": {
             "pbr": 2.24,
             "gpa": 2.3,
             "f_score": 2,
             "asset_growth_yoy": 4.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "KB오토시스": {
             "pbr": 0.3,
             "gpa": 2.0,
             "f_score": 3,
             "asset_growth_yoy": 11.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한일단조": {
             "pbr": 0.47,
             "gpa": 2.2,
             "f_score": 3,
             "asset_growth_yoy": 0.4,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "유성티엔에스": {
             "pbr": 0.28,
             "gpa": 0.3,
             "f_score": 2,
             "asset_growth_yoy": 5.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "세원물산": {
             "pbr": 0.18,
             "gpa": 0.6,
             "f_score": 3,
             "asset_growth_yoy": 4.2,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "KBI메탈": {
-            "pbr": 1.36,
+            "pbr": 1.41,
             "gpa": 5.5,
             "f_score": 2,
             "asset_growth_yoy": 37.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "HLB이노베이션": {
             "pbr": 1.62,
             "gpa": 0.5,
             "f_score": 1,
             "asset_growth_yoy": -6.7,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "케이피에프": {
             "pbr": 0.23,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": 4.1,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "경창산업": {
             "pbr": 0.45,
             "gpa": 4.0,
             "f_score": 3,
             "asset_growth_yoy": -1.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "PN풍년": {
             "pbr": 0.4,
             "gpa": 7.2,
             "f_score": 3,
             "asset_growth_yoy": 5.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "삼천리자전거": {
             "pbr": 0.23,
             "gpa": 8.2,
             "f_score": 2,
             "asset_growth_yoy": 6.1,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "시노펙스": {
             "pbr": 2.09,
             "gpa": 4.5,
             "f_score": 3,
             "asset_growth_yoy": 12.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "DH오토웨어": {
             "pbr": 0.54,
             "gpa": 2.1,
             "f_score": 2,
             "asset_growth_yoy": 22.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "한국선재": {
             "pbr": 0.32,
             "gpa": 3.5,
             "f_score": 2,
             "asset_growth_yoy": 25.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "한국정보통신": {
             "pbr": 0.94,
             "gpa": 2.7,
             "f_score": 2,
             "asset_growth_yoy": 3.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "신라에스지": {
             "pbr": 0.63,
             "gpa": 3.0,
             "f_score": 2,
             "asset_growth_yoy": 0.7,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "케이씨피드": {
             "pbr": 0.54,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": 9.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "동화기업": {
             "pbr": 0.33,
             "gpa": 1.3,
             "f_score": 2,
             "asset_growth_yoy": -3.3,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "동신건설": {
             "pbr": 1.01,
             "gpa": 0.6,
             "f_score": 3,
             "asset_growth_yoy": -0.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "아난티": {
             "pbr": 0.5,
             "gpa": 0.7,
             "f_score": 1,
             "asset_growth_yoy": -3.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "제이에스티나": {
             "pbr": 0.73,
             "gpa": 20.5,
             "f_score": 1,
             "asset_growth_yoy": 14.2,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "특수건설": {
             "pbr": 0.75,
             "gpa": 5.7,
             "f_score": 2,
             "asset_growth_yoy": -0.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "광진실업": {
             "pbr": 2.41,
             "gpa": 1.3,
             "f_score": 1,
             "asset_growth_yoy": -4.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "서울전자통신": {
             "pbr": 2.92,
             "gpa": 2.7,
             "f_score": 1,
             "asset_growth_yoy": -30.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "코리아나": {
             "pbr": 0.65,
             "gpa": 5.9,
             "f_score": 3,
             "asset_growth_yoy": -7.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "아주IB투자": {
             "pbr": 1.68,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -1.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "상보": {
             "pbr": 0.42,
             "gpa": 0.3,
             "f_score": 1,
             "asset_growth_yoy": -11.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "팜스토리": {
             "pbr": 0.36,
             "gpa": 4.2,
             "f_score": 2,
             "asset_growth_yoy": -2.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "대성창투": {
             "pbr": 0.54,
             "gpa": -0.3,
             "f_score": 3,
             "asset_growth_yoy": -0.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "휴맥스홀딩스": {
             "pbr": 0.12,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -20.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "HLB": {
             "pbr": 9.36,
             "gpa": 0.8,
             "f_score": 1,
             "asset_growth_yoy": 10.9,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "광무": {
             "pbr": 0.38,
             "gpa": 0.1,
             "f_score": 2,
             "asset_growth_yoy": 5.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "드래곤플라이": {
             "pbr": 3.0,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": -40.1,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "한글과컴퓨터": {
             "pbr": 0.83,
             "gpa": 6.6,
             "f_score": 2,
             "asset_growth_yoy": 6.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "원익홀딩스": {
             "pbr": 1.1,
             "gpa": 2.1,
             "f_score": 3,
             "asset_growth_yoy": 6.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "양지사": {
             "pbr": 0.41,
             "gpa": -0.8,
             "f_score": 2,
             "asset_growth_yoy": 4.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "아이즈비전": {
             "pbr": 0.14,
             "gpa": 3.5,
             "f_score": 2,
             "asset_growth_yoy": 23.8,
-            "pbr_judgment": "저평가"
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "에스에이엠티": {
             "pbr": 1.55,
             "gpa": 15.0,
             "f_score": 2,
             "asset_growth_yoy": 130.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "오스템": {
             "pbr": 0.4,
             "gpa": 6.1,
             "f_score": 3,
             "asset_growth_yoy": 25.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "디에이치엑스컴퍼니": {
             "pbr": 1.02,
             "gpa": 1.1,
             "f_score": 0,
             "asset_growth_yoy": -22.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "피에스케이홀딩스": {
             "pbr": 6.6,
             "gpa": 3.1,
             "f_score": 2,
             "asset_growth_yoy": 16.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "아즈텍WB": {
             "pbr": 0.21,
             "gpa": 0.7,
             "f_score": 2,
             "asset_growth_yoy": 0.8,
-            "pbr_judgment": "저평가"
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "다우데이타": {
             "pbr": 0.09,
             "gpa": 1.0,
             "f_score": 3,
             "asset_growth_yoy": 54.1,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "삼일": {
             "pbr": 0.3,
             "gpa": 2.0,
             "f_score": 2,
             "asset_growth_yoy": -2.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "한국파마": {
             "pbr": 1.23,
             "gpa": 7.0,
             "f_score": 3,
             "asset_growth_yoy": 11.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "케이엠더블유": {
             "pbr": 4.98,
             "gpa": 1.5,
             "f_score": 2,
             "asset_growth_yoy": -5.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "TJ미디어": {
             "pbr": 0.86,
             "gpa": 5.2,
             "f_score": 2,
             "asset_growth_yoy": 3.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "피델릭스": {
             "pbr": 3.57,
             "gpa": 9.2,
             "f_score": 3,
             "asset_growth_yoy": 29.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "GC메디아이": {
             "pbr": 0.96,
             "gpa": 11.2,
             "f_score": 3,
             "asset_growth_yoy": 43.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "소프트센": {
             "pbr": 0.27,
             "gpa": 1.1,
             "f_score": 0,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "삼진": {
             "pbr": 0.23,
             "gpa": 4.2,
             "f_score": 2,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "엠젠솔루션": {
             "pbr": 0.89,
             "gpa": 2.0,
             "f_score": 0,
             "asset_growth_yoy": -16.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "판타지오": {
             "pbr": 0.38,
             "gpa": 0.9,
             "f_score": 1,
             "asset_growth_yoy": -1.3,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "우리기술": {
             "pbr": 11.36,
             "gpa": 0.5,
             "f_score": 3,
             "asset_growth_yoy": 49.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "비트컴퓨터": {
             "pbr": 0.91,
             "gpa": 4.7,
             "f_score": 3,
             "asset_growth_yoy": 7.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "더라미": {
             "pbr": 0.52,
             "gpa": 3.0,
             "f_score": 1,
             "asset_growth_yoy": -10.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "원익": {
             "pbr": 0.37,
             "gpa": 4.5,
             "f_score": 2,
             "asset_growth_yoy": 6.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "동일기연": {
             "pbr": 0.54,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 1.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "제이엠아이": {
             "pbr": 0.42,
             "gpa": 3.5,
             "f_score": 3,
             "asset_growth_yoy": 22.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "제룡전기": {
             "pbr": 3.27,
             "gpa": 5.5,
             "f_score": 3,
             "asset_growth_yoy": 10.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "디지틀조선": {
             "pbr": 0.86,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 3.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "엠케이전자": {
             "pbr": 0.43,
             "gpa": 0.9,
             "f_score": 2,
             "asset_growth_yoy": 14.5,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "시그네틱스": {
             "pbr": 0.77,
             "gpa": -0.8,
             "f_score": 1,
             "asset_growth_yoy": 14.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "모아텍": {
             "pbr": 0.35,
             "gpa": -0.1,
             "f_score": 1,
             "asset_growth_yoy": -2.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "인성정보": {
             "pbr": 0.61,
             "gpa": 3.4,
             "f_score": 1,
             "asset_growth_yoy": 3.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "로젠": {
             "pbr": 0.22,
             "gpa": 1.6,
             "f_score": 3,
             "asset_growth_yoy": 8.6,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "엠투엔": {
             "pbr": 0.36,
             "gpa": 1.3,
             "f_score": 3,
             "asset_growth_yoy": 6.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "제이씨현시스템": {
             "pbr": 0.43,
             "gpa": 4.6,
             "f_score": 2,
             "asset_growth_yoy": 2.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "좋은사람들": {
             "pbr": 0.71,
             "gpa": 8.0,
             "f_score": 1,
             "asset_growth_yoy": 12.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "동성화인텍": {
             "pbr": 1.81,
             "gpa": 6.5,
             "f_score": 2,
             "asset_growth_yoy": 2.4,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "파라텍": {
             "pbr": 0.54,
             "gpa": -1.2,
             "f_score": 0,
             "asset_growth_yoy": -16.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "블루콤": {
             "pbr": 0.4,
             "gpa": 0.7,
             "f_score": 2,
             "asset_growth_yoy": -2.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "네패스": {
             "pbr": 1.99,
             "gpa": 4.4,
             "f_score": 3,
             "asset_growth_yoy": 0.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "피노": {
             "pbr": 4.72,
             "gpa": 5.6,
             "f_score": 2,
             "asset_growth_yoy": 39.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "티비씨": {
             "pbr": 0.24,
             "gpa": 0.6,
             "f_score": 3,
             "asset_growth_yoy": 0.1,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "해성산업": {
             "pbr": 0.16,
             "gpa": 3.1,
             "f_score": 1,
             "asset_growth_yoy": 2.1,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "조아제약": {
             "pbr": 0.82,
             "gpa": 8.2,
             "f_score": 1,
             "asset_growth_yoy": -6.5,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "한국기업평가": {
             "pbr": 4.13,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 7.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "그래디언트": {
             "pbr": 0.15,
             "gpa": 2.4,
             "f_score": 3,
             "asset_growth_yoy": 2.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "프럼파스트": {
-            "pbr": 0.76,
+            "pbr": 0.72,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": -7.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "골드앤에스": {
             "pbr": 0.59,
             "gpa": 21.3,
             "f_score": 3,
             "asset_growth_yoy": 58.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "기산텔레콤": {
             "pbr": 0.46,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": 10.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "KG이니시스": {
             "pbr": 0.35,
             "gpa": 4.0,
             "f_score": 2,
             "asset_growth_yoy": 5.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "솔본": {
             "pbr": 0.39,
             "gpa": 4.9,
             "f_score": 3,
             "asset_growth_yoy": 13.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "바른손이앤에이": {
             "pbr": 0.22,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": -7.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "CJ ENM": {
             "pbr": 0.19,
             "gpa": 4.6,
             "f_score": 2,
             "asset_growth_yoy": -5.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "이지홀딩스": {
             "pbr": 0.25,
             "gpa": 4.7,
             "f_score": 3,
             "asset_growth_yoy": 5.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "서희건설": {
             "pbr": 0.42,
             "gpa": 2.3,
             "f_score": 2,
             "asset_growth_yoy": 7.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "JYP Ent.": {
             "pbr": 2.7,
             "gpa": 8.3,
             "f_score": 3,
             "asset_growth_yoy": 17.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "예림당": {
             "pbr": 0.24,
             "gpa": 0.6,
             "f_score": 1,
             "asset_growth_yoy": -19.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "아비코전자": {
             "pbr": 0.76,
             "gpa": 3.3,
             "f_score": 2,
             "asset_growth_yoy": 7.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "케이티알파": {
             "pbr": 0.72,
             "gpa": 3.9,
             "f_score": 2,
             "asset_growth_yoy": 4.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "위지트": {
             "pbr": 0.14,
             "gpa": 3.1,
             "f_score": 1,
             "asset_growth_yoy": 20.4,
-            "pbr_judgment": "저평가"
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "서울평가정보": {
             "pbr": 1.79,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 11.7,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "에이치엠넥스": {
             "pbr": 1.36,
             "gpa": 1.4,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "금화피에스시": {
             "pbr": 0.51,
             "gpa": 1.6,
             "f_score": 3,
             "asset_growth_yoy": 2.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "유니셈": {
             "pbr": 1.13,
             "gpa": 3.2,
             "f_score": 2,
             "asset_growth_yoy": 9.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "오상헬스케어": {
             "pbr": 0.31,
             "gpa": 2.5,
             "f_score": 1,
             "asset_growth_yoy": 3.2,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "대성미생물": {
             "pbr": 0.71,
             "gpa": 1.7,
             "f_score": null,
             "asset_growth_yoy": -1.3,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "SFA반도체": {
             "pbr": 2.06,
             "gpa": -0.3,
             "f_score": 3,
             "asset_growth_yoy": -7.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "KZ정밀": {
             "pbr": 0.29,
             "gpa": 0.7,
             "f_score": 3,
             "asset_growth_yoy": 54.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "감성코퍼레이션": {
             "pbr": 2.5,
             "gpa": 20.6,
             "f_score": 3,
             "asset_growth_yoy": 18.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "세종텔레콤": {
             "pbr": 0.44,
             "gpa": 10.4,
             "f_score": 1,
             "asset_growth_yoy": -22.9,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "HRS": {
             "pbr": 0.6,
             "gpa": 3.8,
             "f_score": 2,
             "asset_growth_yoy": 13.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "삼양케이씨아이": {
             "pbr": 0.45,
             "gpa": 6.2,
             "f_score": 3,
             "asset_growth_yoy": -0.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "코맥스": {
             "pbr": 3.81,
             "gpa": 7.0,
             "f_score": 1,
             "asset_growth_yoy": -1.1,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "심텍홀딩스": {
             "pbr": 0.58,
             "gpa": 2.4,
             "f_score": 2,
             "asset_growth_yoy": 18.5,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "나이스정보통신": {
             "pbr": 0.6,
             "gpa": 3.1,
             "f_score": 2,
             "asset_growth_yoy": 10.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "에프에스티": {
             "pbr": 1.89,
             "gpa": 4.2,
             "f_score": 1,
             "asset_growth_yoy": 8.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "솔브레인홀딩스": {
             "pbr": 0.34,
             "gpa": 1.2,
             "f_score": 2,
             "asset_growth_yoy": 32.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "진성티이씨": {
             "pbr": 1.0,
             "gpa": 5.0,
             "f_score": 3,
             "asset_growth_yoy": 13.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "주성엔지니어링": {
             "pbr": 16.59,
             "gpa": 3.3,
             "f_score": 1,
             "asset_growth_yoy": -8.2,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "파워넷": {
             "pbr": 0.3,
             "gpa": 3.3,
             "f_score": 2,
             "asset_growth_yoy": 20.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "파세코": {
             "pbr": 2.01,
             "gpa": 0.3,
             "f_score": 1,
             "asset_growth_yoy": -5.2,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "한국팩키지": {
             "pbr": 0.37,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": 0.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "인지디스플레": {
             "pbr": 0.19,
             "gpa": 1.9,
             "f_score": 2,
             "asset_growth_yoy": -3.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "성도이엔지": {
             "pbr": 0.47,
             "gpa": 2.1,
             "f_score": 3,
             "asset_growth_yoy": 4.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "EG": {
             "pbr": 1.24,
             "gpa": 1.8,
             "f_score": 1,
             "asset_growth_yoy": 2.2,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "우리엔터프라이즈": {
             "pbr": 0.06,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": 3.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "희림": {
             "pbr": 0.61,
             "gpa": 4.0,
             "f_score": 2,
             "asset_growth_yoy": -0.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "삼지전자": {
             "pbr": 0.61,
             "gpa": 13.0,
             "f_score": 2,
             "asset_growth_yoy": 95.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "쎄니트": {
             "pbr": 0.85,
             "gpa": 2.0,
             "f_score": 1,
             "asset_growth_yoy": 8.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "엘컴텍": {
             "pbr": 0.66,
             "gpa": 3.0,
             "f_score": 2,
             "asset_growth_yoy": 7.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "제일테크노스": {
             "pbr": 0.35,
             "gpa": 3.0,
             "f_score": 2,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "루멘스": {
             "pbr": 0.31,
             "gpa": 3.7,
             "f_score": 2,
             "asset_growth_yoy": -14.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "서린바이오": {
             "pbr": 0.49,
             "gpa": 3.7,
             "f_score": 2,
             "asset_growth_yoy": 17.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "에코플라스틱": {
             "pbr": 0.22,
             "gpa": 1.7,
             "f_score": 3,
             "asset_growth_yoy": 14.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "마크로젠": {
             "pbr": 0.75,
             "gpa": 4.5,
             "f_score": 2,
             "asset_growth_yoy": 10.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "레드캡투어": {
             "pbr": 0.84,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 8.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "바이오스마트": {
             "pbr": 0.36,
             "gpa": 7.7,
             "f_score": 2,
             "asset_growth_yoy": 19.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "삼표시멘트": {
             "pbr": 1.11,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": 2.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "케이바이오랩스": {
             "pbr": 0.19,
             "gpa": 1.7,
             "f_score": 1,
             "asset_growth_yoy": -1.0,
-            "pbr_judgment": "저평가"
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "상상인": {
             "pbr": 0.24,
             "gpa": 0.7,
             "f_score": 1,
             "asset_growth_yoy": -4.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "위즈코프": {
             "pbr": 0.3,
             "gpa": 3.8,
             "f_score": 3,
             "asset_growth_yoy": 7.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "에스넷": {
             "pbr": 0.58,
             "gpa": 4.5,
             "f_score": 1,
             "asset_growth_yoy": -6.2,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "에코심플렉스": {
             "pbr": 0.41,
             "gpa": 0.2,
             "f_score": 2,
             "asset_growth_yoy": -11.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "아이에이": {
             "pbr": 0.55,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": -10.1,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "파인디지털": {
             "pbr": 0.31,
             "gpa": 4.6,
             "f_score": 1,
             "asset_growth_yoy": -0.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "현대에이치티": {
             "pbr": 0.66,
             "gpa": 4.2,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "이건홀딩스": {
             "pbr": 0.16,
             "gpa": 2.3,
             "f_score": 1,
             "asset_growth_yoy": -4.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "이오테크닉스": {
             "pbr": 6.71,
             "gpa": 5.6,
             "f_score": 3,
             "asset_growth_yoy": 17.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "오스코텍": {
             "pbr": 6.4,
             "gpa": 1.4,
             "f_score": 2,
             "asset_growth_yoy": 36.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "경남스틸": {
             "pbr": 0.48,
             "gpa": 2.7,
             "f_score": 2,
             "asset_growth_yoy": -4.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "인포뱅크": {
             "pbr": 0.46,
             "gpa": 3.2,
             "f_score": 2,
             "asset_growth_yoy": -2.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "세중": {
             "pbr": 0.19,
             "gpa": 2.4,
             "f_score": 3,
             "asset_growth_yoy": 7.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "한국경제TV": {
             "pbr": 0.72,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 0.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "케이엘넷": {
             "pbr": 0.9,
             "gpa": 5.0,
             "f_score": 3,
             "asset_growth_yoy": 12.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "에스티아이": {
             "pbr": 1.43,
             "gpa": 3.6,
             "f_score": 2,
             "asset_growth_yoy": 4.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "다산네트웍스": {
             "pbr": 0.28,
             "gpa": 5.9,
             "f_score": 3,
             "asset_growth_yoy": 7.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "화성밸브": {
             "pbr": 0.59,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": -1.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "한국정보공학": {
             "pbr": 0.47,
             "gpa": 4.1,
             "f_score": 2,
             "asset_growth_yoy": 37.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "오로라": {
             "pbr": 1.14,
             "gpa": 8.7,
             "f_score": 2,
             "asset_growth_yoy": 6.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "디오": {
             "pbr": 0.89,
             "gpa": 8.3,
             "f_score": 3,
             "asset_growth_yoy": -4.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "나노엔텍": {
             "pbr": 1.54,
             "gpa": 6.8,
             "f_score": 3,
             "asset_growth_yoy": 26.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "폴라리스AI": {
             "pbr": 0.65,
             "gpa": 3.9,
             "f_score": 2,
             "asset_growth_yoy": -6.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "누리플렉스": {
             "pbr": 1.0,
             "gpa": 2.4,
             "f_score": 2,
             "asset_growth_yoy": -1.7,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "YTN": {
             "pbr": 0.43,
             "gpa": -1.5,
             "f_score": 1,
             "asset_growth_yoy": -1.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "크레오에스지": {
             "pbr": 3.47,
             "gpa": 0.8,
             "f_score": 0,
             "asset_growth_yoy": -0.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "정상제이엘에스": {
             "pbr": 1.15,
             "gpa": 5.8,
             "f_score": 3,
             "asset_growth_yoy": -1.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "SG&G": {
             "pbr": 0.13,
             "gpa": 0.4,
             "f_score": 3,
             "asset_growth_yoy": 12.6,
-            "pbr_judgment": "저평가"
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "아이씨디": {
             "pbr": 0.77,
             "gpa": 0.7,
             "f_score": 2,
             "asset_growth_yoy": -9.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "폴라리스오피스": {
             "pbr": 0.27,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 24.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "우리기술투자": {
             "pbr": 0.49,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 17.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "현대에버다임": {
             "pbr": 0.59,
             "gpa": 3.8,
             "f_score": 2,
             "asset_growth_yoy": 6.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "한국전자인증": {
             "pbr": 1.01,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 10.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "에스엠": {
             "pbr": 1.2,
             "gpa": 5.0,
             "f_score": 3,
             "asset_growth_yoy": 12.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "이엘씨": {
             "pbr": 0.63,
             "gpa": 2.5,
             "f_score": 3,
             "asset_growth_yoy": -2.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "플래스크": {
             "pbr": 2.8,
             "gpa": 1.2,
             "f_score": 2,
             "asset_growth_yoy": -0.8,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "인바디": {
             "pbr": 2.26,
             "gpa": 13.5,
             "f_score": 3,
             "asset_growth_yoy": 23.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "폴라리스AI파마": {
             "pbr": 0.56,
             "gpa": 1.5,
             "f_score": 3,
             "asset_growth_yoy": 46.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "메디아나": {
             "pbr": 1.3,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": 6.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "SY동아": {
             "pbr": 0.37,
             "gpa": 4.0,
             "f_score": 2,
             "asset_growth_yoy": -2.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "코미팜": {
             "pbr": 7.74,
             "gpa": 3.4,
             "f_score": 2,
             "asset_growth_yoy": 9.5,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "카페24": {
             "pbr": 1.54,
             "gpa": 1.5,
             "f_score": 3,
             "asset_growth_yoy": 16.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "케이피엠테크": {
             "pbr": 0.2,
             "gpa": 7.1,
             "f_score": 0,
             "asset_growth_yoy": -26.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "에스씨디": {
             "pbr": 0.44,
             "gpa": 2.3,
             "f_score": 3,
             "asset_growth_yoy": 0.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "비츠로테크": {
             "pbr": 0.45,
             "gpa": 4.2,
             "f_score": 3,
             "asset_growth_yoy": 12.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "네오위즈홀딩스": {
             "pbr": 0.26,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 6.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "링네트": {
             "pbr": 0.77,
             "gpa": 3.9,
             "f_score": 3,
             "asset_growth_yoy": 16.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "라온시큐어": {
             "pbr": 1.64,
             "gpa": 7.8,
             "f_score": 2,
             "asset_growth_yoy": 2.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "한스바이오메드": {
             "pbr": 4.8,
             "gpa": 14.6,
             "f_score": null,
             "asset_growth_yoy": 15.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "새로닉스": {
             "pbr": 1.18,
             "gpa": 1.4,
             "f_score": 2,
             "asset_growth_yoy": -4.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "상지건설": {
             "pbr": 0.44,
             "gpa": 0.2,
             "f_score": 0,
             "asset_growth_yoy": 13.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "더테크놀로지": {
             "pbr": 0.29,
             "gpa": 3.0,
             "f_score": 3,
             "asset_growth_yoy": -41.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "알파AI": {
             "pbr": 0.37,
             "gpa": 1.8,
             "f_score": 0,
             "asset_growth_yoy": 32.2,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "바텍": {
             "pbr": 0.51,
             "gpa": 7.5,
             "f_score": 3,
             "asset_growth_yoy": 7.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "파루": {
             "pbr": 1.0,
             "gpa": 4.0,
             "f_score": 2,
             "asset_growth_yoy": -1.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "티에스넥스젠": {
             "pbr": 1.52,
             "gpa": 1.7,
             "f_score": 1,
             "asset_growth_yoy": -68.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "성호전자": {
             "pbr": 2.46,
             "gpa": 1.0,
             "f_score": 2,
             "asset_growth_yoy": 273.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "에쎈테크": {
             "pbr": 1.44,
             "gpa": 2.7,
             "f_score": 2,
             "asset_growth_yoy": -3.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "디지아이": {
             "pbr": 0.47,
             "gpa": 4.3,
             "f_score": 2,
             "asset_growth_yoy": -2.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "피에이치에이": {
             "pbr": 0.27,
             "gpa": 3.2,
             "f_score": 3,
             "asset_growth_yoy": 7.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "웰킵스하이텍": {
             "pbr": 0.45,
             "gpa": 0.4,
             "f_score": 1,
             "asset_growth_yoy": -5.7,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "KT지니뮤직": {
             "pbr": 0.38,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": -11.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "국순당": {
             "pbr": 0.28,
             "gpa": 2.8,
             "f_score": 3,
             "asset_growth_yoy": 1.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "코스리거글로벌": {
             "pbr": 1.53,
             "gpa": 6.5,
             "f_score": 2,
             "asset_growth_yoy": 94.5,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "자연과환경": {
             "pbr": 0.4,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": -7.5,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "KD": {
             "pbr": 0.27,
             "gpa": 4.3,
             "f_score": 2,
             "asset_growth_yoy": -11.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "위닉스": {
             "pbr": 0.83,
             "gpa": 0.4,
             "f_score": 1,
             "asset_growth_yoy": 28.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "빌리언스": {
             "pbr": 1.45,
             "gpa": 3.8,
             "f_score": 0,
             "asset_growth_yoy": 3.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "태웅": {
             "pbr": 0.91,
             "gpa": 1.1,
             "f_score": 3,
             "asset_growth_yoy": -1.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "에이치케이": {
             "pbr": 0.36,
             "gpa": 1.4,
             "f_score": 3,
             "asset_growth_yoy": 19.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "이글벳": {
             "pbr": 0.74,
             "gpa": 6.0,
             "f_score": 3,
             "asset_growth_yoy": 5.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "에이치엔에스하이텍": {
             "pbr": 0.8,
             "gpa": 7.4,
             "f_score": 3,
             "asset_growth_yoy": 9.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "오공": {
             "pbr": 0.31,
             "gpa": 4.7,
             "f_score": 3,
             "asset_growth_yoy": 6.4,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "한양이엔지": {
             "pbr": 0.86,
             "gpa": 3.6,
             "f_score": 2,
             "asset_growth_yoy": 11.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "성우테크론": {
             "pbr": 0.34,
             "gpa": 2.0,
             "f_score": 3,
             "asset_growth_yoy": 6.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "토탈소프트": {
             "pbr": 1.5,
             "gpa": 6.1,
             "f_score": 3,
             "asset_growth_yoy": 23.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "대아티아이": {
             "pbr": 1.15,
             "gpa": 1.8,
             "f_score": 2,
             "asset_growth_yoy": 10.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "정원엔시스": {
             "pbr": 0.54,
             "gpa": 3.8,
             "f_score": 2,
             "asset_growth_yoy": 27.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "크린앤사이언스": {
             "pbr": 1.07,
             "gpa": 6.1,
             "f_score": 2,
             "asset_growth_yoy": -8.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "에이텍": {
             "pbr": 0.65,
             "gpa": 7.8,
             "f_score": 2,
             "asset_growth_yoy": 11.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "코아시아": {
             "pbr": 0.6,
             "gpa": 4.1,
             "f_score": 2,
             "asset_growth_yoy": 13.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "코다코": {
             "pbr": 18.1,
             "gpa": 2.2,
             "f_score": 1,
             "asset_growth_yoy": 3.2,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "오르비텍": {
             "pbr": 1.07,
             "gpa": 1.5,
             "f_score": 1,
             "asset_growth_yoy": 151.2,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "HLB파나진": {
             "pbr": 0.87,
             "gpa": 2.8,
             "f_score": 1,
             "asset_growth_yoy": -22.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "백금T&A": {
             "pbr": 0.38,
             "gpa": 5.2,
             "f_score": 2,
             "asset_growth_yoy": 0.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "삼화네트웍스": {
             "pbr": 0.6,
             "gpa": -1.2,
             "f_score": 1,
             "asset_growth_yoy": -8.7,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "KG파이낸셜": {
             "pbr": 0.43,
             "gpa": 3.4,
             "f_score": 3,
             "asset_growth_yoy": 13.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "서울반도체": {
             "pbr": 0.86,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": -9.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "우원개발": {
             "pbr": 0.37,
             "gpa": 2.3,
             "f_score": 2,
             "asset_growth_yoy": 6.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "우리로": {
             "pbr": 5.17,
             "gpa": 6.3,
             "f_score": 2,
             "asset_growth_yoy": 0.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한빛소프트": {
             "pbr": 1.14,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 6.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "파워로직스": {
             "pbr": 0.53,
             "gpa": 5.2,
             "f_score": 2,
             "asset_growth_yoy": 5.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "이스트소프트": {
             "pbr": 1.42,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -0.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "코데즈컴바인": {
             "pbr": 1.38,
             "gpa": 5.5,
             "f_score": 3,
             "asset_growth_yoy": 4.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "초록뱀미디어": {
             "pbr": 0.28,
             "gpa": 1.2,
             "f_score": 2,
             "asset_growth_yoy": -11.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "HLB제약": {
             "pbr": 1.85,
             "gpa": 14.8,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "현대바이오": {
             "pbr": 5.86,
             "gpa": -0.1,
             "f_score": 1,
             "asset_growth_yoy": -9.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "유라테크": {
             "pbr": 0.43,
             "gpa": 1.2,
             "f_score": 2,
             "asset_growth_yoy": 8.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "대동스틸": {
             "pbr": 0.35,
             "gpa": 1.4,
             "f_score": 3,
             "asset_growth_yoy": 5.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "인트론바이오": {
             "pbr": 1.23,
             "gpa": 1.3,
             "f_score": 1,
             "asset_growth_yoy": -14.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "SM C&C": {
             "pbr": 1.88,
             "gpa": 4.4,
             "f_score": 1,
             "asset_growth_yoy": -4.9,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "TPC로보틱스": {
             "pbr": 1.24,
             "gpa": 3.8,
             "f_score": 1,
             "asset_growth_yoy": 2.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "엔피케이": {
             "pbr": 0.42,
             "gpa": 1.9,
             "f_score": 1,
             "asset_growth_yoy": 10.2,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "시너지이노베이션": {
             "pbr": 0.53,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 5.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "대원미디어": {
             "pbr": 0.44,
             "gpa": 7.1,
             "f_score": 2,
             "asset_growth_yoy": 4.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "인탑스": {
             "pbr": 0.38,
             "gpa": 2.0,
             "f_score": 2,
             "asset_growth_yoy": -1.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "기가레인": {
             "pbr": 2.47,
             "gpa": -0.2,
             "f_score": 1,
             "asset_growth_yoy": 4.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "파인디앤씨": {
             "pbr": 0.4,
             "gpa": 0.7,
             "f_score": 2,
             "asset_growth_yoy": 7.1,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "셀루메드": {
             "pbr": 3.52,
             "gpa": 2.3,
             "f_score": 0,
             "asset_growth_yoy": -8.7,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "코메론": {
             "pbr": 0.69,
             "gpa": 2.6,
             "f_score": 3,
             "asset_growth_yoy": 9.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "비트플래닛": {
             "pbr": 0.66,
             "gpa": 1.1,
             "f_score": 0,
             "asset_growth_yoy": 61.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "오픈베이스": {
             "pbr": 0.59,
             "gpa": 6.3,
             "f_score": 3,
             "asset_growth_yoy": 24.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "유아이엘": {
             "pbr": 0.55,
             "gpa": 3.9,
             "f_score": 3,
             "asset_growth_yoy": -1.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "잉크테크": {
             "pbr": 0.75,
             "gpa": 3.4,
             "f_score": 3,
             "asset_growth_yoy": 1.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "재영솔루텍": {
             "pbr": 1.31,
             "gpa": 5.9,
             "f_score": 3,
             "asset_growth_yoy": 7.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "고려신용정보": {
             "pbr": 2.24,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 9.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "승일": {
             "pbr": 0.26,
             "gpa": 1.4,
             "f_score": 2,
             "asset_growth_yoy": 5.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "미래컴퍼니": {
             "pbr": 0.81,
             "gpa": 7.3,
             "f_score": 3,
             "asset_growth_yoy": -7.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "쎌바이오텍": {
             "pbr": 1.09,
             "gpa": 7.4,
             "f_score": 3,
             "asset_growth_yoy": 8.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "비케이홀딩스": {
             "pbr": 0.89,
             "gpa": 3.0,
             "f_score": 0,
             "asset_growth_yoy": -23.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "캠시스": {
             "pbr": 0.51,
             "gpa": 5.2,
             "f_score": 1,
             "asset_growth_yoy": -17.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "ES큐브": {
             "pbr": 0.43,
             "gpa": 1.3,
             "f_score": 1,
             "asset_growth_yoy": 8.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에스폴리텍": {
             "pbr": 0.33,
             "gpa": 2.8,
             "f_score": 2,
             "asset_growth_yoy": 1.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "아세아텍": {
             "pbr": 0.3,
             "gpa": 3.3,
             "f_score": 3,
             "asset_growth_yoy": -0.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "쏠리드": {
             "pbr": 1.62,
             "gpa": 4.0,
             "f_score": 3,
             "asset_growth_yoy": 20.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "수산아이앤티": {
             "pbr": 0.58,
             "gpa": 0.5,
             "f_score": 3,
             "asset_growth_yoy": 8.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "지어소프트": {
             "pbr": 0.47,
             "gpa": 11.5,
             "f_score": 3,
             "asset_growth_yoy": 3.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "토비스": {
             "pbr": 0.77,
             "gpa": 5.9,
             "f_score": 3,
             "asset_growth_yoy": 8.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "인터플렉스": {
             "pbr": 0.48,
             "gpa": 2.6,
             "f_score": 3,
             "asset_growth_yoy": 7.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "피씨디렉트": {
             "pbr": 0.66,
             "gpa": 6.0,
             "f_score": 3,
             "asset_growth_yoy": -2.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "YW": {
             "pbr": 0.51,
             "gpa": 1.9,
             "f_score": 2,
             "asset_growth_yoy": 1.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "나라엠앤디": {
             "pbr": 0.37,
             "gpa": 1.4,
             "f_score": 1,
             "asset_growth_yoy": 10.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "CJ프레시웨이": {
             "pbr": 0.7,
             "gpa": 9.1,
             "f_score": 2,
             "asset_growth_yoy": -2.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "큐로홀딩스": {
             "pbr": 0.65,
             "gpa": 3.4,
             "f_score": 0,
             "asset_growth_yoy": 13.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "중앙첨단소재": {
             "pbr": 1.11,
             "gpa": 0.5,
             "f_score": 0,
             "asset_growth_yoy": 6.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에스티큐브": {
             "pbr": 8.09,
             "gpa": 1.0,
             "f_score": 1,
             "asset_growth_yoy": -21.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "iMBC": {
             "pbr": 0.76,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -9.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "현대바이오랜드": {
             "pbr": 0.75,
             "gpa": 9.5,
             "f_score": 2,
             "asset_growth_yoy": 1.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "오션인더블유": {
             "pbr": 0.07,
             "gpa": 0.3,
             "f_score": 3,
             "asset_growth_yoy": 22.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "코텍": {
             "pbr": 0.53,
             "gpa": 7.5,
             "f_score": 3,
             "asset_growth_yoy": 12.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "코나아이": {
             "pbr": 2.37,
             "gpa": 7.2,
             "f_score": 3,
             "asset_growth_yoy": 23.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "오성첨단소재": {
             "pbr": 0.28,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": 29.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "아이크래프트": {
             "pbr": 1.12,
             "gpa": 2.4,
             "f_score": 2,
             "asset_growth_yoy": 26.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "한네트": {
             "pbr": 0.93,
             "gpa": 3.6,
             "f_score": 3,
             "asset_growth_yoy": -6.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "아모텍": {
             "pbr": 1.74,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": 1.3,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "아이톡시": {
             "pbr": 1.12,
             "gpa": 4.9,
             "f_score": 1,
             "asset_growth_yoy": -65.7,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "액토즈소프트": {
             "pbr": 0.17,
             "gpa": 1.7,
             "f_score": 3,
             "asset_growth_yoy": 13.5,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "아이앤씨": {
             "pbr": 2.24,
             "gpa": 7.1,
             "f_score": 2,
             "asset_growth_yoy": 3.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "KX하이텍": {
             "pbr": 0.68,
             "gpa": 5.9,
             "f_score": 3,
             "asset_growth_yoy": 0.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "바이넥스": {
             "pbr": 1.25,
             "gpa": 1.2,
             "f_score": 1,
             "asset_growth_yoy": 10.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "지에스이": {
             "pbr": 0.56,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": -0.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "세동": {
             "pbr": 0.58,
             "gpa": 5.5,
             "f_score": 3,
             "asset_growth_yoy": 15.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "케이엔솔": {
             "pbr": 0.93,
             "gpa": 2.6,
             "f_score": 3,
             "asset_growth_yoy": -1.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "프리엠스": {
             "pbr": 0.73,
             "gpa": 1.3,
             "f_score": 1,
             "asset_growth_yoy": 32.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "금강철강": {
             "pbr": 0.7,
             "gpa": 1.3,
             "f_score": 2,
             "asset_growth_yoy": -4.4,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "구영테크": {
             "pbr": 0.31,
             "gpa": 2.7,
             "f_score": 3,
             "asset_growth_yoy": 73.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "예스24": {
             "pbr": 0.45,
             "gpa": 7.2,
             "f_score": 2,
             "asset_growth_yoy": 8.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "NE능률": {
             "pbr": 0.44,
             "gpa": -3.4,
             "f_score": 2,
             "asset_growth_yoy": -9.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "한국정보인증": {
             "pbr": 0.69,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 8.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "이니텍": {
             "pbr": 0.61,
             "gpa": 0.8,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "세코닉스": {
             "pbr": 0.37,
             "gpa": 3.5,
             "f_score": 1,
             "asset_growth_yoy": 9.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "웹케시": {
             "pbr": 0.73,
             "gpa": 2.0,
             "f_score": 3,
             "asset_growth_yoy": 2.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "프로텍": {
             "pbr": 1.66,
             "gpa": 5.1,
             "f_score": 2,
             "asset_growth_yoy": 21.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "태양": {
             "pbr": 0.28,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": 5.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "삼보모터스": {
             "pbr": 0.24,
             "gpa": 3.7,
             "f_score": 2,
             "asset_growth_yoy": 11.9,
-            "pbr_judgment": "저평가"
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "안랩": {
             "pbr": 1.65,
             "gpa": 0.4,
             "f_score": 3,
             "asset_growth_yoy": 7.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "경남제약": {
             "pbr": 0.19,
             "gpa": 2.7,
             "f_score": 0,
             "asset_growth_yoy": 9.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "오상자이엘": {
             "pbr": 0.43,
             "gpa": 2.8,
             "f_score": 3,
             "asset_growth_yoy": 5.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한국컴퓨터": {
             "pbr": 0.47,
             "gpa": 2.7,
             "f_score": 3,
             "asset_growth_yoy": 64.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "NH농우바이오": {
             "pbr": 0.38,
             "gpa": 5.8,
             "f_score": 2,
             "asset_growth_yoy": 4.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "삼진엘앤디": {
             "pbr": 0.57,
             "gpa": 3.3,
             "f_score": 3,
             "asset_growth_yoy": -10.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "메디콕스": {
             "pbr": 0.28,
             "gpa": 0.8,
             "f_score": 1,
             "asset_growth_yoy": -17.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "이랜텍": {
             "pbr": 0.57,
             "gpa": 4.7,
             "f_score": 3,
             "asset_growth_yoy": 22.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "비츠로시스": {
             "pbr": 0.92,
             "gpa": 3.4,
             "f_score": 2,
             "asset_growth_yoy": -8.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "팬스타엔터프라이즈": {
             "pbr": 0.61,
             "gpa": 1.9,
             "f_score": 2,
             "asset_growth_yoy": 53.7,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "케이피티유": {
             "pbr": 0.36,
             "gpa": 1.3,
             "f_score": 3,
             "asset_growth_yoy": 4.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "텔레칩스": {
             "pbr": 1.1,
             "gpa": 7.0,
             "f_score": 3,
             "asset_growth_yoy": 3.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "삼영엠텍": {
             "pbr": 0.33,
             "gpa": 3.2,
             "f_score": 2,
             "asset_growth_yoy": 346.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "APS": {
             "pbr": 0.34,
             "gpa": 2.0,
             "f_score": 2,
             "asset_growth_yoy": -8.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "대한뉴팜": {
             "pbr": 0.57,
             "gpa": 8.5,
             "f_score": 2,
             "asset_growth_yoy": 18.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "키이스트": {
             "pbr": 0.67,
             "gpa": -0.6,
             "f_score": 1,
             "asset_growth_yoy": -8.8,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "아이디스홀딩스": {
             "pbr": 0.17,
             "gpa": 7.2,
             "f_score": 3,
             "asset_growth_yoy": 7.9,
-            "pbr_judgment": "저평가"
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "한컴위드": {
             "pbr": 0.59,
             "gpa": 0.8,
             "f_score": 2,
             "asset_growth_yoy": 9.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "유신": {
             "pbr": 0.32,
             "gpa": 4.6,
             "f_score": 2,
             "asset_growth_yoy": 8.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "엑사이엔씨": {
             "pbr": 0.34,
             "gpa": 4.4,
             "f_score": 2,
             "asset_growth_yoy": 6.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "제이브이엠": {
             "pbr": 1.13,
             "gpa": 5.9,
             "f_score": 3,
             "asset_growth_yoy": 13.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "유진로봇": {
             "pbr": 19.4,
             "gpa": -2.4,
             "f_score": 0,
             "asset_growth_yoy": -5.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "시지메드텍": {
             "pbr": 1.15,
             "gpa": 3.8,
             "f_score": 2,
             "asset_growth_yoy": 18.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "SFA": {
             "pbr": 0.51,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": -6.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "코위버": {
             "pbr": 0.32,
             "gpa": 1.6,
             "f_score": 2,
             "asset_growth_yoy": 22.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "신화인터텍": {
             "pbr": 0.46,
             "gpa": 2.8,
             "f_score": 2,
             "asset_growth_yoy": -18.7,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "CNT85": {
             "pbr": 0.39,
             "gpa": 1.4,
             "f_score": 3,
             "asset_growth_yoy": -7.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "YBM넷": {
             "pbr": 0.7,
             "gpa": 6.2,
             "f_score": 3,
             "asset_growth_yoy": -0.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "옴니시스템": {
             "pbr": 0.5,
             "gpa": 3.1,
             "f_score": 2,
             "asset_growth_yoy": -1.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "티사이언티픽": {
             "pbr": 0.17,
             "gpa": 0.9,
             "f_score": 0,
             "asset_growth_yoy": 20.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "멕아이씨에스": {
             "pbr": 0.82,
             "gpa": 4.8,
             "f_score": 3,
             "asset_growth_yoy": -1.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "KNN": {
             "pbr": 0.31,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": 6.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한주에이알티": {
             "pbr": 1.17,
             "gpa": 3.1,
             "f_score": 0,
             "asset_growth_yoy": 30.8,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "리노공업": {
             "pbr": 8.35,
             "gpa": 6.2,
             "f_score": 3,
             "asset_growth_yoy": 19.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "에스피지": {
             "pbr": 5.86,
             "gpa": 3.3,
             "f_score": 2,
             "asset_growth_yoy": 10.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "엠게임": {
             "pbr": 0.68,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 10.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "CMG제약": {
             "pbr": 0.63,
             "gpa": 4.3,
             "f_score": 2,
             "asset_growth_yoy": 4.3,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "엠로": {
             "pbr": 1.93,
             "gpa": 6.9,
             "f_score": 3,
             "asset_growth_yoy": 13.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "미코": {
             "pbr": 0.77,
             "gpa": 3.7,
             "f_score": 1,
             "asset_growth_yoy": 68.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "아이컴포넌트": {
             "pbr": 0.77,
             "gpa": 5.0,
             "f_score": 3,
             "asset_growth_yoy": 3.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "아진엑스텍": {
             "pbr": 2.19,
             "gpa": 7.0,
             "f_score": 3,
             "asset_growth_yoy": 7.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "메타바이오메드": {
             "pbr": 0.82,
             "gpa": 6.8,
             "f_score": 3,
             "asset_growth_yoy": 6.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "해성에어로보틱스": {
             "pbr": 1.62,
             "gpa": 0.9,
             "f_score": 1,
             "asset_growth_yoy": 1.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "인선이엔티": {
             "pbr": 0.46,
             "gpa": 1.6,
             "f_score": 3,
             "asset_growth_yoy": -5.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "제이케이시냅스": {
             "pbr": 0.15,
             "gpa": 3.4,
             "f_score": 0,
             "asset_growth_yoy": -2.4,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "스타코링크": {
             "pbr": -1.5,
             "gpa": 3.5,
             "f_score": 1,
             "asset_growth_yoy": -22.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "NHN KCP": {
             "pbr": 1.67,
             "gpa": 4.8,
             "f_score": 2,
             "asset_growth_yoy": 24.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "뉴보텍": {
             "pbr": 0.78,
             "gpa": 7.0,
             "f_score": 2,
             "asset_growth_yoy": 11.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "큐렉소": {
             "pbr": 3.53,
             "gpa": 4.3,
             "f_score": 3,
             "asset_growth_yoy": -0.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "3S": {
             "pbr": 1.25,
             "gpa": -3.4,
             "f_score": 1,
             "asset_growth_yoy": 17.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "LS마린솔루션": {
             "pbr": 2.3,
             "gpa": 0.9,
             "f_score": 2,
             "asset_growth_yoy": 181.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "동양에스텍": {
             "pbr": 0.2,
             "gpa": 2.3,
             "f_score": 3,
             "asset_growth_yoy": 13.3,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "국일신동": {
             "pbr": 0.36,
             "gpa": 1.7,
             "f_score": 2,
             "asset_growth_yoy": -1.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "에스에이티": {
             "pbr": 0.27,
             "gpa": 3.6,
             "f_score": 3,
             "asset_growth_yoy": 2.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "HC홈센타": {
             "pbr": 0.24,
             "gpa": 0.2,
             "f_score": 1,
             "asset_growth_yoy": -7.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "드림어스컴퍼니": {
             "pbr": 0.44,
             "gpa": 4.5,
             "f_score": 2,
             "asset_growth_yoy": -10.3,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "씨티씨바이오": {
             "pbr": 0.93,
             "gpa": 9.8,
             "f_score": 3,
             "asset_growth_yoy": -1.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "KH바텍": {
             "pbr": 0.85,
             "gpa": 2.0,
             "f_score": 3,
             "asset_growth_yoy": 6.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "영림원소프트랩": {
             "pbr": 0.76,
             "gpa": 9.9,
             "f_score": 3,
             "asset_growth_yoy": 32.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "에이전트AI": {
             "pbr": 0.49,
             "gpa": 2.1,
             "f_score": 0,
             "asset_growth_yoy": -7.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "알에프텍": {
             "pbr": 0.33,
             "gpa": 1.1,
             "f_score": 0,
             "asset_growth_yoy": -9.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "세나테크놀로지": {
             "pbr": 1.33,
             "gpa": 9.6,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "화일약품": {
             "pbr": 0.34,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": -0.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "LB세미콘": {
             "pbr": 0.89,
             "gpa": 2.1,
             "f_score": 1,
             "asset_growth_yoy": -16.9,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "한국첨단소재": {
             "pbr": 1.75,
             "gpa": 0.5,
             "f_score": 1,
             "asset_growth_yoy": 71.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "컴투스홀딩스": {
             "pbr": 0.33,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -7.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "서울옥션": {
             "pbr": 0.91,
             "gpa": 1.0,
             "f_score": 1,
             "asset_growth_yoy": 10.9,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "SM Life Design": {
             "pbr": 0.75,
             "gpa": 2.3,
             "f_score": 3,
             "asset_growth_yoy": 5.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "NICE인프라": {
             "pbr": 0.59,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 21.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "이엘피": {
             "pbr": 0.36,
             "gpa": 4.3,
             "f_score": 3,
             "asset_growth_yoy": 3.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "인크레더블버즈": {
             "pbr": 0.64,
             "gpa": 1.1,
             "f_score": 0,
             "asset_growth_yoy": -29.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "홈캐스트": {
             "pbr": 0.61,
             "gpa": 0.8,
             "f_score": 2,
             "asset_growth_yoy": -21.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "다날": {
             "pbr": 1.01,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -0.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "인텍플러스": {
             "pbr": 12.16,
             "gpa": 5.3,
             "f_score": 2,
             "asset_growth_yoy": -13.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "브리지텍": {
             "pbr": 0.76,
             "gpa": 3.6,
             "f_score": 2,
             "asset_growth_yoy": -9.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "테크엘": {
             "pbr": 0.38,
             "gpa": -0.5,
             "f_score": 1,
             "asset_growth_yoy": -3.9,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "바이오니아": {
             "pbr": 0.74,
             "gpa": 17.1,
             "f_score": 2,
             "asset_growth_yoy": 0.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "티씨케이": {
             "pbr": 4.81,
             "gpa": 6.0,
             "f_score": 3,
             "asset_growth_yoy": 4.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "포니링크": {
             "pbr": 0.25,
             "gpa": 0.7,
             "f_score": 2,
             "asset_growth_yoy": -10.6,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "케이프": {
             "pbr": 0.84,
             "gpa": 0.9,
             "f_score": 2,
             "asset_growth_yoy": 28.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "에프앤가이드": {
             "pbr": 3.7,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 9.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "지엔코": {
             "pbr": 0.15,
             "gpa": 4.9,
             "f_score": 0,
             "asset_growth_yoy": -0.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "탑엔지니어링": {
             "pbr": 0.16,
             "gpa": 4.9,
             "f_score": 2,
             "asset_growth_yoy": -3.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "대산F&B": {
             "pbr": 0.9,
             "gpa": 6.0,
             "f_score": 2,
             "asset_growth_yoy": -3.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "비엘팜텍": {
             "pbr": 8.35,
             "gpa": 5.9,
             "f_score": 2,
             "asset_growth_yoy": -49.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "신성델타테크": {
             "pbr": 2.18,
             "gpa": 2.7,
             "f_score": 2,
             "asset_growth_yoy": 21.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "위세아이텍": {
             "pbr": 0.73,
             "gpa": 4.2,
             "f_score": 1,
             "asset_growth_yoy": 4.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "에스아이리소스": {
             "pbr": 1.35,
             "gpa": -2.6,
             "f_score": 0,
             "asset_growth_yoy": 14.7,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "이루온": {
             "pbr": 0.8,
             "gpa": 3.5,
             "f_score": 1,
             "asset_growth_yoy": 2.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "빅텍": {
             "pbr": 1.54,
             "gpa": 2.1,
             "f_score": 1,
             "asset_growth_yoy": 11.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "오리엔트정공": {
             "pbr": 0.91,
             "gpa": 3.5,
             "f_score": 0,
             "asset_growth_yoy": 8.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "휴비츠": {
             "pbr": 0.69,
             "gpa": 6.7,
             "f_score": 2,
             "asset_growth_yoy": 2.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "와이어블": {
             "pbr": 0.67,
             "gpa": 2.0,
             "f_score": 3,
             "asset_growth_yoy": 2.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "삼영이엔씨": {
             "pbr": 0.69,
             "gpa": 4.0,
             "f_score": 1,
             "asset_growth_yoy": -26.9,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "하이퍼코퍼레이션": {
             "pbr": 0.88,
             "gpa": 4.2,
             "f_score": 0,
             "asset_growth_yoy": 53.8,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "안트로젠": {
             "pbr": 2.29,
             "gpa": 0.8,
             "f_score": 1,
             "asset_growth_yoy": -11.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "우주일렉트로": {
             "pbr": 1.09,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 7.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "파커스": {
             "pbr": 0.31,
             "gpa": 2.3,
             "f_score": 2,
             "asset_growth_yoy": -14.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "서호전기": {
             "pbr": 2.17,
             "gpa": 8.0,
             "f_score": 3,
             "asset_growth_yoy": 15.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "CS": {
             "pbr": 1.11,
             "gpa": 6.3,
             "f_score": 0,
             "asset_growth_yoy": -1.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "웰크론": {
             "pbr": 0.65,
             "gpa": 3.8,
             "f_score": 1,
             "asset_growth_yoy": -12.7,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "하츠": {
             "pbr": 0.37,
             "gpa": 5.6,
             "f_score": 3,
             "asset_growth_yoy": 1.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "큐에스아이": {
             "pbr": 0.77,
             "gpa": 2.0,
             "f_score": 2,
             "asset_growth_yoy": 7.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "체리부로": {
             "pbr": 0.24,
             "gpa": 4.0,
             "f_score": 3,
             "asset_growth_yoy": 9.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "버킷스튜디오": {
             "pbr": 1.08,
             "gpa": 0.5,
             "f_score": 0,
             "asset_growth_yoy": -15.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "아이로보틱스": {
             "pbr": 1.86,
             "gpa": 1.6,
             "f_score": 1,
             "asset_growth_yoy": 12.3,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "스모트로닉": {
             "pbr": 1.19,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": -12.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "국보디자인": {
             "pbr": 0.56,
             "gpa": 4.7,
             "f_score": 3,
             "asset_growth_yoy": 21.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "디티씨": {
             "pbr": 0.18,
             "gpa": 2.5,
             "f_score": 2,
             "asset_growth_yoy": -5.5,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "테라젠이텍스": {
             "pbr": 0.48,
             "gpa": 13.9,
             "f_score": 2,
             "asset_growth_yoy": 3.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "씨씨에스": {
             "pbr": 4.15,
             "gpa": -2.0,
             "f_score": 1,
             "asset_growth_yoy": -25.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "디에이피": {
             "pbr": 0.41,
             "gpa": 0.5,
             "f_score": 3,
             "asset_growth_yoy": 8.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "손오공": {
             "pbr": 0.45,
             "gpa": 4.3,
             "f_score": 1,
             "asset_growth_yoy": 101.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "한성크린텍": {
             "pbr": 1.57,
             "gpa": 2.0,
             "f_score": 2,
             "asset_growth_yoy": -9.2,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "조이시티": {
             "pbr": 0.9,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -7.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "이씨에스": {
             "pbr": 0.45,
             "gpa": 0.6,
             "f_score": 2,
             "asset_growth_yoy": -14.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "대화제약": {
             "pbr": 2.22,
             "gpa": 5.7,
             "f_score": 2,
             "asset_growth_yoy": 10.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "SOOP": {
             "pbr": 1.11,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 19.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "오텍": {
             "pbr": 0.57,
             "gpa": 4.7,
             "f_score": 1,
             "asset_growth_yoy": -0.9,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "멀티캠퍼스": {
             "pbr": 0.6,
             "gpa": 5.3,
             "f_score": 3,
             "asset_growth_yoy": 4.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "JW신약": {
             "pbr": 2.44,
             "gpa": 17.5,
             "f_score": 3,
             "asset_growth_yoy": 2.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "하나마이크론": {
             "pbr": 3.56,
             "gpa": 4.7,
             "f_score": 3,
             "asset_growth_yoy": 10.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "선바이오": {
             "pbr": 2.48,
             "gpa": 2.0,
             "f_score": 3,
             "asset_growth_yoy": 1.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "아스트": {
             "pbr": 0.67,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": -3.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "엔브이에이치코리아": {
             "pbr": 0.23,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": 7.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "HLB생명과학": {
             "pbr": 0.96,
             "gpa": -0.3,
             "f_score": 1,
             "asset_growth_yoy": -4.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "로지시스": {
             "pbr": 1.02,
             "gpa": 4.9,
             "f_score": 3,
             "asset_growth_yoy": 4.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "세진티에스": {
             "pbr": 0.36,
             "gpa": 2.4,
             "f_score": 3,
             "asset_growth_yoy": 3.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "와이엔텍": {
             "pbr": 0.33,
             "gpa": 1.2,
             "f_score": 3,
             "asset_growth_yoy": 13.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "이글루": {
             "pbr": 0.41,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 95.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "도이치모터스": {
             "pbr": 0.32,
             "gpa": 3.6,
             "f_score": 3,
             "asset_growth_yoy": -3.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "팬엔터테인먼트": {
             "pbr": 0.53,
             "gpa": 2.3,
             "f_score": 2,
             "asset_growth_yoy": -1.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "케이웨더": {
             "pbr": 1.52,
             "gpa": 7.0,
             "f_score": 1,
             "asset_growth_yoy": 23.9,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "다원시스": {
             "pbr": -0.2,
             "gpa": 0.6,
             "f_score": 1,
             "asset_growth_yoy": -17.7,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "일신바이오": {
             "pbr": 0.64,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": 13.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "셀트리온제약": {
             "pbr": 4.09,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": 13.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "DMS": {
             "pbr": 0.37,
             "gpa": 0.5,
             "f_score": 2,
             "asset_growth_yoy": 11.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "디지털대성": {
             "pbr": 1.24,
             "gpa": 7.7,
             "f_score": 3,
             "asset_growth_yoy": 4.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "셀피글로벌": {
             "pbr": 4.23,
             "gpa": 4.9,
             "f_score": 0,
             "asset_growth_yoy": -7.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "웹젠": {
             "pbr": 0.51,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 2.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "누리플랜": {
             "pbr": 0.55,
             "gpa": 5.1,
             "f_score": 2,
             "asset_growth_yoy": -4.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "유아이디": {
             "pbr": 0.81,
             "gpa": 10.9,
             "f_score": 2,
             "asset_growth_yoy": 0.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "엔텔스": {
             "pbr": 0.53,
             "gpa": 6.0,
             "f_score": 2,
             "asset_growth_yoy": 8.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "에스텍": {
             "pbr": 0.57,
             "gpa": 4.3,
             "f_score": 3,
             "asset_growth_yoy": -9.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "빛과전자": {
             "pbr": 4.13,
             "gpa": 0.3,
             "f_score": 0,
             "asset_growth_yoy": 28.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "엑시온그룹": {
             "pbr": 0.18,
             "gpa": 2.2,
             "f_score": 0,
             "asset_growth_yoy": 44.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "엑스큐어": {
             "pbr": 1.97,
             "gpa": 1.0,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "인티큐브": {
             "pbr": 2.25,
             "gpa": 7.1,
             "f_score": 2,
             "asset_growth_yoy": -22.3,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "인피니트헬스케어": {
             "pbr": 1.09,
             "gpa": 8.8,
             "f_score": 3,
             "asset_growth_yoy": 15.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "로체시스템즈": {
             "pbr": 0.74,
             "gpa": 4.3,
             "f_score": 3,
             "asset_growth_yoy": 16.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "에이테크솔루션": {
             "pbr": 0.59,
             "gpa": 1.5,
             "f_score": 2,
             "asset_growth_yoy": 8.8,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "캐스텍코리아": {
             "pbr": 0.58,
             "gpa": 1.1,
             "f_score": 3,
             "asset_growth_yoy": -2.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "중앙백신": {
             "pbr": 0.82,
             "gpa": 5.6,
             "f_score": 3,
             "asset_growth_yoy": 1.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "우리산업홀딩스": {
             "pbr": 0.21,
             "gpa": 4.8,
             "f_score": 3,
             "asset_growth_yoy": 6.7,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "멤레이비티": {
             "pbr": 0.68,
             "gpa": 3.1,
             "f_score": 0,
             "asset_growth_yoy": 1.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "메가스터디": {
             "pbr": 0.43,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": 6.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "빛샘전자": {
             "pbr": 0.74,
             "gpa": 4.8,
             "f_score": 2,
             "asset_growth_yoy": 11.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "에이치시티": {
             "pbr": 0.49,
             "gpa": 3.9,
             "f_score": 1,
             "asset_growth_yoy": 8.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "케이에스피": {
             "pbr": 1.31,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 26.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "엘엠에스": {
             "pbr": 0.6,
             "gpa": 3.1,
             "f_score": 2,
             "asset_growth_yoy": 7.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "듀오백": {
             "pbr": 0.24,
             "gpa": 3.7,
             "f_score": 1,
             "asset_growth_yoy": 137.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "LIG아큐버": {
             "pbr": 1.3,
             "gpa": 4.5,
             "f_score": 1,
             "asset_growth_yoy": 12.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "에프알텍": {
             "pbr": 0.41,
             "gpa": 1.0,
             "f_score": 1,
             "asset_growth_yoy": -1.1,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "우리손에프앤지": {
             "pbr": 0.32,
             "gpa": 1.5,
             "f_score": 3,
             "asset_growth_yoy": 0.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "리튬포어스": {
             "pbr": 0.37,
             "gpa": 1.2,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "테라사이언스": {
             "pbr": 2.61,
             "gpa": 0.9,
             "f_score": 0,
             "asset_growth_yoy": -34.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "아미노로직스": {
             "pbr": 1.55,
             "gpa": 2.8,
             "f_score": 3,
             "asset_growth_yoy": 48.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "원익QnC": {
             "pbr": 1.42,
             "gpa": 4.3,
             "f_score": 3,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "플랜티넷": {
             "pbr": 0.39,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -3.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "동국알앤에스": {
             "pbr": 0.38,
             "gpa": 3.4,
             "f_score": 3,
             "asset_growth_yoy": 0.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "웰크론한텍": {
             "pbr": 2.21,
             "gpa": 2.8,
             "f_score": 1,
             "asset_growth_yoy": -27.8,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "해성옵틱스": {
             "pbr": 1.89,
             "gpa": 3.3,
             "f_score": null,
             "asset_growth_yoy": 52.4,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "덕산하이메탈": {
             "pbr": 1.33,
             "gpa": 1.5,
             "f_score": 2,
             "asset_growth_yoy": -17.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "LS증권": {
             "pbr": 0.42,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 53.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "유비쿼스홀딩스": {
             "pbr": 0.36,
             "gpa": 3.4,
             "f_score": 2,
             "asset_growth_yoy": 9.4,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "국일제지": {
             "pbr": 3.75,
             "gpa": 0.9,
             "f_score": 2,
             "asset_growth_yoy": -3.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "대봉엘에스": {
             "pbr": 0.5,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": 13.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "HB테크놀러지": {
             "pbr": 0.62,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": 14.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "메디포스트": {
             "pbr": 1.47,
             "gpa": 2.3,
             "f_score": null,
             "asset_growth_yoy": 45.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "컴투스": {
             "pbr": 0.3,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": -5.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한양디지텍": {
             "pbr": 1.73,
             "gpa": 3.8,
             "f_score": 3,
             "asset_growth_yoy": 22.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "휴림에이텍": {
             "pbr": 0.28,
             "gpa": 2.4,
             "f_score": 0,
             "asset_growth_yoy": 19.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "대주전자재료": {
             "pbr": 4.97,
             "gpa": 2.6,
             "f_score": 1,
             "asset_growth_yoy": 8.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "아이오케이이엔엠": {
             "pbr": 0.21,
             "gpa": -0.3,
             "f_score": 2,
             "asset_growth_yoy": -11.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "가온그룹": {
             "pbr": 0.58,
             "gpa": 7.2,
             "f_score": 3,
             "asset_growth_yoy": 12.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "와토스코리아": {
             "pbr": 0.5,
             "gpa": 0.5,
             "f_score": 2,
             "asset_growth_yoy": -6.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "한창산업": {
             "pbr": 0.33,
             "gpa": 2.5,
             "f_score": 2,
             "asset_growth_yoy": 5.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "케스피온": {
             "pbr": 0.72,
             "gpa": 7.5,
             "f_score": 2,
             "asset_growth_yoy": -20.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "제우스": {
             "pbr": 0.87,
             "gpa": 2.1,
             "f_score": 2,
             "asset_growth_yoy": -11.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "서산": {
             "pbr": 1.03,
             "gpa": 2.0,
             "f_score": 3,
             "asset_growth_yoy": 0.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "APS이노베이션": {
             "pbr": 0.36,
             "gpa": 3.2,
             "f_score": 2,
             "asset_growth_yoy": -3.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "가비아": {
             "pbr": 1.16,
             "gpa": 5.6,
             "f_score": 3,
             "asset_growth_yoy": 0.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "인베니아": {
             "pbr": 0.46,
             "gpa": 4.7,
             "f_score": 2,
             "asset_growth_yoy": -10.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "동양이엔피": {
             "pbr": 0.35,
             "gpa": 2.3,
             "f_score": 2,
             "asset_growth_yoy": 3.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "투비소프트": {
             "pbr": 0.34,
             "gpa": 11.9,
             "f_score": 2,
             "asset_growth_yoy": 17.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "이상네트웍스": {
             "pbr": 0.42,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": 8.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "모두투어": {
             "pbr": 1.69,
             "gpa": 18.8,
             "f_score": 2,
             "asset_growth_yoy": 8.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "제주반도체": {
             "pbr": 10.06,
             "gpa": 13.9,
             "f_score": 2,
             "asset_growth_yoy": 125.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "모다이노칩": {
             "pbr": 0.3,
             "gpa": 3.6,
             "f_score": 1,
             "asset_growth_yoy": 7.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "성창오토텍": {
             "pbr": 0.29,
             "gpa": 4.0,
             "f_score": 2,
             "asset_growth_yoy": -2.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "오디텍": {
             "pbr": 0.26,
             "gpa": -0.4,
             "f_score": 1,
             "asset_growth_yoy": 5.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "코디": {
             "pbr": 0.46,
             "gpa": 4.0,
             "f_score": 2,
             "asset_growth_yoy": 3.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "오킨스전자": {
             "pbr": 4.96,
             "gpa": 6.3,
             "f_score": 3,
             "asset_growth_yoy": 21.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한국유니온제약": {
             "pbr": -0.86,
             "gpa": 2.3,
             "f_score": 0,
             "asset_growth_yoy": -34.7,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "티플랙스": {
             "pbr": 0.44,
             "gpa": 2.0,
             "f_score": 2,
             "asset_growth_yoy": 9.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "쎄크": {
             "pbr": 1.55,
             "gpa": 1.8,
             "f_score": 1,
             "asset_growth_yoy": 6.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "성우전자": {
             "pbr": 0.3,
             "gpa": 3.3,
             "f_score": 3,
             "asset_growth_yoy": 4.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "옵트론텍": {
             "pbr": 1.09,
             "gpa": 4.4,
             "f_score": 2,
             "asset_growth_yoy": 13.9,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "젬백스": {
             "pbr": 5.83,
             "gpa": 3.4,
             "f_score": 0,
             "asset_growth_yoy": 9.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "코스나인": {
             "pbr": 0.0,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -100.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "비보존 제약": {
             "pbr": 1.55,
             "gpa": 3.4,
             "f_score": 0,
             "asset_growth_yoy": -4.8,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "우리바이오": {
             "pbr": 0.21,
             "gpa": 2.7,
             "f_score": 3,
             "asset_growth_yoy": 2.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "비츠로셀": {
             "pbr": 3.89,
             "gpa": 7.0,
             "f_score": 3,
             "asset_growth_yoy": 19.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "엘오티베큠": {
             "pbr": 0.66,
             "gpa": 5.4,
             "f_score": 1,
             "asset_growth_yoy": -0.2,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "GST": {
             "pbr": 2.84,
             "gpa": 11.1,
             "f_score": 3,
             "asset_growth_yoy": 21.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "이엠앤아이": {
             "pbr": 1.72,
             "gpa": 2.4,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에프엔에스테크": {
             "pbr": 1.44,
             "gpa": 4.5,
             "f_score": 2,
             "asset_growth_yoy": -1.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "케이엠": {
             "pbr": 0.27,
             "gpa": 2.9,
             "f_score": 1,
             "asset_growth_yoy": 3.3,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "인콘": {
             "pbr": 0.24,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": -0.4,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "비에이치아이": {
             "pbr": 7.63,
             "gpa": 5.2,
             "f_score": 2,
             "asset_growth_yoy": 36.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "CSA 코스믹": {
             "pbr": 0.95,
             "gpa": 5.7,
             "f_score": 0,
             "asset_growth_yoy": 66.7,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "CG인바이츠": {
             "pbr": 0.6,
             "gpa": -0.8,
             "f_score": 1,
             "asset_growth_yoy": -14.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "아바코": {
             "pbr": 0.72,
             "gpa": 0.2,
             "f_score": 3,
             "asset_growth_yoy": -13.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "휴온스글로벌": {
             "pbr": 0.33,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 9.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "수성웹툰": {
             "pbr": 0.11,
             "gpa": 8.5,
             "f_score": null,
             "asset_growth_yoy": -30.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "유진테크": {
             "pbr": 7.3,
             "gpa": 8.2,
             "f_score": 3,
             "asset_growth_yoy": 10.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "유비온": {
             "pbr": 2.13,
             "gpa": 20.4,
             "f_score": null,
             "asset_growth_yoy": -0.5,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "랩지노믹스": {
             "pbr": 0.35,
             "gpa": 2.9,
             "f_score": 1,
             "asset_growth_yoy": -18.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "팅크웨어": {
             "pbr": 0.35,
             "gpa": 7.1,
             "f_score": 2,
             "asset_growth_yoy": -1.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "아이티엠반도체": {
             "pbr": 2.1,
             "gpa": 2.8,
             "f_score": 1,
             "asset_growth_yoy": -18.1,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "헬릭스미스": {
             "pbr": 1.18,
             "gpa": 0.2,
             "f_score": 1,
             "asset_growth_yoy": -3.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "차바이오텍": {
             "pbr": 0.87,
             "gpa": 3.2,
             "f_score": 0,
             "asset_growth_yoy": 26.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "뉴프렉스": {
             "pbr": 0.73,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": 0.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "알티캐스트": {
             "pbr": 0.46,
             "gpa": 2.5,
             "f_score": 0,
             "asset_growth_yoy": 49.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "네오티스": {
             "pbr": 3.49,
             "gpa": 3.8,
             "f_score": 2,
             "asset_growth_yoy": 15.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "바이오톡스텍": {
             "pbr": 1.14,
             "gpa": 0.8,
             "f_score": 2,
             "asset_growth_yoy": -2.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "진바이오텍": {
             "pbr": 0.79,
             "gpa": 4.6,
             "f_score": 2,
             "asset_growth_yoy": 9.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "유니테스트": {
             "pbr": 2.48,
             "gpa": 3.6,
             "f_score": 2,
             "asset_growth_yoy": -7.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "동국제약": {
             "pbr": 1.1,
             "gpa": 12.9,
             "f_score": 3,
             "asset_growth_yoy": 11.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "에코프로": {
             "pbr": 2.33,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": 30.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "비엠티": {
             "pbr": 1.05,
             "gpa": 2.6,
             "f_score": 3,
             "asset_growth_yoy": 11.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "선진뷰티사이언스": {
             "pbr": 1.0,
             "gpa": 5.3,
             "f_score": 2,
             "asset_growth_yoy": 8.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "바이오솔루션": {
             "pbr": 3.68,
             "gpa": 3.7,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "이수앱지스": {
             "pbr": 1.16,
             "gpa": 2.1,
             "f_score": 1,
             "asset_growth_yoy": -2.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "메디톡스": {
             "pbr": 1.39,
             "gpa": 7.4,
             "f_score": 3,
             "asset_growth_yoy": -6.4,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "MDS테크": {
             "pbr": 0.54,
             "gpa": 6.3,
             "f_score": 3,
             "asset_growth_yoy": -9.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "쇼박스": {
             "pbr": 1.06,
             "gpa": 11.7,
             "f_score": 3,
             "asset_growth_yoy": 44.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "펩트론": {
             "pbr": 22.29,
             "gpa": 0.3,
             "f_score": 1,
             "asset_growth_yoy": 5.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "모바일어플라이언스": {
             "pbr": 0.18,
             "gpa": 2.3,
             "f_score": 0,
             "asset_growth_yoy": -12.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "픽셀플러스": {
             "pbr": 0.4,
             "gpa": 2.5,
             "f_score": 1,
             "asset_growth_yoy": -1.9,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "동아엘텍": {
             "pbr": 0.32,
             "gpa": 2.5,
             "f_score": 2,
             "asset_growth_yoy": 24.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "쏘닉스": {
             "pbr": 1.46,
             "gpa": 1.4,
             "f_score": 2,
             "asset_growth_yoy": -7.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "이원컴포텍": {
             "pbr": 2.66,
             "gpa": 1.3,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "유라클": {
             "pbr": 1.51,
             "gpa": 6.8,
             "f_score": 1,
             "asset_growth_yoy": -14.9,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "이녹스": {
             "pbr": 0.33,
             "gpa": 2.1,
             "f_score": 2,
             "asset_growth_yoy": 3.5,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "에이스테크": {
             "pbr": 2.05,
             "gpa": 1.7,
             "f_score": 1,
             "asset_growth_yoy": -13.1,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "동우팜투테이블": {
             "pbr": 0.23,
             "gpa": 3.4,
             "f_score": 2,
             "asset_growth_yoy": 9.1,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "켐트로닉스": {
             "pbr": 1.5,
             "gpa": 4.8,
             "f_score": 3,
             "asset_growth_yoy": 20.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "테크윙": {
             "pbr": 9.54,
             "gpa": 3.3,
             "f_score": 2,
             "asset_growth_yoy": 25.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "넥스턴앤롤코리아": {
             "pbr": 0.15,
             "gpa": 2.1,
             "f_score": 2,
             "asset_growth_yoy": 53.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "케이씨티": {
             "pbr": 0.93,
             "gpa": 1.7,
             "f_score": 2,
             "asset_growth_yoy": 5.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "THE E&M": {
             "pbr": 1.22,
             "gpa": 0.9,
             "f_score": 1,
             "asset_growth_yoy": 55.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "KT나스미디어": {
             "pbr": 0.59,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -20.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "제이티": {
             "pbr": 0.68,
             "gpa": 4.0,
             "f_score": 3,
             "asset_growth_yoy": 6.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "유비벨록스": {
             "pbr": 0.23,
             "gpa": 6.8,
             "f_score": 1,
             "asset_growth_yoy": -0.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "코세스": {
             "pbr": 4.88,
             "gpa": 3.5,
             "f_score": 2,
             "asset_growth_yoy": 50.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "브이엠": {
             "pbr": 14.95,
             "gpa": 13.7,
             "f_score": 3,
             "asset_growth_yoy": 71.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "상아프론테크": {
             "pbr": 1.1,
             "gpa": 2.2,
             "f_score": 3,
             "asset_growth_yoy": 3.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "아이윈": {
             "pbr": 0.39,
             "gpa": 7.1,
             "f_score": 3,
             "asset_growth_yoy": -12.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "로보스타": {
             "pbr": 7.44,
             "gpa": 2.7,
             "f_score": 2,
             "asset_growth_yoy": 4.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "덕신이피씨": {
             "pbr": 0.27,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": 4.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "제이스로보틱스": {
             "pbr": 0.61,
             "gpa": -0.1,
             "f_score": 2,
             "asset_growth_yoy": 0.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "휴림로봇": {
             "pbr": 3.64,
             "gpa": 0.7,
             "f_score": 0,
             "asset_growth_yoy": -9.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "현대이지웰": {
             "pbr": 1.22,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 10.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "이엠텍": {
             "pbr": 0.36,
             "gpa": 1.2,
             "f_score": 1,
             "asset_growth_yoy": -2.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "S&K폴리텍": {
             "pbr": 0.17,
             "gpa": 7.7,
             "f_score": 3,
             "asset_growth_yoy": 0.8,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한울소재과학": {
-            "pbr": 2.92,
+            "pbr": 2.93,
             "gpa": 0.1,
             "f_score": 1,
             "asset_growth_yoy": 2.8,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "상신이디피": {
             "pbr": 1.2,
             "gpa": 3.6,
             "f_score": 3,
             "asset_growth_yoy": 13.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "남화토건": {
             "pbr": 0.45,
             "gpa": 0.7,
             "f_score": 2,
             "asset_growth_yoy": 4.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "파트론": {
             "pbr": 0.52,
             "gpa": 4.3,
             "f_score": 3,
             "asset_growth_yoy": 12.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "LSK아이로봇": {
             "pbr": 1.5,
             "gpa": 2.1,
             "f_score": 2,
             "asset_growth_yoy": 0.1,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "아미코젠": {
             "pbr": 0.65,
             "gpa": 1.2,
             "f_score": 1,
             "asset_growth_yoy": -22.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "디엔에프": {
             "pbr": 1.05,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": 0.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "이크레더블": {
             "pbr": 5.13,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": -8.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "서울바이오시스": {
             "pbr": 1.55,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": -6.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "현우산업": {
             "pbr": 0.42,
             "gpa": 3.0,
             "f_score": 3,
             "asset_growth_yoy": 8.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "한라IMS": {
             "pbr": 1.39,
             "gpa": 3.7,
             "f_score": 2,
             "asset_growth_yoy": 37.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "앤씨앤": {
             "pbr": 0.31,
             "gpa": 7.0,
             "f_score": 1,
             "asset_growth_yoy": -39.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "네오팜": {
             "pbr": 1.64,
             "gpa": 10.7,
             "f_score": 3,
             "asset_growth_yoy": 12.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "엑시콘": {
             "pbr": 1.22,
             "gpa": 1.5,
             "f_score": 2,
             "asset_growth_yoy": 18.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "빅솔론": {
             "pbr": 0.68,
             "gpa": 6.2,
             "f_score": 3,
             "asset_growth_yoy": 16.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "케이아이엔엑스": {
             "pbr": 2.66,
             "gpa": 4.3,
             "f_score": 3,
             "asset_growth_yoy": 2.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "풍강": {
             "pbr": 0.35,
             "gpa": 3.3,
             "f_score": null,
             "asset_growth_yoy": 1.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "매커스": {
             "pbr": 2.04,
             "gpa": 5.2,
             "f_score": 2,
             "asset_growth_yoy": -0.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "케이알엠": {
             "pbr": 1.58,
             "gpa": 0.7,
             "f_score": 1,
             "asset_growth_yoy": -14.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "서원인텍": {
             "pbr": 0.42,
             "gpa": 1.7,
             "f_score": 2,
             "asset_growth_yoy": -2.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "동운아나텍": {
             "pbr": 10.05,
             "gpa": 8.6,
             "f_score": 3,
             "asset_growth_yoy": 16.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "칩스앤미디어": {
             "pbr": 2.87,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 24.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "갤럭시아머니트리": {
             "pbr": 1.66,
             "gpa": 3.2,
             "f_score": 2,
             "asset_growth_yoy": 19.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "일진파워": {
             "pbr": 1.09,
             "gpa": 3.3,
             "f_score": 2,
             "asset_growth_yoy": 18.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "슈프리마에이치큐": {
             "pbr": 0.55,
             "gpa": 0.9,
             "f_score": 3,
             "asset_growth_yoy": 5.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "참좋은여행": {
             "pbr": 0.59,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 16.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "네오리진": {
             "pbr": 2.33,
             "gpa": 3.7,
             "f_score": 1,
             "asset_growth_yoy": -2.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "푸른로보틱스": {
             "pbr": 1.25,
             "gpa": 2.2,
             "f_score": 2,
             "asset_growth_yoy": -1.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "제이엠티": {
             "pbr": 0.24,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": 11.6,
-            "pbr_judgment": "저평가"
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "신화프리텍": {
             "pbr": 1.14,
             "gpa": 1.7,
             "f_score": 2,
             "asset_growth_yoy": -6.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "웨이브일렉트로": {
             "pbr": 1.05,
             "gpa": 4.4,
             "f_score": 1,
             "asset_growth_yoy": 12.5,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "ISC": {
             "pbr": 6.19,
             "gpa": 5.6,
             "f_score": 3,
             "asset_growth_yoy": 8.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "미래나노텍": {
             "pbr": 0.63,
             "gpa": 3.1,
             "f_score": 2,
             "asset_growth_yoy": 15.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "테스": {
             "pbr": 10.1,
             "gpa": 5.5,
             "f_score": 3,
             "asset_growth_yoy": 37.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "네오위즈": {
             "pbr": 0.68,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 6.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "제넥신": {
             "pbr": 0.46,
             "gpa": -0.3,
             "f_score": 1,
             "asset_growth_yoy": 5.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "에스에너지": {
             "pbr": 0.41,
             "gpa": -0.0,
             "f_score": 0,
             "asset_growth_yoy": -13.1,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "크레버스": {
             "pbr": 1.89,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -14.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "와이즈넛": {
             "pbr": 1.28,
             "gpa": 3.5,
             "f_score": 2,
             "asset_growth_yoy": 8.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "대창솔루션": {
             "pbr": 1.63,
             "gpa": 2.8,
             "f_score": 2,
             "asset_growth_yoy": 8.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "씨젠": {
             "pbr": 1.49,
             "gpa": 6.9,
             "f_score": 3,
             "asset_growth_yoy": 1.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "알에프세미": {
             "pbr": 3.25,
             "gpa": 6.3,
             "f_score": 3,
             "asset_growth_yoy": -5.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "에스코넥": {
             "pbr": 0.33,
             "gpa": 3.4,
             "f_score": 2,
             "asset_growth_yoy": -18.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "에이루트": {
             "pbr": 0.21,
             "gpa": 1.2,
             "f_score": 1,
             "asset_growth_yoy": -15.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "엘디티": {
             "pbr": 1.0,
             "gpa": 3.0,
             "f_score": 0,
             "asset_growth_yoy": 33.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "에코볼트": {
             "pbr": 0.14,
             "gpa": 0.9,
             "f_score": 3,
             "asset_growth_yoy": -20.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "윈팩": {
             "pbr": 0.91,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -12.7,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "효성오앤비": {
             "pbr": 0.52,
             "gpa": 0.9,
             "f_score": 2,
             "asset_growth_yoy": -1.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한텍": {
             "pbr": 1.62,
             "gpa": 5.2,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "마이크로컨텍솔": {
             "pbr": 2.43,
             "gpa": 8.1,
             "f_score": 3,
             "asset_growth_yoy": 26.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "고영": {
             "pbr": 5.63,
             "gpa": 11.1,
             "f_score": 3,
             "asset_growth_yoy": 13.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "에스티오": {
             "pbr": 0.94,
             "gpa": 13.1,
             "f_score": 2,
             "asset_growth_yoy": -6.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "아이센스": {
             "pbr": 1.24,
             "gpa": 5.4,
             "f_score": 2,
             "asset_growth_yoy": 1.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "SDN": {
             "pbr": 0.61,
             "gpa": 2.8,
             "f_score": 2,
             "asset_growth_yoy": 0.5,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "쎄트렉아이": {
             "pbr": 3.77,
             "gpa": 1.3,
             "f_score": 1,
             "asset_growth_yoy": -7.7,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "브레인즈컴퍼니": {
             "pbr": 0.5,
             "gpa": 4.6,
             "f_score": 2,
             "asset_growth_yoy": 9.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "동방선기": {
             "pbr": 0.82,
             "gpa": 4.2,
             "f_score": 3,
             "asset_growth_yoy": 13.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "바이오플러스": {
             "pbr": 1.19,
             "gpa": 6.1,
             "f_score": 3,
             "asset_growth_yoy": 7.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "스맥": {
             "pbr": 1.99,
             "gpa": 1.0,
             "f_score": 1,
             "asset_growth_yoy": 2.5,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "DGI": {
             "pbr": 2.56,
             "gpa": 3.1,
             "f_score": 1,
             "asset_growth_yoy": -7.4,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "이지케어텍": {
             "pbr": 2.29,
             "gpa": 4.7,
             "f_score": 2,
             "asset_growth_yoy": 4.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "인지소프트": {
             "pbr": 0.71,
             "gpa": 2.3,
             "f_score": 2,
             "asset_growth_yoy": 50.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "뷰웍스": {
             "pbr": 0.87,
             "gpa": 7.8,
             "f_score": 3,
             "asset_growth_yoy": 3.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "동국S&C": {
             "pbr": 0.48,
             "gpa": 0.3,
             "f_score": 1,
             "asset_growth_yoy": -20.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "머큐리": {
             "pbr": 0.42,
             "gpa": 2.2,
             "f_score": 3,
             "asset_growth_yoy": 48.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "서암기계공업": {
             "pbr": 0.56,
             "gpa": 2.0,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "세운메디칼": {
             "pbr": 0.66,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 5.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "미래에셋벤처투자": {
             "pbr": 2.12,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 2.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "KS인더스트리": {
             "pbr": 0.35,
             "gpa": 2.8,
             "f_score": 1,
             "asset_growth_yoy": 14.3,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "월덱스": {
             "pbr": 1.48,
             "gpa": 4.5,
             "f_score": 3,
             "asset_growth_yoy": 14.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "우림피티에스": {
             "pbr": 1.19,
             "gpa": 2.2,
             "f_score": 3,
             "asset_growth_yoy": -0.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "씨큐브": {
             "pbr": 0.3,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": 20.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "모베이스": {
             "pbr": 0.16,
             "gpa": 3.2,
             "f_score": 3,
             "asset_growth_yoy": 3.0,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "에코앤드림": {
             "pbr": 0.6,
             "gpa": 0.5,
             "f_score": 2,
             "asset_growth_yoy": 16.6,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "엔시트론": {
             "pbr": 0.53,
             "gpa": 7.6,
             "f_score": 1,
             "asset_growth_yoy": -4.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에스앤에스텍": {
             "pbr": 3.16,
             "gpa": 4.9,
             "f_score": 3,
             "asset_growth_yoy": 29.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "하이드로리튬": {
             "pbr": 2.02,
             "gpa": -2.0,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "한국정밀기계": {
             "pbr": 0.56,
             "gpa": -0.4,
             "f_score": 2,
             "asset_growth_yoy": 13.4,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "위메이드맥스": {
             "pbr": 0.94,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -6.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "인화정공": {
             "pbr": 0.89,
             "gpa": 1.4,
             "f_score": null,
             "asset_growth_yoy": 2.1,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "우양에이치씨": {
             "pbr": 0.83,
             "gpa": 3.3,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "어보브반도체": {
             "pbr": 0.87,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": -6.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "케이옥션": {
             "pbr": 0.77,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": -2.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "이엔에프테크놀로지": {
             "pbr": 1.27,
             "gpa": 6.0,
             "f_score": 3,
             "asset_growth_yoy": 3.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "코오롱생명과학": {
             "pbr": 0.65,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": 90.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "에스앤더블류": {
             "pbr": 0.34,
             "gpa": 1.2,
             "f_score": 3,
             "asset_growth_yoy": 4.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "우양": {
             "pbr": 0.69,
             "gpa": 3.1,
             "f_score": 2,
             "asset_growth_yoy": 3.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "디에스엠": {
             "pbr": 0.64,
             "gpa": 1.4,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "NHN벅스": {
             "pbr": 0.79,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -6.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "디와이피엔에프": {
             "pbr": 0.63,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": -19.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "티케이케미칼": {
             "pbr": 0.11,
             "gpa": 0.7,
             "f_score": 3,
             "asset_growth_yoy": 0.1,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "코렌텍": {
             "pbr": 0.59,
             "gpa": 7.7,
             "f_score": 3,
             "asset_growth_yoy": -7.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "노랑풍선": {
             "pbr": 1.27,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": 3.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "원익머트리얼즈": {
             "pbr": 0.87,
             "gpa": 5.2,
             "f_score": 3,
             "asset_growth_yoy": 11.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "케이엔더블유": {
             "pbr": 0.82,
             "gpa": 0.8,
             "f_score": 1,
             "asset_growth_yoy": 39.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "엣지파운드리": {
             "pbr": 0.24,
             "gpa": 0.3,
             "f_score": 1,
             "asset_growth_yoy": 0.4,
-            "pbr_judgment": "저평가"
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "디케이락": {
             "pbr": 0.5,
             "gpa": 2.7,
             "f_score": 2,
             "asset_growth_yoy": 13.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "포스뱅크": {
             "pbr": 0.45,
             "gpa": 7.0,
             "f_score": 3,
             "asset_growth_yoy": 16.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "케이이엠텍": {
             "pbr": 0.36,
             "gpa": 0.1,
             "f_score": 0,
             "asset_growth_yoy": 6.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "하이텍팜": {
             "pbr": 0.91,
             "gpa": 1.6,
             "f_score": 1,
             "asset_growth_yoy": 3.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "파인테크닉스": {
             "pbr": 0.4,
             "gpa": 2.3,
             "f_score": 0,
             "asset_growth_yoy": -9.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "새빗켐": {
             "pbr": 1.69,
             "gpa": 1.6,
             "f_score": 2,
             "asset_growth_yoy": -16.4,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "한중엔시에스": {
             "pbr": 2.69,
             "gpa": 4.4,
             "f_score": 1,
             "asset_growth_yoy": 64.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "톱텍": {
             "pbr": 0.28,
             "gpa": 1.9,
             "f_score": 3,
             "asset_growth_yoy": -6.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "대양전기공업": {
             "pbr": 0.58,
             "gpa": 2.9,
             "f_score": 2,
             "asset_growth_yoy": 7.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "로보티즈": {
             "pbr": 9.12,
             "gpa": 1.7,
             "f_score": 1,
             "asset_growth_yoy": 251.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "셀바스AI": {
             "pbr": 0.69,
             "gpa": -0.1,
             "f_score": 3,
             "asset_growth_yoy": -1.4,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "옵티시스": {
             "pbr": 0.79,
             "gpa": 4.5,
             "f_score": 3,
             "asset_growth_yoy": 8.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "에스와이": {
             "pbr": 0.42,
             "gpa": 1.7,
             "f_score": 1,
             "asset_growth_yoy": 11.7,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "씨싸이트": {
             "pbr": 0.42,
             "gpa": 6.8,
             "f_score": 2,
             "asset_growth_yoy": -1.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "디에스케이": {
             "pbr": 1.11,
             "gpa": -1.7,
             "f_score": 1,
             "asset_growth_yoy": -10.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "진매트릭스": {
             "pbr": 1.6,
             "gpa": 5.8,
             "f_score": 1,
             "asset_growth_yoy": -2.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "동일금속": {
             "pbr": 0.43,
             "gpa": 1.6,
             "f_score": 2,
             "asset_growth_yoy": 2.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "앱토크롬": {
             "pbr": 0.08,
             "gpa": 0.1,
             "f_score": 1,
             "asset_growth_yoy": 0.1,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "전진바이오팜": {
             "pbr": 0.92,
             "gpa": 3.6,
             "f_score": 2,
             "asset_growth_yoy": 0.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "크리스에프앤씨": {
             "pbr": 0.17,
             "gpa": 4.2,
             "f_score": 1,
             "asset_growth_yoy": -7.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "디아이티": {
             "pbr": 1.45,
             "gpa": 7.4,
             "f_score": 3,
             "asset_growth_yoy": 17.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "남화산업": {
             "pbr": 0.42,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 1.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "위메이드": {
             "pbr": 0.72,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -5.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "와이씨켐": {
             "pbr": 4.3,
             "gpa": 4.6,
             "f_score": 2,
             "asset_growth_yoy": 26.9,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "디젠스": {
             "pbr": 0.59,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": 6.4,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "강원에너지": {
             "pbr": 3.64,
             "gpa": 0.9,
             "f_score": 2,
             "asset_growth_yoy": -0.4,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "그린생명과학": {
             "pbr": 0.94,
             "gpa": 2.0,
             "f_score": 2,
             "asset_growth_yoy": 25.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "폴라리스우노": {
             "pbr": 0.22,
             "gpa": 2.5,
             "f_score": 2,
             "asset_growth_yoy": 10.6,
-            "pbr_judgment": "저평가"
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "한솔아이원스": {
             "pbr": 1.69,
             "gpa": 5.7,
             "f_score": 2,
             "asset_growth_yoy": 4.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "아이패밀리에스씨": {
             "pbr": 1.33,
             "gpa": 17.1,
             "f_score": 3,
             "asset_growth_yoy": 11.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "휴맥스": {
             "pbr": 0.2,
             "gpa": 4.2,
             "f_score": 3,
             "asset_growth_yoy": -19.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "큐리언트": {
             "pbr": 21.13,
             "gpa": 0.4,
             "f_score": 1,
             "asset_growth_yoy": -6.8,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "인포바인": {
             "pbr": 1.08,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -0.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "우리넷": {
             "pbr": 0.83,
             "gpa": 1.4,
             "f_score": 1,
             "asset_growth_yoy": 10.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "HLB테라퓨틱스": {
             "pbr": 0.99,
             "gpa": -0.3,
             "f_score": 1,
             "asset_growth_yoy": 2.2,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "씨유메디칼": {
             "pbr": 0.29,
             "gpa": 5.7,
             "f_score": 3,
             "asset_growth_yoy": 30.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "케이씨에스": {
             "pbr": 5.61,
             "gpa": 3.4,
             "f_score": 3,
             "asset_growth_yoy": -0.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "씨엔플러스": {
             "pbr": 2.04,
             "gpa": 1.6,
             "f_score": 1,
             "asset_growth_yoy": 6.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "스타플렉스": {
             "pbr": 0.28,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 3.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "이미지스": {
             "pbr": 1.55,
             "gpa": 5.1,
             "f_score": 1,
             "asset_growth_yoy": 6.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "알파칩스": {
             "pbr": 1.32,
             "gpa": 3.0,
             "f_score": 0,
             "asset_growth_yoy": -11.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "티로보틱스": {
             "pbr": 4.7,
             "gpa": 1.7,
             "f_score": 1,
             "asset_growth_yoy": -1.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "모트렉스": {
             "pbr": 0.42,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": 1.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "포메탈": {
             "pbr": 0.58,
             "gpa": 2.0,
             "f_score": 3,
             "asset_growth_yoy": -0.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "인터로조": {
             "pbr": 1.16,
             "gpa": 5.1,
             "f_score": 2,
             "asset_growth_yoy": 7.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "아이텍": {
             "pbr": 0.81,
             "gpa": 0.6,
             "f_score": 1,
             "asset_growth_yoy": 16.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "지엔씨에너지": {
             "pbr": 2.28,
             "gpa": 2.8,
             "f_score": 2,
             "asset_growth_yoy": 48.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "대정화금": {
             "pbr": 0.55,
             "gpa": 3.2,
             "f_score": 3,
             "asset_growth_yoy": 6.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "골프존홀딩스": {
             "pbr": 0.38,
             "gpa": 2.2,
             "f_score": 2,
             "asset_growth_yoy": -0.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "나노신소재": {
             "pbr": 2.21,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": -13.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "비덴트": {
             "pbr": 0.42,
             "gpa": 0.2,
             "f_score": 1,
             "asset_growth_yoy": -12.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "코이즈": {
             "pbr": 0.98,
             "gpa": 4.2,
             "f_score": 1,
             "asset_growth_yoy": -0.5,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "에스디시스템": {
             "pbr": 2.25,
             "gpa": -1.3,
             "f_score": 1,
             "asset_growth_yoy": -8.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "제노레이": {
             "pbr": 0.58,
             "gpa": 7.2,
             "f_score": 2,
             "asset_growth_yoy": 7.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "삼기": {
             "pbr": 0.46,
             "gpa": 1.3,
             "f_score": 2,
             "asset_growth_yoy": 10.3,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "KX": {
             "pbr": 0.25,
             "gpa": 1.9,
             "f_score": 2,
             "asset_growth_yoy": 7.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "예스티": {
             "pbr": 4.87,
             "gpa": 2.7,
             "f_score": 3,
             "asset_growth_yoy": 18.4,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "서진오토모티브": {
             "pbr": 0.09,
             "gpa": 2.1,
             "f_score": 3,
             "asset_growth_yoy": 12.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "와이지엔터테인먼트": {
             "pbr": 1.17,
             "gpa": 5.8,
             "f_score": 3,
             "asset_growth_yoy": 15.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "와이솔": {
             "pbr": 0.56,
             "gpa": 4.5,
             "f_score": 2,
             "asset_growth_yoy": -9.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "알엔티엑스": {
             "pbr": 1.94,
             "gpa": 5.6,
             "f_score": 2,
             "asset_growth_yoy": -8.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "엠에스오토텍": {
             "pbr": 0.14,
             "gpa": 2.0,
             "f_score": 2,
             "asset_growth_yoy": 4.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "제닉": {
             "pbr": 4.28,
             "gpa": 8.3,
             "f_score": 2,
             "asset_growth_yoy": 61.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "코리아에프티": {
             "pbr": 0.54,
             "gpa": 6.1,
             "f_score": 3,
             "asset_growth_yoy": 14.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "위메이드플레이": {
             "pbr": 0.23,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -18.1,
-            "pbr_judgment": "저평가"
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "이엠넷": {
             "pbr": 0.38,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 5.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "알톤": {
             "pbr": 1.4,
             "gpa": 5.1,
             "f_score": 0,
             "asset_growth_yoy": 13.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "뉴온": {
             "pbr": 0.15,
             "gpa": 8.7,
             "f_score": 0,
             "asset_growth_yoy": -17.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "아나패스": {
             "pbr": 2.11,
             "gpa": 5.6,
             "f_score": 2,
             "asset_growth_yoy": 7.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "아이티센글로벌": {
             "pbr": 0.86,
             "gpa": 8.8,
             "f_score": 2,
             "asset_growth_yoy": 76.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "태웅로직스": {
             "pbr": 0.28,
             "gpa": 4.1,
             "f_score": 2,
             "asset_growth_yoy": 5.8,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "티씨머티리얼즈": {
             "pbr": 2.2,
             "gpa": 6.0,
             "f_score": 2,
             "asset_growth_yoy": 70.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "아모그린텍": {
             "pbr": 1.18,
             "gpa": 4.0,
             "f_score": 3,
             "asset_growth_yoy": 8.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한라캐스트": {
             "pbr": 2.71,
             "gpa": 2.0,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "비나텍": {
             "pbr": 3.88,
             "gpa": 1.8,
             "f_score": 0,
             "asset_growth_yoy": 66.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "BGF에코머티리얼즈": {
             "pbr": 0.37,
             "gpa": 2.1,
             "f_score": 2,
             "asset_growth_yoy": 11.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "화신정공": {
             "pbr": 1.09,
             "gpa": 6.1,
             "f_score": 2,
             "asset_growth_yoy": 35.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "하이비젼시스템": {
             "pbr": 0.52,
             "gpa": 1.8,
             "f_score": 1,
             "asset_growth_yoy": -13.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "코칩": {
             "pbr": 2.23,
             "gpa": 3.9,
             "f_score": 3,
             "asset_growth_yoy": 9.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "제이엔케이글로벌": {
             "pbr": 0.42,
             "gpa": 1.7,
             "f_score": 3,
             "asset_growth_yoy": 0.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "제이에스링크": {
             "pbr": 15.65,
             "gpa": -0.3,
             "f_score": 0,
             "asset_growth_yoy": 137.4,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "아시아경제": {
             "pbr": 0.48,
             "gpa": 1.2,
             "f_score": 2,
             "asset_growth_yoy": -10.4,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "화인써키트": {
             "pbr": 0.81,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": -16.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "에코캡": {
             "pbr": 0.31,
             "gpa": 2.1,
             "f_score": 3,
             "asset_growth_yoy": -11.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "피제이메탈": {
             "pbr": 0.91,
             "gpa": 5.6,
             "f_score": 3,
             "asset_growth_yoy": 12.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "앱코": {
             "pbr": 0.75,
             "gpa": 3.1,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "대성하이텍": {
             "pbr": 1.51,
             "gpa": 2.2,
             "f_score": 1,
             "asset_growth_yoy": 13.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "GH신소재": {
             "pbr": 0.26,
             "gpa": 2.0,
             "f_score": 2,
             "asset_growth_yoy": 4.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "나이스디앤비": {
             "pbr": 0.75,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 12.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "티피씨글로벌": {
             "pbr": 0.27,
             "gpa": 1.8,
             "f_score": 2,
             "asset_growth_yoy": -1.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "옵투스제약": {
             "pbr": 0.57,
             "gpa": 6.9,
             "f_score": 1,
             "asset_growth_yoy": 23.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "시큐브": {
             "pbr": 0.61,
             "gpa": 3.8,
             "f_score": 3,
             "asset_growth_yoy": 8.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "티엔엔터테인먼트": {
             "pbr": 0.36,
             "gpa": 2.9,
             "f_score": 1,
             "asset_growth_yoy": -28.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "딜리": {
             "pbr": 0.35,
             "gpa": 3.9,
             "f_score": 3,
             "asset_growth_yoy": 0.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "대한과학": {
             "pbr": 0.52,
             "gpa": 7.4,
             "f_score": 2,
             "asset_growth_yoy": 4.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "티에스이": {
             "pbr": 6.09,
             "gpa": 8.5,
             "f_score": 2,
             "asset_growth_yoy": 31.5,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "알서포트": {
             "pbr": 0.81,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -4.9,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "이브이첨단소재": {
             "pbr": 0.45,
             "gpa": 2.2,
             "f_score": 1,
             "asset_growth_yoy": -10.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "파인텍": {
             "pbr": 0.55,
             "gpa": 0.2,
             "f_score": 2,
             "asset_growth_yoy": -12.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "두산테스나": {
             "pbr": 4.22,
             "gpa": 1.9,
             "f_score": 3,
             "asset_growth_yoy": -6.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "메가엠디": {
             "pbr": 0.47,
             "gpa": 5.4,
             "f_score": 3,
             "asset_growth_yoy": -8.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "이퓨쳐": {
             "pbr": 1.0,
             "gpa": 6.2,
             "f_score": 3,
             "asset_growth_yoy": 0.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "탑코미디어": {
             "pbr": 1.64,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 60.9,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "원일티엔아이": {
             "pbr": 1.35,
             "gpa": 0.2,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "아셈스": {
             "pbr": 0.74,
             "gpa": 4.5,
             "f_score": 3,
             "asset_growth_yoy": 9.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "하림": {
             "pbr": 0.89,
             "gpa": 6.3,
             "f_score": 3,
             "asset_growth_yoy": -4.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "윈스테크넷": {
             "pbr": 0.72,
             "gpa": 3.9,
             "f_score": 3,
             "asset_growth_yoy": 0.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "나래나노텍": {
             "pbr": 0.43,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": -6.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "피엔티": {
             "pbr": 1.01,
             "gpa": 1.2,
             "f_score": 3,
             "asset_growth_yoy": 7.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "넥스트아이": {
             "pbr": 0.39,
             "gpa": 46.7,
             "f_score": 2,
             "asset_growth_yoy": -8.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "제이씨케미칼": {
             "pbr": 0.45,
             "gpa": 1.7,
             "f_score": 3,
             "asset_growth_yoy": 10.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "신진에스엠": {
             "pbr": 0.34,
             "gpa": 3.2,
             "f_score": 3,
             "asset_growth_yoy": -2.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "오이솔루션": {
             "pbr": 3.54,
             "gpa": 3.8,
             "f_score": 2,
             "asset_growth_yoy": -10.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "앤로보틱스": {
             "pbr": 1.71,
             "gpa": 3.5,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "나이벡": {
             "pbr": 3.76,
             "gpa": 4.7,
             "f_score": 3,
             "asset_growth_yoy": 10.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "키네마스터": {
             "pbr": 0.73,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 16.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "서플러스글로벌": {
             "pbr": 0.34,
             "gpa": 0.8,
             "f_score": 1,
             "asset_growth_yoy": 1.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "메지온": {
-            "pbr": 107.77,
+            "pbr": 108.38,
             "gpa": null,
             "f_score": null,
             "asset_growth_yoy": 39.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "카티스": {
             "pbr": 0.47,
             "gpa": 0.9,
             "f_score": 1,
             "asset_growth_yoy": 8.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "대창스틸": {
             "pbr": 0.28,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": 7.2,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "알에스오토메이션": {
             "pbr": 2.04,
             "gpa": 3.3,
             "f_score": 0,
             "asset_growth_yoy": 43.4,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "파크시스템스": {
             "pbr": 8.13,
             "gpa": 7.5,
             "f_score": 3,
             "asset_growth_yoy": 20.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "비아트론": {
             "pbr": 0.57,
             "gpa": 1.3,
             "f_score": 2,
             "asset_growth_yoy": -1.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "리가켐바이오": {
             "pbr": 8.21,
             "gpa": 5.1,
             "f_score": 0,
             "asset_growth_yoy": -11.7,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "유니트론텍": {
             "pbr": 0.74,
             "gpa": 6.6,
             "f_score": 2,
             "asset_growth_yoy": 31.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "녹십자엠에스": {
             "pbr": 1.42,
             "gpa": 3.5,
             "f_score": 2,
             "asset_growth_yoy": -4.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "모아라이프플러스": {
             "pbr": 0.53,
             "gpa": 1.1,
             "f_score": 0,
             "asset_growth_yoy": -28.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "아이디스": {
             "pbr": 0.47,
             "gpa": 6.5,
             "f_score": 3,
             "asset_growth_yoy": 7.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "사람인": {
             "pbr": 0.64,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 45.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "영우디에스피": {
             "pbr": 1.33,
             "gpa": 9.8,
             "f_score": 3,
             "asset_growth_yoy": -13.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "지씨셀": {
             "pbr": 1.15,
             "gpa": 1.8,
             "f_score": 1,
             "asset_growth_yoy": -44.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "뉴파워프라즈마": {
             "pbr": 1.01,
             "gpa": 4.2,
             "f_score": 2,
             "asset_growth_yoy": 3.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "휴젤": {
             "pbr": 2.78,
             "gpa": 7.9,
             "f_score": 3,
             "asset_growth_yoy": 16.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "노브랜드": {
             "pbr": 0.32,
             "gpa": 6.0,
             "f_score": 2,
             "asset_growth_yoy": 18.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "율촌": {
             "pbr": 0.44,
             "gpa": 2.7,
             "f_score": 3,
             "asset_growth_yoy": 21.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "비씨엔씨": {
             "pbr": 1.75,
             "gpa": 2.5,
             "f_score": null,
             "asset_growth_yoy": 2.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "피엠티": {
             "pbr": 8.55,
             "gpa": 3.5,
             "f_score": 1,
             "asset_growth_yoy": 1.8,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "제룡산업": {
             "pbr": 1.55,
             "gpa": 6.4,
             "f_score": 3,
             "asset_growth_yoy": 15.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "세경하이테크": {
             "pbr": 0.45,
             "gpa": 5.0,
             "f_score": 2,
             "asset_growth_yoy": 2.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "알엔투테크놀로지": {
             "pbr": 0.79,
             "gpa": 2.4,
             "f_score": 1,
             "asset_growth_yoy": 24.6,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "비큐AI": {
             "pbr": 1.28,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -4.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "에이치와이티씨": {
             "pbr": 0.5,
             "gpa": 0.9,
             "f_score": 2,
             "asset_growth_yoy": 10.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "아바텍": {
             "pbr": 0.89,
             "gpa": 1.5,
             "f_score": 3,
             "asset_growth_yoy": 4.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "하이로닉": {
             "pbr": 0.89,
             "gpa": 7.3,
             "f_score": 2,
             "asset_growth_yoy": 12.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "파수AI": {
             "pbr": 1.08,
             "gpa": 12.6,
             "f_score": 2,
             "asset_growth_yoy": -3.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "KG에코솔루션": {
             "pbr": 0.08,
             "gpa": 2.7,
             "f_score": 3,
             "asset_growth_yoy": 5.1,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "네이블": {
             "pbr": 1.21,
             "gpa": 2.8,
             "f_score": 2,
             "asset_growth_yoy": 13.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "우리이앤엘하루틴": {
             "pbr": 0.26,
             "gpa": 5.8,
             "f_score": 1,
             "asset_growth_yoy": 4.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "옵티팜": {
             "pbr": 2.86,
             "gpa": 2.9,
             "f_score": 1,
             "asset_growth_yoy": -9.9,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "아시아종묘": {
             "pbr": 0.74,
             "gpa": 10.7,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "다산솔루에타": {
             "pbr": 0.34,
             "gpa": 2.1,
             "f_score": 1,
             "asset_growth_yoy": -5.6,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "와이엠씨": {
             "pbr": 0.44,
             "gpa": 3.0,
             "f_score": 3,
             "asset_growth_yoy": 4.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "엘앤케이바이오": {
             "pbr": 1.86,
             "gpa": 7.3,
             "f_score": 2,
             "asset_growth_yoy": 30.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "아톤": {
             "pbr": 0.91,
             "gpa": 6.2,
             "f_score": 2,
             "asset_growth_yoy": 15.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "아스플로": {
             "pbr": 4.28,
             "gpa": 3.2,
             "f_score": 3,
             "asset_growth_yoy": -5.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "제로투세븐": {
             "pbr": 0.53,
             "gpa": 6.9,
             "f_score": 2,
             "asset_growth_yoy": -0.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "하이젠알앤엠": {
             "pbr": 4.83,
             "gpa": -0.2,
             "f_score": 2,
             "asset_growth_yoy": 40.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "NEW": {
             "pbr": 0.26,
             "gpa": 1.9,
             "f_score": 2,
             "asset_growth_yoy": -1.1,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "싸이맥스": {
             "pbr": 2.31,
             "gpa": 4.2,
             "f_score": 2,
             "asset_growth_yoy": 1.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "필옵틱스": {
             "pbr": 3.93,
             "gpa": 0.5,
             "f_score": 1,
             "asset_growth_yoy": -4.8,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "신스틸": {
             "pbr": 0.7,
             "gpa": 2.7,
             "f_score": 3,
             "asset_growth_yoy": 4.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "에어레인": {
             "pbr": 0.67,
             "gpa": 2.0,
             "f_score": 3,
             "asset_growth_yoy": 35.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "핑거": {
             "pbr": 2.29,
             "gpa": 2.7,
             "f_score": 0,
             "asset_growth_yoy": -2.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "하나머티리얼즈": {
             "pbr": 2.36,
             "gpa": 5.3,
             "f_score": 3,
             "asset_growth_yoy": 22.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "코아스템켐온": {
             "pbr": 2.12,
             "gpa": -1.5,
             "f_score": 0,
             "asset_growth_yoy": -10.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "내츄럴엔도텍": {
             "pbr": 2.53,
             "gpa": 7.5,
             "f_score": 2,
             "asset_growth_yoy": 7.6,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "펨트론": {
             "pbr": 12.67,
             "gpa": 7.2,
             "f_score": 2,
             "asset_growth_yoy": 46.5,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "엠브레인": {
             "pbr": 0.98,
             "gpa": 3.3,
             "f_score": 2,
             "asset_growth_yoy": -5.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "현대공업": {
             "pbr": 0.45,
             "gpa": 3.4,
             "f_score": 3,
             "asset_growth_yoy": 11.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "파이오링크": {
             "pbr": 0.6,
             "gpa": 5.0,
             "f_score": 1,
             "asset_growth_yoy": 3.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "엘티씨": {
             "pbr": 2.49,
             "gpa": 7.0,
             "f_score": 3,
             "asset_growth_yoy": 23.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "램테크놀러지": {
             "pbr": 0.95,
             "gpa": 1.9,
             "f_score": 2,
             "asset_growth_yoy": 3.5,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "선익시스템": {
             "pbr": 3.09,
             "gpa": 1.3,
             "f_score": 2,
             "asset_growth_yoy": 27.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "라이온켐텍": {
             "pbr": 0.53,
             "gpa": 4.7,
             "f_score": null,
             "asset_growth_yoy": 5.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "에이엘티": {
             "pbr": 0.93,
             "gpa": 0.2,
             "f_score": 2,
             "asset_growth_yoy": -6.9,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "오파스넷": {
             "pbr": 1.27,
             "gpa": 5.1,
             "f_score": 2,
             "asset_growth_yoy": 9.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "에프엔씨엔터": {
             "pbr": 1.5,
             "gpa": 3.8,
             "f_score": 2,
             "asset_growth_yoy": 2.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "앱클론": {
             "pbr": 7.82,
             "gpa": 0.4,
             "f_score": 0,
             "asset_growth_yoy": 107.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "휴먼테크놀로지": {
             "pbr": 1.37,
             "gpa": 28.8,
             "f_score": 2,
             "asset_growth_yoy": -20.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "아이큐어": {
             "pbr": 3.43,
             "gpa": 4.1,
             "f_score": 0,
             "asset_growth_yoy": -32.1,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "듀켐바이오": {
             "pbr": 3.39,
             "gpa": 4.4,
             "f_score": 3,
             "asset_growth_yoy": 20.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "베셀": {
             "pbr": 0.35,
             "gpa": 1.6,
             "f_score": 2,
             "asset_growth_yoy": 9.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "파버나인": {
             "pbr": 0.37,
             "gpa": 2.5,
             "f_score": 1,
             "asset_growth_yoy": -4.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "쓰리에이로직스": {
             "pbr": 0.83,
             "gpa": 2.3,
             "f_score": 3,
             "asset_growth_yoy": -5.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "서진시스템": {
             "pbr": 3.22,
             "gpa": 0.1,
             "f_score": 0,
             "asset_growth_yoy": 19.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "일월지엠엘": {
             "pbr": 1.18,
             "gpa": 1.5,
             "f_score": 2,
             "asset_growth_yoy": 6.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "엠아이텍": {
             "pbr": 1.15,
             "gpa": 6.7,
             "f_score": null,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "애드바이오텍": {
             "pbr": 3.96,
             "gpa": 3.5,
             "f_score": 1,
             "asset_growth_yoy": 68.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "유티아이": {
             "pbr": 1.15,
             "gpa": -2.7,
             "f_score": 1,
             "asset_growth_yoy": 45.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "DXVX": {
             "pbr": 2.44,
             "gpa": 0.6,
             "f_score": 0,
             "asset_growth_yoy": 61.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "큐브엔터": {
             "pbr": 0.51,
             "gpa": -0.7,
             "f_score": 1,
             "asset_growth_yoy": -15.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "엔케이젠바이오텍코리아": {
             "pbr": 43.04,
             "gpa": 10.2,
             "f_score": 0,
             "asset_growth_yoy": -43.4,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "코미코": {
             "pbr": 4.25,
             "gpa": 5.6,
             "f_score": 3,
             "asset_growth_yoy": 40.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "엔지켐생명과학": {
             "pbr": 0.56,
             "gpa": 0.2,
             "f_score": 1,
             "asset_growth_yoy": -8.7,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "SGA솔루션즈": {
             "pbr": 0.67,
             "gpa": 9.1,
             "f_score": 1,
             "asset_growth_yoy": 50.9,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "아이진": {
             "pbr": 1.3,
             "gpa": 0.5,
             "f_score": 0,
             "asset_growth_yoy": 2.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "그린플러스": {
             "pbr": 0.95,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": -15.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "디티앤씨": {
             "pbr": 0.26,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": 2.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "신화콘텍": {
             "pbr": 0.4,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": -8.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "HLB제넥스": {
             "pbr": 1.16,
             "gpa": 3.6,
             "f_score": 1,
             "asset_growth_yoy": -2.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "페니트리움바이오": {
             "pbr": 7.71,
             "gpa": -0.4,
             "f_score": 0,
             "asset_growth_yoy": 72.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "나노": {
             "pbr": 2.37,
             "gpa": 1.9,
             "f_score": 1,
             "asset_growth_yoy": 18.7,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "디바이스": {
             "pbr": 1.19,
             "gpa": 6.7,
             "f_score": 3,
             "asset_growth_yoy": 7.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "바이오포트": {
             "pbr": 0.59,
             "gpa": 10.2,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "세니젠": {
             "pbr": 17.82,
             "gpa": 8.8,
             "f_score": 0,
             "asset_growth_yoy": -39.8,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "인텔리안테크": {
             "pbr": 2.58,
             "gpa": 6.0,
             "f_score": 3,
             "asset_growth_yoy": 20.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "씨이랩": {
             "pbr": 3.64,
             "gpa": 0.8,
             "f_score": 0,
             "asset_growth_yoy": 132.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "포시에스": {
             "pbr": 0.59,
             "gpa": 5.2,
             "f_score": 3,
             "asset_growth_yoy": 2.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "서전기전": {
             "pbr": 1.19,
             "gpa": -0.2,
             "f_score": 1,
             "asset_growth_yoy": -19.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "흥국에프엔비": {
             "pbr": 0.46,
             "gpa": 3.1,
             "f_score": 2,
             "asset_growth_yoy": 14.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "나무가": {
             "pbr": 1.09,
             "gpa": 3.6,
             "f_score": 2,
             "asset_growth_yoy": -7.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "코리아에셋투자증권": {
             "pbr": 0.44,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 35.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "육일씨엔에쓰": {
             "pbr": 0.72,
             "gpa": 5.4,
             "f_score": 2,
             "asset_growth_yoy": -10.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "테고사이언스": {
             "pbr": 1.12,
             "gpa": 1.0,
             "f_score": 1,
             "asset_growth_yoy": 44.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "케이사인": {
             "pbr": 0.44,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": -4.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "윈하이텍": {
             "pbr": 0.3,
             "gpa": -0.4,
             "f_score": 0,
             "asset_growth_yoy": -5.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "오늘이엔엠": {
             "pbr": 16.2,
             "gpa": 3.8,
             "f_score": 1,
             "asset_growth_yoy": 18.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "슈피겐코리아": {
             "pbr": 0.33,
             "gpa": 12.1,
             "f_score": 3,
             "asset_growth_yoy": 4.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "링크드": {
             "pbr": 0.39,
             "gpa": -0.1,
             "f_score": 0,
             "asset_growth_yoy": 14.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "데브시스터즈": {
             "pbr": 1.29,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 6.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "노바렉스": {
             "pbr": 0.94,
             "gpa": 5.6,
             "f_score": 3,
             "asset_growth_yoy": 23.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "마니커에프앤지": {
             "pbr": 0.33,
             "gpa": 3.6,
             "f_score": 3,
             "asset_growth_yoy": 1.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "HK이노엔": {
             "pbr": 0.83,
             "gpa": 5.7,
             "f_score": 3,
             "asset_growth_yoy": 7.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "루트K": {
             "pbr": 0.36,
             "gpa": 0.9,
             "f_score": 1,
             "asset_growth_yoy": -42.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "알테오젠": {
             "pbr": 30.14,
             "gpa": 8.4,
             "f_score": 3,
             "asset_growth_yoy": 12.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "HLB펩": {
             "pbr": 2.0,
             "gpa": -0.5,
             "f_score": 1,
             "asset_growth_yoy": 52.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "코아시아씨엠": {
             "pbr": 0.56,
             "gpa": 3.6,
             "f_score": 2,
             "asset_growth_yoy": 10.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "디에이테크놀로지": {
             "pbr": -5.48,
             "gpa": 1.4,
             "f_score": 0,
             "asset_growth_yoy": -40.5,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "웹스": {
             "pbr": 0.36,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": 4.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "디지캡": {
             "pbr": 0.5,
             "gpa": 1.7,
             "f_score": 1,
             "asset_growth_yoy": -3.7,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "캐프": {
             "pbr": 0.33,
             "gpa": 8.7,
             "f_score": 3,
             "asset_growth_yoy": 5.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "강동씨앤엘": {
             "pbr": 0.68,
             "gpa": 0.3,
             "f_score": 1,
             "asset_growth_yoy": -3.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "한주라이트메탈": {
             "pbr": 0.6,
             "gpa": 1.6,
             "f_score": 2,
             "asset_growth_yoy": -5.2,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "케이엔알시스템": {
             "pbr": 4.49,
             "gpa": -0.1,
             "f_score": 1,
             "asset_growth_yoy": 25.9,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "뱅크웨어글로벌": {
             "pbr": 1.61,
             "gpa": 4.0,
             "f_score": 1,
             "asset_growth_yoy": -9.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "레이저옵텍": {
             "pbr": 2.0,
             "gpa": 7.2,
             "f_score": 0,
             "asset_growth_yoy": -18.4,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "바이오인프라": {
             "pbr": 0.63,
             "gpa": 2.0,
             "f_score": 1,
             "asset_growth_yoy": -16.1,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "툴젠": {
             "pbr": 7.44,
             "gpa": 0.6,
             "f_score": 0,
             "asset_growth_yoy": -19.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "제일일렉트릭": {
             "pbr": 1.02,
             "gpa": 2.8,
             "f_score": 3,
             "asset_growth_yoy": 6.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "콜마비앤에이치": {
             "pbr": 0.65,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": -14.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "텔콘RF제약": {
             "pbr": 0.16,
             "gpa": 1.2,
             "f_score": 0,
             "asset_growth_yoy": 7.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "아티스트스튜디오": {
             "pbr": 0.39,
             "gpa": 0.5,
             "f_score": 2,
             "asset_growth_yoy": -6.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "에이팩트": {
             "pbr": 3.55,
             "gpa": -0.2,
             "f_score": 1,
             "asset_growth_yoy": 23.2,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "휴메딕스": {
             "pbr": 0.98,
             "gpa": 5.3,
             "f_score": 3,
             "asset_growth_yoy": 27.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "에이디테크놀로지": {
             "pbr": 3.1,
             "gpa": 2.2,
             "f_score": 3,
             "asset_growth_yoy": 32.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "비씨월드제약": {
             "pbr": 0.47,
             "gpa": 4.6,
             "f_score": 2,
             "asset_growth_yoy": -0.3,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "미투온": {
             "pbr": 0.26,
             "gpa": 4.5,
             "f_score": 3,
             "asset_growth_yoy": -6.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "에이비온": {
             "pbr": 1.06,
             "gpa": 0.1,
             "f_score": 1,
             "asset_growth_yoy": 49.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "유니온바이오메트릭스": {
             "pbr": 0.92,
             "gpa": 7.0,
             "f_score": 3,
             "asset_growth_yoy": 2.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "드림시큐리티": {
             "pbr": 1.49,
             "gpa": 3.3,
             "f_score": 2,
             "asset_growth_yoy": 12.5,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "그리티": {
             "pbr": 0.44,
             "gpa": 15.7,
             "f_score": 2,
             "asset_growth_yoy": 24.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "제이앤티씨": {
             "pbr": 3.91,
             "gpa": -1.1,
             "f_score": 2,
             "asset_growth_yoy": -9.2,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "티쓰리": {
             "pbr": 1.46,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 14.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "글로벌텍스프리": {
             "pbr": 2.18,
             "gpa": 3.0,
             "f_score": 2,
             "asset_growth_yoy": 8.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "지엘팜텍": {
             "pbr": 3.18,
             "gpa": 8.2,
             "f_score": 1,
             "asset_growth_yoy": 7.2,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "엑셈": {
             "pbr": 0.95,
             "gpa": 2.0,
             "f_score": 2,
             "asset_growth_yoy": -2.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "휴마시스": {
             "pbr": 0.23,
             "gpa": 0.4,
             "f_score": 2,
             "asset_growth_yoy": 0.0,
-            "pbr_judgment": "저평가"
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "넥써쓰": {
             "pbr": 3.8,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": 39.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "베노티앤알": {
             "pbr": 0.45,
             "gpa": 0.2,
             "f_score": 0,
             "asset_growth_yoy": -13.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "덱스터": {
             "pbr": 0.67,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 9.4,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "바디텍메드": {
             "pbr": 0.96,
             "gpa": 8.4,
             "f_score": 3,
             "asset_growth_yoy": 14.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "유바이오로직스": {
             "pbr": 1.67,
             "gpa": 3.6,
             "f_score": 3,
             "asset_growth_yoy": 7.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "미스터블루": {
             "pbr": 0.89,
             "gpa": 0.8,
             "f_score": 3,
             "asset_growth_yoy": -27.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "정다운": {
             "pbr": 0.57,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": 1.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "지란지교시큐리티": {
             "pbr": 0.37,
             "gpa": 3.9,
             "f_score": 1,
             "asset_growth_yoy": 1.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "셀바스헬스케어": {
             "pbr": 0.79,
             "gpa": 3.5,
             "f_score": 3,
             "asset_growth_yoy": 29.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "썸에이지": {
             "pbr": 0.81,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": -42.7,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "포톤": {
             "pbr": 0.52,
             "gpa": 2.0,
             "f_score": 3,
             "asset_growth_yoy": 5.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "다산디엠씨": {
             "pbr": 0.59,
             "gpa": 5.6,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "와이제이링크": {
             "pbr": 1.2,
             "gpa": 4.4,
             "f_score": 3,
             "asset_growth_yoy": 11.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "캔버스엔": {
             "pbr": 2.41,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -8.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "인카금융서비스": {
             "pbr": 2.29,
             "gpa": 5.1,
             "f_score": 2,
             "asset_growth_yoy": 35.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "AP위성": {
             "pbr": 1.2,
             "gpa": -0.3,
             "f_score": 2,
             "asset_growth_yoy": -6.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "네오오토": {
             "pbr": 1.11,
             "gpa": 3.4,
             "f_score": 3,
             "asset_growth_yoy": 7.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "아이에스티이": {
             "pbr": 4.74,
             "gpa": 3.8,
             "f_score": 2,
             "asset_growth_yoy": 3.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "덕산네오룩스": {
             "pbr": 1.61,
             "gpa": 4.2,
             "f_score": 3,
             "asset_growth_yoy": 17.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "클래시스": {
             "pbr": 5.61,
             "gpa": 8.1,
             "f_score": 3,
             "asset_growth_yoy": 26.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "헥토이노베이션": {
             "pbr": 0.5,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 22.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "라파스": {
             "pbr": 2.84,
             "gpa": 5.0,
             "f_score": 1,
             "asset_growth_yoy": -17.3,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "FSN": {
             "pbr": 0.61,
             "gpa": 0.6,
             "f_score": 1,
             "asset_growth_yoy": -4.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "케어젠": {
             "pbr": 16.03,
             "gpa": 6.3,
             "f_score": 3,
             "asset_growth_yoy": -1.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "아이쓰리시스템": {
             "pbr": 3.12,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": 25.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "파마리서치": {
             "pbr": 4.65,
             "gpa": 10.4,
             "f_score": 3,
             "asset_growth_yoy": 22.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "롤링스톤": {
             "pbr": 1.46,
             "gpa": -3.0,
             "f_score": 1,
             "asset_growth_yoy": -49.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "디알텍": {
             "pbr": 1.04,
             "gpa": 7.2,
             "f_score": 0,
             "asset_growth_yoy": -0.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "골프존": {
             "pbr": 0.57,
             "gpa": 11.1,
             "f_score": 3,
             "asset_growth_yoy": -4.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "솔디펜스": {
             "pbr": 0.59,
             "gpa": 3.1,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "로보로보": {
             "pbr": 2.69,
             "gpa": 5.4,
             "f_score": 1,
             "asset_growth_yoy": -7.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "메가스터디교육": {
             "pbr": 0.79,
             "gpa": 13.3,
             "f_score": 3,
             "asset_growth_yoy": 6.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "우리산업": {
             "pbr": 0.47,
             "gpa": 4.4,
             "f_score": 3,
             "asset_growth_yoy": 5.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "우정바이오": {
             "pbr": 1.77,
             "gpa": 2.9,
             "f_score": 1,
             "asset_growth_yoy": 31.6,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "토박스코리아": {
             "pbr": 0.57,
             "gpa": 14.3,
             "f_score": 1,
             "asset_growth_yoy": -7.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "신라젠": {
             "pbr": 2.79,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -22.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "이노인스트루먼트": {
             "pbr": 1.02,
             "gpa": 6.3,
             "f_score": 1,
             "asset_growth_yoy": -10.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "인크로스": {
             "pbr": 0.46,
             "gpa": 1.5,
             "f_score": 2,
             "asset_growth_yoy": 8.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "제테마": {
             "pbr": 2.39,
             "gpa": 3.8,
             "f_score": 0,
             "asset_growth_yoy": -3.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "제너셈": {
             "pbr": 1.52,
             "gpa": 3.0,
             "f_score": 1,
             "asset_growth_yoy": 1.4,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "넵튠": {
             "pbr": 0.32,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -11.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "싸이토젠": {
             "pbr": 2.09,
             "gpa": 3.3,
             "f_score": 1,
             "asset_growth_yoy": -20.4,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "에스디생명공학": {
             "pbr": 1.91,
             "gpa": 8.0,
             "f_score": 1,
             "asset_growth_yoy": -39.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "러셀": {
             "pbr": 0.8,
             "gpa": 1.4,
             "f_score": 1,
             "asset_growth_yoy": -2.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "강스템바이오텍": {
             "pbr": 3.49,
             "gpa": -0.0,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "원익피앤이": {
             "pbr": 0.91,
             "gpa": 1.3,
             "f_score": 2,
             "asset_growth_yoy": -27.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "미래생명자원": {
             "pbr": 1.0,
             "gpa": 4.1,
             "f_score": 2,
             "asset_growth_yoy": -5.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "RFHIC": {
             "pbr": 3.21,
             "gpa": 3.1,
             "f_score": 3,
             "asset_growth_yoy": 16.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "타이거일렉": {
             "pbr": 8.43,
             "gpa": 4.7,
             "f_score": 3,
             "asset_growth_yoy": 20.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "링크제니시스": {
             "pbr": 0.79,
             "gpa": 4.5,
             "f_score": 3,
             "asset_growth_yoy": 15.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "디와이디": {
             "pbr": 2.26,
             "gpa": 18.0,
             "f_score": 1,
             "asset_growth_yoy": 8.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "한국비티비": {
             "pbr": 1.06,
             "gpa": 2.8,
             "f_score": 1,
             "asset_growth_yoy": -3.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "퓨쳐켐": {
             "pbr": 3.75,
             "gpa": 2.3,
             "f_score": 2,
             "asset_growth_yoy": -4.9,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "핸디소프트": {
             "pbr": 0.42,
             "gpa": 1.9,
             "f_score": 1,
             "asset_growth_yoy": 17.6,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "켐트로스": {
             "pbr": 1.13,
             "gpa": 3.3,
             "f_score": 3,
             "asset_growth_yoy": 4.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "지구홀딩스": {
             "pbr": 1.59,
             "gpa": 2.2,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "하이즈항공": {
             "pbr": 0.77,
             "gpa": 2.7,
             "f_score": 2,
             "asset_growth_yoy": 7.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "케이디켐": {
             "pbr": 0.38,
             "gpa": 2.9,
             "f_score": 2,
             "asset_growth_yoy": 11.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "코스맥스엔비티": {
             "pbr": 2.64,
             "gpa": 6.1,
             "f_score": 3,
             "asset_growth_yoy": -3.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "SFA넥셀": {
             "pbr": 1.14,
             "gpa": 1.3,
             "f_score": 3,
             "asset_growth_yoy": -8.4,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "팬젠": {
             "pbr": 2.01,
             "gpa": 4.9,
             "f_score": 2,
             "asset_growth_yoy": 8.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "쎄노텍": {
             "pbr": 1.04,
             "gpa": 2.2,
             "f_score": 3,
             "asset_growth_yoy": -1.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "심텍": {
             "pbr": 7.63,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": 17.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "한국맥널티": {
             "pbr": 0.61,
             "gpa": 7.7,
             "f_score": 2,
             "asset_growth_yoy": 0.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "드림씨아이에스": {
             "pbr": 0.87,
             "gpa": 2.4,
             "f_score": 2,
             "asset_growth_yoy": 36.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "사토시홀딩스": {
             "pbr": 3.01,
             "gpa": 2.8,
             "f_score": 1,
             "asset_growth_yoy": 78.0,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "더코디": {
             "pbr": 4.36,
             "gpa": 0.4,
             "f_score": 0,
             "asset_growth_yoy": -11.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "에이텍모빌리티": {
             "pbr": 0.59,
             "gpa": 1.6,
             "f_score": 3,
             "asset_growth_yoy": -6.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "LK삼양": {
             "pbr": 1.56,
             "gpa": 0.6,
             "f_score": 0,
             "asset_growth_yoy": 4.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "제놀루션": {
             "pbr": 0.38,
             "gpa": 1.0,
             "f_score": 2,
             "asset_growth_yoy": -9.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "케이엠제약": {
             "pbr": 0.28,
             "gpa": 2.0,
             "f_score": null,
             "asset_growth_yoy": -5.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "HC보광산업": {
             "pbr": 0.85,
             "gpa": 0.1,
             "f_score": 1,
             "asset_growth_yoy": -3.7,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "넥슨게임즈": {
             "pbr": 2.34,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -19.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "패션플랫폼": {
             "pbr": 0.22,
             "gpa": 17.9,
             "f_score": 3,
             "asset_growth_yoy": 5.8,
-            "pbr_judgment": "저평가"
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "신테카바이오": {
             "pbr": 1.3,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "본느": {
             "pbr": 0.41,
             "gpa": 7.9,
             "f_score": 1,
             "asset_growth_yoy": -25.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "오스테오닉": {
             "pbr": 1.29,
             "gpa": 5.9,
             "f_score": 3,
             "asset_growth_yoy": 20.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "엠디바이스": {
             "pbr": 3.31,
             "gpa": 4.2,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "올릭스": {
             "pbr": 18.94,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": 170.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "아우딘퓨쳐스": {
             "pbr": 1.22,
             "gpa": 6.4,
             "f_score": 1,
             "asset_growth_yoy": 2.7,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "엔투텍": {
             "pbr": 0.33,
             "gpa": -0.1,
             "f_score": 1,
             "asset_growth_yoy": 46.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "동양파일": {
             "pbr": 0.61,
             "gpa": 2.8,
             "f_score": 2,
             "asset_growth_yoy": -4.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "레이": {
             "pbr": 0.97,
             "gpa": 6.9,
             "f_score": 3,
             "asset_growth_yoy": -14.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "지노믹트리": {
             "pbr": 2.46,
             "gpa": -0.2,
             "f_score": 1,
             "asset_growth_yoy": -1.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "레이언스": {
             "pbr": 0.43,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": 0.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "젠큐릭스": {
             "pbr": 2.77,
             "gpa": 5.4,
             "f_score": 0,
             "asset_growth_yoy": 12.7,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "에치에프알": {
             "pbr": 1.52,
             "gpa": 0.7,
             "f_score": 1,
             "asset_growth_yoy": 3.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "와이씨": {
             "pbr": 1.77,
             "gpa": 2.9,
             "f_score": 2,
             "asset_growth_yoy": 11.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "라온로보틱스": {
             "pbr": 2.59,
             "gpa": 6.7,
             "f_score": 2,
             "asset_growth_yoy": 16.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "아이티센피엔에스": {
             "pbr": 1.04,
             "gpa": 2.8,
             "f_score": 1,
             "asset_growth_yoy": 36.8,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "싸이닉솔루션": {
             "pbr": 2.02,
             "gpa": 3.5,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "폴라리스세원": {
             "pbr": 0.1,
             "gpa": 2.7,
             "f_score": 2,
             "asset_growth_yoy": 14.6,
-            "pbr_judgment": "저평가"
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "에스트래픽": {
             "pbr": 0.83,
             "gpa": 1.9,
             "f_score": 2,
             "asset_growth_yoy": -13.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "헥토파이낸셜": {
             "pbr": 1.34,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 19.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "녹십자웰빙": {
             "pbr": 1.37,
             "gpa": 8.2,
             "f_score": 1,
             "asset_growth_yoy": 22.4,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "자이글": {
             "pbr": 3.71,
             "gpa": 3.6,
             "f_score": 2,
             "asset_growth_yoy": -3.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "메드팩토": {
             "pbr": 2.17,
             "gpa": 0.2,
             "f_score": 1,
             "asset_growth_yoy": -18.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "슈프리마": {
             "pbr": 1.22,
             "gpa": 7.0,
             "f_score": 2,
             "asset_growth_yoy": 13.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "엔비티": {
             "pbr": 0.9,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -48.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "에스티팜": {
             "pbr": 4.2,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 14.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "피앤씨테크": {
             "pbr": 0.67,
             "gpa": 3.8,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "플레이디": {
             "pbr": 0.42,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "클리오": {
             "pbr": 0.81,
             "gpa": 11.4,
             "f_score": 3,
             "asset_growth_yoy": 4.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "앤디포스": {
             "pbr": 0.65,
             "gpa": 3.3,
             "f_score": 2,
             "asset_growth_yoy": 23.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "얼라인드": {
             "pbr": 1.18,
             "gpa": 4.6,
             "f_score": 3,
             "asset_growth_yoy": 34.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "비피도": {
             "pbr": 0.46,
             "gpa": 1.0,
             "f_score": 1,
             "asset_growth_yoy": -9.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "힘스": {
             "pbr": 0.44,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -17.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "이스트에이드": {
             "pbr": 1.23,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -26.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "에이치엘사이언스": {
             "pbr": 0.37,
             "gpa": 0.9,
             "f_score": 1,
             "asset_growth_yoy": -13.1,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "피엔에이치테크": {
             "pbr": 0.64,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -3.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "동방메디컬": {
             "pbr": 0.96,
             "gpa": 6.1,
             "f_score": 3,
             "asset_growth_yoy": 10.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "유진테크놀로지": {
             "pbr": 0.44,
             "gpa": 1.9,
             "f_score": 1,
             "asset_growth_yoy": -7.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "원익IPS": {
             "pbr": 7.13,
             "gpa": 6.7,
             "f_score": 3,
             "asset_growth_yoy": 7.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "DSC인베스트먼트": {
             "pbr": 1.64,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 22.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "유니테크노": {
             "pbr": 0.45,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": 4.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "코스메카코리아": {
             "pbr": 2.81,
             "gpa": 6.1,
             "f_score": 3,
             "asset_growth_yoy": 25.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "메카로": {
             "pbr": 1.78,
             "gpa": 5.5,
             "f_score": 3,
             "asset_growth_yoy": 10.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "티이엠씨씨엔에스": {
             "pbr": 0.43,
             "gpa": 1.0,
             "f_score": 2,
             "asset_growth_yoy": 8.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "피씨엘": {
             "pbr": 6.19,
             "gpa": 6.1,
             "f_score": 2,
             "asset_growth_yoy": -74.3,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "에이스토리": {
             "pbr": 0.48,
             "gpa": 0.3,
             "f_score": 2,
             "asset_growth_yoy": -14.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "나무기술": {
             "pbr": 2.85,
             "gpa": 4.5,
             "f_score": 3,
             "asset_growth_yoy": 23.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "휴온스": {
             "pbr": 0.78,
             "gpa": 9.7,
             "f_score": 3,
             "asset_growth_yoy": 9.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "신흥에스이씨": {
             "pbr": 0.48,
             "gpa": 1.3,
             "f_score": 3,
             "asset_growth_yoy": 2.4,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "올리패스": {
             "pbr": -71.33,
             "gpa": 0.3,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "EDGC": {
             "pbr": 7.01,
             "gpa": 1.0,
             "f_score": 1,
             "asset_growth_yoy": -47.1,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "에스엘에스바이오": {
             "pbr": 4.51,
             "gpa": -5.4,
             "f_score": 1,
             "asset_growth_yoy": -36.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "TS인베스트먼트": {
             "pbr": 0.36,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 12.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "티앤알바이오팹": {
             "pbr": 4.61,
             "gpa": 2.9,
             "f_score": 2,
             "asset_growth_yoy": -1.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "아스타": {
             "pbr": 5.47,
             "gpa": 0.3,
             "f_score": 0,
             "asset_growth_yoy": 147.7,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "SCL사이언스": {
             "pbr": 2.61,
             "gpa": 1.3,
             "f_score": 1,
             "asset_growth_yoy": 34.5,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "에코프로비엠": {
             "pbr": 5.67,
             "gpa": 1.0,
             "f_score": 1,
             "asset_growth_yoy": 10.7,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "나노씨엠에스": {
             "pbr": 0.7,
             "gpa": 6.3,
             "f_score": 3,
             "asset_growth_yoy": -25.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "보라티알": {
             "pbr": 0.45,
             "gpa": 3.5,
             "f_score": 1,
             "asset_growth_yoy": 26.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "모비스": {
             "pbr": 2.58,
             "gpa": -0.2,
             "f_score": 1,
             "asset_growth_yoy": -20.4,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "예선테크": {
             "pbr": 0.74,
             "gpa": 5.5,
             "f_score": 3,
             "asset_growth_yoy": 0.5,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "바이오에프디엔씨": {
             "pbr": 1.02,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 8.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "와이엠티": {
             "pbr": 0.84,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": -0.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "브이원텍": {
             "pbr": 0.45,
             "gpa": 0.0,
             "f_score": 2,
             "asset_growth_yoy": -3.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "펌텍코리아": {
             "pbr": 1.41,
             "gpa": 4.2,
             "f_score": null,
             "asset_growth_yoy": 14.1,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "세화피앤씨": {
             "pbr": 0.52,
             "gpa": 7.0,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "샘씨엔에스": {
             "pbr": 5.11,
             "gpa": 5.6,
             "f_score": 3,
             "asset_growth_yoy": 18.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "스튜디오드래곤": {
             "pbr": 0.8,
             "gpa": 1.3,
             "f_score": 2,
             "asset_growth_yoy": 3.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "네오셈": {
             "pbr": 3.68,
             "gpa": 4.5,
             "f_score": 3,
             "asset_growth_yoy": 18.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "수젠텍": {
             "pbr": 0.92,
             "gpa": -0.1,
             "f_score": 1,
             "asset_growth_yoy": -10.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "자비스": {
             "pbr": 1.13,
             "gpa": 5.2,
             "f_score": 1,
             "asset_growth_yoy": 1.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "미래반도체": {
             "pbr": 1.85,
             "gpa": 10.1,
             "f_score": 2,
             "asset_growth_yoy": 120.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "SG": {
             "pbr": 1.43,
             "gpa": -0.7,
             "f_score": 0,
             "asset_growth_yoy": -0.7,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "야스": {
             "pbr": 0.66,
             "gpa": 4.0,
             "f_score": 2,
             "asset_growth_yoy": 18.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "한독크린텍": {
             "pbr": 0.67,
             "gpa": 3.3,
             "f_score": 3,
             "asset_growth_yoy": 2.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "포인트엔지니어링": {
             "pbr": 0.82,
             "gpa": 0.1,
             "f_score": 1,
             "asset_growth_yoy": -6.1,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "한국비엔씨": {
             "pbr": 0.71,
             "gpa": 2.8,
             "f_score": 2,
             "asset_growth_yoy": 2.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "킵스파마": {
             "pbr": 1.35,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": 34.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "피엔티엠에스": {
             "pbr": 1.24,
             "gpa": -1.3,
             "f_score": 1,
             "asset_growth_yoy": -13.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "실리콘투": {
             "pbr": 4.87,
             "gpa": 12.4,
             "f_score": 3,
             "asset_growth_yoy": 42.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "케일럼": {
             "pbr": 0.81,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": -20.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "소프트캠프": {
             "pbr": 1.45,
             "gpa": 7.6,
             "f_score": 1,
             "asset_growth_yoy": 6.1,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "세종메디칼": {
             "pbr": 1.29,
             "gpa": 4.4,
             "f_score": 3,
             "asset_growth_yoy": 34.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "엠플러스": {
             "pbr": 1.06,
             "gpa": 6.6,
             "f_score": 3,
             "asset_growth_yoy": -26.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "알리코제약": {
             "pbr": 0.47,
             "gpa": 15.4,
             "f_score": 2,
             "asset_growth_yoy": -0.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "씨티케이": {
             "pbr": 0.37,
             "gpa": 3.6,
             "f_score": 1,
             "asset_growth_yoy": 26.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에스앤디": {
             "pbr": 1.65,
             "gpa": 8.5,
             "f_score": 3,
             "asset_growth_yoy": 27.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "덴티스": {
             "pbr": 0.79,
             "gpa": 7.2,
             "f_score": 2,
             "asset_growth_yoy": 0.8,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "이지스": {
             "pbr": 0.89,
             "gpa": -0.5,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "아리바이오랩": {
             "pbr": 7.56,
             "gpa": 0.7,
             "f_score": 0,
             "asset_growth_yoy": -51.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "에이프로": {
             "pbr": 0.75,
             "gpa": 2.4,
             "f_score": 2,
             "asset_growth_yoy": -20.8,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "아이퀘스트": {
             "pbr": 0.46,
             "gpa": 3.2,
             "f_score": 3,
             "asset_growth_yoy": 78.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "디케이앤디": {
             "pbr": 0.52,
             "gpa": 6.4,
             "f_score": 3,
             "asset_growth_yoy": 10.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "유틸렉스": {
             "pbr": 2.75,
             "gpa": 0.1,
             "f_score": 1,
             "asset_growth_yoy": -46.3,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "덕우전자": {
             "pbr": 0.4,
             "gpa": 3.5,
             "f_score": 2,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "디알젬": {
             "pbr": 0.61,
             "gpa": 7.0,
             "f_score": 3,
             "asset_growth_yoy": 4.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "케어랩스": {
             "pbr": 0.53,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -4.9,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "디앤씨미디어": {
             "pbr": 0.87,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -0.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "펄어비스": {
             "pbr": 2.26,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 24.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "유에스티": {
             "pbr": 0.46,
             "gpa": 2.0,
             "f_score": 2,
             "asset_growth_yoy": 4.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "데이타솔루션": {
             "pbr": 2.8,
             "gpa": 5.0,
             "f_score": 1,
             "asset_growth_yoy": 54.3,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "상신전자": {
             "pbr": 0.73,
             "gpa": 2.1,
             "f_score": 2,
             "asset_growth_yoy": 2.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "지니언스": {
             "pbr": 1.81,
             "gpa": 9.7,
             "f_score": 3,
             "asset_growth_yoy": 22.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "휴엠앤씨": {
             "pbr": 0.87,
             "gpa": 4.1,
             "f_score": 2,
             "asset_growth_yoy": 0.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "유비쿼스": {
             "pbr": 0.72,
             "gpa": 4.8,
             "f_score": 2,
             "asset_growth_yoy": 10.4,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "씨앤지하이테크": {
             "pbr": 0.92,
             "gpa": 0.9,
             "f_score": 3,
             "asset_growth_yoy": -8.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "이랜시스": {
             "pbr": 2.21,
             "gpa": 3.3,
             "f_score": 3,
             "asset_growth_yoy": 6.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "AP시스템": {
             "pbr": 0.85,
             "gpa": 4.7,
             "f_score": 3,
             "asset_growth_yoy": 19.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "영화테크": {
             "pbr": 0.74,
             "gpa": 6.0,
             "f_score": 2,
             "asset_growth_yoy": 21.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "엔에프씨": {
             "pbr": 1.42,
             "gpa": 6.1,
             "f_score": 3,
             "asset_growth_yoy": 20.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "나인테크": {
             "pbr": 1.15,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": -0.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "배럴": {
             "pbr": 0.56,
             "gpa": 9.4,
             "f_score": 1,
             "asset_growth_yoy": 3.2,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "매일유업": {
             "pbr": 0.4,
             "gpa": 11.1,
             "f_score": 3,
             "asset_growth_yoy": 7.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "시스웍": {
             "pbr": -5.8,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": -9.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "앱튼": {
             "pbr": 0.7,
             "gpa": 0.1,
             "f_score": 0,
             "asset_growth_yoy": -32.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "에브리봇": {
             "pbr": 2.2,
             "gpa": 2.8,
             "f_score": 2,
             "asset_growth_yoy": -8.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "뉴트리": {
             "pbr": 0.41,
             "gpa": 13.2,
             "f_score": 2,
             "asset_growth_yoy": 3.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "팸텍": {
             "pbr": 0.51,
             "gpa": 1.0,
             "f_score": 1,
             "asset_growth_yoy": 8.5,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "케이엔제이": {
             "pbr": 2.36,
             "gpa": 4.5,
             "f_score": 3,
             "asset_growth_yoy": 57.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "이녹스첨단소재": {
             "pbr": 0.82,
             "gpa": 3.0,
             "f_score": 2,
             "asset_growth_yoy": 26.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "와이즈버즈": {
             "pbr": 0.83,
             "gpa": 1.5,
             "f_score": 3,
             "asset_growth_yoy": 15.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "와이엠텍": {
             "pbr": 0.93,
             "gpa": 2.6,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "켄코아에어로스페이스": {
             "pbr": 0.81,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": -7.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "이노시뮬레이션": {
             "pbr": 0.61,
             "gpa": 1.7,
             "f_score": 1,
             "asset_growth_yoy": 13.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "에스에스알": {
             "pbr": 0.87,
             "gpa": 2.2,
             "f_score": 1,
             "asset_growth_yoy": -10.2,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "스코넥": {
             "pbr": 0.58,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": 35.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "한울앤제주": {
             "pbr": 3.58,
             "gpa": 2.2,
             "f_score": 0,
             "asset_growth_yoy": 41.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "린드먼아시아": {
             "pbr": 0.73,
             "gpa": 1.6,
             "f_score": 3,
             "asset_growth_yoy": -3.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "인산가": {
             "pbr": 0.34,
             "gpa": 4.3,
             "f_score": 2,
             "asset_growth_yoy": 14.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "레인보우로보틱스": {
             "pbr": 62.77,
             "gpa": 2.2,
             "f_score": null,
             "asset_growth_yoy": 1.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "티에스아이": {
             "pbr": 0.47,
             "gpa": 2.5,
             "f_score": 2,
             "asset_growth_yoy": -9.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "천보": {
             "pbr": 0.91,
             "gpa": -0.1,
             "f_score": 2,
             "asset_growth_yoy": -4.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "HLB바이오스텝": {
             "pbr": 0.39,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -2.5,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "미디어젠": {
             "pbr": 1.2,
             "gpa": -0.2,
             "f_score": 1,
             "asset_growth_yoy": 4.2,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "레이크머티리얼즈": {
             "pbr": 5.93,
             "gpa": 2.3,
             "f_score": 3,
             "asset_growth_yoy": 4.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "금양그린파워": {
             "pbr": 0.96,
             "gpa": -2.6,
             "f_score": 1,
             "asset_growth_yoy": 11.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "코윈테크": {
             "pbr": 0.46,
             "gpa": 1.8,
             "f_score": 2,
             "asset_growth_yoy": 0.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "카이노스메드": {
             "pbr": 10.53,
             "gpa": 4.9,
             "f_score": 0,
             "asset_growth_yoy": -58.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "노바텍": {
             "pbr": 0.81,
             "gpa": 1.6,
             "f_score": 2,
             "asset_growth_yoy": 4.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "진영": {
             "pbr": 0.39,
             "gpa": 1.5,
             "f_score": 0,
             "asset_growth_yoy": 7.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "나노실리칸첨단소재": {
             "pbr": 2.21,
             "gpa": 0.4,
             "f_score": 0,
             "asset_growth_yoy": 72.4,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "인투셀": {
             "pbr": 15.92,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 71.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "케이피항공산업": {
             "pbr": 3.37,
             "gpa": 2.7,
             "f_score": 2,
             "asset_growth_yoy": 19.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "파라택시스코리아": {
             "pbr": 1.06,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": 120.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에스프리즘": {
             "pbr": 0.67,
             "gpa": -1.5,
             "f_score": 2,
             "asset_growth_yoy": -28.6,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "모아데이타": {
             "pbr": 1.86,
             "gpa": 2.6,
             "f_score": 0,
             "asset_growth_yoy": -4.9,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "아이스크림에듀": {
             "pbr": 0.29,
             "gpa": 14.3,
             "f_score": 3,
             "asset_growth_yoy": -4.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "SV인베스트먼트": {
             "pbr": 1.59,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -2.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "자이언트스텝": {
             "pbr": 0.6,
             "gpa": -8.5,
             "f_score": 1,
             "asset_growth_yoy": -24.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "웨이비스": {
             "pbr": 1.71,
             "gpa": -0.2,
             "f_score": 2,
             "asset_growth_yoy": 77.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "트윔": {
             "pbr": 0.51,
             "gpa": 1.2,
             "f_score": 2,
             "asset_growth_yoy": -3.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "DH오토리드": {
             "pbr": 0.31,
             "gpa": 4.3,
             "f_score": 2,
             "asset_growth_yoy": 15.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "휴네시온": {
             "pbr": 0.53,
             "gpa": 3.6,
             "f_score": 1,
             "asset_growth_yoy": 11.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "신도기연": {
             "pbr": 0.39,
             "gpa": 0.6,
             "f_score": 2,
             "asset_growth_yoy": -8.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "디케이티": {
             "pbr": 2.04,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 23.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "파라택시스이더리움": {
             "pbr": 0.8,
             "gpa": 3.6,
             "f_score": 0,
             "asset_growth_yoy": 63.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "엘앤씨바이오": {
             "pbr": 9.08,
             "gpa": 3.9,
             "f_score": 2,
             "asset_growth_yoy": 8.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "다이나믹솔루션": {
             "pbr": 1.08,
             "gpa": 1.0,
             "f_score": 0,
             "asset_growth_yoy": 10.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "대보마그네틱": {
             "pbr": 2.62,
             "gpa": 0.2,
             "f_score": 1,
             "asset_growth_yoy": -43.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "소룩스": {
             "pbr": 2.87,
             "gpa": 0.4,
             "f_score": 1,
             "asset_growth_yoy": 20.8,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "푸드나무": {
             "pbr": 3.81,
             "gpa": 4.0,
             "f_score": 0,
             "asset_growth_yoy": -6.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "액트로": {
             "pbr": 0.95,
             "gpa": 2.5,
             "f_score": 2,
             "asset_growth_yoy": 18.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "엔피": {
             "pbr": 1.12,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -6.9,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "압타머사이언스": {
             "pbr": 2.27,
             "gpa": 0.8,
             "f_score": 0,
             "asset_growth_yoy": 56.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "핀텔": {
             "pbr": 0.88,
             "gpa": 3.1,
             "f_score": 0,
             "asset_growth_yoy": -12.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "카카오게임즈": {
             "pbr": 0.76,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": -18.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "나우IB": {
             "pbr": 1.22,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -5.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "압타바이오": {
             "pbr": 2.98,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -25.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "레몬": {
             "pbr": 6.85,
             "gpa": -0.5,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "쿠콘": {
             "pbr": 1.03,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 22.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "서남": {
             "pbr": 8.17,
             "gpa": 0.3,
             "f_score": null,
             "asset_growth_yoy": 13.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "에이치브이엠": {
             "pbr": 5.47,
             "gpa": 3.4,
             "f_score": 2,
             "asset_growth_yoy": 54.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "이노에이엑스": {
             "pbr": 0.79,
             "gpa": 8.8,
             "f_score": 3,
             "asset_growth_yoy": -12.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "씨에스베어링": {
             "pbr": 0.99,
             "gpa": 3.6,
             "f_score": 3,
             "asset_growth_yoy": 16.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "아틀라스링크": {
             "pbr": 0.67,
             "gpa": 5.2,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "HB솔루션": {
             "pbr": 0.49,
             "gpa": 1.3,
             "f_score": 2,
             "asset_growth_yoy": 12.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "풍전약품": {
             "pbr": 0.67,
             "gpa": 7.8,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에이비엘바이오": {
             "pbr": 24.22,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 41.5,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "더네이쳐홀딩스": {
             "pbr": 0.23,
             "gpa": 10.9,
             "f_score": 2,
             "asset_growth_yoy": -3.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "슈어소프트테크": {
             "pbr": 1.78,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 4.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "하나기술": {
             "pbr": 1.06,
             "gpa": -0.1,
             "f_score": 2,
             "asset_growth_yoy": 53.9,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "더블유에스아이": {
             "pbr": 0.88,
             "gpa": 3.3,
             "f_score": 2,
             "asset_growth_yoy": -1.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "셀리드": {
             "pbr": 0.47,
             "gpa": 0.7,
             "f_score": 1,
             "asset_growth_yoy": 53.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "위지윅스튜디오": {
             "pbr": 0.29,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -21.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "플리토": {
             "pbr": 6.83,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 41.4,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "라온피플": {
             "pbr": 0.41,
             "gpa": 3.7,
             "f_score": 1,
             "asset_growth_yoy": 12.8,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "바이브컴퍼니": {
             "pbr": 0.43,
             "gpa": 2.3,
             "f_score": 2,
             "asset_growth_yoy": -25.6,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "이노메트리": {
             "pbr": 0.98,
             "gpa": 3.8,
             "f_score": 2,
             "asset_growth_yoy": 5.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "리메드": {
             "pbr": 2.13,
             "gpa": 7.5,
             "f_score": 3,
             "asset_growth_yoy": -3.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "지니틱스": {
             "pbr": 0.94,
             "gpa": 5.7,
             "f_score": 0,
             "asset_growth_yoy": -6.8,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "프로티아": {
             "pbr": 1.98,
             "gpa": 7.0,
             "f_score": 2,
             "asset_growth_yoy": 19.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "이노뎁": {
             "pbr": 0.59,
             "gpa": 5.1,
             "f_score": 1,
             "asset_growth_yoy": -3.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "동국생명과학": {
             "pbr": 0.57,
             "gpa": 3.9,
             "f_score": 3,
             "asset_growth_yoy": 10.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "솔트룩스": {
             "pbr": 2.1,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 24.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에스바이오메딕스": {
             "pbr": 14.08,
             "gpa": 6.3,
             "f_score": null,
             "asset_growth_yoy": -15.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "피플바이오": {
             "pbr": 0.57,
             "gpa": 0.5,
             "f_score": null,
             "asset_growth_yoy": 92.7,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "마이크로디지탈": {
             "pbr": 1.7,
             "gpa": -0.1,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "에스제이그룹": {
             "pbr": 0.15,
             "gpa": 11.4,
             "f_score": 1,
             "asset_growth_yoy": -5.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "지아이에스": {
             "pbr": 1.99,
             "gpa": 1.1,
             "f_score": 1,
             "asset_growth_yoy": 13.7,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "아이엘": {
             "pbr": 4.62,
             "gpa": 2.1,
             "f_score": 0,
             "asset_growth_yoy": 18.6,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "원바이오젠": {
             "pbr": 0.92,
             "gpa": 9.3,
             "f_score": 3,
             "asset_growth_yoy": 15.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "국전": {
             "pbr": 1.08,
             "gpa": 3.2,
             "f_score": 1,
             "asset_growth_yoy": -9.5,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "비투엔": {
             "pbr": 2.12,
             "gpa": 0.3,
             "f_score": 0,
             "asset_growth_yoy": 17.8,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "컴퍼니케이": {
             "pbr": 1.13,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 17.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "바이젠셀": {
             "pbr": 2.93,
             "gpa": 0.0,
             "f_score": 1,
             "asset_growth_yoy": -23.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "형지글로벌": {
             "pbr": 0.19,
             "gpa": 3.3,
             "f_score": null,
             "asset_growth_yoy": 37.8,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "셀비온": {
             "pbr": 8.46,
             "gpa": -0.0,
             "f_score": 0,
             "asset_growth_yoy": -4.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "아이티켐": {
             "pbr": 4.4,
             "gpa": 0.9,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "조이웍스앤코": {
             "pbr": 0.74,
             "gpa": 18.3,
             "f_score": 3,
             "asset_growth_yoy": 10.7,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "LB인베스트먼트": {
             "pbr": 0.79,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 7.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "애니플러스": {
             "pbr": 1.11,
             "gpa": 4.1,
             "f_score": 2,
             "asset_growth_yoy": -6.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "보로노이": {
             "pbr": 30.08,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 156.7,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "디와이씨": {
             "pbr": 0.54,
             "gpa": 5.4,
             "f_score": 1,
             "asset_growth_yoy": 31.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "지오엘리먼트": {
             "pbr": 1.92,
             "gpa": 5.2,
             "f_score": 3,
             "asset_growth_yoy": 8.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "네오크레마": {
             "pbr": 0.21,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 2.1,
-            "pbr_judgment": "저평가"
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "CJ 바이오사이언스": {
             "pbr": 1.09,
             "gpa": 0.2,
             "f_score": 1,
             "asset_growth_yoy": -26.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에이에프더블류": {
             "pbr": 0.19,
             "gpa": -1.5,
             "f_score": 1,
             "asset_growth_yoy": -6.4,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "캐리": {
             "pbr": 0.26,
             "gpa": 0.6,
             "f_score": 0,
             "asset_growth_yoy": 25.8,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "지놈앤컴퍼니": {
             "pbr": 1.53,
             "gpa": 1.9,
             "f_score": 0,
             "asset_growth_yoy": 23.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "알피바이오": {
             "pbr": 0.44,
             "gpa": 2.7,
             "f_score": 3,
             "asset_growth_yoy": 0.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "바이오다인": {
             "pbr": 5.71,
             "gpa": 1.3,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "딥노이드": {
             "pbr": 1.63,
             "gpa": -0.0,
             "f_score": 0,
             "asset_growth_yoy": 28.7,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "라닉스": {
             "pbr": 1.06,
             "gpa": 2.1,
             "f_score": 1,
             "asset_growth_yoy": -0.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "TS트릴리온": {
             "pbr": 0.65,
             "gpa": 7.0,
             "f_score": 2,
             "asset_growth_yoy": 13.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "덕산테코피아": {
             "pbr": 2.22,
             "gpa": 0.1,
             "f_score": 1,
             "asset_growth_yoy": 1.1,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "에피소드컴퍼니": {
             "pbr": 1.74,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 316.1,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "퀀타매트릭스": {
             "pbr": 1.28,
             "gpa": 0.7,
             "f_score": 1,
             "asset_growth_yoy": 57.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "엑스페릭스": {
             "pbr": 0.82,
             "gpa": 1.9,
             "f_score": 1,
             "asset_growth_yoy": 37.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "에스피시스템스": {
             "pbr": 0.73,
             "gpa": 1.2,
             "f_score": 1,
             "asset_growth_yoy": -1.5,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "대모": {
             "pbr": 1.01,
             "gpa": 5.6,
             "f_score": 2,
             "asset_growth_yoy": 9.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "엔바이오니아": {
             "pbr": 0.88,
             "gpa": 1.5,
             "f_score": 1,
             "asset_growth_yoy": 30.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "KBG": {
             "pbr": 0.54,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 4.8,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "팜스빌": {
             "pbr": 0.43,
             "gpa": 2.3,
             "f_score": 2,
             "asset_growth_yoy": 2.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "포인트모바일": {
             "pbr": 0.44,
             "gpa": 8.3,
             "f_score": 3,
             "asset_growth_yoy": 24.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "그래피": {
             "pbr": 12.43,
             "gpa": 7.5,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "셀바이오휴먼텍": {
             "pbr": 0.96,
             "gpa": 4.2,
             "f_score": 3,
             "asset_growth_yoy": 62.9,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "비비씨": {
             "pbr": 0.4,
             "gpa": 5.7,
             "f_score": 3,
             "asset_growth_yoy": 3.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "현대무벡스": {
             "pbr": 14.98,
             "gpa": 3.1,
             "f_score": 2,
             "asset_growth_yoy": 21.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "피에스케이": {
             "pbr": 10.45,
             "gpa": 10.9,
             "f_score": 3,
             "asset_growth_yoy": 21.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "한울반도체": {
             "pbr": 1.97,
             "gpa": 1.9,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "프로이천": {
             "pbr": 1.18,
             "gpa": 4.4,
             "f_score": 3,
             "asset_growth_yoy": 11.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "센서뷰": {
             "pbr": 4.86,
             "gpa": 2.6,
             "f_score": 0,
             "asset_growth_yoy": -4.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "티움바이오": {
             "pbr": 3.61,
             "gpa": 0.6,
             "f_score": 1,
             "asset_growth_yoy": -12.9,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "아티스트컴퍼니": {
             "pbr": 0.88,
             "gpa": 2.2,
             "f_score": 1,
             "asset_growth_yoy": -26.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "LS티라유텍": {
             "pbr": 1.48,
             "gpa": 0.9,
             "f_score": 1,
             "asset_growth_yoy": 20.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "오로스테크놀로지": {
             "pbr": 3.17,
             "gpa": 2.6,
             "f_score": 1,
             "asset_growth_yoy": 22.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "제이엘케이": {
             "pbr": 3.34,
             "gpa": -4.6,
             "f_score": 1,
             "asset_growth_yoy": 0.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "코퍼스코리아": {
             "pbr": 0.69,
             "gpa": -1.0,
             "f_score": 1,
             "asset_growth_yoy": -22.5,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "태성": {
             "pbr": 9.17,
             "gpa": 1.3,
             "f_score": 1,
             "asset_growth_yoy": 18.7,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "다원넥스뷰": {
             "pbr": 3.96,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 19.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "박셀바이오": {
             "pbr": 1.68,
             "gpa": 0.3,
             "f_score": 1,
             "asset_growth_yoy": -17.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "RF머트리얼즈": {
             "pbr": 5.03,
             "gpa": 4.5,
             "f_score": 2,
             "asset_growth_yoy": 18.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "루닛": {
             "pbr": 5.99,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -5.9,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "솔트웨어": {
             "pbr": 0.73,
             "gpa": 5.3,
             "f_score": 1,
             "asset_growth_yoy": -0.1,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "위더스제약": {
             "pbr": 0.81,
             "gpa": 12.8,
             "f_score": 3,
             "asset_growth_yoy": 8.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "스톤브릿지벤처스": {
             "pbr": 0.82,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 27.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "네패스아크": {
             "pbr": 2.75,
             "gpa": 2.8,
             "f_score": 3,
             "asset_growth_yoy": -5.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "포커스에이아이": {
             "pbr": 2.8,
             "gpa": 1.5,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "밸로프": {
             "pbr": 0.59,
             "gpa": 1.7,
             "f_score": 3,
             "asset_growth_yoy": 29.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "아우토크립트": {
             "pbr": 2.53,
             "gpa": -7.7,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "셀레믹스": {
-            "pbr": 5.78,
+            "pbr": 6.59,
             "gpa": 1.2,
             "f_score": 0,
             "asset_growth_yoy": -17.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "누보": {
             "pbr": 0.84,
             "gpa": 8.0,
             "f_score": 2,
             "asset_growth_yoy": 15.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "아이디피": {
             "pbr": 0.98,
             "gpa": 6.6,
             "f_score": 3,
             "asset_growth_yoy": 16.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "PS일렉트로닉스": {
             "pbr": 1.94,
             "gpa": 2.4,
             "f_score": 2,
             "asset_growth_yoy": 21.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "이노테나": {
             "pbr": 1.13,
             "gpa": 6.7,
             "f_score": 2,
             "asset_growth_yoy": -1.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "일승": {
             "pbr": 1.02,
             "gpa": 3.0,
             "f_score": 3,
             "asset_growth_yoy": 16.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "엔시스": {
             "pbr": 1.17,
             "gpa": 1.5,
             "f_score": 1,
             "asset_growth_yoy": -2.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "프레스티지바이오로직스": {
             "pbr": 1.03,
             "gpa": -1.3,
             "f_score": 2,
             "asset_growth_yoy": -6.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "프리시젼바이오": {
             "pbr": 0.75,
             "gpa": 4.9,
             "f_score": 2,
             "asset_growth_yoy": 25.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "윙스풋": {
             "pbr": 0.67,
             "gpa": -2.7,
             "f_score": 2,
             "asset_growth_yoy": -5.0,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "웨이버스": {
             "pbr": 0.69,
             "gpa": 5.3,
             "f_score": 2,
             "asset_growth_yoy": -12.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "원텍": {
             "pbr": 3.03,
             "gpa": 12.6,
             "f_score": 2,
             "asset_growth_yoy": 19.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "탑런토탈솔루션": {
             "pbr": 0.45,
             "gpa": 2.0,
             "f_score": 1,
             "asset_growth_yoy": 26.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "젝시믹스": {
             "pbr": 0.76,
             "gpa": 17.2,
             "f_score": 2,
             "asset_growth_yoy": 3.1,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "뷰노": {
             "pbr": 2.52,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 10.4,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "와이바이오로직스": {
             "pbr": 7.34,
             "gpa": 0.3,
             "f_score": 1,
             "asset_growth_yoy": 171.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "아이비김영": {
             "pbr": 2.1,
             "gpa": 13.1,
             "f_score": 3,
             "asset_growth_yoy": 20.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "다보링크": {
             "pbr": 3.52,
             "gpa": 5.4,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "세림B&G": {
             "pbr": 0.73,
             "gpa": 4.0,
             "f_score": 3,
             "asset_growth_yoy": 12.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "지씨지놈": {
             "pbr": 1.38,
             "gpa": 3.9,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "티앤엘": {
             "pbr": 2.07,
             "gpa": 9.4,
             "f_score": 3,
             "asset_growth_yoy": 13.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "시선AI": {
             "pbr": 2.59,
             "gpa": 0.8,
             "f_score": 1,
             "asset_growth_yoy": 42.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "성원에너텍": {
             "pbr": 1.22,
             "gpa": -1.3,
             "f_score": 0,
             "asset_growth_yoy": -12.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "오아": {
             "pbr": 0.51,
             "gpa": 14.6,
             "f_score": null,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "이노진": {
             "pbr": 1.18,
             "gpa": 9.3,
             "f_score": 0,
             "asset_growth_yoy": -9.1,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "센코": {
             "pbr": 1.09,
             "gpa": 4.4,
             "f_score": 1,
             "asset_growth_yoy": 7.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "스피어": {
             "pbr": 10.32,
             "gpa": 1.3,
             "f_score": 2,
             "asset_growth_yoy": 371.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "피엔케이피부임상연구센타": {
             "pbr": 0.64,
             "gpa": 3.4,
             "f_score": 3,
             "asset_growth_yoy": 4.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "핌스": {
             "pbr": 0.54,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": -0.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "디앤디파마텍": {
             "pbr": 47.11,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 4.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "알체라": {
             "pbr": 3.33,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": 40.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "엠엑스온": {
             "pbr": 0.58,
             "gpa": 3.3,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "모비릭스": {
             "pbr": 0.55,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": -6.6,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "큐라티스": {
             "pbr": 0.71,
             "gpa": -2.3,
             "f_score": 0,
             "asset_growth_yoy": -3.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "고바이오랩": {
             "pbr": 1.33,
             "gpa": 16.0,
             "f_score": 1,
             "asset_growth_yoy": -6.7,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "넥스틴": {
             "pbr": 2.94,
             "gpa": 1.4,
             "f_score": 1,
             "asset_growth_yoy": 25.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "뉴로메카": {
             "pbr": 9.56,
             "gpa": 0.8,
             "f_score": 1,
             "asset_growth_yoy": -12.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "위드텍": {
             "pbr": 0.77,
             "gpa": 1.2,
             "f_score": 2,
             "asset_growth_yoy": 8.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "엔켐": {
             "pbr": 0.95,
             "gpa": -0.1,
             "f_score": 1,
             "asset_growth_yoy": 9.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "넥사다이내믹스": {
             "pbr": 1.48,
             "gpa": -0.1,
             "f_score": 0,
             "asset_growth_yoy": 27.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "이삭엔지니어링": {
             "pbr": 0.95,
             "gpa": -0.3,
             "f_score": 2,
             "asset_growth_yoy": 11.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "차이커뮤니케이션": {
             "pbr": 0.34,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 15.9,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "스톰테크": {
             "pbr": 1.1,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": 10.2,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "씨앤씨인터내셔널": {
             "pbr": 0.73,
             "gpa": 2.0,
             "f_score": 2,
             "asset_growth_yoy": 39.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "씨앤투스": {
             "pbr": 0.24,
             "gpa": 2.3,
             "f_score": 2,
             "asset_growth_yoy": -5.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "셀레스트라": {
             "pbr": -2.04,
             "gpa": 0.0,
             "f_score": 2,
             "asset_growth_yoy": -59.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "오비고": {
             "pbr": 1.36,
             "gpa": -3.1,
             "f_score": 1,
             "asset_growth_yoy": 22.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "인바이오": {
             "pbr": 0.49,
             "gpa": 8.2,
             "f_score": 2,
             "asset_growth_yoy": -0.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "휴럼": {
             "pbr": 0.52,
             "gpa": 8.4,
             "f_score": 2,
             "asset_growth_yoy": 12.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "오토앤": {
             "pbr": 1.16,
             "gpa": 9.3,
             "f_score": 2,
             "asset_growth_yoy": -19.1,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "이지바이오": {
             "pbr": 1.75,
             "gpa": 9.6,
             "f_score": 2,
             "asset_growth_yoy": 15.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "엔젠바이오": {
             "pbr": 0.69,
             "gpa": 2.0,
             "f_score": 1,
             "asset_growth_yoy": 144.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "알멕": {
             "pbr": 1.13,
             "gpa": 2.1,
             "f_score": 2,
             "asset_growth_yoy": 4.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "코스텍시스": {
             "pbr": 5.35,
             "gpa": 2.9,
             "f_score": 3,
             "asset_growth_yoy": 47.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "크라우드웍스": {
             "pbr": 1.2,
             "gpa": -5.1,
             "f_score": 0,
             "asset_growth_yoy": 57.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "에이텀": {
             "pbr": 3.65,
             "gpa": 3.0,
             "f_score": 1,
             "asset_growth_yoy": 85.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "엑스게이트": {
             "pbr": 6.87,
             "gpa": 8.8,
             "f_score": 3,
             "asset_growth_yoy": 6.1,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "티엘비": {
-            "pbr": 6.45,
+            "pbr": 3.24,
             "gpa": 5.4,
             "f_score": 2,
             "asset_growth_yoy": 33.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "싸이버원": {
             "pbr": 0.56,
             "gpa": 4.0,
             "f_score": 2,
             "asset_growth_yoy": -4.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "에이치피오": {
             "pbr": 0.46,
             "gpa": 12.0,
             "f_score": 2,
             "asset_growth_yoy": 2.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "석경에이티": {
             "pbr": 4.47,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": 7.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "아모센스": {
             "pbr": 1.55,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": 2.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "솔브레인": {
             "pbr": 2.07,
             "gpa": 4.9,
             "f_score": 3,
             "asset_growth_yoy": 13.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "SKAI": {
             "pbr": 7.29,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": 21.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "지아이이노베이션": {
             "pbr": 4.56,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -19.7,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "씨엔알리서치": {
             "pbr": 0.48,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 6.4,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "탑머티리얼": {
             "pbr": 0.66,
             "gpa": 0.8,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "코셈": {
             "pbr": 2.28,
             "gpa": 4.4,
             "f_score": 1,
             "asset_growth_yoy": -24.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "제노코": {
             "pbr": 2.06,
             "gpa": 0.1,
             "f_score": 2,
             "asset_growth_yoy": 5.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "알비더블유": {
             "pbr": 0.61,
             "gpa": 1.2,
             "f_score": 3,
             "asset_growth_yoy": 7.8,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "삼영에스앤씨": {
             "pbr": 1.05,
             "gpa": 4.4,
             "f_score": 2,
             "asset_growth_yoy": -7.2,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "청담글로벌": {
             "pbr": 0.7,
             "gpa": 6.4,
             "f_score": 2,
             "asset_growth_yoy": 30.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "드림인사이트": {
             "pbr": 0.64,
             "gpa": 9.6,
             "f_score": 1,
             "asset_growth_yoy": -5.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "진시스템": {
             "pbr": 3.09,
             "gpa": 0.1,
             "f_score": 0,
             "asset_growth_yoy": -44.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "모비데이즈": {
             "pbr": 0.53,
             "gpa": 4.7,
             "f_score": 2,
             "asset_growth_yoy": -1.6,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "에이아이코리아": {
             "pbr": 0.58,
             "gpa": 3.4,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "큐라클": {
             "pbr": 4.7,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": -1.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에스와이스틸텍": {
             "pbr": 0.84,
             "gpa": 1.1,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "성일하이텍": {
             "pbr": 3.21,
             "gpa": 1.0,
             "f_score": 1,
             "asset_growth_yoy": 4.4,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "하이딥": {
             "pbr": -47.47,
             "gpa": -0.7,
             "f_score": 0,
             "asset_growth_yoy": -2.4,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "브이씨": {
             "pbr": 0.58,
             "gpa": 6.8,
             "f_score": 1,
             "asset_growth_yoy": 5.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "나인앤컴퍼니": {
             "pbr": 1.36,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": 11.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "플래티어": {
             "pbr": 0.79,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "아이씨에이치": {
             "pbr": 0.45,
             "gpa": 4.3,
             "f_score": 1,
             "asset_growth_yoy": -11.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "파이버프로": {
             "pbr": 8.46,
             "gpa": 9.5,
             "f_score": 3,
             "asset_growth_yoy": 40.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "오에스피": {
             "pbr": 0.37,
             "gpa": 3.7,
             "f_score": 0,
             "asset_growth_yoy": -4.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "블리츠웨이엔터테인먼트": {
             "pbr": 2.23,
             "gpa": 3.6,
             "f_score": 2,
             "asset_growth_yoy": -24.9,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "퓨런티어": {
             "pbr": 1.37,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -10.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "풍원정밀": {
             "pbr": 15.09,
             "gpa": 2.3,
             "f_score": 1,
             "asset_growth_yoy": -17.2,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "윤성에프앤씨": {
             "pbr": 0.72,
             "gpa": 1.4,
             "f_score": 3,
             "asset_growth_yoy": -11.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "큐로셀": {
             "pbr": 14.99,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": 0.2,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "아이티아이즈": {
             "pbr": 1.72,
             "gpa": -0.7,
             "f_score": 1,
             "asset_growth_yoy": -33.9,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "엑셀세라퓨틱스": {
             "pbr": 3.13,
             "gpa": -0.4,
             "f_score": 0,
             "asset_growth_yoy": 5.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "데이원컴퍼니": {
             "pbr": 0.97,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 29.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "엠아이큐브솔루션": {
             "pbr": 1.1,
             "gpa": 1.3,
             "f_score": 1,
             "asset_growth_yoy": 6.3,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "엑스플러스": {
             "pbr": 1.93,
             "gpa": 2.6,
             "f_score": 0,
             "asset_growth_yoy": 26.4,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "피코그램": {
             "pbr": 0.68,
             "gpa": 4.3,
             "f_score": 2,
             "asset_growth_yoy": -7.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "HEM파마": {
             "pbr": 182.61,
             "gpa": 0.3,
             "f_score": 2,
             "asset_growth_yoy": 43.1,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "씨유테크": {
             "pbr": 0.4,
             "gpa": 2.5,
             "f_score": 3,
             "asset_growth_yoy": -3.4,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "디어유": {
             "pbr": 2.37,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 11.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "로킷헬스케어": {
             "pbr": 74.82,
             "gpa": 4.0,
             "f_score": 0,
             "asset_growth_yoy": 743.2,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "노을": {
             "pbr": 1.7,
             "gpa": 0.5,
             "f_score": 0,
             "asset_growth_yoy": -10.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "원티드랩": {
             "pbr": 0.63,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 20.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "비트맥스": {
             "pbr": -4.43,
             "gpa": 0.8,
             "f_score": 0,
             "asset_growth_yoy": 16.4,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "프롬바이오": {
             "pbr": 0.69,
             "gpa": 20.1,
             "f_score": 1,
             "asset_growth_yoy": -27.4,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "이지트로닉스": {
             "pbr": 0.5,
             "gpa": -0.3,
             "f_score": 1,
             "asset_growth_yoy": -9.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "리파인": {
             "pbr": 0.81,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 29.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "큐에이드": {
             "pbr": 4.59,
             "gpa": 2.1,
             "f_score": 0,
             "asset_growth_yoy": -21.9,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "마음AI": {
             "pbr": 2.64,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 12.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "필에너지": {
             "pbr": 1.98,
             "gpa": 0.0,
             "f_score": 1,
             "asset_growth_yoy": -10.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "샤페론": {
             "pbr": 1.17,
             "gpa": -0.0,
             "f_score": 0,
             "asset_growth_yoy": 63.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "옵티코어": {
             "pbr": 10.01,
             "gpa": 2.4,
             "f_score": 2,
             "asset_growth_yoy": 75.5,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "뉴로핏": {
             "pbr": 5.29,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "제닉스로보틱스": {
             "pbr": 1.53,
             "gpa": -0.9,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "온코크로스": {
             "pbr": 3.48,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 77.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "지아이텍": {
             "pbr": 0.7,
             "gpa": 2.8,
             "f_score": 3,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "지앤비에스 에코": {
             "pbr": 1.14,
             "gpa": 10.6,
             "f_score": 3,
             "asset_growth_yoy": 12.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "원준": {
             "pbr": 0.68,
             "gpa": -1.4,
             "f_score": 2,
             "asset_growth_yoy": -6.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "범한퓨얼셀": {
             "pbr": 0.83,
             "gpa": -0.4,
             "f_score": 1,
             "asset_growth_yoy": 11.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에코프로에이치엔": {
             "pbr": 1.85,
             "gpa": 2.7,
             "f_score": 2,
             "asset_growth_yoy": 2.7,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "디티앤씨알오": {
             "pbr": 1.89,
             "gpa": -1.2,
             "f_score": 1,
             "asset_growth_yoy": 9.0,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "코어라인소프트": {
             "pbr": 3.28,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 106.1,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "파인메딕스": {
             "pbr": 1.29,
             "gpa": 4.0,
             "f_score": 2,
             "asset_growth_yoy": -2.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "지투파워": {
             "pbr": 3.13,
             "gpa": 8.8,
             "f_score": 2,
             "asset_growth_yoy": 28.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "씨엠티엑스": {
             "pbr": 4.52,
             "gpa": 6.2,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "지에프씨생명과학": {
             "pbr": 1.28,
             "gpa": 7.5,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "유일로보틱스": {
             "pbr": 7.95,
             "gpa": 0.2,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "라이콤": {
             "pbr": 6.27,
             "gpa": 2.2,
             "f_score": 1,
             "asset_growth_yoy": -1.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "파로스아이바이오": {
             "pbr": 5.58,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 65.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "자람테크놀로지": {
             "pbr": 3.33,
             "gpa": 1.8,
             "f_score": 1,
             "asset_growth_yoy": 8.4,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "지니너스": {
             "pbr": 3.23,
             "gpa": 0.9,
             "f_score": 0,
             "asset_growth_yoy": 75.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "포바이포": {
             "pbr": 1.91,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 28.9,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "대명에너지": {
             "pbr": 1.43,
             "gpa": 5.2,
             "f_score": 3,
             "asset_growth_yoy": 8.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "인벤티지랩": {
             "pbr": 3.98,
             "gpa": -0.4,
             "f_score": 1,
             "asset_growth_yoy": 78.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "에스비비테크": {
             "pbr": 9.67,
             "gpa": 0.5,
             "f_score": 1,
             "asset_growth_yoy": 13.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "넥스트바이오메디컬": {
             "pbr": 6.53,
             "gpa": 4.6,
             "f_score": 1,
             "asset_growth_yoy": 1.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "유디엠텍": {
             "pbr": 1.46,
             "gpa": 3.1,
             "f_score": 1,
             "asset_growth_yoy": -15.4,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "코닉오토메이션": {
             "pbr": 1.88,
             "gpa": 5.2,
             "f_score": 2,
             "asset_growth_yoy": 18.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "토마토시스템": {
             "pbr": 1.26,
             "gpa": 5.4,
             "f_score": 3,
             "asset_growth_yoy": 66.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "더블유씨피": {
             "pbr": 0.32,
             "gpa": -0.8,
             "f_score": 1,
             "asset_growth_yoy": 4.8,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "대진첨단소재": {
             "pbr": 0.81,
             "gpa": 1.1,
             "f_score": 0,
             "asset_growth_yoy": -6.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "오픈엣지테크놀로지": {
             "pbr": 29.58,
             "gpa": -22.7,
             "f_score": 0,
             "asset_growth_yoy": -49.1,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "리센스메디컬": {
             "pbr": 7.01,
             "gpa": 1.8,
             "f_score": null,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "쓰리빌리언": {
             "pbr": 8.02,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "넥스트칩": {
             "pbr": 5.51,
             "gpa": 11.8,
             "f_score": 1,
             "asset_growth_yoy": -34.4,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "세아메카닉스": {
             "pbr": 1.07,
             "gpa": 3.3,
             "f_score": 2,
             "asset_growth_yoy": 23.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "워트": {
             "pbr": 1.34,
             "gpa": 2.4,
             "f_score": 3,
             "asset_growth_yoy": 4.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "에이프릴바이오": {
             "pbr": 6.33,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -2.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "애드포러스": {
             "pbr": 0.69,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "에스지헬스케어": {
             "pbr": 0.9,
             "gpa": 4.8,
             "f_score": 3,
             "asset_growth_yoy": 22.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "가온칩스": {
             "pbr": 12.12,
             "gpa": -0.6,
             "f_score": 1,
             "asset_growth_yoy": 67.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "코난테크놀로지": {
             "pbr": 5.49,
             "gpa": -0.3,
             "f_score": 0,
             "asset_growth_yoy": 6.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "그린리소스": {
             "pbr": 1.65,
             "gpa": 2.8,
             "f_score": 3,
             "asset_growth_yoy": 18.0,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "우듬지팜": {
             "pbr": 0.65,
             "gpa": 0.5,
             "f_score": 1,
             "asset_growth_yoy": 6.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "더핑크퐁컴퍼니": {
             "pbr": 0.76,
             "gpa": 7.0,
             "f_score": 3,
             "asset_growth_yoy": 58.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "HPSP": {
             "pbr": 13.12,
             "gpa": 6.3,
             "f_score": 3,
             "asset_growth_yoy": 13.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "플라즈맵": {
             "pbr": 3.63,
             "gpa": 4.5,
             "f_score": 1,
             "asset_growth_yoy": 2.1,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "큐알티": {
             "pbr": 1.6,
             "gpa": 6.0,
             "f_score": 3,
             "asset_growth_yoy": 27.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "나라셀라": {
             "pbr": 0.36,
             "gpa": 7.9,
             "f_score": 1,
             "asset_growth_yoy": 5.4,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "뷰티스킨": {
             "pbr": 0.81,
             "gpa": 4.3,
             "f_score": 1,
             "asset_growth_yoy": 12.4,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "꿈비": {
             "pbr": 0.46,
             "gpa": 11.9,
             "f_score": 1,
             "asset_growth_yoy": 42.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "한패스": {
             "pbr": 0.94,
             "gpa": -0.6,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "스튜디오미르": {
             "pbr": 0.88,
             "gpa": -2.1,
             "f_score": 1,
             "asset_growth_yoy": 1.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "메쎄이상": {
             "pbr": 1.59,
             "gpa": 6.5,
             "f_score": 3,
             "asset_growth_yoy": 18.1,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "샌즈랩": {
             "pbr": 1.17,
             "gpa": -1.9,
             "f_score": 1,
             "asset_growth_yoy": -6.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "레이저쎌": {
             "pbr": 4.59,
             "gpa": 1.8,
             "f_score": 0,
             "asset_growth_yoy": -11.8,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "제일엠앤에스": {
             "pbr": -5.61,
             "gpa": 0.6,
             "f_score": 2,
             "asset_growth_yoy": 68.2,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "엠오티": {
             "pbr": 1.23,
             "gpa": 1.3,
             "f_score": 3,
             "asset_growth_yoy": 23.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "씨피시스템": {
             "pbr": 2.56,
             "gpa": 4.3,
             "f_score": 3,
             "asset_growth_yoy": 2.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "비아이매트릭스": {
             "pbr": 1.41,
             "gpa": 9.9,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "스튜디오삼익": {
             "pbr": 0.61,
             "gpa": 8.6,
             "f_score": 3,
             "asset_growth_yoy": 0.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "신성에스티": {
             "pbr": 1.66,
             "gpa": 2.1,
             "f_score": 1,
             "asset_growth_yoy": 76.7,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "나노팀": {
             "pbr": 1.96,
             "gpa": 1.9,
             "f_score": 1,
             "asset_growth_yoy": 19.7,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "핑거스토리": {
             "pbr": 0.41,
             "gpa": -0.2,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "LS머트리얼즈": {
             "pbr": 4.12,
             "gpa": 0.8,
             "f_score": 1,
             "asset_growth_yoy": 4.0,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "제이아이테크": {
             "pbr": 1.38,
             "gpa": 4.1,
             "f_score": 3,
             "asset_growth_yoy": 8.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "트루엔": {
             "pbr": 0.55,
             "gpa": 3.4,
             "f_score": 2,
             "asset_growth_yoy": 6.8,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "저스템": {
             "pbr": 4.7,
             "gpa": 9.2,
             "f_score": 3,
             "asset_growth_yoy": 22.5,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "오브젠": {
             "pbr": 2.93,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "모델솔루션": {
             "pbr": 0.95,
             "gpa": 4.8,
             "f_score": 3,
             "asset_growth_yoy": -3.7,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "시큐레터": {
             "pbr": 14.23,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": -20.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "라온텍": {
             "pbr": 8.73,
             "gpa": 0.4,
             "f_score": 1,
             "asset_growth_yoy": 41.5,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "KT밀리의서재": {
             "pbr": 0.98,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 29.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "제이오": {
             "pbr": 0.81,
             "gpa": 0.0,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "E8": {
             "pbr": 1.17,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": -9.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "삼기에너지솔루션즈": {
             "pbr": 0.93,
             "gpa": 1.8,
             "f_score": null,
             "asset_growth_yoy": 8.6,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "엔젯": {
             "pbr": 1.24,
             "gpa": 0.7,
             "f_score": 2,
             "asset_growth_yoy": 6.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "산돌": {
             "pbr": 0.62,
             "gpa": 5.3,
             "f_score": 3,
             "asset_growth_yoy": 0.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "SAMG엔터": {
             "pbr": 3.47,
             "gpa": 12.3,
             "f_score": 2,
             "asset_growth_yoy": 14.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "비스토스": {
             "pbr": 1.12,
             "gpa": 2.6,
             "f_score": 1,
             "asset_growth_yoy": 26.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "제이투케이바이오": {
             "pbr": 1.43,
             "gpa": 10.7,
             "f_score": 2,
             "asset_growth_yoy": 13.0,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "기가비스": {
             "pbr": 10.51,
             "gpa": 1.3,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "벨로크": {
             "pbr": 0.72,
             "gpa": 2.9,
             "f_score": 1,
             "asset_growth_yoy": 2.6,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "이뮨온시아": {
             "pbr": 12.18,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "스마트레이더시스템": {
             "pbr": 1.91,
             "gpa": 0.7,
             "f_score": 0,
             "asset_growth_yoy": 93.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "마이크로투나노": {
             "pbr": 1.63,
             "gpa": 6.3,
             "f_score": 2,
             "asset_growth_yoy": -4.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "티이엠씨": {
             "pbr": 0.78,
             "gpa": 1.9,
             "f_score": 3,
             "asset_growth_yoy": 2.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "티에프이": {
             "pbr": 3.98,
             "gpa": 7.3,
             "f_score": 3,
             "asset_growth_yoy": 26.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "시지트로닉스": {
             "pbr": 1.21,
             "gpa": -4.5,
             "f_score": 0,
             "asset_growth_yoy": -3.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "한싹": {
             "pbr": 0.77,
             "gpa": 3.1,
             "f_score": 1,
             "asset_growth_yoy": 2.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "케이쓰리아이": {
             "pbr": 0.54,
             "gpa": 2.6,
             "f_score": 1,
             "asset_growth_yoy": 12.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "와이랩": {
             "pbr": 1.1,
             "gpa": 3.2,
             "f_score": 1,
             "asset_growth_yoy": 14.4,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "케이엔에스": {
             "pbr": 1.11,
             "gpa": 3.4,
             "f_score": 3,
             "asset_growth_yoy": 11.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "퀄리타스반도체": {
             "pbr": 3.98,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 34.2,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "엠에프씨": {
             "pbr": 0.8,
             "gpa": 2.9,
             "f_score": 2,
             "asset_growth_yoy": -1.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "모니터랩": {
             "pbr": 0.75,
             "gpa": 4.0,
             "f_score": 2,
             "asset_growth_yoy": 10.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "에르코스": {
             "pbr": 1.0,
             "gpa": 2.8,
             "f_score": 2,
             "asset_growth_yoy": 23.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "삼현": {
             "pbr": 7.9,
             "gpa": 0.3,
             "f_score": 1,
             "asset_growth_yoy": 36.4,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "버넥트": {
             "pbr": 0.68,
             "gpa": 1.6,
             "f_score": 1,
             "asset_growth_yoy": 11.7,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "마녀공장": {
             "pbr": 2.1,
             "gpa": 12.6,
             "f_score": 3,
             "asset_growth_yoy": 8.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "블루엠텍": {
             "pbr": 1.21,
             "gpa": 3.3,
             "f_score": 3,
             "asset_growth_yoy": 3.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "코스모로보틱스": {
             "pbr": 31.76,
             "gpa": 1.8,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "파두": {
             "pbr": 117.4,
             "gpa": 23.8,
             "f_score": 3,
             "asset_growth_yoy": 23.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "HB인베스트먼트": {
             "pbr": 0.54,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 4.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "오픈놀": {
             "pbr": 0.53,
             "gpa": 20.4,
             "f_score": 2,
             "asset_growth_yoy": -12.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "파인엠텍": {
             "pbr": 1.24,
             "gpa": 1.5,
             "f_score": 1,
             "asset_growth_yoy": 28.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "레뷰코퍼레이션": {
             "pbr": 1.22,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 3.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "에스피소프트": {
             "pbr": 1.02,
             "gpa": 3.8,
             "f_score": 3,
             "asset_growth_yoy": 2.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "심플랫폼": {
             "pbr": 2.4,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -13.4,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "에이직랜드": {
             "pbr": 3.53,
             "gpa": 1.6,
             "f_score": 1,
             "asset_growth_yoy": 36.9,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "퓨릿": {
             "pbr": 1.25,
             "gpa": 7.0,
             "f_score": 3,
             "asset_growth_yoy": 20.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "큐리옥스바이오시스템즈": {
             "pbr": 14.12,
             "gpa": 0.7,
             "f_score": 1,
             "asset_growth_yoy": 14.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "메가터치": {
             "pbr": 2.97,
             "gpa": 4.5,
             "f_score": 1,
             "asset_growth_yoy": 38.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "지슨": {
             "pbr": 9.68,
             "gpa": 9.6,
             "f_score": 1,
             "asset_growth_yoy": 40.8,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "에코아이": {
             "pbr": 1.98,
             "gpa": 0.2,
             "f_score": 1,
             "asset_growth_yoy": 4.2,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "코츠테크놀로지": {
             "pbr": 1.02,
             "gpa": 2.1,
             "f_score": 2,
             "asset_growth_yoy": 71.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한국피아이엠": {
             "pbr": 5.17,
             "gpa": 2.1,
             "f_score": 2,
             "asset_growth_yoy": -1.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "하스": {
             "pbr": 0.86,
             "gpa": 3.2,
             "f_score": 1,
             "asset_growth_yoy": -5.2,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "인스웨이브": {
             "pbr": 0.71,
             "gpa": 3.1,
             "f_score": 2,
             "asset_growth_yoy": -9.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "아스테라시스": {
             "pbr": 5.39,
             "gpa": 11.1,
             "f_score": 1,
             "asset_growth_yoy": 23.7,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "아이엠티": {
             "pbr": 2.51,
             "gpa": 5.7,
             "f_score": 3,
             "asset_growth_yoy": 35.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "삐아": {
             "pbr": 1.63,
             "gpa": 20.0,
             "f_score": 3,
             "asset_growth_yoy": 7.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "컨텍": {
             "pbr": 0.68,
             "gpa": 1.4,
             "f_score": 1,
             "asset_growth_yoy": -3.8,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "제이엔비": {
             "pbr": 0.82,
             "gpa": 0.9,
             "f_score": 2,
             "asset_growth_yoy": 7.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "한빛레이저": {
             "pbr": 2.79,
             "gpa": 4.8,
             "f_score": 3,
             "asset_growth_yoy": 15.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "민테크": {
             "pbr": 1.08,
             "gpa": 0.4,
             "f_score": 1,
             "asset_growth_yoy": -16.0,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "한선엔지니어링": {
             "pbr": 2.27,
             "gpa": 5.0,
             "f_score": 2,
             "asset_growth_yoy": 47.5,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "캡스톤파트너스": {
             "pbr": 0.94,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 10.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "이닉스": {
             "pbr": 0.42,
             "gpa": 1.8,
             "f_score": 3,
             "asset_growth_yoy": 2.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "사피엔반도체": {
             "pbr": 18.22,
             "gpa": 4.4,
             "f_score": 2,
             "asset_growth_yoy": 13.0,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "피아이이": {
             "pbr": 2.24,
             "gpa": 0.9,
             "f_score": 1,
             "asset_growth_yoy": 23.3,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "그리드위즈": {
             "pbr": 0.96,
             "gpa": 1.2,
             "f_score": 2,
             "asset_growth_yoy": 12.2,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "에이에스텍": {
             "pbr": 0.9,
             "gpa": -0.6,
             "f_score": 0,
             "asset_growth_yoy": 21.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "케이지에이": {
             "pbr": 0.5,
             "gpa": -0.2,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "엔젤로보틱스": {
             "pbr": 8.64,
             "gpa": 0.9,
             "f_score": 1,
             "asset_growth_yoy": -18.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "아이씨티케이": {
             "pbr": 5.86,
             "gpa": 0.4,
             "f_score": 0,
             "asset_growth_yoy": 63.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "이엔셀": {
             "pbr": 2.15,
             "gpa": -1.6,
             "f_score": 1,
             "asset_growth_yoy": 16.2,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "지투지바이오": {
             "pbr": 3.76,
             "gpa": 0.1,
             "f_score": 0,
             "asset_growth_yoy": 963.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "한켐": {
             "pbr": 1.01,
             "gpa": 1.6,
             "f_score": 3,
             "asset_growth_yoy": 3.3,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "우진엔텍": {
             "pbr": 2.77,
             "gpa": 6.0,
             "f_score": 3,
             "asset_growth_yoy": 10.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "벡트": {
             "pbr": 2.2,
             "gpa": 10.9,
             "f_score": 1,
             "asset_growth_yoy": -13.6,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "에스팀": {
             "pbr": 1.23,
             "gpa": 15.3,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "씨어스": {
             "pbr": 22.73,
             "gpa": 28.3,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "위츠": {
             "pbr": 1.23,
             "gpa": 5.7,
             "f_score": 2,
             "asset_growth_yoy": 64.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "나우로보틱스": {
             "pbr": 12.61,
             "gpa": -0.2,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "알트": {
             "pbr": 0.59,
             "gpa": 5.3,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "아이빔테크놀로지": {
             "pbr": 1.69,
             "gpa": -0.3,
             "f_score": 1,
             "asset_growth_yoy": -13.6,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에스엠씨지": {
             "pbr": 1.12,
             "gpa": 3.4,
             "f_score": 2,
             "asset_growth_yoy": 11.4,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "현대힘스": {
             "pbr": 1.56,
             "gpa": 3.3,
             "f_score": 3,
             "asset_growth_yoy": 1.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "피앤에스로보틱스": {
             "pbr": 1.4,
             "gpa": 1.2,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "아이엠비디엑스": {
             "pbr": 1.91,
             "gpa": 1.5,
             "f_score": 1,
             "asset_growth_yoy": -17.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "아이스크림미디어": {
             "pbr": 1.05,
             "gpa": 3.6,
             "f_score": 2,
             "asset_growth_yoy": 18.9,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "뉴키즈온": {
             "pbr": 0.64,
             "gpa": 9.2,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "이노스페이스": {
             "pbr": 5.5,
             "gpa": -2.8,
             "f_score": 0,
             "asset_growth_yoy": -29.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "라메디텍": {
             "pbr": 4.38,
             "gpa": 1.4,
             "f_score": 1,
             "asset_growth_yoy": 7.4,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "더즌": {
             "pbr": 1.86,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 59.4,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "아이지넷": {
             "pbr": 1.1,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 91.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "뉴엔AI": {
             "pbr": 1.02,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "모티브링크": {
             "pbr": 1.55,
             "gpa": 3.8,
             "f_score": 1,
             "asset_growth_yoy": 0.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에스오에스랩": {
             "pbr": 7.41,
             "gpa": 0.4,
             "f_score": 1,
             "asset_growth_yoy": 66.7,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "티디에스팜": {
             "pbr": 0.73,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 27.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "쿼드메디슨": {
             "pbr": 2.48,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": 69.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "아이언디바이스": {
             "pbr": 0.99,
             "gpa": 4.0,
             "f_score": 1,
             "asset_growth_yoy": -6.8,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "닷밀": {
             "pbr": 0.83,
             "gpa": 1.1,
             "f_score": 1,
             "asset_growth_yoy": 28.4,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "교보15호스팩": {
             "pbr": 1.16,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "인스피언": {
             "pbr": 0.65,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 2.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "클로봇": {
             "pbr": 10.94,
             "gpa": 2.7,
             "f_score": 0,
             "asset_growth_yoy": -5.7,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "사이냅소프트": {
             "pbr": 0.54,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 8.6,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "키움히어로제1호스팩": {
             "pbr": 1.05,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "IBKS제23호스팩": {
             "pbr": 1.03,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "프로티나": {
             "pbr": 11.46,
             "gpa": 0.1,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "유진스팩10호": {
             "pbr": 1.01,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "IBKS제24호스팩": {
             "pbr": 1.04,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 1.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "이노테크": {
             "pbr": 1.77,
             "gpa": 5.7,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "아이비젼웍스": {
             "pbr": 0.63,
             "gpa": 1.3,
             "f_score": 1,
             "asset_growth_yoy": -7.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "하나30호스팩": {
             "pbr": 1.02,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 2.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "하나31호스팩": {
             "pbr": 1.05,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 2.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "대신밸런스제17호스팩": {
             "pbr": 1.05,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "셀로맥스사이언스": {
             "pbr": 1.02,
             "gpa": 4.8,
             "f_score": null,
             "asset_growth_yoy": 6.3,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "신영스팩10호": {
             "pbr": 1.01,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 2.1,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "에스케이증권제11호스팩": {
             "pbr": 1.02,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 1.6,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "폰드그룹": {
             "pbr": 0.79,
             "gpa": 13.2,
             "f_score": 2,
             "asset_growth_yoy": 11.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "에스케이증권제12호스팩": {
             "pbr": 1.04,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "유안타제15호스팩": {
             "pbr": 1.03,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "에스케이증권제13호스팩": {
             "pbr": 1.04,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.5,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "노머스": {
             "pbr": 1.09,
             "gpa": 8.0,
             "f_score": 3,
             "asset_growth_yoy": 14.8,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "루미르": {
             "pbr": 1.88,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 8.3,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "유안타제16호스팩": {
             "pbr": 1.01,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "RF시스템즈": {
             "pbr": 1.64,
             "gpa": 3.7,
             "f_score": 3,
             "asset_growth_yoy": 16.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "링크솔루션": {
             "pbr": 3.87,
             "gpa": -1.4,
             "f_score": 1,
             "asset_growth_yoy": 74.5,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "신한제12호스팩": {
             "pbr": 1.03,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 2.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "신한제13호스팩": {
             "pbr": 1.11,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 1.8,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "스트라드비젼": {
             "pbr": 14.23,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": -12.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "엔알비": {
             "pbr": 0.88,
             "gpa": 1.7,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "하나32호스팩": {
             "pbr": 1.05,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 2.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "하나33호스팩": {
             "pbr": 1.03,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "씨메스로보틱스": {
             "pbr": 3.45,
             "gpa": 1.9,
             "f_score": 1,
             "asset_growth_yoy": -18.0,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "키스트론": {
             "pbr": 0.42,
             "gpa": 1.6,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "미트박스": {
             "pbr": 0.84,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 49.7,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "에이럭스": {
             "pbr": 2.2,
             "gpa": 3.9,
             "f_score": 1,
             "asset_growth_yoy": 47.7,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에스켐": {
             "pbr": 0.73,
             "gpa": 5.1,
             "f_score": 3,
             "asset_growth_yoy": -1.4,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "오름테라퓨틱": {
             "pbr": 8.79,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": 63.3,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "토모큐브": {
             "pbr": 13.4,
             "gpa": 4.1,
             "f_score": 2,
             "asset_growth_yoy": -2.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "오가노이드사이언스": {
             "pbr": 2.59,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "온코닉테라퓨틱스": {
             "pbr": 6.88,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 40.0,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "M83": {
             "pbr": 0.69,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 41.4,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "알지노믹스": {
             "pbr": 8.67,
             "gpa": null,
             "f_score": 0,
             "asset_growth_yoy": 133.1,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "에이치엠씨제7호스팩": {
             "pbr": 1.03,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "미래에셋비전스팩4호": {
             "pbr": 1.08,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "미래에셋비전스팩5호": {
             "pbr": 1.07,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "DB금융스팩12호": {
-            "pbr": 1.06,
+            "pbr": 1.07,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.7,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "마키나락스": {
             "pbr": 44.27,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "이베스트스팩6호": {
             "pbr": 1.11,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.6,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "나라스페이스테크놀로지": {
             "pbr": 2.91,
             "gpa": -0.7,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "KB제29호스팩": {
             "pbr": 1.0,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "미래에셋비전스팩6호": {
             "pbr": 1.01,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.8,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "블랙야크아이앤씨": {
             "pbr": 1.75,
             "gpa": 6.5,
             "f_score": 3,
             "asset_growth_yoy": 103.5,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "한국제15호스팩": {
             "pbr": 1.02,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 3.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "위너스일렉": {
             "pbr": 1.2,
             "gpa": 3.1,
             "f_score": 2,
             "asset_growth_yoy": 5.9,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "에이유브랜즈": {
             "pbr": 2.92,
             "gpa": 11.2,
             "f_score": 3,
             "asset_growth_yoy": 49.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "엔에이치스팩31호": {
             "pbr": 1.03,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "교보16호스팩": {
             "pbr": 1.0,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.2,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "삼양엔씨켐": {
             "pbr": 2.54,
             "gpa": 7.2,
             "f_score": 3,
             "asset_growth_yoy": 2.2,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "미래에셋비전스팩7호": {
             "pbr": 1.01,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.4,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "대신밸런스제19호스팩": {
             "pbr": 0.99,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "도우인시스": {
             "pbr": 1.13,
             "gpa": 3.2,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "하나34호스팩": {
             "pbr": 1.06,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": -100.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "삼양컴텍": {
             "pbr": 1.61,
             "gpa": 1.3,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "티엑스알로보틱스": {
             "pbr": 2.43,
             "gpa": 1.6,
             "f_score": 2,
             "asset_growth_yoy": -24.3,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "KB제30호스팩": {
             "pbr": 1.02,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "노타": {
             "pbr": 16.03,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "신한제14호스팩": {
             "pbr": 1.05,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 2.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "폴레드": {
             "pbr": 1.95,
             "gpa": 21.1,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "키움제10호스팩": {
             "pbr": 1.02,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "신한제15호스팩": {
             "pbr": 1.04,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 2.2,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "유진스팩11호": {
             "pbr": 1.01,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 2.1,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "에스투더블유": {
             "pbr": 4.96,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "비츠로넥스텍": {
             "pbr": 4.17,
             "gpa": -1.0,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 4,
+            "value_tier": "판단보류"
         },
         "교보17호스팩": {
             "pbr": 1.0,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 2.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "바이오비쥬": {
             "pbr": 1.47,
             "gpa": 8.1,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "키움제11호스팩": {
             "pbr": 1.12,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 2.0,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "엘케이켐": {
             "pbr": 2.13,
             "gpa": 3.9,
             "f_score": 3,
             "asset_growth_yoy": 8.3,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "디비금융제13호스팩": {
             "pbr": 1.0,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 2.3,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "세미파이브": {
             "pbr": 3.01,
             "gpa": 6.3,
             "f_score": 2,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "리브스메드": {
             "pbr": 5.63,
             "gpa": 2.3,
             "f_score": 1,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "KB제31호스팩": {
             "pbr": 1.0,
             "gpa": null,
             "f_score": 2,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "아이엠바이오로직스": {
             "pbr": 2.28,
             "gpa": 2.1,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "지에프아이": {
             "pbr": 1.41,
             "gpa": 6.1,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "유안타제17호스팩": {
             "pbr": 1.01,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": 1.9,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "큐리오시스": {
             "pbr": 4.4,
             "gpa": 1.1,
             "f_score": 0,
             "asset_growth_yoy": 115.4,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "신한제16호스팩": {
             "pbr": 1.05,
             "gpa": null,
             "f_score": 3,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "한화플러스제5호스팩": {
             "pbr": 1.03,
             "gpa": null,
             "f_score": 1,
             "asset_growth_yoy": 1.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "고스트스튜디오": {
             "pbr": 1148.28,
             "gpa": 6.4,
             "f_score": 3,
             "asset_growth_yoy": -10.9,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "JTC": {
             "pbr": 13.22,
             "gpa": 10.5,
             "f_score": 3,
             "asset_growth_yoy": 25.3,
-            "pbr_judgment": null
+            "value_score": 9,
+            "value_tier": "저평가"
         },
         "테라뷰": {
             "pbr": 23656003.69,
             "gpa": 8.7,
             "f_score": null,
             "asset_growth_yoy": null,
-            "pbr_judgment": null
+            "value_score": 0,
+            "value_tier": "위험"
         },
         "엑세스바이오": {
             "pbr": 216.17,
             "gpa": -0.6,
             "f_score": 1,
             "asset_growth_yoy": -16.3,
-            "pbr_judgment": null
+            "value_score": 3,
+            "value_tier": "판단보류"
         },
         "잉글우드랩": {
             "pbr": 1433.21,
             "gpa": 4.8,
             "f_score": 3,
             "asset_growth_yoy": 10.1,
-            "pbr_judgment": null
+            "value_score": 10,
+            "value_tier": "극저평가"
         },
         "코오롱티슈진": {
             "pbr": 80243.61,
             "gpa": 0.0,
             "f_score": 0,
             "asset_growth_yoy": 60.1,
-            "pbr_judgment": null
+            "value_score": 1,
+            "value_tier": "위험"
         },
         "네오이뮨텍": {
             "pbr": 1350.66,
             "gpa": -8.1,
             "f_score": 0,
             "asset_growth_yoy": 30.9,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         },
         "소마젠": {
             "pbr": 3038.39,
             "gpa": 6.0,
             "f_score": 2,
             "asset_growth_yoy": -8.7,
-            "pbr_judgment": null
+            "value_score": 5,
+            "value_tier": "판단보류"
         },
         "씨엑스아이": {
             "pbr": 3.14,
             "gpa": 2.0,
             "f_score": null,
             "asset_growth_yoy": 2.8,
-            "pbr_judgment": null
+            "value_score": 6,
+            "value_tier": "판단보류"
         },
         "크리스탈신소재": {
             "pbr": 15.64,
             "gpa": 0.5,
             "f_score": 2,
             "asset_growth_yoy": -8.0,
-            "pbr_judgment": null
+            "value_score": 7,
+            "value_tier": "판단보류"
         },
         "글로벌에스엠": {
             "pbr": 292.75,
             "gpa": 5.2,
             "f_score": 3,
             "asset_growth_yoy": 1.6,
-            "pbr_judgment": null
+            "value_score": 8,
+            "value_tier": "저평가"
         },
         "파이온엑스": {
             "pbr": 401.05,
             "gpa": 0.5,
             "f_score": 0,
             "asset_growth_yoy": -2.5,
-            "pbr_judgment": null
+            "value_score": 2,
+            "value_tier": "판단보류"
         }
     },
     "ncav_value": [
