@@ -3,7 +3,7 @@ const KOSPI_QUANT_PACKAGE = {
         "krx_basis_date": "20260716",
         "dart_basis": "2026년 1분기보고서",
         "status": "NORMAL",
-        "checked_at": "16:01:24"
+        "checked_at": "03:04:19"
     },
     "super_value": [
         {
@@ -8167,8 +8167,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -13.7,
             "asset_growth_r": 8,
             "price_volatility": 0.31,
-            "volatility_r": 552,
-            "avg_r": 157.8,
+            "volatility_r": 551,
+            "avg_r": 157.5,
             "quarter_revenue": 233,
             "quarter_cost_of_sales": 176,
             "assets": 580,
@@ -10672,8 +10672,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 10.5,
             "asset_growth_r": 557,
             "price_volatility": 0.26,
-            "volatility_r": 535,
-            "avg_r": 216.2,
+            "volatility_r": 534,
+            "avg_r": 216.1,
             "equity": 1135,
             "quarter_operating_cf": 207,
             "quarter_net_income": 36,
@@ -11012,8 +11012,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -13.7,
             "asset_growth_r": 16,
             "price_volatility": 0.31,
-            "volatility_r": 556,
-            "avg_r": 225.4,
+            "volatility_r": 555,
+            "avg_r": 225.2,
             "equity": 343,
             "quarter_operating_cf": 99,
             "quarter_net_income": 42,
@@ -13717,7 +13717,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 14.9,
             "asset_growth_r": 241,
             "price_volatility": 0.27,
-            "volatility_r": 215,
+            "volatility_r": 214,
             "op_growth_qoq": 316.7,
             "op_qoq_r": 123,
             "op_growth_yoy": 824.1,
@@ -13726,7 +13726,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 13,
             "ni_growth_yoy": 563.7,
             "ni_yoy_r": 71,
-            "avg_r": 124.9,
+            "avg_r": 124.8,
             "quarter_revenue": 372,
             "quarter_cost_of_sales": 247,
             "assets": 3067,
@@ -14198,7 +14198,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 12.2,
             "asset_growth_r": 217,
             "price_volatility": 0.3,
-            "volatility_r": 220,
+            "volatility_r": 219,
             "op_growth_qoq": 393.9,
             "op_qoq_r": 99,
             "op_growth_yoy": 1073.2,
@@ -14207,7 +14207,7 @@ const KOSPI_QUANT_PACKAGE = {
             "ni_qoq_r": 140,
             "ni_growth_yoy": 293.7,
             "ni_yoy_r": 135,
-            "avg_r": 137.2,
+            "avg_r": 137.1,
             "quarter_revenue": 110,
             "quarter_cost_of_sales": 82,
             "assets": 908,
@@ -21429,7 +21429,6 @@ const KOSPI_QUANT_PACKAGE = {
         "엔에이치스팩33호": [
             "금융/지주",
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "키움히어로제2호스팩": [
@@ -29295,9 +29294,9 @@ const KOSPI_QUANT_PACKAGE = {
         "주연테크": {
             "pbr": 0.35,
             "gpa": 4.7,
-            "f_score": 2,
+            "f_score": 1,
             "asset_growth_yoy": 4.7,
-            "value_score": 6,
+            "value_score": 5,
             "value_tier": "판단보류"
         },
         "KSS해운": {
