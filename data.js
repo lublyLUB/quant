@@ -3,7 +3,7 @@ const KOSPI_QUANT_PACKAGE = {
         "krx_basis_date": "20260803",
         "dart_basis": "2026년 1분기보고서",
         "status": "NORMAL",
-        "checked_at": "16:01:19"
+        "checked_at": "03:04:06"
     },
     "super_value": [
         {
@@ -15674,9 +15674,9 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 107,
             "asset_growth_yoy": 0.5,
             "asset_growth_r": 175,
-            "price_volatility": -4.5,
-            "volatility_r": 5,
-            "avg_r": 139.8,
+            "price_volatility": -5.08,
+            "volatility_r": 3,
+            "avg_r": 139.2,
             "quarter_revenue": 105,
             "quarter_cost_of_sales": 75,
             "assets": 530,
@@ -21409,9 +21409,9 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 109,
             "asset_growth_yoy": 0.5,
             "asset_growth_r": 183,
-            "price_volatility": -4.5,
-            "volatility_r": 5,
-            "avg_r": 223.4,
+            "price_volatility": -5.08,
+            "volatility_r": 3,
+            "avg_r": 223.1,
             "equity": 165,
             "quarter_operating_cf": 2,
             "quarter_net_income": 11,
@@ -22498,8 +22498,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 6.4,
             "asset_growth_r": 416,
             "price_volatility": -4.92,
-            "volatility_r": 4,
-            "avg_r": 250.5,
+            "volatility_r": 5,
+            "avg_r": 250.6,
             "equity": 257,
             "quarter_operating_cf": 20,
             "quarter_net_income": 14,
@@ -58473,7 +58473,7 @@ const KOSPI_QUANT_PACKAGE = {
         "씨이랩": {
             "pbr": 3.77,
             "gpa": 0.8,
-            "f_score": 0,
+            "f_score": 1,
             "asset_growth_yoy": 132.6,
             "value_score": 2,
             "value_tier": "판단보류"
