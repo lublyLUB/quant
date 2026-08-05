@@ -15,7 +15,8 @@ import json
 import logging
 import sys
 import threading
-from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timedelta
 
 logging.basicConfig(
     level=logging.INFO,
@@ -52,25 +53,54 @@ def get_base_url(is_mock=True):
     return MOCK_URL if is_mock else PROD_URL
 
 
+_token_cache = {"token": None, "expires_at": None}
+_token_cache_lock = threading.Lock()
+
+
+def invalidate_cached_token():
+    """캐시된 토큰을 강제로 무효화 - 다른 프로세스가 같은 appkey로 새 토큰을 발급받아
+    기존 토큰이 서버 쪽에서 조기 무효화됐을 때(만료 전 401/LOGIN 실패) 다음 호출이 재발급받게 한다."""
+    with _token_cache_lock:
+        _token_cache["token"] = None
+        _token_cache["expires_at"] = None
+
+
 def issue_access_token(app_key, app_secret, is_mock=True):
-    """접근토큰발급 (OAuth2). 성공 시 토큰 문자열을 반환."""
-    url = f"{get_base_url(is_mock)}/oauth2/token"
-    resp = requests.post(
-        url,
-        json={
-            "grant_type": "client_credentials",
-            "appkey": app_key,
-            "secretkey": app_secret,
-        },
-        headers={"Content-Type": "application/json;charset=UTF-8"},
-        timeout=15,
-    )
-    resp.raise_for_status()
-    data = resp.json()
-    token = data.get("token") or data.get("access_token")
-    if not token:
-        raise RuntimeError(f"토큰 발급 실패: {data}")
-    return token
+    """접근토큰발급 (OAuth2). 유효기간(expires_dt) 동안은 캐시된 토큰을 재사용한다."""
+    with _token_cache_lock:
+        if _token_cache["token"] and _token_cache["expires_at"] and datetime.now() < _token_cache["expires_at"]:
+            return _token_cache["token"]
+
+        url = f"{get_base_url(is_mock)}/oauth2/token"
+        resp = requests.post(
+            url,
+            json={
+                "grant_type": "client_credentials",
+                "appkey": app_key,
+                "secretkey": app_secret,
+            },
+            headers={"Content-Type": "application/json;charset=UTF-8"},
+            timeout=15,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        token = data.get("token") or data.get("access_token")
+        if not token:
+            raise RuntimeError(f"토큰 발급 실패: {data}")
+
+        expires_at = None
+        expires_dt = data.get("expires_dt")
+        if expires_dt:
+            try:
+                expires_at = datetime.strptime(expires_dt, "%Y%m%d%H%M%S") - timedelta(minutes=5)
+            except ValueError:
+                expires_at = None
+        if not expires_at:
+            expires_at = datetime.now() + timedelta(hours=1)
+
+        _token_cache["token"] = token
+        _token_cache["expires_at"] = expires_at
+        return token
 
 
 def get_transaction_history(strt_dt: str, end_dt: str, tp: str = "0", stk_cd: str = "") -> list:
@@ -136,27 +166,16 @@ def get_net_deposit(strt_dt: str, end_dt: str) -> dict:
     }
 
 
-def get_daily_asset_history(start_dt: str, end_dt: str) -> list:
-    """kt00002 일별추정예탁자산현황. start_dt~end_dt 기간의 일별 자산 리스트 반환."""
-    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
-    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/acnt"
-    headers = {
-        "Content-Type": "application/json;charset=UTF-8",
-        "api-id": "kt00002",
-        "cont-yn": "N",
-        "next-key": "",
-        "authorization": f"Bearer {token}",
-    }
-    resp = requests.post(url, headers=headers,
-                         json={"start_dt": start_dt, "end_dt": end_dt}, timeout=15)
-    resp.raise_for_status()
-    return resp.json().get("daly_prsm_dpst_aset_amt_prst") or []
-
 
 def get_stock_list_flags():
-    """ka10099로 KOSPI+KOSDAQ 전 종목의 플래그를 한 번에 조회.
+    """ka10099로 KOSPI+KOSDAQ 전 종목의 플래그와 시세(현재가·시가총액)를 한 번에 조회.
 
-    반환: {종목코드: {'is_admin': bool, 'is_admin_warning': bool, 'is_halt': bool, 'is_inv_warn': bool}}
+    공공데이터포털 시세는 기준일로부터 최소 2영업일 지연(익영업일 오후 1시 발행)돼 스크리닝에
+    쓰기엔 너무 느리다. ka10099 응답에 이미 현재가(lastPrice)·상장주식수(listCount)가 들어있어
+    추가 호출 없이 실시간 시세를 얻을 수 있으므로, 플래그 조회와 함께 같이 뽑아 재사용한다.
+
+    반환: {종목코드: {'is_admin': bool, 'is_admin_warning': bool, 'is_halt': bool, 'is_inv_warn': bool,
+                    'price': int, 'market_cap': float, 'market': 'KOSPI'|'KOSDAQ'}}
     """
     token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
     url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/stkinfo"
@@ -183,6 +202,14 @@ def get_stock_list_flags():
                 audit  = (s.get("auditInfo") or "").strip()
                 state  = (s.get("state") or "").strip()
                 warn   = str(s.get("orderWarning") or "0").strip()
+                try:
+                    price = int(s.get("lastPrice") or 0)
+                except ValueError:
+                    price = 0
+                try:
+                    shares = int(s.get("listCount") or 0)
+                except ValueError:
+                    shares = 0
                 result[code] = {
                     "is_admin":         "관리" in audit and "우려" not in audit,
                     "is_admin_warning": "우려" in audit,
@@ -192,6 +219,9 @@ def get_stock_list_flags():
                     # orderWarning "2" = 정리매매. 경고가 아니라 거래소가 상장폐지를 이미
                     # 확정하고 마지막 매매 기회를 주는 기간이라 별도로 구분해서 표시한다.
                     "is_delisting":     warn == "2",
+                    "price":            price,
+                    "market_cap":       float(price * shares),
+                    "market":           "KOSPI" if mrkt_tp == "0" else "KOSDAQ",
                 }
             cont_yn  = resp.headers.get("cont-yn", "N")
             next_key = resp.headers.get("next-key", "")
@@ -222,11 +252,28 @@ def fetch_account_balance(access_token, account_no, is_mock=True):
 
 
 def get_holdings():
-    """보유 내역을 조회해서 반환 (종목코드/종목명/수량/평가금액 등 원본 응답 그대로)."""
+    """보유 내역을 조회해서 반환 (종목코드/종목명/수량/평가금액 등 원본 응답 그대로).
+
+    캐시된 토큰이 (다른 프로세스의 재발급 등으로) 조기 무효화돼 인증 실패가 나면,
+    캐시를 비우고 새 토큰으로 한 번만 재시도한다.
+    """
     if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET and KIWOOM_ACCOUNT_NO):
         raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET/KIWOOM_ACCOUNT_NO를 먼저 입력하세요.")
     token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
-    data = fetch_account_balance(token, KIWOOM_ACCOUNT_NO, KIWOOM_IS_MOCK)
+    try:
+        data = fetch_account_balance(token, KIWOOM_ACCOUNT_NO, KIWOOM_IS_MOCK)
+        retry_needed = data.get("return_code") not in (0, None)
+    except requests.HTTPError:
+        data = None
+        retry_needed = True
+    if retry_needed:
+        # 키움은 토큰 무효화를 HTTP 오류가 아니라 200 응답 본문의 return_code(예: 8005)로
+        # 내려주는 경우가 있어, 본문까지 확인해야 죽은 캐시 토큰을 감지해 재발급받을 수 있다.
+        invalidate_cached_token()
+        token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+        data = fetch_account_balance(token, KIWOOM_ACCOUNT_NO, KIWOOM_IS_MOCK)
+        if data.get("return_code") not in (0, None):
+            raise RuntimeError(f"보유 내역 조회 실패: {data.get('return_msg')}")
     # 0B 등 실시간 이벤트엔 종목명이 없으므로, 조회 때마다 코드→이름 캐시를 채워둔다.
     for r in data.get("acnt_evlt_remn_indv_tot", []):
         code = (r.get("stk_cd") or "").lstrip("A")
@@ -884,6 +931,120 @@ def fetch_stock_quote(access_token, stk_cd, is_mock=True):
     return resp.json()
 
 
+def get_year_high_ratios(codes):
+    """ka10001의 250일(약 52주) 최고가 대비율(250hgst_pric_pre_rt)을 종목코드별로 조회.
+
+    ka10004(호가)/ka10087(시간외단일가) 기반 실시간 시세 로테이션에는 이 필드가 없어서,
+    장중 시세 갱신과 무관하게 필요할 때 ka10001을 직접 호출한다.
+    """
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET을 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    result = {}
+    for code in codes:
+        try:
+            data = fetch_stock_quote(token, code, KIWOOM_IS_MOCK)
+            rt = data.get("250hgst_pric_pre_rt")
+            if rt not in (None, ""):
+                result[code] = float(rt)
+        except Exception:
+            continue
+    return result
+
+
+def _get_recent_closes(stk_cd, token, n_days=60):
+    """ka10086 일별주가로 최근 n_days일 종가를 최신순으로 반환(이동평균 산출용)."""
+    url = f"{get_base_url(KIWOOM_IS_MOCK)}/api/dostk/mrkcond"
+    qry_dt = datetime.now().strftime("%Y%m%d")
+    closes = []
+    cont_yn, next_key = "N", ""
+    while len(closes) < n_days:
+        headers = {
+            "Content-Type": "application/json;charset=UTF-8",
+            "api-id": "ka10086",
+            "cont-yn": cont_yn,
+            "next-key": next_key,
+            "authorization": f"Bearer {token}",
+        }
+        resp = requests.post(url, headers=headers, json={"stk_cd": stk_cd, "qry_dt": qry_dt, "indc_tp": "1"}, timeout=15)
+        resp.raise_for_status()
+        data = resp.json()
+        rows = data.get("daly_stkpc") or []
+        if not rows:
+            break
+        closes.extend(abs(int(r.get("close_pric") or 0)) for r in rows)
+        cont_yn = resp.headers.get("cont-yn", "N")
+        next_key = resp.headers.get("next-key", "")
+        if cont_yn != "Y":
+            break
+    return closes[:n_days]
+
+
+def _get_ma_trend(stk_cd, token):
+    """5/20일 이동평균 정배열(5>20)/역배열(5<20)/혼조 판정 - ka10086 1페이지(20건)로 조회."""
+    closes = _get_recent_closes(stk_cd, token, 20)
+    if len(closes) < 20:
+        return None
+    ma5 = sum(closes[:5]) / 5
+    ma20 = sum(closes[:20]) / 20
+    if ma5 > ma20:
+        return "정배열"
+    if ma5 < ma20:
+        return "역배열"
+    return "혼조"
+
+
+def _num(v, cast=float):
+    """ka10001 응답 필드(부호 접두 문자열)를 숫자로 변환. 빈 값이면 None."""
+    if v in (None, "", "-0", "+0"):
+        return None
+    try:
+        return cast(v)
+    except (TypeError, ValueError):
+        return None
+
+
+def _fetch_one_watchlist_quote(code, token):
+    q = fetch_stock_quote(token, code, KIWOOM_IS_MOCK)
+    cur_prc = _num(q.get("cur_prc"), int)
+    entry = {
+        "name": q.get("stk_nm"),
+        "cur_prc": abs(cur_prc) if cur_prc is not None else None,
+        "flu_rt": _num(q.get("flu_rt")),
+        "per": _num(q.get("per")),
+        "pbr": _num(q.get("pbr")),
+        "roe": _num(q.get("roe")),
+        "eps": _num(q.get("eps"), int),
+        "bps": _num(q.get("bps"), int),
+        "mac": _num(q.get("mac"), int),
+        "trde_qty": _num(q.get("trde_qty"), int),
+        "crd_rt": _num(q.get("crd_rt")),
+        "for_exh_rt": _num(q.get("for_exh_rt")),
+        "year_high_rt": _num(q.get("250hgst_pric_pre_rt")),
+    }
+    entry["ma_trend"] = _get_ma_trend(code, token)
+    return entry
+
+
+def get_watchlist_quotes(codes):
+    """'매도 검토' 탭용 - ka10001(기본정보)의 시세·밸류에이션·수급 필드와 ka10086 기반
+    이동평균 정배열/역배열을 종목코드별로 조회. 종목 수만큼 API 왕복이 발생해 스레드풀로 병렬 처리한다.
+    """
+    if not (KIWOOM_APP_KEY and KIWOOM_APP_SECRET):
+        raise RuntimeError("config_local.py에 KIWOOM_APP_KEY/KIWOOM_APP_SECRET을 먼저 입력하세요.")
+    token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
+    result = {}
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        futures = {executor.submit(_fetch_one_watchlist_quote, code, token): code for code in codes}
+        for future in as_completed(futures):
+            code = futures[future]
+            try:
+                result[code] = future.result()
+            except Exception:
+                continue
+    return result
+
+
 def fetch_quote(access_token, stk_cd, api_id, is_mock=True):
     """호가/시세 조회 공통 함수 (/api/dostk/mrkcond 계열)."""
     url = f"{get_base_url(is_mock)}/api/dostk/mrkcond"
@@ -1012,31 +1173,29 @@ def round_to_tick(price: int) -> int:
 
 
 def get_closing_auction_price(stk_cd: str) -> int:
-    """동시호가 주문용 가격 계산 (ka10001 예상체결가 × 1.005, 상한가 이하로 제한, 호가단위 보정).
+    """동시호가 매수 주문용 가격 = 상한가.
 
-    15:20 시점 예상체결가에 0.5% 버퍼를 더해 동시호가 내 체결 확률을 높인다.
-    예상체결가가 없으면 현재가를 사용한다.
+    동시호가(단일가매매)는 지정가가 얼마든 실제로는 그 시점에 결정된 단일 체결가로만
+    체결되므로, 상한가로 지정해도 상한가에 사줘지는 게 아니라 체결 확률만 최대화된다.
+    예전엔 "예상체결가(또는 현재가) × 1.005"로 버퍼를 두었는데, 이 값이 그 시점 최우선
+    매수/매도 호가보다도 낮아 미체결로 남는 경우가 실제로 있었다 - 예상체결가 필드가
+    비어있는 경우가 잦고, 현재가는 15:20 이후 갱신이 멈춘 값이라 버퍼가 무의미해질 수 있다.
     """
     token = issue_access_token(KIWOOM_APP_KEY, KIWOOM_APP_SECRET, KIWOOM_IS_MOCK)
     data  = fetch_stock_quote(token, stk_cd, KIWOOM_IS_MOCK)
-    exp   = data.get("exp_cntr_pric")
-    cur   = data.get("cur_prc")
     upl   = data.get("upl_pric")
-    # 예상체결가가 없으면 키움은 빈 문자열이 아니라 "-0"을 내려주는데, 이는 파이썬에서
-    # truthy라 exp 분기가 그대로 타면서 abs(int("-0"))=0이 되어버린다.
-    # 문자열 유무가 아니라 "실제로 0이 아닌 값인지"로 판단해야 현재가로 제대로 폴백된다.
-    exp_val = abs(int(exp)) if exp else 0
-    base    = exp_val if exp_val else (abs(int(cur)) if cur else 0)
-    upper   = abs(int(upl)) if upl else base
-    price   = int(base * 1.005)
-    return round_to_tick(min(price, upper))
+    cur   = data.get("cur_prc")
+    upper = abs(int(upl)) if upl else (abs(int(cur)) if cur else 0)
+    return round_to_tick(upper)
 
 
 def place_order(stk_cd, qty, side, price=None, is_mock=KIWOOM_IS_MOCK):
     """주식 매수/매도 주문 (kt10000/kt10001).
 
     side: "buy" 또는 "sell". 현재 시각에 따라 정규장/동시호가/시간외 거래구분을 자동으로 선택한다.
-    동시호가(15:20~15:30) 매수 시 price=None이면 예상체결가×1.005를 자동 계산한다.
+    동시호가(15:20~15:30) 매수는 항상 예상체결가×1.005로 다시 계산한다 - 이 구간엔 신규 체결이
+    없어 조회 시점의 현재가(cur_prc)가 15:20 시점에 멈춘 값이라, 그 가격 그대로 지정가를 넣으면
+    실제 동시호가 체결가보다 낮아 미체결로 남는 경우가 있었다.
     """
     if side not in ("buy", "sell"):
         raise ValueError("side는 'buy' 또는 'sell'이어야 합니다.")
@@ -1047,8 +1206,8 @@ def place_order(stk_cd, qty, side, price=None, is_mock=KIWOOM_IS_MOCK):
     t    = now.time()
     t_1520 = datetime.strptime("15:20", "%H:%M").time()
     t_1530 = datetime.strptime("15:30", "%H:%M").time()
-    # 동시호가 매수 시 price 미지정이면 자동 계산
-    if side == "buy" and t_1520 <= t < t_1530 and not price:
+    # 동시호가 매수는 호출자가 준 price(정규장 마감 직전 현재가)를 무시하고 예상체결가 기준으로 재계산
+    if side == "buy" and t_1520 <= t < t_1530:
         price = get_closing_auction_price(stk_cd)
 
     trde_tp = resolve_trde_tp(price, now)
@@ -1254,6 +1413,9 @@ def start_order_realtime(on_fill, on_balance=None, on_stock_info=None, on_error=
                 _after_login(ws)
             else:
                 _wslog.error("LOGIN 실패: %s", msg.get("return_msg"))
+                # 캐시된 토큰이 (다른 프로세스의 재발급 등으로) 조기 무효화된 경우, 다음 재연결 때
+                # 같은 죽은 토큰을 계속 재사용하지 않도록 캐시를 비워 강제로 재발급받게 한다.
+                invalidate_cached_token()
                 ws.close()
             return
         if trnm != "REAL":

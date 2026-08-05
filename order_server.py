@@ -21,6 +21,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 import kiwoom_api
+import update_data as update_data_module  # 이름 충돌 주의: 아래 /api/update_data 라우트 함수가 update_data라는 이름을 씀
 
 app = Flask(__name__)
 CORS(app)  # 로컬 전용 서버이므로 file:// 출처(브라우저)도 허용
@@ -45,6 +46,14 @@ PERFORMANCE_FILE  = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pe
 PORTFOLIO_FILE    = os.path.join(os.path.dirname(os.path.abspath(__file__)), "portfolio_settings.json")
 PENDING_ALERTS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pending_alerts.json")
 RECOMMEND_SETTINGS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "recommend_settings.json")
+MANUAL_HOLDINGS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "manual_holdings.json")
+UPDATE_SUMMARY_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "update_summary.json")
+# 수동 "가격 데이터 갱신" 완료 알림 감지용 - 파일 기반이라 order_server.py가 도중에 재시작돼도
+# (update_data.py 자체는 별도 프로세스라 안 죽지만, 완료를 기다리던 스레드는 같이 죽어버려서
+# 텔레그램이 영영 안 가는 문제가 있었다) 스케줄러 루프가 이 파일의 트리거 시각과
+# update_summary.json 갱신 시각을 비교해서 완료를 알아낸다.
+MANUAL_UPDATE_MARKER_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "manual_update_pending.json")
+UPDATE_PROGRESS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "update_progress.json")
 BENCHMARK_CODES = {"kospi": "069500", "kosdaq": "229200"}  # KODEX 200 / KODEX 코스닥150 (지수 추종 ETF로 근사)
 
 
@@ -185,15 +194,58 @@ def _compute_recommend_top50() -> set:
     return {name for name, score in results if score <= cut_score}
 
 
-def _check_portfolio_ranks() -> str:
-    """포트폴리오 종목의 전략별 순위를 체크해 텔레그램 메시지 생성."""
-    history = _load_performance()
-    if not history.get("baselines"):
-        return "📋 기준점 없음 - 포트폴리오를 먼저 설정하세요."
+_holiday_cache = {}  # {"YYYYMMDD": bool} - 하루에 여러 번 물어봐도 API를 반복 호출하지 않도록 캐시
 
-    portfolio = [s["name"] for s in history["baselines"][-1].get("stocks", [])]
+
+def _is_market_holiday(dt) -> bool:
+    """공공데이터포털 특일 정보(getRestDeInfo)로 실제 휴장일(공휴일·임시공휴일)인지 확인.
+
+    조회 실패 시 False(평소대로 진행)로 폴백한다 - 이 체크 때문에 정상 거래일에 긴급 매도
+    알림 등이 안 가는 것보다는, 어쩌다 휴일에 알림이 한 번 더 가는 쪽이 훨씬 안전하다.
+    """
+    key = dt.strftime("%Y%m%d")
+    if key in _holiday_cache:
+        return _holiday_cache[key]
+    try:
+        from config_local import DATA_GO_KR_API_KEY
+        import xml.etree.ElementTree as ET
+        r = requests.get(
+            "https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo",
+            params={
+                "serviceKey": DATA_GO_KR_API_KEY,
+                "solYear": dt.strftime("%Y"),
+                "solMonth": dt.strftime("%m"),
+                "numOfRows": "30",
+                "pageNo": "1",
+            },
+            timeout=10,
+        )
+        root = ET.fromstring(r.content)
+        is_holiday = any(
+            item.findtext("locdate") == key and item.findtext("isHoliday") == "Y"
+            for item in root.findall(".//item")
+        )
+    except Exception:
+        return False
+    _holiday_cache[key] = is_holiday
+    return is_holiday
+
+
+def _check_portfolio_ranks() -> str:
+    """포트폴리오 종목의 전략별 순위를 체크해 텔레그램 메시지 생성.
+
+    "기준점"(리밸런싱 메뉴에서 수동으로 찍는 스냅샷)은 그 이후 매매가 있어도 다시 찍기 전까진
+    갱신이 안 돼서, 최근 매수 종목은 빠지고 이미 판 종목은 계속 체크되는 어긋남이 생긴다.
+    _check_holding_conditions()와 동일하게 kiwoom_api.get_holdings()의 실시간 보유내역을 쓴다.
+    """
+    try:
+        h = kiwoom_api.get_holdings()
+        stocks = h.get("acnt_evlt_remn_indv_tot", [])
+    except Exception:
+        stocks = []
+    portfolio = [s.get("stk_nm", "") for s in stocks if s.get("stk_nm")]
     if not portfolio:
-        return "📋 포트폴리오 종목이 없습니다."
+        return "📋 보유 종목이 없습니다."
 
     # 추천 메뉴 종합순위(보르다 카운트) 기준 top50 — "매칭된 전략끼리만 평균내면 실제로는
     # 탈락했는데도 좋아 보이는" 문제가 있어 단순 평균 대신 이걸로 판정한다.
@@ -212,6 +264,153 @@ def _check_portfolio_ranks() -> str:
     if lines_warn:
         return header + "\n".join(lines_warn)
     return header + "✅ 전 종목 TOP50 이내 이상 없음"
+
+
+_halt_disclosure_alerted: set = set()  # 이미 알림 보낸 "종목코드:접수번호" - 서버 재시작 전까진 중복 알림 안 함
+
+
+def _check_upcoming_halts() -> str:
+    """보유종목(실계좌 + 매도검토 워치리스트) 중 DART에 최근 올라온 거래정지 예고·병합·분할
+    결정 공시를 찾아 텔레그램으로 미리 경고한다.
+
+    예: 주식병합/분할 결정 후 몇 달 뒤 실제 거래정지가 시작되는데, 그 사이 DART에
+    "주권매매거래정지" 공시가 실제 정지일보다 며칠~몇 주 먼저 뜬다. 지금까지는 이 공시를
+    아무도 감시하지 않아서 정지 당일에야 알게 되는 문제가 있었다.
+    """
+    try:
+        codes = set()
+        names_by_code = {}
+        try:
+            h = kiwoom_api.get_holdings()
+            for s in h.get("acnt_evlt_remn_indv_tot", []):
+                code = (s.get("stk_cd") or "").lstrip("A")
+                if code and s.get("stk_nm"):
+                    codes.add(code)
+                    names_by_code[code] = s["stk_nm"]
+        except Exception:
+            pass
+        for m in _load_manual_holdings():
+            if m.get("code"):
+                codes.add(m["code"])
+
+        if not codes:
+            return ""
+
+        from datetime import timedelta
+        corp_map = update_data_module.get_corp_code_map()
+        bgn_de = (datetime.now() - timedelta(days=60)).strftime("%Y%m%d")
+        end_de = datetime.now().strftime("%Y%m%d")
+        KEYWORDS = ("거래정지", "병합결정", "분할결정")
+
+        lines = []
+        for code in codes:
+            corp_code = corp_map.get(code)
+            if not corp_code:
+                continue
+            try:
+                r = update_data_module._safe_get(
+                    "https://opendart.fss.or.kr/api/list.json",
+                    params={
+                        "crtfc_key": update_data_module.DART_API_KEY,
+                        "corp_code": corp_code,
+                        "bgn_de": bgn_de,
+                        "end_de": end_de,
+                        "pblntf_ty": "I",  # 거래소공시
+                        "page_count": 100,
+                    },
+                    timeout=15,
+                )
+                data = r.json()
+            except Exception:
+                continue
+            if data.get("status") != "000":
+                continue
+            for item in data.get("list", []):
+                title = (item.get("report_nm") or "").strip()
+                if "정정" in title or not any(kw in title for kw in KEYWORDS):
+                    continue
+                dedup_key = f"{code}:{item.get('rcept_no', '')}"
+                if dedup_key in _halt_disclosure_alerted:
+                    continue
+                _halt_disclosure_alerted.add(dedup_key)
+                name = names_by_code.get(code, code)
+                lines.append(f"🚨 {name}: {title} ({item.get('rcept_dt', '')})")
+
+        if lines:
+            return "⚠️ <b>거래정지/병합·분할 공시 감지</b>\n" + "\n".join(lines)
+        return ""
+    except Exception:
+        return ""
+
+
+def _build_update_summary_telegram(label: str = "새벽 데이터 업데이트") -> str:
+    """update_data.py 실행 결과(update_summary.json)를 요약해서 텔레그램으로 보고.
+
+    새벽 3시 자동 배치(07:00 요약)와 수동 "가격 데이터 갱신" 완료 알림 양쪽에서 공용으로 쓰여서,
+    호출부가 문맥에 맞는 label("새벽 데이터 업데이트"/"수동 데이터 갱신")을 넘겨 헤더에 반영한다.
+
+    시도 내역(공공데이터/키움/DART) + 반영 결과(전략별 종목 수) + 경고를 한눈에 보여준다.
+    전략 배열이 비정상적으로 비어버리는 사고(2026-07-13 DART 캐시 버그 등)를 다음날 아침에
+    바로 알아차릴 수 있도록, 각 전략 종목 수와 저수치 경고를 반드시 포함한다.
+    """
+    if not os.path.exists(UPDATE_SUMMARY_FILE):
+        return f"⚠️ <b>{label} 요약</b>\nupdate_summary.json이 없습니다 - 배치가 실행 안 됐거나 아직 완료 전일 수 있습니다."
+    try:
+        with open(UPDATE_SUMMARY_FILE, encoding="utf-8") as f:
+            s = json.load(f)
+    except Exception as e:
+        return f"⚠️ <b>{label} 요약</b>\n결과 파일 읽기 실패: {e}"
+
+    if s.get("crashed"):
+        return (
+            f"❌ <b>{label} 실패</b> ({s.get('checked_at', '-')})\n"
+            f"사유: {s.get('reason', '알 수 없음')}"
+        )
+
+    lines = [f"🌅 <b>{label} 요약</b> ({s.get('checked_at', '-')})"]
+
+    lines.append(
+        f"\n📥 <b>시도 내역</b>\n"
+        f"  공공데이터(KRX): 기준일 {s.get('krx_basis_date', 'N/A')}\n"
+        f"    KOSPI {s.get('kospi_count', 0)}개 · KOSDAQ {s.get('kosdaq_count', 0)}개\n"
+        f"  키움 ka10099(플래그): {s.get('ka10099_count', 0)}개\n"
+        f"  키움 ka10032(거래대금): {s.get('ka10032_count', 0)}개\n"
+        f"  DART 재무제표: {s.get('dart_attempted', 0)}개 시도 → {s.get('dart_valid', 0)}개 확보\n"
+        f"    (캐시 적중 {s.get('dart_cache_hits', 0)}건, 기준 {s.get('dart_basis', 'N/A')})"
+    )
+
+    # 전략별 종목 수(상위 N개 순위표 크기)보다, 19개 원천 지표가 실제로 몇 종목에서
+    # 채워졌는지가 데이터 이상 감지에 더 직접적이라 이걸로 대체 — 순위표는 밑바탕 지표가
+    # 깨져도 "어쨌든 몇 개는 채워짐"으로 정상처럼 보일 수 있다.
+    indicator_coverage = s.get("indicator_coverage") or {}
+    if indicator_coverage:
+        total = next(iter(indicator_coverage.values())).get("total", 0)
+        parts = "\n".join(
+            f"  {label}: {c['count'] / total * 100:.0f}%" if total else f"  {label}: -"
+            for label, c in indicator_coverage.items()
+        )
+        lines.append(f"\n📊 <b>지표 커버리지</b> (전체 {total}종목 중 값 있는 종목 수)\n{parts}")
+
+    # 업종 컬럼 저평가 점수 배지와 동일한 구분(극저평가/저평가/판단보류/위험)으로 전 종목 집계.
+    pbr_bd = s.get("pbr_judgment_breakdown") or {}
+    pbr_total = pbr_bd.get("total", 0)
+    if pbr_total:
+        pbr_parts = "\n".join(
+            f"  {label}: {pbr_bd.get(label, 0)} ({pbr_bd.get(label, 0) / pbr_total * 100:.0f}%)"
+            for label in ("극저평가", "저평가", "판단보류", "위험")
+        )
+        lines.append(f"\n📊 <b>저평가 점수 판정</b> (전체 {pbr_total}종목)\n{pbr_parts}")
+
+    warnings = list(s.get("warnings") or [])
+    warnings += s.get("low_indicator_warnings") or []
+    if s.get("deploy_success") is False:
+        warnings.append("깃허브 배포 실패 - 웹에 반영 안 됐을 수 있음")
+    if warnings:
+        lines.append("\n⚠️ <b>경고</b>\n  " + "\n  ".join(warnings))
+    else:
+        lines.append("\n✅ 경고 없음")
+
+    return "\n".join(lines)
 
 
 def _load_performance():
@@ -287,6 +486,18 @@ def _save_portfolio_settings(data: dict):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
+def _load_manual_holdings() -> list:
+    if os.path.exists(MANUAL_HOLDINGS_FILE):
+        with open(MANUAL_HOLDINGS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
+
+
+def _save_manual_holdings(holdings: list):
+    with open(MANUAL_HOLDINGS_FILE, "w", encoding="utf-8") as f:
+        json.dump(holdings, f, ensure_ascii=False, indent=2)
+
+
 def _load_pending_alerts() -> dict:
     if os.path.exists(PENDING_ALERTS_FILE):
         with open(PENDING_ALERTS_FILE, "r", encoding="utf-8") as f:
@@ -329,6 +540,9 @@ _update_watched = None  # start_order_realtime()이 반환하는 실시간 종�
 _pending_sell_alerts: dict = {}
 # 당일 "아니" 응답한 종목 (당일 재알림 억제)
 _dismissed_sell_alerts: set = set()
+# 현재 거래정지 중이라고 이미 알림을 보낸 종목 코드 — 정지 해제되면 제거되어, 나중에
+# 다시 정지되면(별개의 새 사건) 다시 알림이 나가도록 한다. (응답 여부와 무관하게 상태로만 추적)
+_halt_alerted_codes: set = set()
 
 # 추가 투자 대기 목록: {message_id: {stocks:[{code,name,qty,price}], mode, scheduled_at, last_sent}}
 _pending_invest_orders: dict = {}
@@ -545,7 +759,18 @@ def _check_holding_conditions(check_volume: bool = False):
                 watch_reasons.append("거래대금 5억 미만")
 
             if not urgent_reasons and not watch_reasons:
+                _halt_alerted_codes.discard(code)
                 continue
+
+            # 거래정지는 매도 자체가 불가능해서 반복 알림이 무의미하다. 다만 "응답 대기 중이냐"가
+            # 아니라 "지금도 정지 상태가 이어지고 있냐"로 판단해야, 정지가 풀렸다가 나중에 별개
+            # 사유로 다시 정지되는 경우엔 새로 알림이 나간다.
+            if "거래정지" in urgent_reasons:
+                if code in _halt_alerted_codes:
+                    continue
+                _halt_alerted_codes.add(code)
+            else:
+                _halt_alerted_codes.discard(code)
 
             is_urgent = bool(urgent_reasons)
             reason_str = " · ".join(urgent_reasons + watch_reasons)
@@ -571,6 +796,14 @@ def _check_holding_conditions(check_volume: bool = False):
 
 def _run_update_data():
     update_state.update(running=True, log="", done=False, success=None)
+    # 완료 감지를 이 프로세스/스레드 생존 여부에 의존하지 않도록, 트리거 시각을 파일로 남겨둔다.
+    # (_daily_alert_scheduler가 주기적으로 이 파일과 update_summary.json 갱신 시각을 비교해서
+    # 완료를 감지하고 텔레그램을 보낸다 - order_server.py가 도중에 재시작돼도 안 끊긴다.)
+    try:
+        with open(MANUAL_UPDATE_MARKER_FILE, "w", encoding="utf-8") as f:
+            json.dump({"triggered_at": datetime.now().isoformat()}, f)
+    except Exception:
+        pass
     try:
         proc = subprocess.Popen(
             [sys.executable, "-u", "update_data.py", "--no-deploy"],
@@ -773,6 +1006,44 @@ def quotes():
         return jsonify({"error": "codes 파라미터가 필요합니다."}), 400
     try:
         return jsonify({"prices": kiwoom_api.get_stock_quotes(codes)})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/year_high_ratio", methods=["GET"])
+def year_high_ratio():
+    codes = [c for c in (request.args.get("codes") or "").split(",") if c]
+    if not codes:
+        return jsonify({"error": "codes 파라미터가 필요합니다."}), 400
+    try:
+        return jsonify(kiwoom_api.get_year_high_ratios(codes))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/manual_holdings", methods=["GET"])
+def get_manual_holdings():
+    """API 미연동 증권계좌의 보유종목(매도 검토 탭)을 조회 - 종목코드/수량/평단가."""
+    return jsonify(_load_manual_holdings())
+
+
+@app.route("/api/manual_holdings", methods=["POST"])
+def save_manual_holdings():
+    """매도 검토 탭의 보유종목 목록(전체)을 저장."""
+    data = request.get_json(force=True) or {}
+    holdings = data.get("holdings") or []
+    _save_manual_holdings(holdings)
+    return jsonify({"ok": True, "saved": len(holdings)})
+
+
+@app.route("/api/watchlist_quotes", methods=["GET"])
+def watchlist_quotes():
+    """매도 검토 탭용 - 종목코드별 시세·밸류에이션·수급·이동평균 조회."""
+    codes = [c for c in (request.args.get("codes") or "").split(",") if c]
+    if not codes:
+        return jsonify({"error": "codes 파라미터가 필요합니다."}), 400
+    try:
+        return jsonify(kiwoom_api.get_watchlist_quotes(codes))
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -1190,6 +1461,22 @@ def performance_summary():
         return jsonify({"error": str(e)}), 500
 
 
+def _build_stock_heatmap_text(pairs, cols: int = 3) -> str:
+    """[(종목명, 등락률)] 목록을 이모지 히트맵 텍스트로 변환. 수익률 높은 순으로 정렬해서
+    한눈에 잘된 종목/못된 종목을 구분할 수 있게 한다."""
+    def color(pct):
+        if pct >= 5:
+            return "🟩"
+        if pct <= -5:
+            return "🟥"
+        return "🟨"
+
+    ordered = sorted(pairs, key=lambda p: p[1], reverse=True)
+    cells = [f"{color(pct)}{name} {pct:+.1f}%" for name, pct in ordered]
+    rows = ["  ".join(cells[i:i + cols]) for i in range(0, len(cells), cols)]
+    return "\n".join(rows)
+
+
 def _build_daily_summary(label: str) -> str:
     """kt00016(기간수익률) + ka01690(종목별 수익률)으로 텔레그램 요약 메시지 생성."""
     try:
@@ -1251,10 +1538,16 @@ def _build_daily_summary(label: str) -> str:
         if base_dt:
             try:
                 perf = kiwoom_api.get_period_eval(fr_dt=base_dt, to_dt=today_str)
-                evltv_prft = int(perf.get("evltv_prft") or 0)
-                prft_rt = float(perf.get("prft_rt") or 0)
+                # kt00016의 evltv_prft/prft_rt는 tot_amt_to(예수금+유가증권평가금액 단순합) 기준이라
+                # 위에서 "총평가금액"으로 쓰는 kt00018 추정예탁자산(total_asset)과 기준이 달라서 서로
+                # 안 맞는다. /api/performance/summary(성과추적 화면)와 동일하게, total_asset 기준으로
+                # 재계산해서 화면·텔레그램이 항상 같은 숫자를 보여주게 한다.
+                base_asset = int(perf.get("tot_amt_fr") or 0)
                 # kt00016은 to_dt가 오늘이면 당일 입출금까지 이미 반영되어 있으므로 더 더하지 않는다.
                 net_in = int(perf.get("termin_tot_trns") or 0) - int(perf.get("termin_tot_pymn") or 0)
+                evltv_prft = total_asset - base_asset - net_in
+                invested = base_asset + net_in
+                prft_rt = (evltv_prft / invested * 100) if invested > 0 else 0.0
                 tdy_sell = tdy_buy = tdy_cmsn = tdy_tax = tdy_dvida = 0
                 try:
                     today_dep = kiwoom_api.get_today_deposit()
@@ -1315,16 +1608,26 @@ def _build_daily_summary(label: str) -> str:
                            + int(r.get("incm_tax") or 0) + int(r.get("rstx") or 0)
                            + int(r.get("resi_tax") or 0) for r in rows)
             if sell_sum or buy_sum:
+                net_settle = sell_sum - buy_sum - tot_cmsn
+                cash_note = (
+                    " (출금 준비 필요)" if net_settle < 0 else ""
+                )
                 setl_str = (
                     f"\n📅 익일 결제 예정"
-                    f"\n매도 정산: <b>{sell_sum:,}원</b>  매수 정산: <b>{buy_sum:,}원</b>"
-                    f"\n거래비용 합계: <b>{tot_cmsn:,}원</b>"
+                    f"\n순정산: <b>{net_settle:+,}원</b>{cash_note}"
+                    f" (매도 {sell_sum:,} - 매수 {buy_sum:,} - 비용 {tot_cmsn:,})"
                 )
+                # 부분체결 등으로 같은 종목이 여러 행에 나뉘어 오므로 종목별로 합산해서 한 줄씩만 보여준다.
+                net_by_stock = {}
                 for r in rows:
-                    nm   = r.get("stk_nm", "")
-                    tp   = "매도" if "매도" in r.get("sell_tp", "") else "매수"
+                    nm = r.get("stk_nm", "")
+                    tp = "매도" if "매도" in r.get("sell_tp", "") else "매수"
+                    # exct_amt는 키움이 부호 없는 절대값으로 내려주므로, 매도=입금(+)/매수=출금(-)을 직접 적용한다.
                     exct = int(r.get("exct_amt") or 0)
-                    setl_str += f"\n  {nm} {tp} {exct:+,}원"
+                    signed_exct = exct if tp == "매도" else -exct
+                    net_by_stock[nm] = net_by_stock.get(nm, 0) + signed_exct
+                for nm, amt in sorted(net_by_stock.items(), key=lambda kv: kv[1]):
+                    setl_str += f"\n  {nm} {amt:+,}원"
         except Exception:
             pass
 
@@ -1354,7 +1657,11 @@ def _build_daily_summary(label: str) -> str:
 
         # 실현손익 (ka10074) - 15:30 장마감 시에만 포함
         rlzt_str = ""
+        heatmap_str = ""
         if label == "장 마감":
+            if indv:
+                pairs = [(s["stk_nm"], float(s["prft_rt"])) for s in indv]
+                heatmap_str = f"\n📊 <b>보유종목 히트맵</b>\n{_build_stock_heatmap_text(pairs)}"
             try:
                 rlzt = kiwoom_api.get_daily_realized_pl()
                 rlzt_rows = rlzt.get("daly_rlzt_pl_prps_array") or []
@@ -1383,6 +1690,7 @@ def _build_daily_summary(label: str) -> str:
             f"{rlzt_str}"
             f"{dep_str}"
             f"{stock_lines}"
+            f"{heatmap_str}"
         )
     except Exception as e:
         return f"⚠️ 잔고 요약 조회 실패: {e}"
@@ -1564,13 +1872,14 @@ def _handle_telegram_command(text: str) -> str | None:
             "  5분 내 미응답 시 자동 재발송\n"
             "\n"
             "📅 <b>자동 알림 (설정 시 자동 전송)</b>\n"
+            "  07:00 → 새벽 데이터 업데이트 요약 (시도 내역·전략별 반영 결과·경고)\n"
             "  08:00 → 잔고 요약·포트폴리오 순위 점검·배당금 수령 여부\n"
-            "  09:00 · 12:00 · 15:30 → 잔고 요약 (15:30엔 실현손익 포함)\n"
+            "  09~15시(매시) · 15:30 → 잔고 요약 (15:30엔 실현손익 포함)\n"
             "  월요일 08:00 → 직전 주 주간 자산 요약\n"
             "  매월 1일 08:00 → 전월 월간 자산 요약\n"
             "  체결 시 → 종목·체결가·수량·당일실현손익 즉시 알림\n"
             "  VI 발동/해제 시 → 보유 종목 실시간 알림\n"
-            "  장 개장/마감 시 → 장운영 상태 알림\n"
+            "  15:20 동시호가 시작 · 15:30 정규장 마감 시 → 장운영 상태 알림\n"
             "\n"
             "  도움말 · help · ? → 이 안내"
         )
@@ -1657,7 +1966,8 @@ def _telegram_polling():
 def _build_period_asset_summary(label: str, start_dt: str, end_dt: str) -> str:
     """kt00002로 기간 자산 변화 요약 메시지 생성."""
     try:
-        rows = kiwoom_api.get_daily_asset_history(start_dt, end_dt)
+        hist = kiwoom_api.get_daily_asset_history(start_dt, end_dt)
+        rows = hist.get("daly_prsm_dpst_aset_amt_prst") or []
         if not rows:
             return f"⚠️ [{label}] 기간 자산 데이터 없음"
         rows_sorted = sorted(rows, key=lambda r: r.get("dt", ""))
@@ -1704,8 +2014,7 @@ def _daily_alert_scheduler():
     """
     from datetime import timedelta
     ALERT_TIMES = [
-        ("08:00", "개장 준비"), ("09:00", "장 개장"), ("10:00", "장중"), ("11:00", "장중"),
-        ("12:00", "장 중간"), ("13:00", "장중"), ("14:00", "장중"), ("15:30", "장 마감"),
+        ("08:00", "개장 준비"), ("15:30", "장 마감"),
     ]
     sent_today = set()
     last_condition_check = datetime.min  # 마지막 조건 점검 시각
@@ -1715,7 +2024,13 @@ def _daily_alert_scheduler():
         key = now.strftime("%Y%m%d")
         hm  = now.strftime("%H:%M")
 
-        if now.weekday() < 5:  # 평일
+        # ── 07:00 — 새벽 데이터 업데이트 요약 (요일 무관, 배치가 도는 날은 매일 확인) ──
+        slot_update = f"{key}_0700_update"
+        if slot_update not in sent_today and hm == "07:00":
+            _send_telegram(_build_update_summary_telegram())
+            sent_today.add(slot_update)
+
+        if now.weekday() < 5 and not _is_market_holiday(now):  # 평일이면서 휴장일이 아닐 때
             # ── 정해진 시각 요약 알림 ─────────────────────────────────────
             for t, label in ALERT_TIMES:
                 slot = f"{key}_{t}"
@@ -1738,6 +2053,9 @@ def _daily_alert_scheduler():
                             pass
                     if t == "08:00":
                         _send_telegram(_check_portfolio_ranks())
+                        halt_msg = _check_upcoming_halts()
+                        if halt_msg:
+                            _send_telegram(halt_msg)
                         # 배당금 수령 여부 (kt00017)
                         try:
                             dep = kiwoom_api.get_today_deposit()
@@ -1808,6 +2126,47 @@ def _daily_alert_scheduler():
             sent_today.clear()
             _dismissed_sell_alerts.clear()
             last_condition_check = datetime.min
+
+        # ── 수동 "가격 데이터 갱신" 완료 감지 (파일 기반 - order_server.py 재시작에도 안 끊김) ──
+        # 새벽 3시 자동 배치는 정상적으로 빠르게 끝나는 게 보통이라 진행상황 알림이 필요 없고,
+        # 이 마커는 수동 트리거(버튼) 때만 생기므로 자동 배치는 애초에 아래 로직을 안 탄다.
+        if os.path.exists(MANUAL_UPDATE_MARKER_FILE):
+            try:
+                with open(MANUAL_UPDATE_MARKER_FILE, encoding="utf-8") as f:
+                    marker = json.load(f)
+                triggered_at = datetime.fromisoformat(marker["triggered_at"])
+                if os.path.exists(UPDATE_SUMMARY_FILE):
+                    summary_mtime = datetime.fromtimestamp(os.path.getmtime(UPDATE_SUMMARY_FILE))
+                else:
+                    summary_mtime = None
+                if summary_mtime and summary_mtime > triggered_at:
+                    _send_telegram(f"🔄 <b>수동 데이터 갱신 완료</b>\n\n{_build_update_summary_telegram(label='수동 데이터 갱신')}")
+                    os.remove(MANUAL_UPDATE_MARKER_FILE)
+                else:
+                    # 아직 완료 전 - 30분 경과 시마다 진행상황만 짧게 보고
+                    last_notified_str = marker.get("last_progress_notified_at")
+                    last_notified = datetime.fromisoformat(last_notified_str) if last_notified_str else triggered_at
+                    if (now - last_notified).total_seconds() >= 1800:
+                        progress_line = "진행상황 파일 없음(아직 초기 단계이거나 확인 불가)"
+                        if os.path.exists(UPDATE_PROGRESS_FILE):
+                            try:
+                                with open(UPDATE_PROGRESS_FILE, encoding="utf-8") as f:
+                                    p = json.load(f)
+                                stage_no = p.get("stage_no")
+                                stage_total = p.get("stage_total")
+                                stage_prefix = f"({stage_no}/{stage_total}단계) " if stage_no and stage_total else ""
+                                progress_line = f"{stage_prefix}{p.get('stage', '진행 중')}: {p.get('done', 0)}/{p.get('total', 0)}"
+                            except Exception:
+                                pass
+                        elapsed_min = int((now - triggered_at).total_seconds() / 60)
+                        _send_telegram(
+                            f"⏳ <b>수동 데이터 갱신 진행 중</b> (시작 후 {elapsed_min}분 경과)\n{progress_line}"
+                        )
+                        marker["last_progress_notified_at"] = now.isoformat()
+                        with open(MANUAL_UPDATE_MARKER_FILE, "w", encoding="utf-8") as f:
+                            json.dump(marker, f)
+            except Exception:
+                pass
 
         threading.Event().wait(30)
 
@@ -1913,17 +2272,11 @@ if __name__ == "__main__":
             _send_telegram(f"↩️ <b>상/하한가 이탈</b>\n종목: {stk_nm} ({code})")
 
     # 장운영구분(215) 실제 값 — 키움 0s 문서 기준 (기존 코드에 2/3이 뒤바뀌어 있었음)
+    # 장 시작 전(0)/정규장 개장(3)/마감 확정(8)/시간외 종가매매·단일가(a,b,c,d)/전체 시장 종료(9)는
+    # 일상적으로 계속 발생해 알림 가치가 낮아 제외 — 퀀트 매매에 직접 영향 있는 두 시점만 남긴다.
     _MARKET_LABELS = {
-        "0": "🔔 장 시작 전 (8:40~)",
-        "3": "🔔 정규장 개장 (09:00)",
-        "2": "🔔 장마감 알림 (15:20~)",
+        "2": "🔔 동시호가 시작 (15:20~)",
         "4": "🔔 정규장 마감 (15:30)",
-        "8": "🔔 정규장 마감 확정",
-        "9": "🔔 전체 시장 종료",
-        "a": "🔔 시간외 종가매매 시작",
-        "b": "🔔 시간외 종가매매 종료",
-        "c": "🔔 시간외 단일가 시작",
-        "d": "🔔 시간외 단일가 종료",
     }
     _last_market_op_tp = [None]  # 같은 상태가 반복 전송돼도 한 번만 알리기 위한 추적
 

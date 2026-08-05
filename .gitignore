@@ -8,6 +8,11 @@ cache_monthly_price.json
 cache_monthly_index.json
 cache_induty_code.json
 cache_admin_issue.json
+cache_stock_rights.json
 performance_history.json
+manual_holdings.json
 recommend_settings.json
+update_summary.json
+manual_update_pending.json
+update_progress.json
 .claude/
