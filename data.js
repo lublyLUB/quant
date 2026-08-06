@@ -3,8 +3,7 @@ const KOSPI_QUANT_PACKAGE = {
         "krx_basis_date": "20260805",
         "dart_basis": "2026년 1분기보고서",
         "status": "NORMAL",
-        "checked_at": "11:40:34",
-        "price_updated_at": "2026-08-06 16:00:08"
+        "checked_at": "16:01:32"
     },
     "super_value": [
         {
@@ -10839,8 +10838,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 9526,
             "assets_yoy": 10275,
             "op_to_debt_now": 0.2015454545152876,
-            "op_to_debt_yoy": 0.05843442312459183,
-            "market_cap": 9095
+            "op_to_debt_yoy": 0.05843442312459183
         },
         {
             "rank": 2,
@@ -10864,8 +10862,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2192,
             "assets_yoy": 2416,
             "op_to_debt_now": 0.2576236399585491,
-            "op_to_debt_yoy": 0.038331533402129,
-            "market_cap": 863
+            "op_to_debt_yoy": 0.038331533402129
         },
         {
             "rank": 3,
@@ -10889,8 +10886,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1009,
             "assets_yoy": 1025,
             "op_to_debt_now": 0.04265639831256384,
-            "op_to_debt_yoy": -0.008597415856815739,
-            "market_cap": 390
+            "op_to_debt_yoy": -0.008597415856815739
         },
         {
             "rank": 4,
@@ -10914,8 +10910,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3038,
             "assets_yoy": 3158,
             "op_to_debt_now": 0.06329913556484038,
-            "op_to_debt_yoy": 0.00447247264879069,
-            "market_cap": 1602
+            "op_to_debt_yoy": 0.00447247264879069
         },
         {
             "rank": 5,
@@ -10939,8 +10934,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 628,
             "assets_yoy": 611,
             "op_to_debt_now": 1.9223199446666666,
-            "op_to_debt_yoy": 0.06696611839538119,
-            "market_cap": 1123
+            "op_to_debt_yoy": 0.06696611839538119
         },
         {
             "rank": 6,
@@ -10964,8 +10958,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1466,
             "assets_yoy": 1488,
             "op_to_debt_now": 0.065279081561789,
-            "op_to_debt_yoy": 0.011384037809898198,
-            "market_cap": 737
+            "op_to_debt_yoy": 0.011384037809898198
         },
         {
             "rank": 7,
@@ -10989,8 +10982,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 70990,
             "assets_yoy": 75628,
             "op_to_debt_now": 1.6008903197234834,
-            "op_to_debt_yoy": 0.5686106189279619,
-            "market_cap": 43803
+            "op_to_debt_yoy": 0.5686106189279619
         },
         {
             "rank": 8,
@@ -11014,8 +11006,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 42698,
             "assets_yoy": 44892,
             "op_to_debt_now": 0.03176379285760506,
-            "op_to_debt_yoy": 0.014145725864530834,
-            "market_cap": 9306
+            "op_to_debt_yoy": 0.014145725864530834
         },
         {
             "rank": 9,
@@ -11039,8 +11030,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 4936,
             "assets_yoy": 4870,
             "op_to_debt_now": 0.13697300772765247,
-            "op_to_debt_yoy": 0.016291355479578135,
-            "market_cap": 1271
+            "op_to_debt_yoy": 0.016291355479578135
         },
         {
             "rank": 10,
@@ -11064,8 +11054,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 547,
             "assets_yoy": 569,
             "op_to_debt_now": 0.04411231703365368,
-            "op_to_debt_yoy": 0.02301512464468779,
-            "market_cap": 916
+            "op_to_debt_yoy": 0.02301512464468779
         },
         {
             "rank": 11,
@@ -11089,8 +11078,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 7141,
             "assets_yoy": 7615,
             "op_to_debt_now": 0.04997387651371556,
-            "op_to_debt_yoy": -0.04281527862926591,
-            "market_cap": 2724
+            "op_to_debt_yoy": -0.04281527862926591
         },
         {
             "rank": 12,
@@ -11114,8 +11102,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3140,
             "assets_yoy": 3080,
             "op_to_debt_now": 0.09773395219678846,
-            "op_to_debt_yoy": 0.026758804007283237,
-            "market_cap": 666
+            "op_to_debt_yoy": 0.026758804007283237
         },
         {
             "rank": 13,
@@ -11139,8 +11126,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3500,
             "assets_yoy": 3346,
             "op_to_debt_now": 0.20365847621301775,
-            "op_to_debt_yoy": 0.028798528251928274,
-            "market_cap": 1347
+            "op_to_debt_yoy": 0.028798528251928274
         },
         {
             "rank": 14,
@@ -11164,8 +11150,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2106,
             "assets_yoy": 2098,
             "op_to_debt_now": 0.2256152008824423,
-            "op_to_debt_yoy": 0.040547550499863035,
-            "market_cap": 862
+            "op_to_debt_yoy": 0.040547550499863035
         },
         {
             "rank": 15,
@@ -11189,8 +11174,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 4903,
             "assets_yoy": 6114,
             "op_to_debt_now": 0.02843673600629084,
-            "op_to_debt_yoy": -0.053553654315911386,
-            "market_cap": 243
+            "op_to_debt_yoy": -0.053553654315911386
         },
         {
             "rank": 16,
@@ -11214,8 +11198,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1410,
             "assets_yoy": 1306,
             "op_to_debt_now": 0.5113066321964751,
-            "op_to_debt_yoy": 0.1008332807485186,
-            "market_cap": 2713
+            "op_to_debt_yoy": 0.1008332807485186
         },
         {
             "rank": 17,
@@ -11239,8 +11222,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 580,
             "assets_yoy": 673,
             "op_to_debt_now": 0.8437861697619048,
-            "op_to_debt_yoy": -0.007478435301866081,
-            "market_cap": 467
+            "op_to_debt_yoy": -0.007478435301866081
         },
         {
             "rank": 18,
@@ -11264,8 +11246,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 12661,
             "assets_yoy": 12556,
             "op_to_debt_now": 0.3869850060576973,
-            "op_to_debt_yoy": 0.13971284016230673,
-            "market_cap": 2816
+            "op_to_debt_yoy": 0.13971284016230673
         },
         {
             "rank": 19,
@@ -11289,8 +11270,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1,
             "assets_yoy": 1,
             "op_to_debt_now": 0.5433825685546215,
-            "op_to_debt_yoy": 0.17207967614335307,
-            "market_cap": 276
+            "op_to_debt_yoy": 0.17207967614335307
         },
         {
             "rank": 20,
@@ -11314,8 +11294,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3261,
             "assets_yoy": 3044,
             "op_to_debt_now": 0.10311049702961236,
-            "op_to_debt_yoy": 0.04104132372198541,
-            "market_cap": 1437
+            "op_to_debt_yoy": 0.04104132372198541
         },
         {
             "rank": 21,
@@ -11339,8 +11318,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 7931,
             "assets_yoy": 8308,
             "op_to_debt_now": 0.019961509084030764,
-            "op_to_debt_yoy": 0.004908697812449887,
-            "market_cap": 738
+            "op_to_debt_yoy": 0.004908697812449887
         },
         {
             "rank": 22,
@@ -11364,8 +11342,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3135,
             "assets_yoy": 3251,
             "op_to_debt_now": 1.2432812528,
-            "op_to_debt_yoy": 0.1445305301842822,
-            "market_cap": 1795
+            "op_to_debt_yoy": 0.1445305301842822
         },
         {
             "rank": 23,
@@ -11389,8 +11366,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3681,
             "assets_yoy": 3706,
             "op_to_debt_now": 0.5642392277107215,
-            "op_to_debt_yoy": 0.5281156254982255,
-            "market_cap": 4591
+            "op_to_debt_yoy": 0.5281156254982255
         },
         {
             "rank": 24,
@@ -11414,8 +11390,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2713,
             "assets_yoy": 2707,
             "op_to_debt_now": 4.167621030232558,
-            "op_to_debt_yoy": -1.4909542506459947,
-            "market_cap": 1083
+            "op_to_debt_yoy": -1.4909542506459947
         },
         {
             "rank": 25,
@@ -11439,8 +11414,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 13258,
             "assets_yoy": 13477,
             "op_to_debt_now": 0.09804595138947035,
-            "op_to_debt_yoy": 0.02179482997263467,
-            "market_cap": 3858
+            "op_to_debt_yoy": 0.02179482997263467
         },
         {
             "rank": 26,
@@ -11464,8 +11438,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6350,
             "assets_yoy": 6320,
             "op_to_debt_now": 0.06471183071252701,
-            "op_to_debt_yoy": 0.03386245598391915,
-            "market_cap": 6240
+            "op_to_debt_yoy": 0.03386245598391915
         },
         {
             "rank": 27,
@@ -11489,8 +11462,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 17194,
             "assets_yoy": 17441,
             "op_to_debt_now": 19.759477469962746,
-            "op_to_debt_yoy": 0.6202081745026342,
-            "market_cap": 3502
+            "op_to_debt_yoy": 0.6202081745026342
         },
         {
             "rank": 28,
@@ -11514,8 +11486,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3851,
             "assets_yoy": 3768,
             "op_to_debt_now": 0.14079186724931214,
-            "op_to_debt_yoy": 0.018984428022491364,
-            "market_cap": 1041
+            "op_to_debt_yoy": 0.018984428022491364
         },
         {
             "rank": 29,
@@ -11539,8 +11510,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 756,
             "assets_yoy": 879,
             "op_to_debt_now": 0.11163490327024687,
-            "op_to_debt_yoy": 0.06425696858096042,
-            "market_cap": 224
+            "op_to_debt_yoy": 0.06425696858096042
         },
         {
             "rank": 30,
@@ -11564,8 +11534,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1298,
             "assets_yoy": 1373,
             "op_to_debt_now": 0.022869700152312655,
-            "op_to_debt_yoy": -0.02140239518621887,
-            "market_cap": 2200
+            "op_to_debt_yoy": -0.02140239518621887
         },
         {
             "rank": 31,
@@ -11589,8 +11558,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6479,
             "assets_yoy": 6251,
             "op_to_debt_now": 0.1064596258540457,
-            "op_to_debt_yoy": 0.028689360595153236,
-            "market_cap": 1374
+            "op_to_debt_yoy": 0.028689360595153236
         },
         {
             "rank": 32,
@@ -11614,8 +11582,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3811,
             "assets_yoy": 3096,
             "op_to_debt_now": 44.67479758495047,
-            "op_to_debt_yoy": 0.1932572286772348,
-            "market_cap": 7643
+            "op_to_debt_yoy": 0.1932572286772348
         },
         {
             "rank": 33,
@@ -11639,8 +11606,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 23718,
             "assets_yoy": 23737,
             "op_to_debt_now": 0.06089505808282227,
-            "op_to_debt_yoy": 0.009488670564966894,
-            "market_cap": 3040
+            "op_to_debt_yoy": 0.009488670564966894
         },
         {
             "rank": 34,
@@ -11664,8 +11630,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 21632,
             "assets_yoy": 22268,
             "op_to_debt_now": 0.037378247178523345,
-            "op_to_debt_yoy": 0.023589872346239084,
-            "market_cap": 2822
+            "op_to_debt_yoy": 0.023589872346239084
         },
         {
             "rank": 35,
@@ -11689,8 +11654,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 11695,
             "assets_yoy": 12251,
             "op_to_debt_now": 0.02402750823786394,
-            "op_to_debt_yoy": -0.018354600868078507,
-            "market_cap": 2920
+            "op_to_debt_yoy": -0.018354600868078507
         },
         {
             "rank": 36,
@@ -11714,8 +11678,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2213,
             "assets_yoy": 2052,
             "op_to_debt_now": 0.08379401422687624,
-            "op_to_debt_yoy": 0.01028619366703553,
-            "market_cap": 1481
+            "op_to_debt_yoy": 0.01028619366703553
         },
         {
             "rank": 37,
@@ -11739,8 +11702,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3279,
             "assets_yoy": 3419,
             "op_to_debt_now": 0.061768566876909986,
-            "op_to_debt_yoy": 0.019885752366272283,
-            "market_cap": 1663
+            "op_to_debt_yoy": 0.019885752366272283
         },
         {
             "rank": 38,
@@ -11764,8 +11726,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 5031,
             "assets_yoy": 4812,
             "op_to_debt_now": 1602.9202067920235,
-            "op_to_debt_yoy": 501.72229515658086,
-            "market_cap": 1692
+            "op_to_debt_yoy": 501.72229515658086
         },
         {
             "rank": 39,
@@ -11789,8 +11750,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 12557,
             "assets_yoy": 12369,
             "op_to_debt_now": 0.30549748910774344,
-            "op_to_debt_yoy": 0.1922589850748528,
-            "market_cap": 14649
+            "op_to_debt_yoy": 0.1922589850748528
         },
         {
             "rank": 40,
@@ -11814,8 +11774,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 34611,
             "assets_yoy": 35572,
             "op_to_debt_now": 0.0865126440044,
-            "op_to_debt_yoy": 0.02306490640127662,
-            "market_cap": 5889
+            "op_to_debt_yoy": 0.02306490640127662
         },
         {
             "rank": 41,
@@ -11839,8 +11798,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 684,
             "assets_yoy": 683,
             "op_to_debt_now": 0.07396225860999754,
-            "op_to_debt_yoy": 0.032023563962312686,
-            "market_cap": 210
+            "op_to_debt_yoy": 0.032023563962312686
         },
         {
             "rank": 42,
@@ -11864,8 +11822,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 397,
             "assets_yoy": 456,
             "op_to_debt_now": 7.361108928,
-            "op_to_debt_yoy": 0.10116181665028876,
-            "market_cap": 220
+            "op_to_debt_yoy": 0.10116181665028876
         },
         {
             "rank": 43,
@@ -11889,8 +11846,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 73828,
             "assets_yoy": 77630,
             "op_to_debt_now": 0.09407464695669467,
-            "op_to_debt_yoy": 0.041565792615307344,
-            "market_cap": 20734
+            "op_to_debt_yoy": 0.041565792615307344
         },
         {
             "rank": 44,
@@ -11914,8 +11870,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3092,
             "assets_yoy": 3001,
             "op_to_debt_now": 0.09542876961671376,
-            "op_to_debt_yoy": 0.04231403202738907,
-            "market_cap": 1521
+            "op_to_debt_yoy": 0.04231403202738907
         },
         {
             "rank": 45,
@@ -11939,8 +11894,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2072,
             "assets_yoy": 2096,
             "op_to_debt_now": 0.17032254685938733,
-            "op_to_debt_yoy": 0.11784641838849917,
-            "market_cap": 576
+            "op_to_debt_yoy": 0.11784641838849917
         },
         {
             "rank": 46,
@@ -11964,8 +11918,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1617,
             "assets_yoy": 1601,
             "op_to_debt_now": 0.024247291923474586,
-            "op_to_debt_yoy": 0.005397470574563842,
-            "market_cap": 668
+            "op_to_debt_yoy": 0.005397470574563842
         },
         {
             "rank": 47,
@@ -11989,8 +11942,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 88632,
             "assets_yoy": 86337,
             "op_to_debt_now": 0.518631597026318,
-            "op_to_debt_yoy": 0.43424653856287665,
-            "market_cap": 19955
+            "op_to_debt_yoy": 0.43424653856287665
         },
         {
             "rank": 48,
@@ -12014,8 +11966,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 618,
             "assets_yoy": 600,
             "op_to_debt_now": 0.1824000223420647,
-            "op_to_debt_yoy": 0.0698291635335473,
-            "market_cap": 367
+            "op_to_debt_yoy": 0.0698291635335473
         },
         {
             "rank": 49,
@@ -12039,8 +11990,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3567,
             "assets_yoy": 3456,
             "op_to_debt_now": 0.12881084749670874,
-            "op_to_debt_yoy": 0.02810975913229908,
-            "market_cap": 2292
+            "op_to_debt_yoy": 0.02810975913229908
         },
         {
             "rank": 50,
@@ -12064,8 +12014,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 31021,
             "assets_yoy": 30012,
             "op_to_debt_now": 0.03493228179397555,
-            "op_to_debt_yoy": 0.024553162289936963,
-            "market_cap": 6359
+            "op_to_debt_yoy": 0.024553162289936963
         },
         {
             "rank": 51,
@@ -12089,8 +12038,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6216,
             "assets_yoy": 6110,
             "op_to_debt_now": 0.14000532189111398,
-            "op_to_debt_yoy": 0.07860885683524725,
-            "market_cap": 5670
+            "op_to_debt_yoy": 0.07860885683524725
         },
         {
             "rank": 52,
@@ -12114,8 +12062,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 57196,
             "assets_yoy": 56117,
             "op_to_debt_now": 0.03611354861036429,
-            "op_to_debt_yoy": -0.01972869998980651,
-            "market_cap": 963
+            "op_to_debt_yoy": -0.01972869998980651
         },
         {
             "rank": 53,
@@ -12139,8 +12086,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 70409,
             "assets_yoy": 68775,
             "op_to_debt_now": 0.4796335786133752,
-            "op_to_debt_yoy": 0.41784980928106225,
-            "market_cap": 76800
+            "op_to_debt_yoy": 0.41784980928106225
         },
         {
             "rank": 54,
@@ -12164,8 +12110,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 817,
             "assets_yoy": 669,
             "op_to_debt_now": 0.21963561414784238,
-            "op_to_debt_yoy": 0.003015413595789602,
-            "market_cap": 1352
+            "op_to_debt_yoy": 0.003015413595789602
         },
         {
             "rank": 55,
@@ -12189,8 +12134,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2447,
             "assets_yoy": 2489,
             "op_to_debt_now": 0.026571480185239256,
-            "op_to_debt_yoy": 0.0232694375004584,
-            "market_cap": 399
+            "op_to_debt_yoy": 0.0232694375004584
         },
         {
             "rank": 56,
@@ -12214,8 +12158,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 4184,
             "assets_yoy": 4005,
             "op_to_debt_now": 0.27063394125733703,
-            "op_to_debt_yoy": 0.13225625456118495,
-            "market_cap": 647
+            "op_to_debt_yoy": 0.13225625456118495
         },
         {
             "rank": 57,
@@ -12239,8 +12182,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2618,
             "assets_yoy": 2272,
             "op_to_debt_now": 16.0427233687778,
-            "op_to_debt_yoy": 5.154160081503282,
-            "market_cap": 2295
+            "op_to_debt_yoy": 5.154160081503282
         },
         {
             "rank": 58,
@@ -12264,8 +12206,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2861,
             "assets_yoy": 1665,
             "op_to_debt_now": 0.36692191079715314,
-            "op_to_debt_yoy": 0.04650202894749023,
-            "market_cap": 17954
+            "op_to_debt_yoy": 0.04650202894749023
         },
         {
             "rank": 59,
@@ -12289,8 +12230,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3105,
             "assets_yoy": 3001,
             "op_to_debt_now": 0.07178533735033346,
-            "op_to_debt_yoy": 0.04502535194078168,
-            "market_cap": 774
+            "op_to_debt_yoy": 0.04502535194078168
         },
         {
             "rank": 60,
@@ -12314,8 +12254,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1306,
             "assets_yoy": 1410,
             "op_to_debt_now": 0.066501589549555,
-            "op_to_debt_yoy": -0.3289722221083092,
-            "market_cap": 889
+            "op_to_debt_yoy": -0.3289722221083092
         },
         {
             "rank": 61,
@@ -12339,8 +12278,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 5165,
             "assets_yoy": 5644,
             "op_to_debt_now": 0.045514013967868874,
-            "op_to_debt_yoy": 0.02261751174261958,
-            "market_cap": 1649
+            "op_to_debt_yoy": 0.02261751174261958
         },
         {
             "rank": 62,
@@ -12364,8 +12302,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 713,
             "assets_yoy": 550,
             "op_to_debt_now": 0.6278179023188406,
-            "op_to_debt_yoy": -0.3286379852631579,
-            "market_cap": 1484
+            "op_to_debt_yoy": -0.3286379852631579
         },
         {
             "rank": 63,
@@ -12389,8 +12326,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 857,
             "assets_yoy": 936,
             "op_to_debt_now": 0.007932711524431452,
-            "op_to_debt_yoy": -0.023503572320333687,
-            "market_cap": 316
+            "op_to_debt_yoy": -0.023503572320333687
         },
         {
             "rank": 64,
@@ -12414,8 +12350,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 12916,
             "assets_yoy": 12879,
             "op_to_debt_now": 0.06344113572061515,
-            "op_to_debt_yoy": 0.008904213761068818,
-            "market_cap": 3251
+            "op_to_debt_yoy": 0.008904213761068818
         },
         {
             "rank": 65,
@@ -12439,8 +12374,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 5970,
             "assets_yoy": 5694,
             "op_to_debt_now": 0.24965751549527362,
-            "op_to_debt_yoy": 0.20230989273244404,
-            "market_cap": 1808
+            "op_to_debt_yoy": 0.20230989273244404
         },
         {
             "rank": 66,
@@ -12464,8 +12398,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 33462,
             "assets_yoy": 34879,
             "op_to_debt_now": 0.05911259989359415,
-            "op_to_debt_yoy": 0.06150593269730697,
-            "market_cap": 10555
+            "op_to_debt_yoy": 0.06150593269730697
         },
         {
             "rank": 67,
@@ -12489,8 +12422,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 4725,
             "assets_yoy": 5074,
             "op_to_debt_now": 0.3271762127510917,
-            "op_to_debt_yoy": 0.07594767703840088,
-            "market_cap": 5529
+            "op_to_debt_yoy": 0.07594767703840088
         },
         {
             "rank": 68,
@@ -12514,8 +12446,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3006,
             "assets_yoy": 2747,
             "op_to_debt_now": 0.12926011620453817,
-            "op_to_debt_yoy": 0.038854788791108985,
-            "market_cap": 892
+            "op_to_debt_yoy": 0.038854788791108985
         },
         {
             "rank": 69,
@@ -12539,8 +12470,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2257,
             "assets_yoy": 2228,
             "op_to_debt_now": 0.5428373451709597,
-            "op_to_debt_yoy": 0.8398951147857993,
-            "market_cap": 1540
+            "op_to_debt_yoy": 0.8398951147857993
         },
         {
             "rank": 70,
@@ -12564,8 +12494,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 57824,
             "assets_yoy": 56252,
             "op_to_debt_now": 0.052971026306608195,
-            "op_to_debt_yoy": 0.028514122560549138,
-            "market_cap": 3131
+            "op_to_debt_yoy": 0.028514122560549138
         },
         {
             "rank": 71,
@@ -12589,8 +12518,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 7084,
             "assets_yoy": 5830,
             "op_to_debt_now": 3.7255009955354867,
-            "op_to_debt_yoy": 1.5197963905523317,
-            "market_cap": 36990
+            "op_to_debt_yoy": 1.5197963905523317
         },
         {
             "rank": 72,
@@ -12614,8 +12542,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1054,
             "assets_yoy": 1068,
             "op_to_debt_now": 0.11318943257787367,
-            "op_to_debt_yoy": 0.10916334955570794,
-            "market_cap": 904
+            "op_to_debt_yoy": 0.10916334955570794
         },
         {
             "rank": 73,
@@ -12639,8 +12566,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3546,
             "assets_yoy": 3558,
             "op_to_debt_now": 0.33672869208333334,
-            "op_to_debt_yoy": 0.368938119,
-            "market_cap": 1014
+            "op_to_debt_yoy": 0.368938119
         },
         {
             "rank": 74,
@@ -12664,8 +12590,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 8283,
             "assets_yoy": 8690,
             "op_to_debt_now": 0.02315315106991256,
-            "op_to_debt_yoy": 0.012037146891581368,
-            "market_cap": 2846
+            "op_to_debt_yoy": 0.012037146891581368
         },
         {
             "rank": 75,
@@ -12689,8 +12614,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 368091,
             "assets_yoy": 354815,
             "op_to_debt_now": 0.15091137436746252,
-            "op_to_debt_yoy": 0.091492325146238,
-            "market_cap": 88250
+            "op_to_debt_yoy": 0.091492325146238
         },
         {
             "rank": 76,
@@ -12714,8 +12638,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 561,
             "assets_yoy": 520,
             "op_to_debt_now": 0.2609003623993829,
-            "op_to_debt_yoy": 0.12035932011910964,
-            "market_cap": 757
+            "op_to_debt_yoy": 0.12035932011910964
         },
         {
             "rank": 77,
@@ -12739,8 +12662,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 5935,
             "assets_yoy": 6902,
             "op_to_debt_now": 0.079775591692036,
-            "op_to_debt_yoy": 0.026633808777713045,
-            "market_cap": 2526
+            "op_to_debt_yoy": 0.026633808777713045
         },
         {
             "rank": 78,
@@ -12764,8 +12686,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2752,
             "assets_yoy": 2785,
             "op_to_debt_now": 0.02419380235074887,
-            "op_to_debt_yoy": 0.005683745564291033,
-            "market_cap": 623
+            "op_to_debt_yoy": 0.005683745564291033
         },
         {
             "rank": 79,
@@ -12789,8 +12710,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1602,
             "assets_yoy": 1733,
             "op_to_debt_now": 0.03091844834110833,
-            "op_to_debt_yoy": 0.020411447518954736,
-            "market_cap": 555
+            "op_to_debt_yoy": 0.020411447518954736
         },
         {
             "rank": 80,
@@ -12814,8 +12734,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1763,
             "assets_yoy": 2062,
             "op_to_debt_now": -0.056018260122298505,
-            "op_to_debt_yoy": 0.002750235632109326,
-            "market_cap": 929
+            "op_to_debt_yoy": 0.002750235632109326
         },
         {
             "rank": 81,
@@ -12839,8 +12758,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 12636,
             "assets_yoy": 13189,
             "op_to_debt_now": 0.05504762890911941,
-            "op_to_debt_yoy": 0.05271091019748592,
-            "market_cap": 1356
+            "op_to_debt_yoy": 0.05271091019748592
         },
         {
             "rank": 82,
@@ -12864,8 +12782,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1296,
             "assets_yoy": 1071,
             "op_to_debt_now": 0.2607987524699733,
-            "op_to_debt_yoy": -0.10252394031880235,
-            "market_cap": 1330
+            "op_to_debt_yoy": -0.10252394031880235
         },
         {
             "rank": 83,
@@ -12889,8 +12806,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2855,
             "assets_yoy": 2867,
             "op_to_debt_now": 0.027445278496154767,
-            "op_to_debt_yoy": 0.027004684584905837,
-            "market_cap": 547
+            "op_to_debt_yoy": 0.027004684584905837
         },
         {
             "rank": 84,
@@ -12914,8 +12830,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1244,
             "assets_yoy": 1231,
             "op_to_debt_now": 0.48542370795016626,
-            "op_to_debt_yoy": 0.3046232132532977,
-            "market_cap": 850
+            "op_to_debt_yoy": 0.3046232132532977
         },
         {
             "rank": 85,
@@ -12939,8 +12854,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 5443,
             "assets_yoy": 5633,
             "op_to_debt_now": 1.3254566523580587,
-            "op_to_debt_yoy": 0.7948815425171812,
-            "market_cap": 1154
+            "op_to_debt_yoy": 0.7948815425171812
         },
         {
             "rank": 86,
@@ -12964,8 +12878,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 39748,
             "assets_yoy": 41255,
             "op_to_debt_now": 0.034930315521657006,
-            "op_to_debt_yoy": 0.039118163842982466,
-            "market_cap": 1863
+            "op_to_debt_yoy": 0.039118163842982466
         },
         {
             "rank": 87,
@@ -12989,8 +12902,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 5,
             "assets_yoy": 5,
             "op_to_debt_now": 0.14351388036237586,
-            "op_to_debt_yoy": 0.05335017229029622,
-            "market_cap": 2367
+            "op_to_debt_yoy": 0.05335017229029622
         },
         {
             "rank": 88,
@@ -13014,8 +12926,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2160,
             "assets_yoy": 2129,
             "op_to_debt_now": 0.0706814502236432,
-            "op_to_debt_yoy": 0.006377332717327532,
-            "market_cap": 733
+            "op_to_debt_yoy": 0.006377332717327532
         },
         {
             "rank": 89,
@@ -13039,8 +12950,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 817,
             "assets_yoy": 885,
             "op_to_debt_now": 0.04704817547683924,
-            "op_to_debt_yoy": -0.6686888605263158,
-            "market_cap": 207
+            "op_to_debt_yoy": -0.6686888605263158
         },
         {
             "rank": 90,
@@ -13064,8 +12974,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 9667,
             "assets_yoy": 9040,
             "op_to_debt_now": 2.2482927366254692,
-            "op_to_debt_yoy": 1.935670020782875,
-            "market_cap": 4296
+            "op_to_debt_yoy": 1.935670020782875
         },
         {
             "rank": 91,
@@ -13089,8 +12998,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1284,
             "assets_yoy": 1227,
             "op_to_debt_now": 0.2738170311,
-            "op_to_debt_yoy": 0.12142426433333334,
-            "market_cap": 578
+            "op_to_debt_yoy": 0.12142426433333334
         },
         {
             "rank": 92,
@@ -13114,8 +13022,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3584,
             "assets_yoy": 3440,
             "op_to_debt_now": 0.05152318310914859,
-            "op_to_debt_yoy": 0.026701238856408786,
-            "market_cap": 2244
+            "op_to_debt_yoy": 0.026701238856408786
         },
         {
             "rank": 93,
@@ -13139,8 +13046,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3487,
             "assets_yoy": 3391,
             "op_to_debt_now": 0.14457585529176054,
-            "op_to_debt_yoy": 0.07977758563755662,
-            "market_cap": 6856
+            "op_to_debt_yoy": 0.07977758563755662
         },
         {
             "rank": 94,
@@ -13164,8 +13070,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1455,
             "assets_yoy": 1179,
             "op_to_debt_now": 0.48775822720574724,
-            "op_to_debt_yoy": -0.8265889311724138,
-            "market_cap": 33323
+            "op_to_debt_yoy": -0.8265889311724138
         },
         {
             "rank": 95,
@@ -13189,8 +13094,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 10912,
             "assets_yoy": 10179,
             "op_to_debt_now": 0.09401165497803958,
-            "op_to_debt_yoy": 0.06364314072121814,
-            "market_cap": 2636
+            "op_to_debt_yoy": 0.06364314072121814
         },
         {
             "rank": 96,
@@ -13214,8 +13118,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 604,
             "assets_yoy": 602,
             "op_to_debt_now": 0.7382170742307692,
-            "op_to_debt_yoy": 0.6602998511538462,
-            "market_cap": 993
+            "op_to_debt_yoy": 0.6602998511538462
         },
         {
             "rank": 97,
@@ -13239,8 +13142,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 9406,
             "assets_yoy": 10374,
             "op_to_debt_now": 4.504159483973382,
-            "op_to_debt_yoy": 4.087808095159199,
-            "market_cap": 1187
+            "op_to_debt_yoy": 4.087808095159199
         },
         {
             "rank": 98,
@@ -13264,8 +13166,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 5367,
             "assets_yoy": 5222,
             "op_to_debt_now": 144.9191212,
-            "op_to_debt_yoy": 0.07644591040267605,
-            "market_cap": 2218
+            "op_to_debt_yoy": 0.07644591040267605
         },
         {
             "rank": 99,
@@ -13289,8 +13190,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 5959,
             "assets_yoy": 5986,
             "op_to_debt_now": 0.024264455635890032,
-            "op_to_debt_yoy": 0.052521125725358955,
-            "market_cap": 1740
+            "op_to_debt_yoy": 0.052521125725358955
         },
         {
             "rank": 100,
@@ -13314,8 +13214,7 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1136,
             "assets_yoy": 1296,
             "op_to_debt_now": 0.04169996397142,
-            "op_to_debt_yoy": 0.023709396045787978,
-            "market_cap": 208
+            "op_to_debt_yoy": 0.023709396045787978
         }
     ],
     "fama_value": [
@@ -32399,8 +32298,7 @@ const KOSPI_QUANT_PACKAGE = {
             "2천만↓"
         ],
         "노루홀딩스": [
-            "금융/지주",
-            "2천만↓"
+            "금융/지주"
         ],
         "한화손해보험": [
             "금융/지주"
@@ -32410,8 +32308,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "CR홀딩스": [
-            "금융/지주",
-            "2천만↓"
+            "금융/지주"
         ],
         "삼일제약": [
             "증거금100%"
@@ -32454,24 +32351,20 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "전방": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "페이퍼코리아": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "CJ": [
             "금융/지주"
         ],
         "대한방직": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "만호제강": [
             "증거금100%",
-            "불성실공시법인지정",
-            "2천만↓"
+            "불성실공시법인지정"
         ],
         "유진투자증권": [
             "금융/지주"
@@ -32501,8 +32394,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "SG글로벌": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "태원물산": [
             "증거금100%",
@@ -32588,9 +32480,6 @@ const KOSPI_QUANT_PACKAGE = {
             "관리",
             "300억↓"
         ],
-        "한독": [
-            "2천만↓"
-        ],
         "범양건영": [
             "자본잠식50%↑",
             "불성실공시법인지정",
@@ -32608,15 +32497,13 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "제일파마홀딩스": [
             "금융/지주",
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "오리엔트바이오": [
             "증거금100%"
         ],
         "동일제강": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "신일전자": [
@@ -32717,8 +32604,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "신흥": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "한솔홀딩스": [
             "금융/지주"
@@ -32803,11 +32689,7 @@ const KOSPI_QUANT_PACKAGE = {
             "불성실공시법인지정"
         ],
         "크라운해태홀딩스": [
-            "금융/지주",
-            "2천만↓"
-        ],
-        "신영와코루": [
-            "2천만↓"
+            "금융/지주"
         ],
         "풍산홀딩스": [
             "금융/지주"
@@ -32828,9 +32710,6 @@ const KOSPI_QUANT_PACKAGE = {
         "동원산업": [
             "금융/지주",
             "불성실공시법인지정예고"
-        ],
-        "사조오양": [
-            "2천만↓"
         ],
         "SK디스커버리": [
             "금융/지주"
@@ -32931,7 +32810,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "이건산업": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "남선알미늄": [
@@ -32960,9 +32838,6 @@ const KOSPI_QUANT_PACKAGE = {
         "대양금속": [
             "증거금100%"
         ],
-        "무림페이퍼": [
-            "2천만↓"
-        ],
         "신원": [
             "증거금100%"
         ],
@@ -32976,8 +32851,7 @@ const KOSPI_QUANT_PACKAGE = {
             "300억↓"
         ],
         "아진전자부품": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "태영건설": [
             "증거금100%"
@@ -33007,8 +32881,7 @@ const KOSPI_QUANT_PACKAGE = {
             "금융/지주"
         ],
         "한국내화": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "OCI홀딩스": [
             "금융/지주"
@@ -33048,8 +32921,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "갤럭시아에스엠": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "한신기계": [
             "증거금100%"
@@ -33083,8 +32955,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "세우글로벌": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "일성건설": [
             "증거금100%"
@@ -33098,7 +32969,6 @@ const KOSPI_QUANT_PACKAGE = {
         "한익스프레스": [
             "증거금100%",
             "불성실공시법인지정",
-            "2천만↓",
             "300억↓"
         ],
         "대영포장": [
@@ -33148,8 +33018,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "퍼시스": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "웅진": [
             "금융/지주",
@@ -33164,8 +33033,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "우신시스템": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "조일알미늄": [
             "증거금100%"
@@ -33203,31 +33071,23 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "MH에탄올": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "한국종합기술": [
             "증거금100%"
         ],
         "동남합성": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "인팩": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "에쓰씨엔지니어링": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "WISCOM": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
-        ],
-        "디씨엠": [
-            "2천만↓"
         ],
         "기업은행": [
             "금융/지주"
@@ -33329,8 +33189,7 @@ const KOSPI_QUANT_PACKAGE = {
             "금융/지주"
         ],
         "팜스코": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "키움증권": [
             "금융/지주"
@@ -33371,8 +33230,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "삼성출판사": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "대호에이엘": [
             "2천만↓"
@@ -33382,8 +33240,7 @@ const KOSPI_QUANT_PACKAGE = {
             "2천만↓"
         ],
         "모나용평": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "한국금융지주": [
             "금융/지주"
@@ -33481,8 +33338,7 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "DYP": [
             "증거금100%",
-            "불성실공시법인지정",
-            "2천만↓"
+            "불성실공시법인지정"
         ],
         "넥스틸": [
             "불성실공시법인지정"
@@ -33490,9 +33346,6 @@ const KOSPI_QUANT_PACKAGE = {
         "형지엘리트": [
             "증거금100%",
             "300억↓"
-        ],
-        "웅진씽크빅": [
-            "2천만↓"
         ],
         "JW홀딩스": [
             "금융/지주"
@@ -33540,15 +33393,8 @@ const KOSPI_QUANT_PACKAGE = {
         "한국자산신탁": [
             "금융/지주"
         ],
-        "인터지스": [
-            "2천만↓"
-        ],
         "화인베스틸": [
-            "증거금100%",
-            "2천만↓"
-        ],
-        "미원화학": [
-            "2천만↓"
+            "증거금100%"
         ],
         "시디즈": [
             "증거금100%"
@@ -33563,8 +33409,7 @@ const KOSPI_QUANT_PACKAGE = {
             "금융/지주"
         ],
         "아주스틸": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "핸즈코퍼레이션": [
             "거래정지",
@@ -33576,11 +33421,7 @@ const KOSPI_QUANT_PACKAGE = {
             "200억↓"
         ],
         "케이탑리츠": [
-            "증거금100%",
-            "2천만↓"
-        ],
-        "DSR": [
-            "2천만↓"
+            "증거금100%"
         ],
         "JB금융지주": [
             "금융/지주"
@@ -33692,9 +33533,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "카카오페이": [
             "금융/지주"
-        ],
-        "화승알앤에이": [
-            "2천만↓"
         ],
         "LX홀딩스": [
             "금융/지주"
@@ -33822,7 +33660,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "무림SP": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "이화공영": [
@@ -33843,9 +33680,6 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%",
             "2천만↓",
             "200억↓"
-        ],
-        "에이스침대": [
-            "2천만↓"
         ],
         "교보18호스팩": [
             "금융/지주",
@@ -33882,8 +33716,7 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "매일홀딩스": [
             "금융/지주",
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "국영지앤엠": [
             "증거금100%",
@@ -33927,7 +33760,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "한일화학": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "원풍물산": [
@@ -33940,7 +33772,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "부스타": [
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "대동기어": [
@@ -33955,11 +33786,7 @@ const KOSPI_QUANT_PACKAGE = {
         "신영스팩11호": [
             "금융/지주",
             "증거금100%",
-            "2천만↓",
             "200억↓"
-        ],
-        "삼아제약": [
-            "2천만↓"
         ],
         "미래에셋비전스팩8호": [
             "금융/지주",
@@ -33974,7 +33801,6 @@ const KOSPI_QUANT_PACKAGE = {
         "삼성스팩12호": [
             "금융/지주",
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "미래에셋비전스팩9호": [
@@ -33987,9 +33813,6 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%",
             "불성실공시법인지정",
             "200억↓"
-        ],
-        "엠에스씨": [
-            "2천만↓"
         ],
         "미래에셋비전스팩10호": [
             "금융/지주",
@@ -34025,9 +33848,6 @@ const KOSPI_QUANT_PACKAGE = {
             "2천만↓",
             "200억↓"
         ],
-        "흥국": [
-            "2천만↓"
-        ],
         "아이티센엔텍": [
             "증거금100%"
         ],
@@ -34041,9 +33861,6 @@ const KOSPI_QUANT_PACKAGE = {
             "관리",
             "동전주",
             "200억↓"
-        ],
-        "유니크": [
-            "2천만↓"
         ],
         "서한": [
             "증거금100%"
@@ -34060,9 +33877,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "원일특강": [
             "증거금100%",
-            "2천만↓"
-        ],
-        "리드코프": [
             "2천만↓"
         ],
         "모베이스전자": [
@@ -34106,17 +33920,14 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "청보": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "스페코": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "메디앙스": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "원익큐브": [
@@ -34126,8 +33937,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "고려제약": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "리더스코스메틱": [
             "증거금100%",
@@ -34181,7 +33991,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "졸스": [
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "일지테크": [
@@ -34202,8 +34011,7 @@ const KOSPI_QUANT_PACKAGE = {
             "300억↓"
         ],
         "서연탑메탈": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "대신정보통신": [
             "거래정지",
@@ -34221,12 +34029,10 @@ const KOSPI_QUANT_PACKAGE = {
             "금융/지주"
         ],
         "KCC건설": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "한국큐빅": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "메이슨캐피탈": [
             "금융/지주",
@@ -34234,8 +34040,7 @@ const KOSPI_QUANT_PACKAGE = {
             "300억↓"
         ],
         "티케이지애강": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "제이스코홀딩스": [
             "금융/지주",
@@ -34256,12 +34061,10 @@ const KOSPI_QUANT_PACKAGE = {
             "300억↓"
         ],
         "KB오토시스": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "세원물산": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "KBI메탈": [
             "불성실공시법인지정예고"
@@ -34335,8 +34138,7 @@ const KOSPI_QUANT_PACKAGE = {
             "금융/지주"
         ],
         "아이즈비전": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "오스템": [
             "증거금100%"
@@ -34356,7 +34158,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "삼일": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "케이엠더블유": [
@@ -34375,12 +34176,10 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "삼진": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "엠젠솔루션": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "판타지오": [
@@ -34393,7 +34192,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "더라미": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "동일기연": [
@@ -34402,7 +34200,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "제이엠아이": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "시그네틱스": [
@@ -34412,15 +34209,13 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "모아텍": [
             "증거금100%",
+            "2천만↓",
             "300억↓"
         ],
         "인성정보": [
             "증거금100%"
         ],
         "로젠": [
-            "2천만↓"
-        ],
-        "엠투엔": [
             "2천만↓"
         ],
         "좋은사람들": [
@@ -34440,8 +34235,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "티비씨": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "해성산업": [
             "금융/지주"
@@ -34453,7 +34247,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "프럼파스트": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "골드앤에스": [
@@ -34495,8 +34288,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "세종텔레콤": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "삼양케이씨아이": [
             "2천만↓"
@@ -34531,8 +34323,7 @@ const KOSPI_QUANT_PACKAGE = {
             "200억↓"
         ],
         "쎄니트": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "엘컴텍": [
             "증거금100%"
@@ -34559,7 +34350,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "위즈코프": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "에코심플렉스": [
@@ -34580,16 +34370,12 @@ const KOSPI_QUANT_PACKAGE = {
             "금융/지주"
         ],
         "인포뱅크": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "세중": [
             "증거금100%",
             "불성실공시법인지정",
             "200억↓"
-        ],
-        "한국경제TV": [
-            "2천만↓"
         ],
         "한국정보공학": [
             "증거금100%",
@@ -34608,12 +34394,8 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%",
             "불성실공시법인지정"
         ],
-        "SG&G": [
-            "2천만↓"
-        ],
         "아이씨디": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "우리기술투자": [
             "금융/지주"
@@ -34678,9 +34460,6 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%",
             "200억↓"
         ],
-        "KT지니뮤직": [
-            "2천만↓"
-        ],
         "코스리거글로벌": [
             "증거금100%",
             "2천만↓"
@@ -34695,7 +34474,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "빌리언스": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "에이치케이": [
@@ -34738,8 +34516,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "삼화네트웍스": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "서울반도체": [
             "증거금100%"
@@ -34755,8 +34532,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "초록뱀미디어": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "HLB제약": [
             "증거금100%"
@@ -34769,7 +34545,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "대동스틸": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "인트론바이오": [
@@ -34783,7 +34558,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "엔피케이": [
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "기가레인": [
@@ -34791,7 +34565,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "파인디앤씨": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "셀루메드": [
@@ -34800,9 +34573,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "비트플래닛": [
             "증거금100%"
-        ],
-        "잉크테크": [
-            "2천만↓"
         ],
         "재영솔루텍": [
             "증거금100%"
@@ -34826,8 +34596,7 @@ const KOSPI_QUANT_PACKAGE = {
             "300억↓"
         ],
         "ES큐브": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "에스폴리텍": [
             "증거금100%",
@@ -34845,8 +34614,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "나라엠앤디": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "큐로홀딩스": [
             "금융/지주",
@@ -34858,9 +34626,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "에스티큐브": [
             "증거금100%"
-        ],
-        "iMBC": [
-            "2천만↓"
         ],
         "오션인더블유": [
             "증거금100%",
@@ -34897,12 +34662,8 @@ const KOSPI_QUANT_PACKAGE = {
         "구영테크": [
             "증거금100%"
         ],
-        "예스24": [
-            "2천만↓"
-        ],
         "NE능률": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "이니텍": [
@@ -34975,7 +34736,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "티사이언티픽": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "멕아이씨에스": [
@@ -34993,8 +34753,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "아이컴포넌트": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "해성에어로보틱스": [
             "증거금100%"
@@ -35028,8 +34787,7 @@ const KOSPI_QUANT_PACKAGE = {
             "300억↓"
         ],
         "HC홈센타": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "드림어스컴퍼니": [
             "거래정지",
@@ -35069,7 +34827,6 @@ const KOSPI_QUANT_PACKAGE = {
         "이엘피": [
             "증거금100%",
             "불성실공시법인지정예고",
-            "2천만↓",
             "300억↓"
         ],
         "인크레더블버즈": [
@@ -35102,7 +34859,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "대산F&B": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "비엘팜텍": [
@@ -35185,7 +34941,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "이씨에스": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "오텍": [
@@ -35208,7 +34963,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "로지시스": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "세진티에스": [
@@ -35219,12 +34973,10 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "팬엔터테인먼트": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "케이웨더": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "다원시스": [
@@ -35251,7 +35003,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "엔텔스": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "빛과전자": [
@@ -35267,7 +35018,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "인티큐브": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "인피니트헬스케어": [
@@ -35278,22 +35028,14 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "캐스텍코리아": [
-            "증거금100%",
-            "2천만↓"
-        ],
-        "중앙백신": [
-            "2천만↓"
+            "증거금100%"
         ],
         "우리산업홀딩스": [
             "금융/지주",
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "멤레이비티": [
             "증거금100%"
-        ],
-        "에이치시티": [
-            "2천만↓"
         ],
         "엘엠에스": [
             "증거금100%",
@@ -35309,22 +35051,19 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "리튬포어스": [
             "관리",
-            "2천만↓",
             "200억↓"
         ],
         "테라사이언스": [
             "2천만↓"
         ],
         "아미노로직스": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "플랜티넷": [
             "증거금100%"
         ],
         "동국알앤에스": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "웰크론한텍": [
@@ -35390,16 +35129,13 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "성창오토텍": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "오디텍": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "코디": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "한국유니온제약": [
@@ -35464,9 +35200,6 @@ const KOSPI_QUANT_PACKAGE = {
         "랩지노믹스": [
             "증거금100%"
         ],
-        "팅크웨어": [
-            "2천만↓"
-        ],
         "아이티엠반도체": [
             "증거금100%"
         ],
@@ -35482,8 +35215,7 @@ const KOSPI_QUANT_PACKAGE = {
             "300억↓"
         ],
         "바이오톡스텍": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "진바이오텍": [
             "증거금100%"
@@ -35504,8 +35236,7 @@ const KOSPI_QUANT_PACKAGE = {
             "200억↓"
         ],
         "픽셀플러스": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "쏘닉스": [
             "증거금100%"
@@ -35524,12 +35255,10 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "동우팜투테이블": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "넥스턴앤롤코리아": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "케이씨티": [
             "증거금100%"
@@ -35539,9 +35268,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "제이티": [
             "증거금100%"
-        ],
-        "유비벨록스": [
-            "2천만↓"
         ],
         "브이엠": [
             "불성실공시법인지정예고"
@@ -35566,7 +35292,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "S&K폴리텍": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "한울소재과학": [
@@ -35587,9 +35312,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "디엔에프": [
             "증거금100%"
-        ],
-        "이크레더블": [
-            "2천만↓"
         ],
         "서울바이오시스": [
             "증거금100%"
@@ -35634,17 +35356,14 @@ const KOSPI_QUANT_PACKAGE = {
             "2천만↓"
         ],
         "에스코넥": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "에이루트": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "엘디티": [
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "에코볼트": [
@@ -35677,9 +35396,6 @@ const KOSPI_QUANT_PACKAGE = {
         "DGI": [
             "2천만↓"
         ],
-        "이지케어텍": [
-            "2천만↓"
-        ],
         "머큐리": [
             "증거금100%"
         ],
@@ -35708,21 +35424,13 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "한국정밀기계": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
-        ],
-        "우양에이치씨": [
-            "2천만↓"
-        ],
-        "케이옥션": [
-            "2천만↓"
         ],
         "코오롱생명과학": [
             "증거금100%"
         ],
         "에스앤더블류": [
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "우양": [
@@ -35730,17 +35438,10 @@ const KOSPI_QUANT_PACKAGE = {
             "300억↓"
         ],
         "디에스엠": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "NHN벅스": [
             "불성실공시법인지정"
-        ],
-        "디와이피엔에프": [
-            "2천만↓"
-        ],
-        "코렌텍": [
-            "2천만↓"
         ],
         "엣지파운드리": [
             "거래정지",
@@ -35787,8 +35488,7 @@ const KOSPI_QUANT_PACKAGE = {
             "200억↓"
         ],
         "크리스에프앤씨": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "남화산업": [
             "증거금100%"
@@ -35854,22 +35554,14 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "코이즈": [
             "관리",
-            "2천만↓",
             "200억↓"
         ],
         "에스디시스템": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
-        ],
-        "제노레이": [
-            "2천만↓"
         ],
         "삼기": [
             "증거금100%"
-        ],
-        "KX": [
-            "2천만↓"
         ],
         "서진오토모티브": [
             "증거금100%",
@@ -35901,9 +35593,6 @@ const KOSPI_QUANT_PACKAGE = {
         "화신정공": [
             "증거금100%"
         ],
-        "제이엔케이글로벌": [
-            "2천만↓"
-        ],
         "제이에스링크": [
             "증거금100%"
         ],
@@ -35911,14 +35600,8 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%",
             "2천만↓"
         ],
-        "화인써키트": [
-            "2천만↓"
-        ],
         "에코캡": [
             "증거금100%",
-            "2천만↓"
-        ],
-        "피제이메탈": [
             "2천만↓"
         ],
         "앱코": [
@@ -35929,7 +35612,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "GH신소재": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "나이스디앤비": [
@@ -35982,9 +35664,6 @@ const KOSPI_QUANT_PACKAGE = {
         "탑코미디어": [
             "증거금100%"
         ],
-        "윈스테크넷": [
-            "2천만↓"
-        ],
         "나래나노텍": [
             "증거금100%"
         ],
@@ -35993,12 +35672,10 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "넥스트아이": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "신진에스엠": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "오이솔루션": [
@@ -36029,9 +35706,6 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%",
             "200억↓"
         ],
-        "아이디스": [
-            "2천만↓"
-        ],
         "영우디에스피": [
             "증거금100%"
         ],
@@ -36058,8 +35732,7 @@ const KOSPI_QUANT_PACKAGE = {
             "300억↓"
         ],
         "에이치와이티씨": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "하이로닉": [
             "증거금100%"
@@ -36068,8 +35741,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "네이블": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "우리이앤엘하루틴": [
             "거래정지",
@@ -36081,7 +35753,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "아시아종묘": [
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "다산솔루에타": [
@@ -36111,8 +35782,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "내츄럴엔도텍": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "엠브레인": [
             "증거금100%",
@@ -36123,12 +35793,10 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "램테크놀러지": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "에프엔씨엔터": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "앱클론": [
             "증거금100%"
@@ -36147,12 +35815,10 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "파버나인": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "일월지엠엘": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "애드바이오텍": [
             "증거금100%"
@@ -36184,7 +35850,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "디티앤씨": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "신화콘텍": [
@@ -36236,7 +35901,6 @@ const KOSPI_QUANT_PACKAGE = {
         "윈하이텍": [
             "증거금100%",
             "불성실공시법인지정예고",
-            "2천만↓",
             "200억↓"
         ],
         "오늘이엔엠": [
@@ -36249,7 +35913,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "마니커에프앤지": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "루트K": [
@@ -36274,7 +35937,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "디지캡": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "캐프": [
@@ -36293,7 +35955,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "뱅크웨어글로벌": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "레이저옵텍": [
@@ -36449,8 +36110,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "링크제니시스": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "디와이디": [
             "관리",
@@ -36465,8 +36125,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "폴라리스AI핸디": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "켐트로스": [
             "불성실공시법인지정예고"
@@ -36476,8 +36135,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "하이즈항공": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "케이디켐": [
             "증거금100%",
@@ -36501,12 +36159,10 @@ const KOSPI_QUANT_PACKAGE = {
         "사토시홀딩스": [
             "금융/지주",
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "더코디": [
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "에이텍모빌리티": [
@@ -36609,12 +36265,10 @@ const KOSPI_QUANT_PACKAGE = {
             "300억↓"
         ],
         "피엔에이치테크": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "유진테크놀로지": [
             "관리",
-            "2천만↓",
             "200억↓"
         ],
         "DSC인베스트먼트": [
@@ -36626,7 +36280,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "에이스토리": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "나무에이엑스": [
@@ -36663,8 +36316,7 @@ const KOSPI_QUANT_PACKAGE = {
             "200억↓"
         ],
         "보라티알": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "모비스": [
             "증거금100%",
@@ -36672,12 +36324,10 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "예선테크": [
             "관리",
-            "2천만↓",
             "200억↓"
         ],
         "세화피앤씨": [
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "수젠텍": [
@@ -36726,8 +36376,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "덴티스": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "아리바이오랩": [
             "증거금100%"
@@ -36745,14 +36394,8 @@ const KOSPI_QUANT_PACKAGE = {
             "불성실공시법인지정",
             "2천만↓"
         ],
-        "디알젬": [
-            "2천만↓"
-        ],
         "케어랩스": [
             "증거금100%",
-            "2천만↓"
-        ],
-        "디앤씨미디어": [
             "2천만↓"
         ],
         "유에스티": [
@@ -36781,8 +36424,7 @@ const KOSPI_QUANT_PACKAGE = {
             "불성실공시법인지정"
         ],
         "뉴트리": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "팸텍": [
             "증거금100%"
@@ -36817,7 +36459,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "인산가": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "천보": [
@@ -36856,7 +36497,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "에스프리즘": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "모아데이타": [
@@ -36873,7 +36513,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "자이언트스텝": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "웨이비스": [
@@ -36899,15 +36538,13 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "파라택시스이더리움": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "다이나믹솔루션": [
             "증거금100%"
         ],
         "대보마그네틱": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "아리바이오홀딩스": [
             "금융/지주",
@@ -36945,7 +36582,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "이노에이엑스": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "씨에스베어링": [
@@ -37008,7 +36644,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "에스제이그룹": [
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "지아이에스": [
@@ -37055,8 +36690,7 @@ const KOSPI_QUANT_PACKAGE = {
             "300억↓"
         ],
         "네오크레마": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "CJ 바이오사이언스": [
             "증거금100%"
@@ -37108,12 +36742,10 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "엔바이오니아": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "KBG": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "팜스빌": [
@@ -37144,8 +36776,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "아티스트컴퍼니": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "LS티라유텍": [
             "증거금100%"
@@ -37176,7 +36807,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "솔트웨어": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "스톤브릿지벤처스": [
@@ -37216,7 +36846,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "윙스풋": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "웨이버스": [
@@ -37252,14 +36881,10 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "이노진": [
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "스피어": [
             "증거금100%"
-        ],
-        "피엔케이피부임상연구센타": [
-            "2천만↓"
         ],
         "핌스": [
             "증거금100%",
@@ -37268,9 +36893,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "알체라": [
             "증거금100%"
-        ],
-        "엠엑스온": [
-            "2천만↓"
         ],
         "모비릭스": [
             "증거금100%",
@@ -37302,8 +36924,7 @@ const KOSPI_QUANT_PACKAGE = {
             "200억↓"
         ],
         "씨앤투스": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "셀레스트라": [
             "자본잠식50%↑",
@@ -37363,15 +36984,13 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "코셈": [
             "증거금100%",
-            "불성실공시법인지정예고",
-            "2천만↓"
+            "불성실공시법인지정예고"
         ],
         "알비더블유": [
             "증거금100%"
         ],
         "삼영에스앤씨": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "드림인사이트": [
@@ -37387,8 +37006,7 @@ const KOSPI_QUANT_PACKAGE = {
             "300억↓"
         ],
         "에이아이코리아": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "큐라클": [
             "증거금100%"
@@ -37414,7 +37032,6 @@ const KOSPI_QUANT_PACKAGE = {
         "오에스피": [
             "관리",
             "불성실공시법인지정",
-            "2천만↓",
             "300억↓"
         ],
         "블리츠웨이엔터테인먼트": [
@@ -37434,9 +37051,6 @@ const KOSPI_QUANT_PACKAGE = {
         "엑셀세라퓨틱스": [
             "증거금100%",
             "300억↓"
-        ],
-        "데이원컴퍼니": [
-            "2천만↓"
         ],
         "엠아이큐브솔루션": [
             "증거금100%",
@@ -37470,7 +37084,6 @@ const KOSPI_QUANT_PACKAGE = {
         "비트맥스": [
             "관리",
             "자본잠식50%↑",
-            "2천만↓",
             "300억↓"
         ],
         "프롬바이오": [
@@ -37516,12 +37129,10 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "파인메딕스": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "지에프씨생명과학": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "유일로보틱스": [
             "증거금100%"
@@ -37589,6 +37200,7 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "나라셀라": [
             "증거금100%",
+            "2천만↓",
             "300억↓"
         ],
         "뷰티스킨": [
@@ -37605,18 +37217,12 @@ const KOSPI_QUANT_PACKAGE = {
         "스튜디오미르": [
             "증거금100%"
         ],
-        "메쎄이상": [
-            "2천만↓"
-        ],
         "레이저쎌": [
             "증거금100%"
         ],
         "제일엠앤에스": [
             "자본잠식50%↑",
             "불성실공시법인지정",
-            "2천만↓"
-        ],
-        "비아이매트릭스": [
             "2천만↓"
         ],
         "스튜디오삼익": [
@@ -37626,9 +37232,6 @@ const KOSPI_QUANT_PACKAGE = {
         "핑거스토리": [
             "증거금100%",
             "300억↓"
-        ],
-        "트루엔": [
-            "2천만↓"
         ],
         "오브젠": [
             "증거금100%"
@@ -37647,12 +37250,10 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "산돌": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "비스토스": [
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "제이투케이바이오": [
@@ -37667,9 +37268,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "스마트레이더시스템": [
             "증거금100%"
-        ],
-        "마이크로투나노": [
-            "2천만↓"
         ],
         "시지트로닉스": [
             "증거금100%",
@@ -37692,16 +37290,11 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "엠에프씨": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "모니터랩": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
-        ],
-        "에르코스": [
-            "2천만↓"
         ],
         "삼현": [
             "투자경고",
@@ -37723,7 +37316,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "오픈놀": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "레뷰코퍼레이션": [
@@ -37740,8 +37332,7 @@ const KOSPI_QUANT_PACKAGE = {
             "불성실공시법인지정"
         ],
         "지슨": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "하스": [
             "증거금100%",
@@ -37749,7 +37340,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "인스웨이브": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "제이엔비": [
@@ -37765,9 +37355,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "사피엔반도체": [
             "증거금100%"
-        ],
-        "에이에스텍": [
-            "2천만↓"
         ],
         "케이지에이": [
             "증거금100%",
@@ -37792,8 +37379,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "아이빔테크놀로지": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "뉴키즈온": [
             "증거금100%",
@@ -37808,7 +37394,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "아이지넷": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "모티브링크": [
@@ -37823,7 +37408,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "아이언디바이스": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "닷밀": [
@@ -37872,11 +37456,13 @@ const KOSPI_QUANT_PACKAGE = {
         "하나31호스팩": [
             "금융/지주",
             "증거금100%",
+            "2천만↓",
             "200억↓"
         ],
         "대신밸런스제17호스팩": [
             "금융/지주",
             "관리",
+            "2천만↓",
             "200억↓"
         ],
         "셀로맥스사이언스": [
@@ -37915,7 +37501,6 @@ const KOSPI_QUANT_PACKAGE = {
         "유안타제16호스팩": [
             "금융/지주",
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "링크솔루션": [
@@ -37968,7 +37553,6 @@ const KOSPI_QUANT_PACKAGE = {
         "에이치엠씨제7호스팩": [
             "금융/지주",
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "미래에셋비전스팩4호": [
@@ -37979,7 +37563,6 @@ const KOSPI_QUANT_PACKAGE = {
         "미래에셋비전스팩5호": [
             "금융/지주",
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "DB금융스팩12호": [
@@ -38002,11 +37585,7 @@ const KOSPI_QUANT_PACKAGE = {
         "미래에셋비전스팩6호": [
             "금융/지주",
             "증거금100%",
-            "2천만↓",
             "200억↓"
-        ],
-        "블랙야크아이앤씨": [
-            "2천만↓"
         ],
         "한국제15호스팩": [
             "금융/지주",
@@ -38023,7 +37602,6 @@ const KOSPI_QUANT_PACKAGE = {
         "교보16호스팩": [
             "금융/지주",
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "미래에셋비전스팩7호": [
@@ -38047,7 +37625,6 @@ const KOSPI_QUANT_PACKAGE = {
         "KB제30호스팩": [
             "금융/지주",
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "노타": [
@@ -38076,7 +37653,6 @@ const KOSPI_QUANT_PACKAGE = {
         "유진스팩11호": [
             "금융/지주",
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "교보17호스팩": [
@@ -38106,7 +37682,6 @@ const KOSPI_QUANT_PACKAGE = {
         "유안타제17호스팩": [
             "금융/지주",
             "증거금100%",
-            "2천만↓",
             "200억↓"
         ],
         "큐리오시스": [
@@ -38143,8 +37718,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "소마젠": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "씨엑스아이": [
             "금융/지주",
