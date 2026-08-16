@@ -4,7 +4,7 @@ const KOSPI_QUANT_PACKAGE = {
         "dart_basis": "2026년 1분기보고서",
         "status": "NORMAL",
         "checked_at": "03:31:30",
-        "price_updated_at": "2026-08-14 16:00:03"
+        "price_updated_at": "2026-08-16 16:00:02"
     },
     "super_value": [
         {
