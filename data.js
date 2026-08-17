@@ -3,7 +3,7 @@ const KOSPI_QUANT_PACKAGE = {
         "krx_basis_date": "20260813",
         "dart_basis": "2026년 반기보고서",
         "status": "NORMAL",
-        "checked_at": "16:18:35"
+        "checked_at": "03:04:06"
     },
     "super_value": [
         {
