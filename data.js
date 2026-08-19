@@ -3,7 +3,7 @@ const KOSPI_QUANT_PACKAGE = {
         "krx_basis_date": "20260818",
         "dart_basis": "2026년 반기보고서",
         "status": "NORMAL",
-        "checked_at": "16:01:51"
+        "checked_at": "03:04:49"
     },
     "super_value": [
         {
@@ -80972,9 +80972,6 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%",
             "300억↓"
         ],
-        "탑런토탈솔루션": [
-            "2천만↓"
-        ],
         "뷰노": [
             "증거금100%"
         ],
@@ -95866,7 +95863,7 @@ const KOSPI_QUANT_PACKAGE = {
         "비나텍": {
             "pbr": 5.44,
             "gpa": 3.2,
-            "f_score": 0,
+            "f_score": 1,
             "asset_growth_yoy": 46.2,
             "value_score": 0,
             "value_tier": "위험"
@@ -98386,7 +98383,7 @@ const KOSPI_QUANT_PACKAGE = {
         "나노씨엠에스": {
             "pbr": 0.53,
             "gpa": 8.3,
-            "f_score": 3,
+            "f_score": 2,
             "asset_growth_yoy": -23.1,
             "value_score": 9,
             "value_tier": "저평가"
