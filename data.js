@@ -3,7 +3,8 @@ const KOSPI_QUANT_PACKAGE = {
         "krx_basis_date": "20260827",
         "dart_basis": "2026년 반기보고서",
         "status": "NORMAL",
-        "checked_at": "05:30:58"
+        "checked_at": "05:30:58",
+        "price_updated_at": "2026-08-30 16:00:03"
     },
     "super_value": [
         {
@@ -24462,7 +24463,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1772,
             "assets_yoy": 2029,
             "op_to_debt_now": 0.09340245107240042,
-            "op_to_debt_yoy": -0.023971722330335444
+            "op_to_debt_yoy": -0.023971722330335444,
+            "market_cap": 718
         },
         {
             "rank": 2,
@@ -24486,7 +24488,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 537,
             "assets_yoy": 544,
             "op_to_debt_now": 0.056879908225000025,
-            "op_to_debt_yoy": 0.0018077405911974046
+            "op_to_debt_yoy": 0.0018077405911974046,
+            "market_cap": 839
         },
         {
             "rank": 3,
@@ -24510,7 +24513,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 924,
             "assets_yoy": 991,
             "op_to_debt_now": 0.0664968974468085,
-            "op_to_debt_yoy": 0.006582161008536827
+            "op_to_debt_yoy": 0.006582161008536827,
+            "market_cap": 499
         },
         {
             "rank": 4,
@@ -24534,7 +24538,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2719,
             "assets_yoy": 2670,
             "op_to_debt_now": 3.245038733850129,
-            "op_to_debt_yoy": -0.36018731744186044
+            "op_to_debt_yoy": -0.36018731744186044,
+            "market_cap": 1277
         },
         {
             "rank": 5,
@@ -24558,7 +24563,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 10119,
             "assets_yoy": 10095,
             "op_to_debt_now": 0.2042039171868699,
-            "op_to_debt_yoy": 0.0620997055194399
+            "op_to_debt_yoy": 0.0620997055194399,
+            "market_cap": 2609
         },
         {
             "rank": 6,
@@ -24582,7 +24588,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 5733,
             "assets_yoy": 5813,
             "op_to_debt_now": -4.8363976664899783e-05,
-            "op_to_debt_yoy": -0.007988951383159384
+            "op_to_debt_yoy": -0.007988951383159384,
+            "market_cap": 1740
         },
         {
             "rank": 7,
@@ -24606,7 +24613,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6536,
             "assets_yoy": 6425,
             "op_to_debt_now": 0.09606162563219023,
-            "op_to_debt_yoy": 0.007239753640970711
+            "op_to_debt_yoy": 0.007239753640970711,
+            "market_cap": 1421
         },
         {
             "rank": 8,
@@ -24630,7 +24638,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 20091,
             "assets_yoy": 18991,
             "op_to_debt_now": 8.356952996405466,
-            "op_to_debt_yoy": 0.8933103321454322
+            "op_to_debt_yoy": 0.8933103321454322,
+            "market_cap": 17079
         },
         {
             "rank": 9,
@@ -24654,7 +24663,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 7908,
             "assets_yoy": 8489,
             "op_to_debt_now": 0.004444285587085738,
-            "op_to_debt_yoy": -0.003116938350789156
+            "op_to_debt_yoy": -0.003116938350789156,
+            "market_cap": 752
         },
         {
             "rank": 10,
@@ -24678,7 +24688,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 431,
             "assets_yoy": 431,
             "op_to_debt_now": 5.75623434,
-            "op_to_debt_yoy": 0.016677900895448697
+            "op_to_debt_yoy": 0.016677900895448697,
+            "market_cap": 329
         },
         {
             "rank": 11,
@@ -24702,7 +24713,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 89127,
             "assets_yoy": 85445,
             "op_to_debt_now": 0.5321711821615109,
-            "op_to_debt_yoy": 0.29458346092669346
+            "op_to_debt_yoy": 0.29458346092669346,
+            "market_cap": 20108
         },
         {
             "rank": 12,
@@ -24726,7 +24738,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2157,
             "assets_yoy": 2148,
             "op_to_debt_now": 0.02663329729045138,
-            "op_to_debt_yoy": -0.0031087348568341645
+            "op_to_debt_yoy": -0.0031087348568341645,
+            "market_cap": 402
         },
         {
             "rank": 13,
@@ -24750,7 +24763,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 813,
             "assets_yoy": 887,
             "op_to_debt_now": 0.11371532901459853,
-            "op_to_debt_yoy": 0.05853820864583333
+            "op_to_debt_yoy": 0.05853820864583333,
+            "market_cap": 437
         },
         {
             "rank": 14,
@@ -24774,7 +24788,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2615,
             "assets_yoy": 2399,
             "op_to_debt_now": 0.1790515905129992,
-            "op_to_debt_yoy": 0.06269389980302831
+            "op_to_debt_yoy": 0.06269389980302831,
+            "market_cap": 1576
         },
         {
             "rank": 15,
@@ -24798,7 +24813,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1305,
             "assets_yoy": 1268,
             "op_to_debt_now": 0.06589470236836885,
-            "op_to_debt_yoy": 0.002293294825362108
+            "op_to_debt_yoy": 0.002293294825362108,
+            "market_cap": 869
         },
         {
             "rank": 16,
@@ -24822,7 +24838,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2078,
             "assets_yoy": 2014,
             "op_to_debt_now": 0.1472624832812732,
-            "op_to_debt_yoy": 0.08066144270426358
+            "op_to_debt_yoy": 0.08066144270426358,
+            "market_cap": 593
         },
         {
             "rank": 17,
@@ -24846,7 +24863,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 4717,
             "assets_yoy": 4693,
             "op_to_debt_now": 0.04358059990048903,
-            "op_to_debt_yoy": -0.06801027172491428
+            "op_to_debt_yoy": -0.06801027172491428,
+            "market_cap": 847
         },
         {
             "rank": 18,
@@ -24870,7 +24888,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 5090,
             "assets_yoy": 4631,
             "op_to_debt_now": 2777.39780284554,
-            "op_to_debt_yoy": 655.433801941775
+            "op_to_debt_yoy": 655.433801941775,
+            "market_cap": 1747
         },
         {
             "rank": 19,
@@ -24894,7 +24913,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 34347,
             "assets_yoy": 34500,
             "op_to_debt_now": 0.038134820043841694,
-            "op_to_debt_yoy": 0.029186403437343942
+            "op_to_debt_yoy": 0.029186403437343942,
+            "market_cap": 6059
         },
         {
             "rank": 20,
@@ -24918,7 +24938,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 32601,
             "assets_yoy": 33582,
             "op_to_debt_now": 0.07051294662113033,
-            "op_to_debt_yoy": 0.06643994389823153
+            "op_to_debt_yoy": 0.06643994389823153,
+            "market_cap": 10646
         },
         {
             "rank": 21,
@@ -24942,7 +24963,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 10464,
             "assets_yoy": 10448,
             "op_to_debt_now": 0.17456004582942813,
-            "op_to_debt_yoy": 0.1226934750685833
+            "op_to_debt_yoy": 0.1226934750685833,
+            "market_cap": 3294
         },
         {
             "rank": 22,
@@ -24966,7 +24988,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 38924,
             "assets_yoy": 39969,
             "op_to_debt_now": 0.04128846783397577,
-            "op_to_debt_yoy": 0.04239058043858164
+            "op_to_debt_yoy": 0.04239058043858164,
+            "market_cap": 1863
         },
         {
             "rank": 23,
@@ -24990,7 +25013,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 834,
             "assets_yoy": 831,
             "op_to_debt_now": 0.004489653594520406,
-            "op_to_debt_yoy": -0.12195494834225457
+            "op_to_debt_yoy": -0.12195494834225457,
+            "market_cap": 540
         },
         {
             "rank": 24,
@@ -25014,7 +25038,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1655,
             "assets_yoy": 1513,
             "op_to_debt_now": 1.5165227753333332,
-            "op_to_debt_yoy": 0.2427389708439666
+            "op_to_debt_yoy": 0.2427389708439666,
+            "market_cap": 3423
         },
         {
             "rank": 25,
@@ -25038,7 +25063,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3274,
             "assets_yoy": 3334,
             "op_to_debt_now": 0.0829414972479464,
-            "op_to_debt_yoy": 0.04506569216691685
+            "op_to_debt_yoy": 0.04506569216691685,
+            "market_cap": 1450
         },
         {
             "rank": 26,
@@ -25062,7 +25088,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 22083,
             "assets_yoy": 20499,
             "op_to_debt_now": 0.06836281144766716,
-            "op_to_debt_yoy": 0.04643690843025528
+            "op_to_debt_yoy": 0.04643690843025528,
+            "market_cap": 6207
         },
         {
             "rank": 27,
@@ -25086,7 +25113,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 841,
             "assets_yoy": 676,
             "op_to_debt_now": 0.3212106564697968,
-            "op_to_debt_yoy": 0.0891301201341678
+            "op_to_debt_yoy": 0.0891301201341678,
+            "market_cap": 1312
         },
         {
             "rank": 28,
@@ -25110,7 +25138,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1117,
             "assets_yoy": 1012,
             "op_to_debt_now": 0.7202435838356165,
-            "op_to_debt_yoy": 0.1165880978331652
+            "op_to_debt_yoy": 0.1165880978331652,
+            "market_cap": 915
         },
         {
             "rank": 29,
@@ -25134,7 +25163,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6562,
             "assets_yoy": 6601,
             "op_to_debt_now": -0.010999565042803474,
-            "op_to_debt_yoy": -0.002251534684182746
+            "op_to_debt_yoy": -0.002251534684182746,
+            "market_cap": 966
         },
         {
             "rank": 30,
@@ -25158,7 +25188,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 584,
             "assets_yoy": 597,
             "op_to_debt_now": 0.6670002782387973,
-            "op_to_debt_yoy": 0.4330704760052511
+            "op_to_debt_yoy": 0.4330704760052511,
+            "market_cap": 604
         },
         {
             "rank": 31,
@@ -25182,7 +25213,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1807,
             "assets_yoy": 1796,
             "op_to_debt_now": 1.896452242206693,
-            "op_to_debt_yoy": 0.2090160046
+            "op_to_debt_yoy": 0.2090160046,
+            "market_cap": 1346
         },
         {
             "rank": 32,
@@ -25206,7 +25238,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6206,
             "assets_yoy": 5430,
             "op_to_debt_now": 0.03458845505693966,
-            "op_to_debt_yoy": 0.02653554641517499
+            "op_to_debt_yoy": 0.02653554641517499,
+            "market_cap": 1922
         },
         {
             "rank": 33,
@@ -25230,7 +25263,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6931,
             "assets_yoy": 6234,
             "op_to_debt_now": 0.040006282231310156,
-            "op_to_debt_yoy": 0.027105625662697405
+            "op_to_debt_yoy": 0.027105625662697405,
+            "market_cap": 1741
         },
         {
             "rank": 34,
@@ -25254,7 +25288,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 28179,
             "assets_yoy": 27337,
             "op_to_debt_now": 70.30647792673855,
-            "op_to_debt_yoy": 10.946083469028773
+            "op_to_debt_yoy": 10.946083469028773,
+            "market_cap": 12177
         },
         {
             "rank": 35,
@@ -25278,7 +25313,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 675,
             "assets_yoy": 640,
             "op_to_debt_now": 0.3032795065187717,
-            "op_to_debt_yoy": 0.1474811058076274
+            "op_to_debt_yoy": 0.1474811058076274,
+            "market_cap": 406
         },
         {
             "rank": 36,
@@ -25302,7 +25338,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6598,
             "assets_yoy": 5900,
             "op_to_debt_now": 0.13337891148898173,
-            "op_to_debt_yoy": 0.09358676795642969
+            "op_to_debt_yoy": 0.09358676795642969,
+            "market_cap": 6287
         },
         {
             "rank": 37,
@@ -25326,7 +25363,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2451,
             "assets_yoy": 2481,
             "op_to_debt_now": 0.03286790893800563,
-            "op_to_debt_yoy": 0.025607752713666613
+            "op_to_debt_yoy": 0.025607752713666613,
+            "market_cap": 300
         },
         {
             "rank": 38,
@@ -25350,7 +25388,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 33302,
             "assets_yoy": 30389,
             "op_to_debt_now": 0.21520008409611838,
-            "op_to_debt_yoy": 0.14901438815450152
+            "op_to_debt_yoy": 0.14901438815450152,
+            "market_cap": 60880
         },
         {
             "rank": 39,
@@ -25374,7 +25413,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 12278,
             "assets_yoy": 12963,
             "op_to_debt_now": 0.036629443986691275,
-            "op_to_debt_yoy": 0.03452989392817733
+            "op_to_debt_yoy": 0.03452989392817733,
+            "market_cap": 2449
         },
         {
             "rank": 40,
@@ -25398,7 +25438,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1338,
             "assets_yoy": 1238,
             "op_to_debt_now": 0.03363458035498422,
-            "op_to_debt_yoy": 0.015305467345298996
+            "op_to_debt_yoy": 0.015305467345298996,
+            "market_cap": 645
         },
         {
             "rank": 41,
@@ -25422,7 +25463,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 851,
             "assets_yoy": 757,
             "op_to_debt_now": 0.1400573813481258,
-            "op_to_debt_yoy": 0.12964594639385243
+            "op_to_debt_yoy": 0.12964594639385243,
+            "market_cap": 268
         },
         {
             "rank": 42,
@@ -25446,7 +25488,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 11696,
             "assets_yoy": 10919,
             "op_to_debt_now": 0.16044696262266323,
-            "op_to_debt_yoy": 0.02460878666220631
+            "op_to_debt_yoy": 0.02460878666220631,
+            "market_cap": 2445
         },
         {
             "rank": 43,
@@ -25470,7 +25513,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 352,
             "assets_yoy": 298,
             "op_to_debt_now": 0.8210662034712869,
-            "op_to_debt_yoy": 0.498373862809973
+            "op_to_debt_yoy": 0.498373862809973,
+            "market_cap": 638
         },
         {
             "rank": 44,
@@ -25494,7 +25538,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 41219,
             "assets_yoy": 36046,
             "op_to_debt_now": 0.419142641966272,
-            "op_to_debt_yoy": 0.23509485028418306
+            "op_to_debt_yoy": 0.23509485028418306,
+            "market_cap": 25972
         },
         {
             "rank": 45,
@@ -25518,7 +25563,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1858,
             "assets_yoy": 1767,
             "op_to_debt_now": 0.2474794108657329,
-            "op_to_debt_yoy": 0.2476475014714358
+            "op_to_debt_yoy": 0.2476475014714358,
+            "market_cap": 6474
         },
         {
             "rank": 46,
@@ -25542,7 +25588,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 128425,
             "assets_yoy": 119193,
             "op_to_debt_now": 0.04492721117293509,
-            "op_to_debt_yoy": 0.012811267741165071
+            "op_to_debt_yoy": 0.012811267741165071,
+            "market_cap": 10477
         },
         {
             "rank": 47,
@@ -25566,7 +25613,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 7661,
             "assets_yoy": 7558,
             "op_to_debt_now": 0.04820911291763125,
-            "op_to_debt_yoy": 0.009585376715450861
+            "op_to_debt_yoy": 0.009585376715450861,
+            "market_cap": 621
         },
         {
             "rank": 48,
@@ -25590,7 +25638,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2864,
             "assets_yoy": 2773,
             "op_to_debt_now": 0.1640102229,
-            "op_to_debt_yoy": 0.24433958128
+            "op_to_debt_yoy": 0.24433958128,
+            "market_cap": 567
         },
         {
             "rank": 49,
@@ -25614,7 +25663,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 100267,
             "assets_yoy": 92244,
             "op_to_debt_now": 0.06072228774145548,
-            "op_to_debt_yoy": 0.023171025205962738
+            "op_to_debt_yoy": 0.023171025205962738,
+            "market_cap": 14786
         },
         {
             "rank": 50,
@@ -25638,7 +25688,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3884,
             "assets_yoy": 3013,
             "op_to_debt_now": 0.4234654828129447,
-            "op_to_debt_yoy": 0.33281425818405747
+            "op_to_debt_yoy": 0.33281425818405747,
+            "market_cap": 8155
         },
         {
             "rank": 51,
@@ -25662,7 +25713,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 927,
             "assets_yoy": 913,
             "op_to_debt_now": 0.3222622326409711,
-            "op_to_debt_yoy": 0.04398885233153379
+            "op_to_debt_yoy": 0.04398885233153379,
+            "market_cap": 387
         },
         {
             "rank": 52,
@@ -25686,7 +25738,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2358,
             "assets_yoy": 2384,
             "op_to_debt_now": -0.01745169558653279,
-            "op_to_debt_yoy": -0.2946006564279147
+            "op_to_debt_yoy": -0.2946006564279147,
+            "market_cap": 564
         },
         {
             "rank": 53,
@@ -25710,7 +25763,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 944,
             "assets_yoy": 840,
             "op_to_debt_now": 0.49260289715626765,
-            "op_to_debt_yoy": 0.20941600572697378
+            "op_to_debt_yoy": 0.20941600572697378,
+            "market_cap": 487
         },
         {
             "rank": 54,
@@ -25734,7 +25788,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 13166,
             "assets_yoy": 11794,
             "op_to_debt_now": 0.247090659698732,
-            "op_to_debt_yoy": 0.048360951008645535
+            "op_to_debt_yoy": 0.048360951008645535,
+            "market_cap": 2745
         },
         {
             "rank": 55,
@@ -25758,7 +25813,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1756,
             "assets_yoy": 1760,
             "op_to_debt_now": 0.020690930501660827,
-            "op_to_debt_yoy": -0.007170763091266625
+            "op_to_debt_yoy": -0.007170763091266625,
+            "market_cap": 300
         },
         {
             "rank": 56,
@@ -25782,7 +25838,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2305,
             "assets_yoy": 2033,
             "op_to_debt_now": 0.5393312634159629,
-            "op_to_debt_yoy": 0.10467795752663438
+            "op_to_debt_yoy": 0.10467795752663438,
+            "market_cap": 1594
         },
         {
             "rank": 57,
@@ -25806,7 +25863,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 27126,
             "assets_yoy": 25645,
             "op_to_debt_now": 0.031889849394441346,
-            "op_to_debt_yoy": 0.006816728021939325
+            "op_to_debt_yoy": 0.006816728021939325,
+            "market_cap": 1926
         },
         {
             "rank": 58,
@@ -25830,7 +25888,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 37243,
             "assets_yoy": 36518,
             "op_to_debt_now": 0.07369284173680418,
-            "op_to_debt_yoy": 0.05662624616032343
+            "op_to_debt_yoy": 0.05662624616032343,
+            "market_cap": 5824
         },
         {
             "rank": 59,
@@ -25854,7 +25913,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3087,
             "assets_yoy": 3483,
             "op_to_debt_now": 0.12258804593847217,
-            "op_to_debt_yoy": 0.02848089596519985
+            "op_to_debt_yoy": 0.02848089596519985,
+            "market_cap": 709
         },
         {
             "rank": 60,
@@ -25878,7 +25938,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2320,
             "assets_yoy": 2119,
             "op_to_debt_now": 8.634374214599214,
-            "op_to_debt_yoy": 0.24419781210624927
+            "op_to_debt_yoy": 0.24419781210624927,
+            "market_cap": 3908
         },
         {
             "rank": 61,
@@ -25902,7 +25963,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 27487,
             "assets_yoy": 19330,
             "op_to_debt_now": 0.4496762237399511,
-            "op_to_debt_yoy": 0.2702201211461865
+            "op_to_debt_yoy": 0.2702201211461865,
+            "market_cap": 111488
         },
         {
             "rank": 62,
@@ -25926,7 +25988,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1892,
             "assets_yoy": 2021,
             "op_to_debt_now": 0.0375030459769648,
-            "op_to_debt_yoy": -0.013951841639645602
+            "op_to_debt_yoy": -0.013951841639645602,
+            "market_cap": 1209
         },
         {
             "rank": 63,
@@ -25950,7 +26013,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 58671,
             "assets_yoy": 54644,
             "op_to_debt_now": 0.03233718302068871,
-            "op_to_debt_yoy": 0.024749456493577595
+            "op_to_debt_yoy": 0.024749456493577595,
+            "market_cap": 4626
         },
         {
             "rank": 64,
@@ -25974,7 +26038,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 17018,
             "assets_yoy": 17003,
             "op_to_debt_now": 0.006050239967323599,
-            "op_to_debt_yoy": 0.0015398691391888277
+            "op_to_debt_yoy": 0.0015398691391888277,
+            "market_cap": 1393
         },
         {
             "rank": 65,
@@ -25998,7 +26063,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2712,
             "assets_yoy": 2711,
             "op_to_debt_now": 0.047455252133891214,
-            "op_to_debt_yoy": 0.03658677656903766
+            "op_to_debt_yoy": 0.03658677656903766,
+            "market_cap": 394
         },
         {
             "rank": 66,
@@ -26022,7 +26088,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1307,
             "assets_yoy": 1065,
             "op_to_debt_now": 0.2261871226753926,
-            "op_to_debt_yoy": 0.19064243869399905
+            "op_to_debt_yoy": 0.19064243869399905,
+            "market_cap": 1715
         },
         {
             "rank": 67,
@@ -26046,7 +26113,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 7148,
             "assets_yoy": 7015,
             "op_to_debt_now": 0.04576964459222425,
-            "op_to_debt_yoy": 0.02342948944474291
+            "op_to_debt_yoy": 0.02342948944474291,
+            "market_cap": 5557
         },
         {
             "rank": 68,
@@ -26070,7 +26138,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 4815,
             "assets_yoy": 4548,
             "op_to_debt_now": 0.07483019392805143,
-            "op_to_debt_yoy": 0.08253440997879627
+            "op_to_debt_yoy": 0.08253440997879627,
+            "market_cap": 2303
         },
         {
             "rank": 69,
@@ -26094,7 +26163,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1385,
             "assets_yoy": 1268,
             "op_to_debt_now": 0.08439247872376902,
-            "op_to_debt_yoy": -0.028686528638960977
+            "op_to_debt_yoy": -0.028686528638960977,
+            "market_cap": 359
         },
         {
             "rank": 70,
@@ -26118,7 +26188,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 13936,
             "assets_yoy": 12351,
             "op_to_debt_now": 0.17882876186379165,
-            "op_to_debt_yoy": 0.2223886251202178
+            "op_to_debt_yoy": 0.2223886251202178,
+            "market_cap": 2294
         },
         {
             "rank": 71,
@@ -26142,7 +26213,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 33086,
             "assets_yoy": 33368,
             "op_to_debt_now": 0.05255904865861358,
-            "op_to_debt_yoy": 0.07362975395923102
+            "op_to_debt_yoy": 0.07362975395923102,
+            "market_cap": 4261
         },
         {
             "rank": 72,
@@ -26166,7 +26238,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 7427,
             "assets_yoy": 6469,
             "op_to_debt_now": 1.2672567497849574,
-            "op_to_debt_yoy": 0.7690320178320325
+            "op_to_debt_yoy": 0.7690320178320325,
+            "market_cap": 2825
         },
         {
             "rank": 73,
@@ -26190,7 +26263,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2064,
             "assets_yoy": 1694,
             "op_to_debt_now": 0.09207798226633448,
-            "op_to_debt_yoy": 0.05916971205388537
+            "op_to_debt_yoy": 0.05916971205388537,
+            "market_cap": 1214
         },
         {
             "rank": 74,
@@ -26214,7 +26288,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 9925,
             "assets_yoy": 9869,
             "op_to_debt_now": 0.03738750022032635,
-            "op_to_debt_yoy": 0.03062345402731106
+            "op_to_debt_yoy": 0.03062345402731106,
+            "market_cap": 1192
         },
         {
             "rank": 75,
@@ -26238,7 +26313,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1039,
             "assets_yoy": 1059,
             "op_to_debt_now": 0.030806905613328876,
-            "op_to_debt_yoy": 0.017543311508120694
+            "op_to_debt_yoy": 0.017543311508120694,
+            "market_cap": 217
         },
         {
             "rank": 76,
@@ -26262,7 +26338,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1592,
             "assets_yoy": 1332,
             "op_to_debt_now": 0.5766192425567827,
-            "op_to_debt_yoy": 1.0126633669112968
+            "op_to_debt_yoy": 1.0126633669112968,
+            "market_cap": 476
         },
         {
             "rank": 77,
@@ -26286,7 +26363,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1852,
             "assets_yoy": 1717,
             "op_to_debt_now": 0.07112398733333333,
-            "op_to_debt_yoy": 0.12099458679310345
+            "op_to_debt_yoy": 0.12099458679310345,
+            "market_cap": 710
         },
         {
             "rank": 78,
@@ -26310,7 +26388,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2390,
             "assets_yoy": 1339,
             "op_to_debt_now": 0.2512677515330675,
-            "op_to_debt_yoy": 0.2321588911221758
+            "op_to_debt_yoy": 0.2321588911221758,
+            "market_cap": 3040
         },
         {
             "rank": 79,
@@ -26334,7 +26413,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3338,
             "assets_yoy": 2998,
             "op_to_debt_now": 1.572188739037306,
-            "op_to_debt_yoy": 5.5963437254715585
+            "op_to_debt_yoy": 5.5963437254715585,
+            "market_cap": 2307
         },
         {
             "rank": 80,
@@ -26358,7 +26438,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 4313,
             "assets_yoy": 3561,
             "op_to_debt_now": 39.06261729158551,
-            "op_to_debt_yoy": 38.648093919313304
+            "op_to_debt_yoy": 38.648093919313304,
+            "market_cap": 1367
         },
         {
             "rank": 81,
@@ -26382,7 +26463,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1280,
             "assets_yoy": 1022,
             "op_to_debt_now": 1.0378366928,
-            "op_to_debt_yoy": 0.6689573216998449
+            "op_to_debt_yoy": 0.6689573216998449,
+            "market_cap": 436
         },
         {
             "rank": 82,
@@ -26406,7 +26488,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1699,
             "assets_yoy": 1682,
             "op_to_debt_now": 0.302476904687473,
-            "op_to_debt_yoy": 0.14975058304271488
+            "op_to_debt_yoy": 0.14975058304271488,
+            "market_cap": 519
         },
         {
             "rank": 83,
@@ -26430,7 +26513,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 44276,
             "assets_yoy": 42814,
             "op_to_debt_now": 0.032465367558848914,
-            "op_to_debt_yoy": 0.03339739860728728
+            "op_to_debt_yoy": 0.03339739860728728,
+            "market_cap": 4747
         },
         {
             "rank": 84,
@@ -26454,7 +26538,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 50170,
             "assets_yoy": 47549,
             "op_to_debt_now": 0.021831777722024142,
-            "op_to_debt_yoy": 0.0246211993043155
+            "op_to_debt_yoy": 0.0246211993043155,
+            "market_cap": 6270
         },
         {
             "rank": 85,
@@ -26478,7 +26563,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1316,
             "assets_yoy": 1188,
             "op_to_debt_now": 0.3496277358,
-            "op_to_debt_yoy": 0.2833351165
+            "op_to_debt_yoy": 0.2833351165,
+            "market_cap": 573
         },
         {
             "rank": 86,
@@ -26502,7 +26588,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2671,
             "assets_yoy": 1580,
             "op_to_debt_now": 2.2087445846973446,
-            "op_to_debt_yoy": -0.045331414879737957
+            "op_to_debt_yoy": -0.045331414879737957,
+            "market_cap": 13409
         },
         {
             "rank": 87,
@@ -26526,7 +26613,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 7346,
             "assets_yoy": 5801,
             "op_to_debt_now": 0.14700949443532513,
-            "op_to_debt_yoy": 0.1449696374369754
+            "op_to_debt_yoy": 0.1449696374369754,
+            "market_cap": 14845
         },
         {
             "rank": 88,
@@ -26550,7 +26638,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2127,
             "assets_yoy": 2252,
             "op_to_debt_now": 0.07288371980270635,
-            "op_to_debt_yoy": -0.0005063323509745164
+            "op_to_debt_yoy": -0.0005063323509745164,
+            "market_cap": 693
         },
         {
             "rank": 89,
@@ -26574,7 +26663,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 822,
             "assets_yoy": 809,
             "op_to_debt_now": 0.20190265274557495,
-            "op_to_debt_yoy": 0.17118347685460145
+            "op_to_debt_yoy": 0.17118347685460145,
+            "market_cap": 651
         },
         {
             "rank": 90,
@@ -26598,7 +26688,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 737,
             "assets_yoy": 680,
             "op_to_debt_now": 0.00853351441825087,
-            "op_to_debt_yoy": -0.0002000127321857419
+            "op_to_debt_yoy": -0.0002000127321857419,
+            "market_cap": 503
         },
         {
             "rank": 91,
@@ -26622,7 +26713,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6660,
             "assets_yoy": 6494,
             "op_to_debt_now": 0.10463649336446221,
-            "op_to_debt_yoy": 0.07544276517720676
+            "op_to_debt_yoy": 0.07544276517720676,
+            "market_cap": 1050
         },
         {
             "rank": 92,
@@ -26646,7 +26738,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 596,
             "assets_yoy": 481,
             "op_to_debt_now": 0.2754117827882478,
-            "op_to_debt_yoy": 0.03966860785898524
+            "op_to_debt_yoy": 0.03966860785898524,
+            "market_cap": 312
         },
         {
             "rank": 93,
@@ -26670,7 +26763,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 15304,
             "assets_yoy": 13199,
             "op_to_debt_now": 0.11918803749083824,
-            "op_to_debt_yoy": 0.12720195551646873
+            "op_to_debt_yoy": 0.12720195551646873,
+            "market_cap": 7635
         },
         {
             "rank": 94,
@@ -26694,7 +26788,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3704,
             "assets_yoy": 3235,
             "op_to_debt_now": 0.00705332526517427,
-            "op_to_debt_yoy": -0.01960765715469714
+            "op_to_debt_yoy": -0.01960765715469714,
+            "market_cap": 1366
         },
         {
             "rank": 95,
@@ -26718,7 +26813,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 166251,
             "assets_yoy": 151191,
             "op_to_debt_now": 0.039925663345035084,
-            "op_to_debt_yoy": 0.017178478347277502
+            "op_to_debt_yoy": 0.017178478347277502,
+            "market_cap": 40142
         },
         {
             "rank": 96,
@@ -26742,7 +26838,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 7489,
             "assets_yoy": 7254,
             "op_to_debt_now": 0.08245002672738279,
-            "op_to_debt_yoy": 0.04812436880400766
+            "op_to_debt_yoy": 0.04812436880400766,
+            "market_cap": 1777
         },
         {
             "rank": 97,
@@ -26766,7 +26863,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 5117,
             "assets_yoy": 4946,
             "op_to_debt_now": 0.037177255943401995,
-            "op_to_debt_yoy": 0.01006899056122292
+            "op_to_debt_yoy": 0.01006899056122292,
+            "market_cap": 569
         },
         {
             "rank": 98,
@@ -26790,7 +26888,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1203,
             "assets_yoy": 1197,
             "op_to_debt_now": 0.17831346790486374,
-            "op_to_debt_yoy": 243.3430564311322
+            "op_to_debt_yoy": 243.3430564311322,
+            "market_cap": 692
         },
         {
             "rank": 99,
@@ -26814,7 +26913,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6326,
             "assets_yoy": 5294,
             "op_to_debt_now": 0.01659328902268273,
-            "op_to_debt_yoy": 0.005617690655825992
+            "op_to_debt_yoy": 0.005617690655825992,
+            "market_cap": 963
         },
         {
             "rank": 100,
@@ -26838,7 +26938,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2246,
             "assets_yoy": 1633,
             "op_to_debt_now": 0.019701574184694867,
-            "op_to_debt_yoy": 0.022632426180275538
+            "op_to_debt_yoy": 0.022632426180275538,
+            "market_cap": 1923
         },
         {
             "rank": 101,
@@ -26862,7 +26963,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 489453,
             "assets_yoy": 464579,
             "op_to_debt_now": 0.03609902383886425,
-            "op_to_debt_yoy": 0.042077930883539276
+            "op_to_debt_yoy": 0.042077930883539276,
+            "market_cap": 36938
         },
         {
             "rank": 102,
@@ -26886,7 +26988,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1499,
             "assets_yoy": 1444,
             "op_to_debt_now": 0.17599665671645282,
-            "op_to_debt_yoy": 3.578934101
+            "op_to_debt_yoy": 3.578934101,
+            "market_cap": 554
         },
         {
             "rank": 103,
@@ -26910,7 +27013,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2970,
             "assets_yoy": 2696,
             "op_to_debt_now": 0.12101286964847748,
-            "op_to_debt_yoy": 0.05147297084115787
+            "op_to_debt_yoy": 0.05147297084115787,
+            "market_cap": 2787
         },
         {
             "rank": 104,
@@ -26934,7 +27038,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 943,
             "assets_yoy": 784,
             "op_to_debt_now": 0.37437980898876405,
-            "op_to_debt_yoy": 0.22797318896296295
+            "op_to_debt_yoy": 0.22797318896296295,
+            "market_cap": 1334
         },
         {
             "rank": 105,
@@ -26958,7 +27063,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 4980,
             "assets_yoy": 4614,
             "op_to_debt_now": 0.76021239226407,
-            "op_to_debt_yoy": 0.5672670655103036
+            "op_to_debt_yoy": 0.5672670655103036,
+            "market_cap": 2082
         },
         {
             "rank": 106,
@@ -26982,7 +27088,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2403,
             "assets_yoy": 2004,
             "op_to_debt_now": 0.023686306211003826,
-            "op_to_debt_yoy": 0.0018781282523533038
+            "op_to_debt_yoy": 0.0018781282523533038,
+            "market_cap": 321
         },
         {
             "rank": 107,
@@ -27006,7 +27113,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 5750,
             "assets_yoy": 5050,
             "op_to_debt_now": 0.03894504476550079,
-            "op_to_debt_yoy": 0.007895664616764437
+            "op_to_debt_yoy": 0.007895664616764437,
+            "market_cap": 5455
         },
         {
             "rank": 108,
@@ -27030,7 +27138,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 889,
             "assets_yoy": 883,
             "op_to_debt_now": 0.09553086269767441,
-            "op_to_debt_yoy": 0.052765872374065166
+            "op_to_debt_yoy": 0.052765872374065166,
+            "market_cap": 516
         },
         {
             "rank": 109,
@@ -27054,7 +27163,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 15600,
             "assets_yoy": 14769,
             "op_to_debt_now": 0.1131475159286414,
-            "op_to_debt_yoy": 0.16500304009186526
+            "op_to_debt_yoy": 0.16500304009186526,
+            "market_cap": 2580
         },
         {
             "rank": 110,
@@ -27078,7 +27188,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1068293,
             "assets_yoy": 936622,
             "op_to_debt_now": 3.8965686950308562,
-            "op_to_debt_yoy": 1.6402100833107403
+            "op_to_debt_yoy": 1.6402100833107403,
+            "market_cap": 492310
         },
         {
             "rank": 111,
@@ -27102,7 +27213,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1317,
             "assets_yoy": 1298,
             "op_to_debt_now": 0.021982118211144767,
-            "op_to_debt_yoy": 0.011564722412177717
+            "op_to_debt_yoy": 0.011564722412177717,
+            "market_cap": 595
         },
         {
             "rank": 112,
@@ -27126,7 +27238,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 88730,
             "assets_yoy": 86380,
             "op_to_debt_now": 0.01305558427857542,
-            "op_to_debt_yoy": 0.012463175059106801
+            "op_to_debt_yoy": 0.012463175059106801,
+            "market_cap": 7159
         },
         {
             "rank": 113,
@@ -27150,7 +27263,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 8113,
             "assets_yoy": 7461,
             "op_to_debt_now": 0.5050488525658415,
-            "op_to_debt_yoy": 0.3883837579889736
+            "op_to_debt_yoy": 0.3883837579889736,
+            "market_cap": 4145
         },
         {
             "rank": 114,
@@ -27174,7 +27288,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1021,
             "assets_yoy": 781,
             "op_to_debt_now": 0.08444085643880621,
-            "op_to_debt_yoy": 0.039556180603101974
+            "op_to_debt_yoy": 0.039556180603101974,
+            "market_cap": 1447
         },
         {
             "rank": 115,
@@ -27198,7 +27313,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2174,
             "assets_yoy": 1418,
             "op_to_debt_now": 0.08538469755139316,
-            "op_to_debt_yoy": 0.053446184271883426
+            "op_to_debt_yoy": 0.053446184271883426,
+            "market_cap": 2223
         },
         {
             "rank": 116,
@@ -27222,7 +27338,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 4441,
             "assets_yoy": 4141,
             "op_to_debt_now": 10.924638907563418,
-            "op_to_debt_yoy": 9.217184117931751
+            "op_to_debt_yoy": 9.217184117931751,
+            "market_cap": 783
         },
         {
             "rank": 117,
@@ -27246,7 +27363,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 15410,
             "assets_yoy": 13525,
             "op_to_debt_now": 0.12029921289204251,
-            "op_to_debt_yoy": 0.055490621164745124
+            "op_to_debt_yoy": 0.055490621164745124,
+            "market_cap": 2641
         },
         {
             "rank": 118,
@@ -27270,7 +27388,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2407,
             "assets_yoy": 2428,
             "op_to_debt_now": 0.03416929394552023,
-            "op_to_debt_yoy": -0.04535808646815822
+            "op_to_debt_yoy": -0.04535808646815822,
+            "market_cap": 1418
         },
         {
             "rank": 119,
@@ -27294,7 +27413,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1549,
             "assets_yoy": 1377,
             "op_to_debt_now": 0.23918569569971893,
-            "op_to_debt_yoy": 0.3045231198289418
+            "op_to_debt_yoy": 0.3045231198289418,
+            "market_cap": 812
         },
         {
             "rank": 120,
@@ -27318,7 +27438,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1365,
             "assets_yoy": 1367,
             "op_to_debt_now": -0.04512403944830082,
-            "op_to_debt_yoy": 0.00029766922759160585
+            "op_to_debt_yoy": 0.00029766922759160585,
+            "market_cap": 306
         },
         {
             "rank": 121,
@@ -27342,7 +27463,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 7818,
             "assets_yoy": 7210,
             "op_to_debt_now": 0.040920807067911284,
-            "op_to_debt_yoy": 0.05762163959539268
+            "op_to_debt_yoy": 0.05762163959539268,
+            "market_cap": 2370
         },
         {
             "rank": 122,
@@ -27366,7 +27488,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 695,
             "assets_yoy": 624,
             "op_to_debt_now": 0.6841091185,
-            "op_to_debt_yoy": 0.3389837295
+            "op_to_debt_yoy": 0.3389837295,
+            "market_cap": 1778
         },
         {
             "rank": 123,
@@ -27390,7 +27513,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 20589,
             "assets_yoy": 19307,
             "op_to_debt_now": 0.02718156891648512,
-            "op_to_debt_yoy": -0.0035102783670214834
+            "op_to_debt_yoy": -0.0035102783670214834,
+            "market_cap": 15640
         },
         {
             "rank": 124,
@@ -27414,7 +27538,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 56911,
             "assets_yoy": 48759,
             "op_to_debt_now": 0.9685383675140926,
-            "op_to_debt_yoy": 0.5025115025495734
+            "op_to_debt_yoy": 0.5025115025495734,
+            "market_cap": 22926
         },
         {
             "rank": 125,
@@ -27438,7 +27563,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6788,
             "assets_yoy": 5399,
             "op_to_debt_now": 0.08722453205454546,
-            "op_to_debt_yoy": 0.028458615355442092
+            "op_to_debt_yoy": 0.028458615355442092,
+            "market_cap": 2949
         },
         {
             "rank": 126,
@@ -27462,7 +27588,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1562,
             "assets_yoy": 1430,
             "op_to_debt_now": 0.20265608735926122,
-            "op_to_debt_yoy": 0.09257657222557579
+            "op_to_debt_yoy": 0.09257657222557579,
+            "market_cap": 1684
         },
         {
             "rank": 127,
@@ -27486,7 +27613,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2154,
             "assets_yoy": 2042,
             "op_to_debt_now": 0.018448312415211745,
-            "op_to_debt_yoy": 0.03660032719159948
+            "op_to_debt_yoy": 0.03660032719159948,
+            "market_cap": 566
         },
         {
             "rank": 128,
@@ -27510,7 +27638,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 24799,
             "assets_yoy": 21517,
             "op_to_debt_now": 0.12359976450370988,
-            "op_to_debt_yoy": 0.1574078646134277
+            "op_to_debt_yoy": 0.1574078646134277,
+            "market_cap": 8329
         },
         {
             "rank": 129,
@@ -27534,7 +27663,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 29262,
             "assets_yoy": 27564,
             "op_to_debt_now": 0.04723877256785589,
-            "op_to_debt_yoy": 0.05369803644415134
+            "op_to_debt_yoy": 0.05369803644415134,
+            "market_cap": 2903
         },
         {
             "rank": 130,
@@ -27558,7 +27688,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6595,
             "assets_yoy": 5276,
             "op_to_debt_now": 0.7414586647272727,
-            "op_to_debt_yoy": 0.3054599215714286
+            "op_to_debt_yoy": 0.3054599215714286,
+            "market_cap": 2444
         },
         {
             "rank": 131,
@@ -27582,7 +27713,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 65740,
             "assets_yoy": 57069,
             "op_to_debt_now": 0.533275111816284,
-            "op_to_debt_yoy": 0.612839093654321
+            "op_to_debt_yoy": 0.612839093654321,
+            "market_cap": 15219
         },
         {
             "rank": 132,
@@ -27606,7 +27738,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6429,
             "assets_yoy": 5572,
             "op_to_debt_now": 1.1397501910939438,
-            "op_to_debt_yoy": 0.589366545071035
+            "op_to_debt_yoy": 0.589366545071035,
+            "market_cap": 27384
         },
         {
             "rank": 133,
@@ -27630,7 +27763,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2733,
             "assets_yoy": 2239,
             "op_to_debt_now": 0.14768989024331275,
-            "op_to_debt_yoy": 0.059507766076540264
+            "op_to_debt_yoy": 0.059507766076540264,
+            "market_cap": 8027
         },
         {
             "rank": 134,
@@ -27654,7 +27788,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6577,
             "assets_yoy": 6028,
             "op_to_debt_now": 0.06871887714999958,
-            "op_to_debt_yoy": 0.09714584375363702
+            "op_to_debt_yoy": 0.09714584375363702,
+            "market_cap": 1077
         },
         {
             "rank": 135,
@@ -27678,7 +27813,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1109,
             "assets_yoy": 850,
             "op_to_debt_now": 0.3509122131107195,
-            "op_to_debt_yoy": 0.0728422370993935
+            "op_to_debt_yoy": 0.0728422370993935,
+            "market_cap": 264
         },
         {
             "rank": 136,
@@ -27702,7 +27838,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1226,
             "assets_yoy": 1141,
             "op_to_debt_now": 0.09138516632651857,
-            "op_to_debt_yoy": 0.10944518467921371
+            "op_to_debt_yoy": 0.10944518467921371,
+            "market_cap": 396
         },
         {
             "rank": 137,
@@ -27726,7 +27863,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 7442,
             "assets_yoy": 8502,
             "op_to_debt_now": -0.02848460117998755,
-            "op_to_debt_yoy": 0.012247704583333333
+            "op_to_debt_yoy": 0.012247704583333333,
+            "market_cap": 1100
         },
         {
             "rank": 138,
@@ -27750,7 +27888,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 107179,
             "assets_yoy": 99024,
             "op_to_debt_now": 0.042752647219613506,
-            "op_to_debt_yoy": 0.05307597551810722
+            "op_to_debt_yoy": 0.05307597551810722,
+            "market_cap": 16721
         },
         {
             "rank": 139,
@@ -27774,7 +27913,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1391,
             "assets_yoy": 1216,
             "op_to_debt_now": 0.046530995384430555,
-            "op_to_debt_yoy": 0.04443037956469327
+            "op_to_debt_yoy": 0.04443037956469327,
+            "market_cap": 6827
         },
         {
             "rank": 140,
@@ -27798,7 +27938,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 17485,
             "assets_yoy": 15374,
             "op_to_debt_now": 0.011099403158029871,
-            "op_to_debt_yoy": 0.03329450839126639
+            "op_to_debt_yoy": 0.03329450839126639,
+            "market_cap": 1958
         },
         {
             "rank": 141,
@@ -27822,7 +27963,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 754,
             "assets_yoy": 682,
             "op_to_debt_now": 0.3442202097120693,
-            "op_to_debt_yoy": 0.4846303951572523
+            "op_to_debt_yoy": 0.4846303951572523,
+            "market_cap": 636
         },
         {
             "rank": 142,
@@ -27846,7 +27988,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3237,
             "assets_yoy": 2667,
             "op_to_debt_now": 10159.018417,
-            "op_to_debt_yoy": 7569.81671
+            "op_to_debt_yoy": 7569.81671,
+            "market_cap": 3849
         },
         {
             "rank": 143,
@@ -27870,7 +28013,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 994,
             "assets_yoy": 958,
             "op_to_debt_now": -0.21331615850340135,
-            "op_to_debt_yoy": -0.07159886130033037
+            "op_to_debt_yoy": -0.07159886130033037,
+            "market_cap": 338
         },
         {
             "rank": 144,
@@ -27894,7 +28038,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6227,
             "assets_yoy": 5127,
             "op_to_debt_now": 0.017754393035302525,
-            "op_to_debt_yoy": 0.01080823888677556
+            "op_to_debt_yoy": 0.01080823888677556,
+            "market_cap": 2300
         },
         {
             "rank": 145,
@@ -27918,7 +28063,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 8313,
             "assets_yoy": 6833,
             "op_to_debt_now": 5.584027796,
-            "op_to_debt_yoy": 2.869451942888889
+            "op_to_debt_yoy": 2.869451942888889,
+            "market_cap": 50078
         },
         {
             "rank": 146,
@@ -27942,7 +28088,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 642,
             "assets_yoy": 638,
             "op_to_debt_now": -0.0410015553,
-            "op_to_debt_yoy": 0.10543448669291339
+            "op_to_debt_yoy": 0.10543448669291339,
+            "market_cap": 227
         },
         {
             "rank": 147,
@@ -27966,7 +28113,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 538,
             "assets_yoy": 437,
             "op_to_debt_now": 0.694907295,
-            "op_to_debt_yoy": 3.1982375975727577
+            "op_to_debt_yoy": 3.1982375975727577,
+            "market_cap": 439
         },
         {
             "rank": 148,
@@ -27990,7 +28138,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1986,
             "assets_yoy": 1754,
             "op_to_debt_now": 0.6547363510938872,
-            "op_to_debt_yoy": 0.33767252935897435
+            "op_to_debt_yoy": 0.33767252935897435,
+            "market_cap": 495
         },
         {
             "rank": 149,
@@ -28014,7 +28163,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 8752,
             "assets_yoy": 7832,
             "op_to_debt_now": 0.1395514650324469,
-            "op_to_debt_yoy": 0.24809573752924866
+            "op_to_debt_yoy": 0.24809573752924866,
+            "market_cap": 14124
         },
         {
             "rank": 150,
@@ -28038,7 +28188,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6322,
             "assets_yoy": 5252,
             "op_to_debt_now": 0.23262515386666666,
-            "op_to_debt_yoy": 0.1335233219
+            "op_to_debt_yoy": 0.1335233219,
+            "market_cap": 1943
         },
         {
             "rank": 151,
@@ -28062,7 +28213,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 833,
             "assets_yoy": 757,
             "op_to_debt_now": -0.2989366033265641,
-            "op_to_debt_yoy": -2.153314189063126
+            "op_to_debt_yoy": -2.153314189063126,
+            "market_cap": 345
         },
         {
             "rank": 152,
@@ -28086,7 +28238,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 96046,
             "assets_yoy": 81277,
             "op_to_debt_now": 0.00654822839500623,
-            "op_to_debt_yoy": 0.00019262551814136145
+            "op_to_debt_yoy": 0.00019262551814136145,
+            "market_cap": 163661
         },
         {
             "rank": 153,
@@ -28110,7 +28263,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2016,
             "assets_yoy": 2021,
             "op_to_debt_now": 0.14060258585221155,
-            "op_to_debt_yoy": 0.11157523381731745
+            "op_to_debt_yoy": 0.11157523381731745,
+            "market_cap": 294
         },
         {
             "rank": 154,
@@ -28134,7 +28288,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6481,
             "assets_yoy": 5110,
             "op_to_debt_now": 0.014089581287364348,
-            "op_to_debt_yoy": -0.014823588436738226
+            "op_to_debt_yoy": -0.014823588436738226,
+            "market_cap": 1021
         },
         {
             "rank": 155,
@@ -28158,7 +28313,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 43731,
             "assets_yoy": 42907,
             "op_to_debt_now": 0.034448534542894364,
-            "op_to_debt_yoy": 0.06663512603889313
+            "op_to_debt_yoy": 0.06663512603889313,
+            "market_cap": 2306
         },
         {
             "rank": 156,
@@ -28182,7 +28338,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 359314,
             "assets_yoy": 314619,
             "op_to_debt_now": 3.333675262858322,
-            "op_to_debt_yoy": 0.7086381016241228
+            "op_to_debt_yoy": 0.7086381016241228,
+            "market_cap": 173114
         },
         {
             "rank": 157,
@@ -28206,7 +28363,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 4195,
             "assets_yoy": 3861,
             "op_to_debt_now": 14.27759065117489,
-            "op_to_debt_yoy": 3.0632122198913763
+            "op_to_debt_yoy": 3.0632122198913763,
+            "market_cap": 4115
         },
         {
             "rank": 158,
@@ -28230,7 +28388,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 8480,
             "assets_yoy": 7323,
             "op_to_debt_now": 0.2515849638925503,
-            "op_to_debt_yoy": 0.11217471588423493
+            "op_to_debt_yoy": 0.11217471588423493,
+            "market_cap": 23152
         },
         {
             "rank": 159,
@@ -28254,7 +28413,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 655,
             "assets_yoy": 674,
             "op_to_debt_now": 0.03828435608766765,
-            "op_to_debt_yoy": 0.07128385344591952
+            "op_to_debt_yoy": 0.07128385344591952,
+            "market_cap": 325
         },
         {
             "rank": 160,
@@ -28278,7 +28438,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2578,
             "assets_yoy": 2548,
             "op_to_debt_now": -0.07838982450246548,
-            "op_to_debt_yoy": 0.0033124281942557197
+            "op_to_debt_yoy": 0.0033124281942557197,
+            "market_cap": 632
         },
         {
             "rank": 161,
@@ -28302,7 +28463,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 10273,
             "assets_yoy": 9703,
             "op_to_debt_now": 0.12923189437912866,
-            "op_to_debt_yoy": 0.12293300616451289
+            "op_to_debt_yoy": 0.12293300616451289,
+            "market_cap": 1604
         },
         {
             "rank": 162,
@@ -28326,7 +28488,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1859,
             "assets_yoy": 1935,
             "op_to_debt_now": 0.0353315293323648,
-            "op_to_debt_yoy": 0.08208504579851855
+            "op_to_debt_yoy": 0.08208504579851855,
+            "market_cap": 566
         },
         {
             "rank": 163,
@@ -28350,7 +28513,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 961,
             "assets_yoy": 872,
             "op_to_debt_now": 0.1259068062544794,
-            "op_to_debt_yoy": 0.14412445638540677
+            "op_to_debt_yoy": 0.14412445638540677,
+            "market_cap": 883
         },
         {
             "rank": 164,
@@ -28374,7 +28538,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 732,
             "assets_yoy": 709,
             "op_to_debt_now": -0.02075647788107853,
-            "op_to_debt_yoy": -0.07456062068641686
+            "op_to_debt_yoy": -0.07456062068641686,
+            "market_cap": 358
         },
         {
             "rank": 165,
@@ -28398,7 +28563,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1686,
             "assets_yoy": 1541,
             "op_to_debt_now": 1.72813178625,
-            "op_to_debt_yoy": 0.00734489026747785
+            "op_to_debt_yoy": 0.00734489026747785,
+            "market_cap": 1445
         },
         {
             "rank": 166,
@@ -28422,7 +28588,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3701,
             "assets_yoy": 3349,
             "op_to_debt_now": 0.024329140773293158,
-            "op_to_debt_yoy": 0.013771135161855408
+            "op_to_debt_yoy": 0.013771135161855408,
+            "market_cap": 770
         },
         {
             "rank": 167,
@@ -28446,7 +28613,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 4453,
             "assets_yoy": 4343,
             "op_to_debt_now": -0.854178952924342,
-            "op_to_debt_yoy": -0.17126800998001204
+            "op_to_debt_yoy": -0.17126800998001204,
+            "market_cap": 449
         },
         {
             "rank": 168,
@@ -28470,7 +28638,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 4670,
             "assets_yoy": 3829,
             "op_to_debt_now": 0.017664720209543305,
-            "op_to_debt_yoy": 0.025390690615991165
+            "op_to_debt_yoy": 0.025390690615991165,
+            "market_cap": 4114
         },
         {
             "rank": 169,
@@ -28494,7 +28663,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2261,
             "assets_yoy": 2188,
             "op_to_debt_now": 0.0304314422915618,
-            "op_to_debt_yoy": 0.0486219405316476
+            "op_to_debt_yoy": 0.0486219405316476,
+            "market_cap": 422
         },
         {
             "rank": 170,
@@ -28518,7 +28688,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 4853,
             "assets_yoy": 4541,
             "op_to_debt_now": 0.060621002819912596,
-            "op_to_debt_yoy": 0.280788749263569
+            "op_to_debt_yoy": 0.280788749263569,
+            "market_cap": 1698
         },
         {
             "rank": 171,
@@ -28542,7 +28713,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2834,
             "assets_yoy": 2477,
             "op_to_debt_now": 0.14681138662975096,
-            "op_to_debt_yoy": 0.547118475333383
+            "op_to_debt_yoy": 0.547118475333383,
+            "market_cap": 8047
         },
         {
             "rank": 172,
@@ -28566,7 +28738,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 793,
             "assets_yoy": 765,
             "op_to_debt_now": -0.012582592182442646,
-            "op_to_debt_yoy": -0.055706828134804084
+            "op_to_debt_yoy": -0.055706828134804084,
+            "market_cap": 231
         },
         {
             "rank": 173,
@@ -28590,7 +28763,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 8577,
             "assets_yoy": 8212,
             "op_to_debt_now": -0.00885254003214993,
-            "op_to_debt_yoy": -0.004871904279585267
+            "op_to_debt_yoy": -0.004871904279585267,
+            "market_cap": 1533
         },
         {
             "rank": 174,
@@ -28614,7 +28788,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 4624,
             "assets_yoy": 4009,
             "op_to_debt_now": 0.14856935933582444,
-            "op_to_debt_yoy": 0.2147618828401261
+            "op_to_debt_yoy": 0.2147618828401261,
+            "market_cap": 406
         },
         {
             "rank": 175,
@@ -28638,7 +28813,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 42845,
             "assets_yoy": 38331,
             "op_to_debt_now": 0.04366284800007427,
-            "op_to_debt_yoy": 0.04086173631142749
+            "op_to_debt_yoy": 0.04086173631142749,
+            "market_cap": 15582
         },
         {
             "rank": 176,
@@ -28662,7 +28838,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1905,
             "assets_yoy": 1426,
             "op_to_debt_now": 0.5539886330683571,
-            "op_to_debt_yoy": 0.37481978167577545
+            "op_to_debt_yoy": 0.37481978167577545,
+            "market_cap": 984
         },
         {
             "rank": 177,
@@ -28686,7 +28863,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 5958,
             "assets_yoy": 4615,
             "op_to_debt_now": 0.0249384996315164,
-            "op_to_debt_yoy": 0.021467695206852908
+            "op_to_debt_yoy": 0.021467695206852908,
+            "market_cap": 553
         },
         {
             "rank": 178,
@@ -28710,7 +28888,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 714,
             "assets_yoy": 702,
             "op_to_debt_now": -0.15919997836579308,
-            "op_to_debt_yoy": -0.1297528533775203
+            "op_to_debt_yoy": -0.1297528533775203,
+            "market_cap": 308
         },
         {
             "rank": 179,
@@ -28734,7 +28913,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1273,
             "assets_yoy": 1053,
             "op_to_debt_now": 0.015903700254922177,
-            "op_to_debt_yoy": -0.035850839239650024
+            "op_to_debt_yoy": -0.035850839239650024,
+            "market_cap": 1098
         },
         {
             "rank": 180,
@@ -28758,7 +28938,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6880,
             "assets_yoy": 6348,
             "op_to_debt_now": 0.040286237984193195,
-            "op_to_debt_yoy": 0.03532950902557491
+            "op_to_debt_yoy": 0.03532950902557491,
+            "market_cap": 772
         },
         {
             "rank": 181,
@@ -28782,7 +28963,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 5188,
             "assets_yoy": 3438,
             "op_to_debt_now": 0.09605230855415677,
-            "op_to_debt_yoy": 0.09134451171991527
+            "op_to_debt_yoy": 0.09134451171991527,
+            "market_cap": 352
         },
         {
             "rank": 182,
@@ -28806,7 +28988,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 763,
             "assets_yoy": 695,
             "op_to_debt_now": 0.6147646019478786,
-            "op_to_debt_yoy": 18.43277141
+            "op_to_debt_yoy": 18.43277141,
+            "market_cap": 786
         },
         {
             "rank": 183,
@@ -28830,7 +29013,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1947,
             "assets_yoy": 1732,
             "op_to_debt_now": 0.04007033188745481,
-            "op_to_debt_yoy": 0.03740150078425311
+            "op_to_debt_yoy": 0.03740150078425311,
+            "market_cap": 424
         },
         {
             "rank": 184,
@@ -28854,7 +29038,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1462,
             "assets_yoy": 1240,
             "op_to_debt_now": 0.018886074992428253,
-            "op_to_debt_yoy": 0.0670114648692076
+            "op_to_debt_yoy": 0.0670114648692076,
+            "market_cap": 313
         },
         {
             "rank": 185,
@@ -28878,7 +29063,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 63575,
             "assets_yoy": 57143,
             "op_to_debt_now": 0.003014955671439909,
-            "op_to_debt_yoy": -0.15182819023132998
+            "op_to_debt_yoy": -0.15182819023132998,
+            "market_cap": 7410
         },
         {
             "rank": 186,
@@ -28902,7 +29088,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1527,
             "assets_yoy": 1429,
             "op_to_debt_now": 0.032012318092536754,
-            "op_to_debt_yoy": 0.0571265140238321
+            "op_to_debt_yoy": 0.0571265140238321,
+            "market_cap": 355
         },
         {
             "rank": 187,
@@ -28926,7 +29113,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 12189,
             "assets_yoy": 10577,
             "op_to_debt_now": 0.5939112266455885,
-            "op_to_debt_yoy": 0.5838310738323756
+            "op_to_debt_yoy": 0.5838310738323756,
+            "market_cap": 2333
         },
         {
             "rank": 188,
@@ -28950,7 +29138,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2605,
             "assets_yoy": 2344,
             "op_to_debt_now": 0.034047119361937044,
-            "op_to_debt_yoy": 0.020114989080519292
+            "op_to_debt_yoy": 0.020114989080519292,
+            "market_cap": 641
         },
         {
             "rank": 189,
@@ -28974,7 +29163,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 357656,
             "assets_yoy": 336542,
             "op_to_debt_now": 0.0056793269389381834,
-            "op_to_debt_yoy": 0.010584841257192711
+            "op_to_debt_yoy": 0.010584841257192711,
+            "market_cap": 41968
         },
         {
             "rank": 190,
@@ -28998,7 +29188,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3662,
             "assets_yoy": 2953,
             "op_to_debt_now": 0.059702102801726914,
-            "op_to_debt_yoy": 0.04455673167392807
+            "op_to_debt_yoy": 0.04455673167392807,
+            "market_cap": 563
         },
         {
             "rank": 191,
@@ -29022,7 +29213,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 14934,
             "assets_yoy": 12484,
             "op_to_debt_now": 0.04377823129259931,
-            "op_to_debt_yoy": 0.10598346813761998
+            "op_to_debt_yoy": 0.10598346813761998,
+            "market_cap": 55317
         },
         {
             "rank": 192,
@@ -29046,7 +29238,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 156486,
             "assets_yoy": 112890,
             "op_to_debt_now": 0.013198291400959882,
-            "op_to_debt_yoy": 0.00586990558041687
+            "op_to_debt_yoy": 0.00586990558041687,
+            "market_cap": 2368
         },
         {
             "rank": 193,
@@ -29070,7 +29263,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 28759,
             "assets_yoy": 25855,
             "op_to_debt_now": 0.027233118898618368,
-            "op_to_debt_yoy": 0.11851375418019122
+            "op_to_debt_yoy": 0.11851375418019122,
+            "market_cap": 4608
         },
         {
             "rank": 194,
@@ -29094,7 +29288,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 13973,
             "assets_yoy": 14223,
             "op_to_debt_now": 0.029423584551227143,
-            "op_to_debt_yoy": 0.06810425413091102
+            "op_to_debt_yoy": 0.06810425413091102,
+            "market_cap": 8482
         },
         {
             "rank": 195,
@@ -29118,7 +29313,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3453,
             "assets_yoy": 2857,
             "op_to_debt_now": 0.06391361915219682,
-            "op_to_debt_yoy": 0.07692689109842883
+            "op_to_debt_yoy": 0.07692689109842883,
+            "market_cap": 687
         },
         {
             "rank": 196,
@@ -29142,7 +29338,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6716,
             "assets_yoy": 6415,
             "op_to_debt_now": 0.11486062850536258,
-            "op_to_debt_yoy": 0.2997576637432872
+            "op_to_debt_yoy": 0.2997576637432872,
+            "market_cap": 1120
         },
         {
             "rank": 197,
@@ -29166,7 +29363,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 7137,
             "assets_yoy": 6229,
             "op_to_debt_now": 0.017230189189730846,
-            "op_to_debt_yoy": 0.012846668240979199
+            "op_to_debt_yoy": 0.012846668240979199,
+            "market_cap": 1556
         },
         {
             "rank": 198,
@@ -29190,7 +29388,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1081,
             "assets_yoy": 1192,
             "op_to_debt_now": -0.030761522473693553,
-            "op_to_debt_yoy": 0.010015979121404051
+            "op_to_debt_yoy": 0.010015979121404051,
+            "market_cap": 252
         },
         {
             "rank": 199,
@@ -29214,7 +29413,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1108,
             "assets_yoy": 935,
             "op_to_debt_now": 0.054452718522671494,
-            "op_to_debt_yoy": 0.17803604549824753
+            "op_to_debt_yoy": 0.17803604549824753,
+            "market_cap": 499
         },
         {
             "rank": 200,
@@ -29238,7 +29438,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 604,
             "assets_yoy": 436,
             "op_to_debt_now": 0.04502532620545074,
-            "op_to_debt_yoy": 0.10824816875
+            "op_to_debt_yoy": 0.10824816875,
+            "market_cap": 415
         },
         {
             "rank": 201,
@@ -29262,7 +29463,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 4077,
             "assets_yoy": 3603,
             "op_to_debt_now": 0.028918256362252807,
-            "op_to_debt_yoy": 0.022098866164370914
+            "op_to_debt_yoy": 0.022098866164370914,
+            "market_cap": 8019
         },
         {
             "rank": 202,
@@ -29286,7 +29488,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2285,
             "assets_yoy": 2345,
             "op_to_debt_now": -0.005797406816727423,
-            "op_to_debt_yoy": 0.020953915311358408
+            "op_to_debt_yoy": 0.020953915311358408,
+            "market_cap": 684
         },
         {
             "rank": 203,
@@ -29310,7 +29513,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1709,
             "assets_yoy": 1286,
             "op_to_debt_now": 0.20478833874927369,
-            "op_to_debt_yoy": 0.19136377149793302
+            "op_to_debt_yoy": 0.19136377149793302,
+            "market_cap": 1093
         },
         {
             "rank": 204,
@@ -29334,7 +29538,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2648,
             "assets_yoy": 1504,
             "op_to_debt_now": 0.09304467882809238,
-            "op_to_debt_yoy": 0.09768849757931047
+            "op_to_debt_yoy": 0.09768849757931047,
+            "market_cap": 2026
         },
         {
             "rank": 205,
@@ -29358,7 +29563,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3065461,
             "assets_yoy": 2644225,
             "op_to_debt_now": 0.03344193258223092,
-            "op_to_debt_yoy": 0.028459060280179322
+            "op_to_debt_yoy": 0.028459060280179322,
+            "market_cap": 69434
         },
         {
             "rank": 206,
@@ -29382,7 +29588,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 6105,
             "assets_yoy": 4580,
             "op_to_debt_now": 0.12019248818415598,
-            "op_to_debt_yoy": 0.1895045523960177
+            "op_to_debt_yoy": 0.1895045523960177,
+            "market_cap": 2998
         },
         {
             "rank": 207,
@@ -29406,7 +29613,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 18539,
             "assets_yoy": 15739,
             "op_to_debt_now": 0.029010283562195777,
-            "op_to_debt_yoy": 0.02643111697544532
+            "op_to_debt_yoy": 0.02643111697544532,
+            "market_cap": 798
         },
         {
             "rank": 208,
@@ -29430,7 +29638,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 3436,
             "assets_yoy": 2845,
             "op_to_debt_now": 0.05062707347772379,
-            "op_to_debt_yoy": 0.09152815461013972
+            "op_to_debt_yoy": 0.09152815461013972,
+            "market_cap": 363
         },
         {
             "rank": 209,
@@ -29454,7 +29663,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 7088,
             "assets_yoy": 5637,
             "op_to_debt_now": 0.2794839360230898,
-            "op_to_debt_yoy": 0.31523905993326706
+            "op_to_debt_yoy": 0.31523905993326706,
+            "market_cap": 2258
         },
         {
             "rank": 210,
@@ -29478,7 +29688,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 211227,
             "assets_yoy": 155896,
             "op_to_debt_now": 0.024477077012123847,
-            "op_to_debt_yoy": 0.02836826594137863
+            "op_to_debt_yoy": 0.02836826594137863,
+            "market_cap": 40343
         },
         {
             "rank": 211,
@@ -29502,7 +29713,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 5113,
             "assets_yoy": 4947,
             "op_to_debt_now": -0.011105025613182254,
-            "op_to_debt_yoy": 0.03021748050884383
+            "op_to_debt_yoy": 0.03021748050884383,
+            "market_cap": 326
         },
         {
             "rank": 212,
@@ -29526,7 +29738,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 8576,
             "assets_yoy": 7109,
             "op_to_debt_now": 0.008868277996108762,
-            "op_to_debt_yoy": -0.031513724482051635
+            "op_to_debt_yoy": -0.031513724482051635,
+            "market_cap": 732
         },
         {
             "rank": 213,
@@ -29550,7 +29763,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1865,
             "assets_yoy": 1832,
             "op_to_debt_now": -0.008749698176447312,
-            "op_to_debt_yoy": 0.01750524947378805
+            "op_to_debt_yoy": 0.01750524947378805,
+            "market_cap": 1234
         },
         {
             "rank": 214,
@@ -29574,7 +29788,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 4115,
             "assets_yoy": 2918,
             "op_to_debt_now": 0.12309068300773456,
-            "op_to_debt_yoy": 0.1322950646241107
+            "op_to_debt_yoy": 0.1322950646241107,
+            "market_cap": 3100
         },
         {
             "rank": 215,
@@ -29598,7 +29813,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 5104,
             "assets_yoy": 4819,
             "op_to_debt_now": -0.01541397325341132,
-            "op_to_debt_yoy": 0.020550708778552442
+            "op_to_debt_yoy": 0.020550708778552442,
+            "market_cap": 708
         },
         {
             "rank": 216,
@@ -29622,7 +29838,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 33134,
             "assets_yoy": 24055,
             "op_to_debt_now": 0.3620920494993504,
-            "op_to_debt_yoy": 0.677016643996468
+            "op_to_debt_yoy": 0.677016643996468,
+            "market_cap": 41503
         },
         {
             "rank": 217,
@@ -29646,7 +29863,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1961,
             "assets_yoy": 1598,
             "op_to_debt_now": 0.0030042121739130433,
-            "op_to_debt_yoy": 0.20427107033429592
+            "op_to_debt_yoy": 0.20427107033429592,
+            "market_cap": 567
         },
         {
             "rank": 218,
@@ -29670,7 +29888,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1164,
             "assets_yoy": 545,
             "op_to_debt_now": 0.13965822118650034,
-            "op_to_debt_yoy": 0.21759455196055777
+            "op_to_debt_yoy": 0.21759455196055777,
+            "market_cap": 1364
         },
         {
             "rank": 219,
@@ -29694,7 +29913,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 4825,
             "assets_yoy": 4172,
             "op_to_debt_now": 0.01570178190806705,
-            "op_to_debt_yoy": 0.03061871119615367
+            "op_to_debt_yoy": 0.03061871119615367,
+            "market_cap": 4084
         },
         {
             "rank": 220,
@@ -29718,7 +29938,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 20458,
             "assets_yoy": 9058,
             "op_to_debt_now": 0.05303685410344192,
-            "op_to_debt_yoy": 0.25878915528204954
+            "op_to_debt_yoy": 0.25878915528204954,
+            "market_cap": 1394
         },
         {
             "rank": 221,
@@ -29742,7 +29963,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1389,
             "assets_yoy": 1226,
             "op_to_debt_now": -0.007309887202176266,
-            "op_to_debt_yoy": 0.047166840098021565
+            "op_to_debt_yoy": 0.047166840098021565,
+            "market_cap": 1013
         },
         {
             "rank": 222,
@@ -29766,7 +29988,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 9577,
             "assets_yoy": 8234,
             "op_to_debt_now": 0.00011132598854270529,
-            "op_to_debt_yoy": 0.025041600678498203
+            "op_to_debt_yoy": 0.025041600678498203,
+            "market_cap": 486
         },
         {
             "rank": 223,
@@ -29790,7 +30013,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1966,
             "assets_yoy": 1385,
             "op_to_debt_now": 0.021338321214246645,
-            "op_to_debt_yoy": 0.16461226642391244
+            "op_to_debt_yoy": 0.16461226642391244,
+            "market_cap": 718
         },
         {
             "rank": 224,
@@ -29814,7 +30038,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 11714,
             "assets_yoy": 8815,
             "op_to_debt_now": 0.032765371988574286,
-            "op_to_debt_yoy": 0.06932304175987203
+            "op_to_debt_yoy": 0.06932304175987203,
+            "market_cap": 4206
         },
         {
             "rank": 225,
@@ -29838,7 +30063,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 1917,
             "assets_yoy": 1611,
             "op_to_debt_now": -0.009068786406923837,
-            "op_to_debt_yoy": 0.2604054180440268
+            "op_to_debt_yoy": 0.2604054180440268,
+            "market_cap": 1271
         },
         {
             "rank": 226,
@@ -29862,7 +30088,8 @@ const KOSPI_QUANT_PACKAGE = {
             "assets": 2812,
             "assets_yoy": 2258,
             "op_to_debt_now": -2.968897463333333,
-            "op_to_debt_yoy": -0.07205710189643055
+            "op_to_debt_yoy": -0.07205710189643055,
+            "market_cap": 883
         }
     ],
     "fama_value": [
