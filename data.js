@@ -3,7 +3,7 @@ const KOSPI_QUANT_PACKAGE = {
         "krx_basis_date": "20260903",
         "dart_basis": "2026년 반기보고서",
         "status": "NORMAL",
-        "checked_at": "16:00:47"
+        "checked_at": "03:24:48"
     },
     "super_value": [
         {
@@ -24929,7 +24929,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 54,
             "asset_growth_yoy": -6.7,
             "asset_growth_r": 26,
-            "price_volatility": -2.01,
+            "price_volatility": -1.97,
             "volatility_r": 9,
             "avg_r": 170.0,
             "quarter_revenue": 103,
@@ -53048,7 +53048,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 30,
             "asset_growth_yoy": -6.7,
             "asset_growth_r": 10,
-            "price_volatility": -2.01,
+            "price_volatility": -1.97,
             "volatility_r": 5,
             "op_growth_qoq": 160.6,
             "op_qoq_r": 248,
@@ -58524,7 +58524,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 182,
             "asset_growth_yoy": 33.0,
             "asset_growth_r": 359,
-            "price_volatility": -2.66,
+            "price_volatility": -2.58,
             "volatility_r": 2,
             "op_growth_qoq": 78.6,
             "op_qoq_r": 452,
@@ -63526,7 +63526,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 25,
             "asset_growth_yoy": -6.7,
             "asset_growth_r": 9,
-            "price_volatility": -2.01,
+            "price_volatility": -1.97,
             "volatility_r": 4,
             "op_growth_qoq": 160.6,
             "op_qoq_r": 248,
@@ -67654,7 +67654,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 165,
             "asset_growth_yoy": 33.0,
             "asset_growth_r": 332,
-            "price_volatility": -2.66,
+            "price_volatility": -2.58,
             "volatility_r": 2,
             "op_growth_qoq": 78.6,
             "op_qoq_r": 452,
@@ -75336,7 +75336,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 30,
             "asset_growth_yoy": 33.0,
             "asset_growth_r": 48,
-            "price_volatility": -2.66,
+            "price_volatility": -2.58,
             "volatility_r": 1,
             "op_growth_qoq": 78.6,
             "op_qoq_r": 452,
@@ -77040,6 +77040,7 @@ const KOSPI_QUANT_PACKAGE = {
             "금융/지주"
         ],
         "우성": [
+            "거래정지",
             "증거금100%"
         ],
         "미래아이앤지": [
@@ -79173,8 +79174,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "브리지텍": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "테크엘": [
             "증거금100%",
@@ -80410,6 +80410,9 @@ const KOSPI_QUANT_PACKAGE = {
         "인카금융서비스": [
             "금융/지주"
         ],
+        "네오오토": [
+            "거래정지"
+        ],
         "아이에스티이": [
             "증거금100%"
         ],
@@ -81124,7 +81127,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "KBG": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "팜스빌": [
