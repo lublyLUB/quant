@@ -3,7 +3,7 @@ const KOSPI_QUANT_PACKAGE = {
         "krx_basis_date": "20260917",
         "dart_basis": "2026년 반기보고서",
         "status": "NORMAL",
-        "checked_at": "16:14:39"
+        "checked_at": "04:01:13"
     },
     "super_value": [
         {
@@ -55800,7 +55800,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 294,
             "asset_growth_yoy": 15.7,
             "asset_growth_r": 250,
-            "price_volatility": -11.87,
+            "price_volatility": -10.41,
             "volatility_r": 1,
             "op_growth_qoq": 1233.2,
             "op_qoq_r": 27,
@@ -64031,7 +64031,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 271,
             "asset_growth_yoy": 15.7,
             "asset_growth_r": 227,
-            "price_volatility": -11.87,
+            "price_volatility": -10.41,
             "volatility_r": 1,
             "op_growth_qoq": 1233.2,
             "op_qoq_r": 27,
@@ -84863,7 +84863,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -100.0,
             "value_score": 4,
             "value_tier": "판단보류",
-            "price_volatility": -2.87,
+            "price_volatility": -2.32,
             "market": "KOSPI"
         },
         "대덕": {
@@ -91333,7 +91333,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -3.8,
             "value_score": 7,
             "value_tier": "판단보류",
-            "price_volatility": 3.51,
+            "price_volatility": 3.41,
             "market": "KOSDAQ"
         },
         "세보엠이씨": {
@@ -92263,7 +92263,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 22.5,
             "value_score": 5,
             "value_tier": "판단보류",
-            "price_volatility": -4.9,
+            "price_volatility": -4.29,
             "market": "KOSDAQ"
         },
         "한국선재": {
@@ -95413,7 +95413,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 15.7,
             "value_score": 9,
             "value_tier": "저평가",
-            "price_volatility": -11.87,
+            "price_volatility": -10.41,
             "market": "KOSDAQ"
         },
         "한주에이알티": {
@@ -95463,7 +95463,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 4.1,
             "value_score": 4,
             "value_tier": "판단보류",
-            "price_volatility": 0.24,
+            "price_volatility": 0.4,
             "market": "KOSDAQ"
         },
         "엠로": {
@@ -103853,7 +103853,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": null,
             "value_score": 9,
             "value_tier": "저평가",
-            "price_volatility": 3.87,
+            "price_volatility": 3.57,
             "market": "KOSDAQ"
         },
         "HB솔루션": {
@@ -105543,7 +105543,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -1.9,
             "value_score": 0,
             "value_tier": "위험",
-            "price_volatility": 0.41,
+            "price_volatility": -1.29,
             "market": "KOSDAQ"
         },
         "파이버프로": {
