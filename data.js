@@ -3,7 +3,7 @@ const KOSPI_QUANT_PACKAGE = {
         "krx_basis_date": "20260922",
         "dart_basis": "2026년 반기보고서",
         "status": "NORMAL",
-        "checked_at": "16:11:45"
+        "checked_at": "03:32:05"
     },
     "super_value": [
         {
@@ -43150,7 +43150,7 @@ const KOSPI_QUANT_PACKAGE = {
             "op_debt_r": 397,
             "asset_growth_yoy": -3.2,
             "asset_growth_r": 69,
-            "price_volatility": 4.7,
+            "price_volatility": 4.53,
             "volatility_r": 943,
             "avg_r": 357.9,
             "equity": 492,
@@ -43967,8 +43967,8 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 18.9,
             "asset_growth_r": 716,
             "price_volatility": 1.3,
-            "volatility_r": 897,
-            "avg_r": 371.1,
+            "volatility_r": 898,
+            "avg_r": 371.2,
             "equity": 1438,
             "quarter_operating_cf": 100,
             "quarter_net_income": 50,
@@ -76815,8 +76815,7 @@ const KOSPI_QUANT_PACKAGE = {
             "금융/지주"
         ],
         "대한화섬": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "SG세계물산": [
             "증거금100%"
@@ -77050,9 +77049,6 @@ const KOSPI_QUANT_PACKAGE = {
         "케이아이이": [
             "증거금100%"
         ],
-        "한솔로지스틱스": [
-            "2천만↓"
-        ],
         "대양금속": [
             "증거금100%"
         ],
@@ -77149,8 +77145,7 @@ const KOSPI_QUANT_PACKAGE = {
             "2천만↓"
         ],
         "영흥": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "아센디오": [
             "관리",
@@ -78564,8 +78559,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "세종텔레콤": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "코맥스": [
             "2천만↓"
@@ -78640,13 +78634,11 @@ const KOSPI_QUANT_PACKAGE = {
             "금융/지주"
         ],
         "인포뱅크": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "세중": [
             "증거금100%",
             "불성실공시법인지정",
-            "2천만↓",
             "300억↓"
         ],
         "한국경제TV": [
@@ -78881,8 +78873,7 @@ const KOSPI_QUANT_PACKAGE = {
             "300억↓"
         ],
         "YW": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "나라엠앤디": [
             "증거금100%"
@@ -80284,7 +80275,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "텔콘RF제약": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "아티스트스튜디오": [
@@ -80587,7 +80577,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "힘스": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "이스트에이드": [
@@ -80696,7 +80685,6 @@ const KOSPI_QUANT_PACKAGE = {
         "피엔티엠에스": [
             "증거금100%",
             "불성실공시법인지정",
-            "2천만↓",
             "300억↓"
         ],
         "케일럼": [
@@ -81064,8 +81052,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "에피소드컴퍼니": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "퀀타매트릭스": [
             "증거금100%"
@@ -81160,8 +81147,7 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%"
         ],
         "아이디피": [
-            "증거금100%",
-            "2천만↓"
+            "증거금100%"
         ],
         "이노테나": [
             "증거금100%",
@@ -81185,9 +81171,6 @@ const KOSPI_QUANT_PACKAGE = {
             "증거금100%",
             "2천만↓",
             "300억↓"
-        ],
-        "탑런토탈솔루션": [
-            "2천만↓"
         ],
         "뷰노": [
             "증거금100%"
@@ -81267,7 +81250,6 @@ const KOSPI_QUANT_PACKAGE = {
         "인바이오": [
             "증거금100%",
             "불성실공시법인지정예고",
-            "2천만↓",
             "300억↓"
         ],
         "휴럼": [
@@ -81421,7 +81403,6 @@ const KOSPI_QUANT_PACKAGE = {
         ],
         "이지트로닉스": [
             "증거금100%",
-            "2천만↓",
             "300억↓"
         ],
         "큐에이드": [
@@ -90343,7 +90324,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 6.7,
             "value_score": 8,
             "value_tier": "저평가",
-            "price_volatility": 3.38,
+            "price_volatility": 2.68,
             "market": "KOSDAQ"
         },
         "헝셩그룹": {
@@ -90503,7 +90484,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 0.3,
             "value_score": 3,
             "value_tier": "판단보류",
-            "price_volatility": 2.83,
+            "price_volatility": 2.62,
             "market": "KOSDAQ"
         },
         "보원케미칼": {
@@ -91263,7 +91244,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 7.5,
             "value_score": 8,
             "value_tier": "저평가",
-            "price_volatility": -3.17,
+            "price_volatility": -3.27,
             "market": "KOSDAQ"
         },
         "오리콤": {
@@ -92703,7 +92684,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 3.3,
             "value_score": 9,
             "value_tier": "저평가",
-            "price_volatility": 1.32,
+            "price_volatility": 1.29,
             "market": "KOSDAQ"
         },
         "제이엠아이": {
@@ -95523,7 +95504,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 10.3,
             "value_score": 4,
             "value_tier": "판단보류",
-            "price_volatility": -4.66,
+            "price_volatility": -3.45,
             "market": "KOSDAQ"
         },
         "NHN KCP": {
@@ -100713,7 +100694,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 67.5,
             "value_score": 6,
             "value_tier": "판단보류",
-            "price_volatility": -1.62,
+            "price_volatility": -1.69,
             "market": "KOSDAQ"
         },
         "아이진": {
@@ -101033,7 +101014,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": 8.1,
             "value_score": 2,
             "value_tier": "판단보류",
-            "price_volatility": 3.01,
+            "price_volatility": 3.06,
             "market": "KOSDAQ"
         },
         "디에이테크놀로지": {
@@ -105413,7 +105394,7 @@ const KOSPI_QUANT_PACKAGE = {
             "asset_growth_yoy": -3.2,
             "value_score": 9,
             "value_tier": "저평가",
-            "price_volatility": 4.7,
+            "price_volatility": 4.53,
             "market": "KOSDAQ"
         },
         "에이아이코리아": {
